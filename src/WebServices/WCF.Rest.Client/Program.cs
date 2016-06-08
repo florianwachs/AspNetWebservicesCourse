@@ -47,7 +47,7 @@ namespace WCF.Rest.Client
         public class UniversityServiceClient : IDisposable
         {
             private readonly HttpClient client;
-            private Uri baseUri = new Uri("http://localhost:51553/UniversityService.svc/", UriKind.Absolute);
+            private Uri baseUri = new Uri("http://localhost:45262/UniversityService.svc/", UriKind.Absolute);
 
             public UniversityServiceClient()
             {
