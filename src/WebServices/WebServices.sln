@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Soap.Client", "WCF.Soap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Rest", "WCF.Rest\WCF.Rest.csproj", "{6FEA7029-AEFB-4D15-9458-A6F3F665D83B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Rest.Client", "WCF.Rest.Client\WCF.Rest.Client.csproj", "{D4C29D0A-1897-4B3D-8599-D6809C366AD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{6FEA7029-AEFB-4D15-9458-A6F3F665D83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FEA7029-AEFB-4D15-9458-A6F3F665D83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FEA7029-AEFB-4D15-9458-A6F3F665D83B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C29D0A-1897-4B3D-8599-D6809C366AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C29D0A-1897-4B3D-8599-D6809C366AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C29D0A-1897-4B3D-8599-D6809C366AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C29D0A-1897-4B3D-8599-D6809C366AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
