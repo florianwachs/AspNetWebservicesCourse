@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.AsyncService", "WCF.Asy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNET.ConnectedLayer", "AdoNET.ConnectedLayer\AdoNET.ConnectedLayer.csproj", "{86DB3609-4EE2-4376-88B6-6DC1172955DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNET.DisconnectedLayer", "AdoNET.DisconnectedLayer\AdoNET.DisconnectedLayer.csproj", "{1151F516-0892-4DD5-9007-089AC24478E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{86DB3609-4EE2-4376-88B6-6DC1172955DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86DB3609-4EE2-4376-88B6-6DC1172955DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86DB3609-4EE2-4376-88B6-6DC1172955DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1151F516-0892-4DD5-9007-089AC24478E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1151F516-0892-4DD5-9007-089AC24478E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1151F516-0892-4DD5-9007-089AC24478E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1151F516-0892-4DD5-9007-089AC24478E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
