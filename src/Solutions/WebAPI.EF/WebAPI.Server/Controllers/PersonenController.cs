@@ -16,7 +16,7 @@ namespace WebAPI.Server.Controllers
         private IPersonRepository PersonRepository { get; set; }
         public PersonenController()
         {
-            PersonRepository = new InMemoryPersonService();
+            PersonRepository = new EFPersonRepository();
         }
 
         [Route("")]
@@ -25,7 +25,7 @@ namespace WebAPI.Server.Controllers
             return PersonRepository.GetAll();
         }
 
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Person))]
         public IHttpActionResult GetById(int id)
         {
@@ -43,20 +43,26 @@ namespace WebAPI.Server.Controllers
         [HttpPost]
         public IHttpActionResult InsertPerson(Person p)
         {
+            if (p == null || !ModelState.IsValid)
+                return BadRequest();
+
             var addedPerson = PersonRepository.Add(p);
             return Ok(addedPerson);
         }
 
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Person))]
         [HttpPut]
         public IHttpActionResult UpdatePerson(int id, Person p)
         {
+            if (p == null || !ModelState.IsValid)
+                return BadRequest();
+
             PersonRepository.Update(id, p);
             return Ok(p);
         }
 
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Person))]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
