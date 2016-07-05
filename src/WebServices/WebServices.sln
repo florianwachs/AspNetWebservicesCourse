@@ -36,6 +36,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetSignalR", "AspNetSign
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetSignalR.Client", "AspNetSignalR.Client\AspNetSignalR.Client.csproj", "{1DD17EF5-0C10-47B5-8BCA-1CA77D576410}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Security", "WCF.Security\WCF.Security.csproj", "{78650053-A090-4598-BD1C-6B253AD9D49A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.Security.Client", "WCF.Security.Client\WCF.Security.Client.csproj", "{959A23B7-6AA7-4D10-A410-08CAD8952D97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{78650053-A090-4598-BD1C-6B253AD9D49A} = {78650053-A090-4598-BD1C-6B253AD9D49A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +109,14 @@ Global
 		{1DD17EF5-0C10-47B5-8BCA-1CA77D576410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DD17EF5-0C10-47B5-8BCA-1CA77D576410}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DD17EF5-0C10-47B5-8BCA-1CA77D576410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78650053-A090-4598-BD1C-6B253AD9D49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78650053-A090-4598-BD1C-6B253AD9D49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78650053-A090-4598-BD1C-6B253AD9D49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78650053-A090-4598-BD1C-6B253AD9D49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959A23B7-6AA7-4D10-A410-08CAD8952D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959A23B7-6AA7-4D10-A410-08CAD8952D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959A23B7-6AA7-4D10-A410-08CAD8952D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959A23B7-6AA7-4D10-A410-08CAD8952D97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
