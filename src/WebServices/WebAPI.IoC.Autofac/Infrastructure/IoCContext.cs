@@ -27,13 +27,20 @@ namespace WebAPI.IoC.Autofac.Infrastructure
         {
             if (_isInitialized) return;
 
+            // Neuen Container für die Registrierung der Dependencies erzeugen
             var containerBuilder = new ContainerBuilder();
 
+            // Alle WebApi-Controller aus dem aktuellen Projekt dem Container hinzufügen
             containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            // Spezial-Fall Filter, da Standard-WebApi-Filter nicht DI-freundlich gebaut sind
             containerBuilder.RegisterWebApiFilterProvider(httpConfig);
 
+            // Module helfen, Registrierungen auf wiederverwenbare Art und Weise durchzuführen
+            // Auch die Konfiguration per XML ist möglich
             containerBuilder.RegisterModule(new RepositoriesModule() { InMemory = false });
 
+            // Nach alle Registrierungen werde der Container zusammengebaut
             _container = containerBuilder.Build();
 
             _isInitialized = true;
