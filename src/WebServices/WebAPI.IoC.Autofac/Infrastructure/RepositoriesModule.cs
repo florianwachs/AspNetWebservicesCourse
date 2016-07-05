@@ -7,6 +7,8 @@ using WebAPI.IoC.Autofac.DataAccess;
 
 namespace WebAPI.IoC.Autofac.Infrastructure
 {
+    // Repositories kapseln wiederverwenbare Registrierungslogik
+    // Können auch über die .config konfiguriert werden    
     public class RepositoriesModule : Module
     {
         public bool InMemory { get; set; } = true;
