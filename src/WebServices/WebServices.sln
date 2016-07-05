@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Security.Client", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.IoC.Autofac", "WebAPI.IoC.Autofac\WebAPI.IoC.Autofac.csproj", "{2326BF4A-F73F-416C-8B7D-C5CA58233644}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Automapper", "WebAPI.Automapper\WebAPI.Automapper.csproj", "{3DA0C5FA-E999-491F-B354-54C1875FEDC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{2326BF4A-F73F-416C-8B7D-C5CA58233644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2326BF4A-F73F-416C-8B7D-C5CA58233644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2326BF4A-F73F-416C-8B7D-C5CA58233644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
