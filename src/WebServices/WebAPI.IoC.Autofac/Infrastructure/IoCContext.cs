@@ -39,7 +39,7 @@ namespace WebAPI.IoC.Autofac.Infrastructure
             // Module helfen, Registrierungen auf wiederverwenbare Art und Weise durchzuführen
             // Auch die Konfiguration per XML ist möglich
             containerBuilder.RegisterModule(new RepositoriesModule() { InMemory = false });
-
+            containerBuilder.RegisterModule(new CommonServicesModule());
             // Nach alle Registrierungen werde der Container zusammengebaut
             _container = containerBuilder.Build();
 

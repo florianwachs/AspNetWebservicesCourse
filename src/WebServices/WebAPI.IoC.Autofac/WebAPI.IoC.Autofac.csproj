@@ -111,8 +111,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CommonServicesModule.cs" />
     <Compile Include="Infrastructure\IoCContext.cs" />
+    <Compile Include="Infrastructure\ITimeService.cs" />
     <Compile Include="Infrastructure\RepositoriesModule.cs" />
+    <Compile Include="Infrastructure\DefaultTimeService.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

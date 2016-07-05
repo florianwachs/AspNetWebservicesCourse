@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI.IoC.Autofac.DataAccess;
+using WebAPI.IoC.Autofac.Infrastructure;
 using WebAPI.IoC.Autofac.Models;
 
 namespace WebAPI.IoC.Autofac.Controllers
@@ -14,9 +15,12 @@ namespace WebAPI.IoC.Autofac.Controllers
     public class BooksController : ApiController
     {
         public IBookRepository BookRepository { get; set; }
-        public BooksController(IBookRepository bookRepository)
+        public ITimeService TimeService { get; set; }
+
+        public BooksController(IBookRepository bookRepository, ITimeService timeService)
         {
             BookRepository = bookRepository;
+            TimeService = timeService;
         }
         // GET api/books
         [Route("")]
