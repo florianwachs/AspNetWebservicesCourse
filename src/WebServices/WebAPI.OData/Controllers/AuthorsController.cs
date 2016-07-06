@@ -42,6 +42,14 @@ namespace WebAPI.OData.Controllers
             return db.Authors.Where(p => p.Id == key).SelectMany(b => b.Books);
         }
 
+        // Mit Convention Based Routing
+        //// Get: /odata/Authors({key})/Books
+        //[EnableQuery]
+        //public IQueryable<Book> GetBooks([FromODataUri] int key)
+        //{
+        //    return db.Authors.Where(p => p.Id == key).SelectMany(b => b.Books);
+        //}
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
