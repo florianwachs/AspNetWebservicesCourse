@@ -26,6 +26,12 @@ namespace WebAPI.OData.Controllers
             return SingleResult.Create(result);
         }
 
+        [EnableQuery]
+        public IQueryable<Book> GetBooks([FromODataUri] int key)
+        {
+            return db.Authors.Where(p => p.Id == key).SelectMany(b => b.Books);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
