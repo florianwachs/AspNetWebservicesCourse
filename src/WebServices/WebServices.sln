@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.IoC.Autofac", "WebAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Automapper", "WebAPI.Automapper\WebAPI.Automapper.csproj", "{3DA0C5FA-E999-491F-B354-54C1875FEDC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.OData", "WebAPI.OData\WebAPI.OData.csproj", "{45D1A5F8-2D0C-488E-9928-C1E211841F1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DA0C5FA-E999-491F-B354-54C1875FEDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D1A5F8-2D0C-488E-9928-C1E211841F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D1A5F8-2D0C-488E-9928-C1E211841F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D1A5F8-2D0C-488E-9928-C1E211841F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D1A5F8-2D0C-488E-9928-C1E211841F1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
