@@ -14,12 +14,14 @@ namespace WebAPI.OData.Controllers
     {
         BookDbContext db = new BookDbContext();
 
+        // GET: /odata/Books
         [EnableQuery]
         public IQueryable<Book> Get()
         {
             return db.Books;
         }
 
+        // GET: /odata/Books({id})
         [EnableQuery]
         public SingleResult<Book> Get([FromODataUri] int key)
         {
