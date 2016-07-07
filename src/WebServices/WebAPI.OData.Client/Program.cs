@@ -36,7 +36,6 @@ namespace WebAPI.OData.Client
             foreach (var book in books)
             {
                 Console.WriteLine($"{book.Title} {book.Price}");
-                Console.WriteLine(book.Authors);
             }
         }
     }
