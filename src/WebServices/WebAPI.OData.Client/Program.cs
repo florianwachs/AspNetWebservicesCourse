@@ -31,7 +31,7 @@ namespace WebAPI.OData.Client
             PrintBooks(container.Books.Expand(b=>b.Authors).Where(b => b.Title.Contains("C#") && b.Authors.Any(a=>a.FirstName.StartsWith("Chuck"))));
         }
 
-        private static void PrintBooks(IQueryable<WebAPI.OData.Models.Book> books)
+        private static void PrintBooks(IQueryable<Book> books)
         {
             foreach (var book in books)
             {
