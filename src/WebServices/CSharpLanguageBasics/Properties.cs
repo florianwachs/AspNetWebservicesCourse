@@ -44,7 +44,21 @@ namespace CSharpLanguageBasics
         // auto-property
         public string FirstName { get; private set; }
 
-        // C# 6 Feature
-        // public DateTime TimeStamp { get; } = DateTime.UtcNow;
+        // C# 6 initializer
+        public DateTime TimeStamp { get; } = DateTime.UtcNow;
+
+        // C# 7 expression
+        public DateTime Today => DateTime.Today;
+
+        // C# 7 expression and normal mixed
+        public int Age2
+        {
+            get => age;
+            set
+            {
+                if (age >= 0)
+                    age = value;
+            }
+        }
     }
 }

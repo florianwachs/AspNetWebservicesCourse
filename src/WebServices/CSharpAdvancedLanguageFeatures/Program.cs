@@ -24,7 +24,7 @@ namespace CSharpAdvancedLanguageFeatures
             //AnonymousTypes.UseCaseLinq();
             //AnonymousTypes.UseCaseLinq2();
 
-            Yield.DemoMitYield();
+            //Yield.DemoMitYield();
             //Yield.DemoOhneYield();
 
             //ExtensionMethods.Demo1();
@@ -40,6 +40,9 @@ namespace CSharpAdvancedLanguageFeatures
             //Dynamic.DynamicObjectProviderDemo();
             //Dynamic.ReplaceReflectionDemo();
             //Dynamic.DynamicWithJsonNetDemo();
+
+            new Nameof().UseNameof();
+
             Console.WriteLine();
             Console.WriteLine("Press the [any] key");
             Console.ReadKey();

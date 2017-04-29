@@ -28,11 +28,11 @@ namespace CSharpLanguageBasics
 
         public static void DemoDictionary()
         {
-            var map = new Dictionary<string, decimal> 
-            { 
-                { "EUR", 1 }, 
-                { "USD", 1.1m }, 
-                { "NOK", 8m } 
+            var map = new Dictionary<string, decimal>
+            {
+                { "EUR", 1 },
+                { "USD", 1.1m },
+                { "NOK", 8m }
             };
 
             map.Add("CHF", 2);
@@ -46,6 +46,13 @@ namespace CSharpLanguageBasics
             if (!map.TryGetValue("AUD", out q))
             {
                 q = 10;
+            }
+
+            // C# 7: out-Variables
+            // amount ist nur innerhalb des if-Blocks zugewiesen
+            if (map.TryGetValue("USD", out decimal amount))
+            {
+                q = amount;
             }
         }
     }

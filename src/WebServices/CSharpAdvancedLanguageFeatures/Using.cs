@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 // Mit using können für Aliase für Typen erzeugt werden
 using MathOp = System.Func<decimal, decimal, decimal>;
+// Mit using static können Methoden aus einem Typen direkt importiert werden
+using static System.Math;
+using static System.Console;
 
 namespace CSharpAdvancedLanguageFeatures
 {
@@ -15,6 +18,9 @@ namespace CSharpAdvancedLanguageFeatures
         {
             MathOp op = (x, y) => x + y;
         }
+
+        public static void UsingNormalMath(int value) => Console.WriteLine(Math.Abs(value) * Math.PI);
+        public static void UsingStaticMath(int value) => WriteLine(Abs(value) * PI);
 
         public static void DemoDispose()
         {
