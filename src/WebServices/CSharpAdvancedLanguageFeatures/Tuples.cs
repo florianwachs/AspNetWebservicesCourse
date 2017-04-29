@@ -29,6 +29,11 @@ namespace CSharpAdvancedLanguageFeatures
 
             var t3 = GetAmountAndDiscountValueTupleWithName();
             Console.WriteLine($"Amount {t3.amount} with Discount {t3.discountInPercent}");
+
+            // Tuple lassen sich auf direkt in lokale Variablen übertragen
+            var (betrag, rabatt) = GetAmountAndDiscountValueTupleNoName();
+
+            var (betrag2, rabatt2) = GetAmountAndDiscountValueTupleWithName();
         }
     }
 }
