@@ -28,7 +28,10 @@ namespace CSharpLanguageBasics
                 // Fängt alle restlichen Exceptions
 
                 // wirft die Exception weiter den Stacktrace rauf
-                throw ex;
+                throw;
+
+                // wirft die Exception weiter den Stackrace rauf, der Stacktrace beginnt aber erst von dieser Stelle
+                //throw ex;
             }
             finally
             {
