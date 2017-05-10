@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.MiddlewareConcepts", "AspNetCore.MiddlewareConcepts\AspNetCore.MiddlewareConcepts.csproj", "{4A21FB44-4974-4B33-97EA-7EAE9BF4AD11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.SimpleControllerSample", "AspNetCore.SimpleControllerSample\AspNetCore.SimpleControllerSample.csproj", "{5E879E81-FB21-45EF-8220-8600ED1A887D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4A21FB44-4974-4B33-97EA-7EAE9BF4AD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A21FB44-4974-4B33-97EA-7EAE9BF4AD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A21FB44-4974-4B33-97EA-7EAE9BF4AD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E879E81-FB21-45EF-8220-8600ED1A887D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E879E81-FB21-45EF-8220-8600ED1A887D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E879E81-FB21-45EF-8220-8600ED1A887D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E879E81-FB21-45EF-8220-8600ED1A887D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
