@@ -36,7 +36,7 @@ namespace AspNetCore.BooksServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBook(Book book)
+        public IActionResult CreateBook([FromBody] Book book)
         {
             // Während des Model Bindings werden die Validatoren
             // von Book geprüft
@@ -55,7 +55,7 @@ namespace AspNetCore.BooksServer.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateBook(int id, Book book)
+        public IActionResult UpdateBook(int id, [FromBody]Book book)
         {
             // Während des Model Bindings werden die Validatoren
             // von Book geprüft

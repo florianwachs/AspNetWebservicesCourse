@@ -55,7 +55,7 @@ namespace AspNetCore.BooksServer.Repositories
         }
         private int GetUniqueId()
         {
-            return id++;
+            return ++id;
         }
     }
 }
