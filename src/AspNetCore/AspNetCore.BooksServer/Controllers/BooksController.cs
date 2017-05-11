@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.BooksServer.Controllers
 {
-    [Route("api/books")]
+    [Route("api/[controller]")]
     public class BooksController : Controller
     {
         public IBookRepository BookRepository { get; set; }
@@ -21,7 +21,7 @@ namespace AspNetCore.BooksServer.Controllers
             TimeService = timeService;
         }
         // GET api/books
-        [Route("")]
+        [HttpGet("")]
         public IEnumerable<Book> GetBooks()
         {
             return BookRepository.GetAll();
