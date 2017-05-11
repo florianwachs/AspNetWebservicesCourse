@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using AspNetCore.BooksServer.Repositories;
+using AspNetCore.BooksServer.Infrastructure;
 
 namespace AspNetCore.BooksServer
 {
@@ -29,6 +31,9 @@ namespace AspNetCore.BooksServer
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddScoped<IBookRepository, InMemoryBookRepository>();
+            services.AddSingleton<ITimeService, DefaultTimeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

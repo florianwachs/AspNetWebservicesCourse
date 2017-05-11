@@ -1,4 +1,6 @@
-﻿using AspNetCore.BooksServer.Models;
+﻿using AspNetCore.BooksServer.Infrastructure;
+using AspNetCore.BooksServer.Models;
+using AspNetCore.BooksServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,52 +12,27 @@ namespace AspNetCore.BooksServer.Controllers
     [Route("api/books")]
     public class BooksController : Controller
     {
-        private static int lastBookId = 4;
+        public IBookRepository BookRepository { get; set; }
+        public ITimeService TimeService { get; set; }
 
-        // ACHTUNG: nur zu DEMO-Zwecken. Dictionary ist nicht threadsafe!
-        private static readonly Dictionary<int, Book> books = new Dictionary<int, Book>()
+        public BooksController(IBookRepository bookRepository, ITimeService timeService)
         {
-            {1,new Book(1,"1430242337", "C# Pro", 30, new []{"Troelson"}, DateTime.Now.AddYears(-2))},
-            {2,new Book(2,"161729134X", "C# in Depth", 40, new []{"Skeet"}, DateTime.Now.AddMonths(-2))},
-            {3,new Book(3,"1449320104", "C# in a Nutshell", 40, new []{"Albahari"}, DateTime.Now.AddMonths(-2))},
-            {4,new Book(4,"0596807260", "Entity Framework 6", 20, new []{"Lerman"}, DateTime.Now.AddMonths(-2))},
-        };
-
+            BookRepository = bookRepository;
+            TimeService = timeService;
+        }
         // GET api/books
-        [HttpGet]
+        [Route("")]
         public IEnumerable<Book> GetBooks()
         {
-            return books.Values;
+            return BookRepository.GetAll();
         }
 
         // GET api/books/1
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "BookById")]
         public IActionResult GetBookById(int id)
         {
-            Book book;
-            return books.TryGetValue(id, out book) ? (IActionResult)Ok(book) : NotFound();
-        }
-
-        // ~ überschreibt das RoutePrefix
-        // GET api/authors/skeet/books
-        [HttpGet("~/api/authors/{author:alpha}/books")]
-        public IEnumerable<Book> GetBookByAuthorName(string author)
-        {
-            var result = books.Values
-                .Where(b => b.Authors != null && b.Authors.Contains(author, StringComparer.OrdinalIgnoreCase))
-                .ToArray();
-            return result;
-        }
-
-        [HttpGet("~/api/authors/{author:alpha}/books/{year:int:min(1950):max(2050)}")]
-        // GET api/authors/skeet/books/2015
-        public IEnumerable<Book> GetBookByAuthorNameInYear(string author, int year)
-        {
-            var result = books.Values
-                .Where(b => b.ReleaseDate.HasValue && b.ReleaseDate.Value.Year == year
-                    && b.Authors != null && b.Authors.Contains(author, StringComparer.OrdinalIgnoreCase))
-                    .ToArray();
-            return result;
+            var book = BookRepository.GetById(id);
+            return book != null ? (IActionResult)Ok(book) : NotFound();
         }
 
         [HttpPost]
@@ -67,10 +44,9 @@ namespace AspNetCore.BooksServer.Controllers
             {
                 return BadRequest();
             }
-            book.Id = GetNextId();
-            books.Add(book.Id, book);
 
-            return Ok(book);
+            var created = BookRepository.Add(book);
+            return Created(Url.Link("BookById", new { Id = created.Id }), created);
         }
 
         [HttpPut("{id:int}")]
@@ -83,19 +59,15 @@ namespace AspNetCore.BooksServer.Controllers
                 return BadRequest();
             }
 
-            if (!books.ContainsKey(id))
+            var existing = BookRepository.GetById(id);
+
+            if (existing == null)
             {
                 return NotFound();
             }
-            book.Id = id;
-            books[id] = book;
-            return Ok(book);
-        }
 
-        private int GetNextId()
-        {
-            // TODO: only for Demo-Purposes! Not Threadsafe
-            return ++lastBookId;
+            book = BookRepository.Update(id, book);
+            return Ok(book);
         }
 
     }
