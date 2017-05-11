@@ -42,11 +42,16 @@ namespace AspNetCore.BooksServer.Controllers
             // von Book geprüft
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var created = BookRepository.Add(book);
             return Created(Url.Link("BookById", new { Id = created.Id }), created);
+        }
+
+        private string GetErrorMessage()
+        {
+            return string.Join(";", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
         }
 
         [HttpPut("{id:int}")]

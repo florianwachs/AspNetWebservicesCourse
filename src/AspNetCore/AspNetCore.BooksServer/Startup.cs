@@ -29,10 +29,12 @@ namespace AspNetCore.BooksServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            // Services für MVC registrieren
             services.AddMvc();
 
+            // Pro Request wird ein neuer Bookservice erzeugt
             services.AddScoped<IBookRepository, InMemoryBookRepository>();
+            // Ein Singleton bleibt für die Applikationslaufzeit das selbe Objekt
             services.AddSingleton<ITimeService, DefaultTimeService>();
         }
 
