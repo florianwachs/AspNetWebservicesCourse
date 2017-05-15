@@ -3,12 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.Logging.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private ILogger Logger { get; set; }
+
+        // Logger manuell über Factory erzeugen
+        //public ValuesController(ILoggerFactory logger)
+        //{
+        //    Logger = logger.CreateLogger<ValuesController>();
+        //}
+
+        // Logger vom DI-System erzeugen lassen
+        public ValuesController(ILogger<ValuesController> logger)
+        {
+            Logger = logger;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()

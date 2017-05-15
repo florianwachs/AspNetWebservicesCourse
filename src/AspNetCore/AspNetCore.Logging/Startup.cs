@@ -41,12 +41,15 @@ namespace AspNetCore.Logging
 
             // Ein Logger kann manuell mit CreateLogger erzeugt werden
             // Der TypParameter definiert die Category unter der geloggt wird
-            var startupLogger = loggerFactory.CreateLogger(typeof(Startup));
+            //var startupLogger = loggerFactory.CreateLogger("AspNetCore.Logging.Startup");
+            //var startupLogger = loggerFactory.CreateLogger(typeof(Startup));
+            var startupLogger = loggerFactory.CreateLogger<Startup>();
+
             startupLogger.LogInformation("configuration phase");
 
-            app.UseMvc();            
+            app.UseMvc();
 
-            startupLogger.LogInformation("request pipeline successfully configured");
+            startupLogger.LogInformation("request pipeline successfully configured at {TimeStamp}", DateTime.Now);
         }
     }
 }
