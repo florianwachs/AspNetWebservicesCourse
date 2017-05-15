@@ -22,11 +22,16 @@ namespace AspNetCore.Logging.Serilog
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            Log.Logger = new LoggerConfiguration()
-                         .Enrich.FromLogContext()
-                         .WriteTo.LiterateConsole()
-                         .CreateLogger();
+            // Globalen Serilog-Logger konfigurieren
+            //Log.Logger = new LoggerConfiguration()
+            //             .Enrich.FromLogContext()
+            //             .WriteTo.LiterateConsole()
+            //             .WriteTo.RollingFile("myapp-{Date}.txt")
+            //             .CreateLogger();
 
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
