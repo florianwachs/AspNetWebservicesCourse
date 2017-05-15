@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.BooksClient", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Logging", "AspNetCore.Logging\AspNetCore.Logging.csproj", "{4463EDCF-E604-42B4-9632-273404B7282F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Logging.Serilog", "AspNetCore.Logging.Serilog\AspNetCore.Logging.Serilog.csproj", "{1C7E355F-6BBA-4193-856E-B2329C57AEFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4463EDCF-E604-42B4-9632-273404B7282F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4463EDCF-E604-42B4-9632-273404B7282F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4463EDCF-E604-42B4-9632-273404B7282F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
