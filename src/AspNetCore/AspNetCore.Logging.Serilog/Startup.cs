@@ -33,6 +33,7 @@ namespace AspNetCore.Logging.Serilog
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
+                .Enrich.WithProperty("Release", "0.0.1-beta-nightmare")
                 .CreateLogger();
         }
 
