@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using AspNetCore.Logging.Serilog.Infrastructure;
+using AspNetCore.Logging.Serilog.Repositories;
 
 namespace AspNetCore.Logging.Serilog
 {
@@ -38,7 +40,14 @@ namespace AspNetCore.Logging.Serilog
 
         public void ConfigureServices(IServiceCollection services)
         {
+            RegisterMyServices(services);
             services.AddMvc();
+        }
+
+        private void RegisterMyServices(IServiceCollection services)
+        {
+            services.AddSingleton<ITimeService, DefaultTimeService>();
+            services.AddScoped<IBookRepository, InMemoryBookRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
