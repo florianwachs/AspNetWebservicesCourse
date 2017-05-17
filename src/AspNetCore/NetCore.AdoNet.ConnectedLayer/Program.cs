@@ -128,10 +128,9 @@ namespace NetCore.AdoNet.ConnectedLayer
             // Der Connection String sollte in der Regel aus der App.config kommen
             connectionString = Configuration["connectionStringDb"];
             //oder
-            //var connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;            
+            //var connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;          
 
             var con = new SqlConnection(connectionString);
-
             return con;
         }
 

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using AspNetCore.Logging.Serilog.Infrastructure;
 using AspNetCore.Logging.Serilog.Repositories;
+using Serilog.Events;
+using Serilog.Formatting.Json;
+using Serilog.Core;
 
 namespace AspNetCore.Logging.Serilog
 {
@@ -25,14 +28,11 @@ namespace AspNetCore.Logging.Serilog
             Configuration = builder.Build();
 
             // Globalen Serilog-Logger konfigurieren
-            //Log.Logger = new LoggerConfiguration()
-            //             .Enrich.FromLogContext()
-            //             .WriteTo.LiterateConsole()
-            //             .WriteTo.RollingFile("myapp-{Date}.txt")
-            //             .CreateLogger();
-
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
+                .ReadFrom.Configuration(Configuration) // Konfiguration kann teilweise oder vollständig aus dem Konfigurationsobjekt stammen
+                .WriteTo.RollingFile("Log-{Date}.txt")
+                //.WriteTo.RollingFile(new JsonFormatter(null, true), "Log-{Date}.json", shared: true, fileSizeLimitBytes: 10000000, retainedFileCountLimit: 1000)
+                //  .WriteTo.Seq("http://localhost:5341")
                 .Enrich.WithProperty("Release", "0.0.1-beta-nightmare")
                 .CreateLogger();
         }
