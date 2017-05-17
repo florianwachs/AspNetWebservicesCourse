@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,9 +9,11 @@ namespace NetCore.AdoNet.ConnectedLayer
     {
         private const string DbName = "FHRWebServicesDb";
         private const string Server = @"(localdb)\mssqllocaldb";
+        private static IConfigurationRoot Configuration { get; set; }
 
         static void Main(string[] args)
         {
+            InitConfiguration();
             DropCreateDatabase();
             CreateTables();
             FillStudents();
@@ -18,6 +21,14 @@ namespace NetCore.AdoNet.ConnectedLayer
             PrintStudents();
 
             Console.ReadKey();
+        }
+
+        private static void InitConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         private static string GetConnectionStringForDb(string dbname = DbName) => $"Server={Server};Database={dbname};Trusted_Connection=True;";
@@ -115,7 +126,7 @@ namespace NetCore.AdoNet.ConnectedLayer
             var connectionString = GetConnectionStringForDb();
 
             // Der Connection String sollte in der Regel aus der App.config kommen
-            //var connectionString = ConfigurationManager.AppSettings["connectionString"];
+            connectionString = Configuration["connectionStringDb"];
             //oder
             //var connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;            
 
