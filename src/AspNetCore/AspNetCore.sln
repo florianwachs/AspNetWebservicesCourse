@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Logging", "AspNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Logging.Serilog", "AspNetCore.Logging.Serilog\AspNetCore.Logging.Serilog.csproj", "{1C7E355F-6BBA-4193-856E-B2329C57AEFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.AdoNet.ConnectedLayer", "NetCore.AdoNet.ConnectedLayer\NetCore.AdoNet.ConnectedLayer.csproj", "{949E8C49-4D60-41B0-BDBE-5718D360A8B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C7E355F-6BBA-4193-856E-B2329C57AEFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
