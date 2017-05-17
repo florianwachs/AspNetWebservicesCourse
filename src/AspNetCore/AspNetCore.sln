@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Logging.Serilog"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore.AdoNet.ConnectedLayer", "NetCore.AdoNet.ConnectedLayer\NetCore.AdoNet.ConnectedLayer.csproj", "{949E8C49-4D60-41B0-BDBE-5718D360A8B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.EFBasics", "AspNetCore.EFBasics\AspNetCore.EFBasics.csproj", "{2447D31C-E09B-4E8B-A792-A0101B4D5474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{949E8C49-4D60-41B0-BDBE-5718D360A8B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2447D31C-E09B-4E8B-A792-A0101B4D5474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2447D31C-E09B-4E8B-A792-A0101B4D5474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2447D31C-E09B-4E8B-A792-A0101B4D5474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2447D31C-E09B-4E8B-A792-A0101B4D5474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
