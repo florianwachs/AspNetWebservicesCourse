@@ -29,7 +29,7 @@ namespace NetCore.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            modelBuilder.Entity<Student>().Property(s => s.Joined).HasColumnType("datetime2");
 
         }
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)

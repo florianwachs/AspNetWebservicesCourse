@@ -27,6 +27,7 @@ namespace NetCore.EF.Models
         [Range(0, 10)]
         public decimal Motivation { get; set; }
 
+        [Column(TypeName = "datetime2")]
         public DateTime Joined { get; set; }
         // Es gibt spezialisierte Validatoren.
         // Man kann auch seine eigenen erstellen.
