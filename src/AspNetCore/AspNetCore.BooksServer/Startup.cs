@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AspNetCore.BooksServer.Repositories;
 using AspNetCore.BooksServer.Infrastructure;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AspNetCore.BooksServer
 {
@@ -32,6 +33,11 @@ namespace AspNetCore.BooksServer
             // Services für MVC registrieren
             services.AddMvc();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Awesome Book API", Version = "v1" });
+            });
+
             // Pro Request wird ein neuer Bookservice erzeugt
             services.AddScoped<IBookRepository, InMemoryBookRepository>();
             // Ein Singleton bleibt für die Applikationslaufzeit das selbe Objekt
@@ -45,6 +51,16 @@ namespace AspNetCore.BooksServer
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
+            });
         }
     }
 }
