@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NetCore.EF;
 using Microsoft.EntityFrameworkCore;
+using AspNetCore.EFBasics.Infrastructure;
 
 namespace AspNetCore.EFBasics
 {
@@ -32,17 +32,20 @@ namespace AspNetCore.EFBasics
             // Add framework services.
             services.AddMvc();
 
+            // Der Context muss am DI-System registriert werden
             var connection = Configuration["ConnectionStrings:DefaultConnectionString"];
-            services.AddDbContext<UniversityContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<BookDbContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, BookDbContext bookDbContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            DbInitializer.Initialize(bookDbContext, false);
         }
     }
 }
