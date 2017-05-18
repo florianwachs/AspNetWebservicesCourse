@@ -26,10 +26,8 @@ namespace AspNetCore.EFBasics
 
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddMvc();
 
             // Der Context muss am DI-System registriert werden
@@ -37,7 +35,6 @@ namespace AspNetCore.EFBasics
             services.AddDbContext<BookDbContext>(options => options.UseSqlServer(connection));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, BookDbContext bookDbContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
