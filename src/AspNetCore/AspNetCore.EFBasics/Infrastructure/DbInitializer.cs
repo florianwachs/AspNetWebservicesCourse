@@ -21,10 +21,9 @@ namespace AspNetCore.EFBasics.Infrastructure
 
             context.Database.Migrate();
 
-            // Look for any students.
             if (context.Books.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
 
             AddBooks(context);
@@ -39,7 +38,7 @@ namespace AspNetCore.EFBasics.Infrastructure
 
             foreach (var author in authors)
             {
-                author.ContactInfos.Add(new ContactInfo { Type = ContactInfoTypes.Mail, Value = "test@test.de" });                
+                author.ContactInfos.Add(new ContactInfo { Type = ContactInfoTypes.Mail, Value = "test@test.de" });
             }
 
             context.SaveChanges();
