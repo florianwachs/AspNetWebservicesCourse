@@ -29,7 +29,20 @@ namespace AspNetCore.EFBasics.Infrastructure
 
             AddBooks(context);
             AddAuthors(context);
+            AddContactInfos(context);
             AddBookAuthorRelationship(context);
+        }
+
+        private static void AddContactInfos(BookDbContext context)
+        {
+            var authors = context.Authors.Include(a => a.ContactInfos).ToArray();
+
+            foreach (var author in authors)
+            {
+                author.ContactInfos.Add(new ContactInfo { Type = ContactInfoTypes.Mail, Value = "test@test.de" });                
+            }
+
+            context.SaveChanges();
         }
 
         private static void AddBooks(BookDbContext context)

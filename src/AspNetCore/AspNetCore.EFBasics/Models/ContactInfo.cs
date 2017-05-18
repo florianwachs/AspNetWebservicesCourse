@@ -19,5 +19,6 @@ namespace AspNetCore.EFBasics.Models
         public Author Author { get; set; }
 
         public ContactInfoTypes Type { get; set; }
+        public string Value { get; set; }
     }
 }

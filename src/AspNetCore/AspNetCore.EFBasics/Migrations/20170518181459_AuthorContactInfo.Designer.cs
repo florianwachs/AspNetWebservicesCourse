@@ -9,9 +9,10 @@ using AspNetCore.EFBasics.Models;
 namespace AspNetCore.EFBasics.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170518181459_AuthorContactInfo")]
+    partial class AuthorContactInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
