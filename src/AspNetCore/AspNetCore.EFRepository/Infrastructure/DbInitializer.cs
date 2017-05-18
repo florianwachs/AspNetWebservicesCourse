@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
-using  AspNetCore.EFRepository.Models;
+using AspNetCore.EFRepository.Models;
 
 namespace AspNetCore.EFRepository.Infrastructure
 {
@@ -48,10 +48,10 @@ namespace AspNetCore.EFRepository.Infrastructure
         {
             var books = new[]
             {
-                new Book("1430242337", "C# Pro", 30, DateTime.Now.AddYears(-2)),
-                new Book("161729134X", "C# in Depth", 40, DateTime.Now.AddMonths(-2)),
-                new Book("1449320104", "C# in a Nutshell", 40, DateTime.Now.AddMonths(-2)),
-                new Book("0596807260", "Entity Framework 6", 20, DateTime.Now.AddMonths(-2)),
+                new Book("1430242337", "C# Pro", 30, DateTime.Now.AddYears(-2), rating: random.Next(0,11)),
+                new Book("161729134X", "C# in Depth", 40, DateTime.Now.AddMonths(-2), rating: random.Next(0,11)),
+                new Book("1449320104", "C# in a Nutshell", 40, DateTime.Now.AddMonths(-2), rating: random.Next(0,11)),
+                new Book("0596807260", "Entity Framework 6", 20, DateTime.Now.AddMonths(-2), rating: random.Next(0,11)),
             };
 
             context.Books.AddRange(books);

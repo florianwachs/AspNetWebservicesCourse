@@ -47,7 +47,7 @@ namespace AspNetCore.EFRepository
 
             app.UseMvc();
 
-            DbInitializer.Initialize(bookDbContext, false);
+            DbInitializer.Initialize(bookDbContext, true);
         }
     }
 }

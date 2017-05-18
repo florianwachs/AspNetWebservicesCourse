@@ -30,12 +30,13 @@ namespace AspNetCore.EFRepository.Models
         {
         }
 
-        public Book(string isbn, string title, decimal price, DateTime? releaseDate = null)
+        public Book(string isbn, string title, decimal price, DateTime? releaseDate = null, int rating = 0)
         {
             Isbn = isbn;
             Title = title;
             Price = price;
             ReleaseDate = releaseDate;
+            Rating = rating;
         }
     }
 }

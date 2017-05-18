@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.EFRepository.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.EFRepository.Repositories
 {
@@ -35,9 +36,9 @@ namespace AspNetCore.EFRepository.Repositories
             return true;
         }
 
-        public IEnumerable<Book> GetAll()
+        public Task<List<Book>> GetAll()
         {
-            return BookDbContext.Books;
+            return BookDbContext.Books.ToListAsync();
         }
 
         public Task<Book> GetById(int id)
@@ -51,6 +52,11 @@ namespace AspNetCore.EFRepository.Repositories
             var result = BookDbContext.Books.Update(book);
             await BookDbContext.SaveChangesAsync();
             return result.Entity;
+        }
+
+        public Task<List<Book>> GetWithRatingHigherThan(int minRating)
+        {
+            return BookDbContext.Books.Where(b => b.Rating > minRating).ToListAsync();
         }
     }
 }

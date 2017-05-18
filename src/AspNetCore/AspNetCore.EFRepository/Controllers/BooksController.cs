@@ -20,7 +20,7 @@ namespace AspNetCore.EFRepository.Controllers
         }
         // GET api/books
         [HttpGet("")]
-        public IEnumerable<Book> GetBooks()
+        public Task<List<Book>> GetBooks()
         {
             return BookRepository.GetAll();
         }
@@ -71,6 +71,12 @@ namespace AspNetCore.EFRepository.Controllers
 
             book = await BookRepository.Update(id, book);
             return Ok(book);
+        }
+
+        [HttpGet("toprated")]
+        public Task<List<Book>> GetTopRatedBooks()
+        {
+            return BookRepository.GetWithRatingHigherThan(5);
         }
 
     }
