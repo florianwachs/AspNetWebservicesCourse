@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace  AspNetCore.EFRepository.Models
+namespace AspNetCore.EFRepository.Models
 {
     public class Book
     {
@@ -22,6 +22,9 @@ namespace  AspNetCore.EFRepository.Models
         public string TopSecret { get; set; }
 
         public ICollection<BookAuthorRel> AuthorRelations { get; set; }
+
+        [Range(0, 10)]
+        public int Rating { get; set; }
 
         public Book()
         {
