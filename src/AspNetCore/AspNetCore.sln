@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.MiddlewareConcepts", "AspNetCore.MiddlewareConcepts\AspNetCore.MiddlewareConcepts.csproj", "{4A21FB44-4974-4B33-97EA-7EAE9BF4AD11}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.EFBasics", "AspNetCore.EFBasics\AspNetCore.EFBasics.csproj", "{2447D31C-E09B-4E8B-A792-A0101B4D5474}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.EFRepository", "AspNetCore.EFRepository\AspNetCore.EFRepository.csproj", "{DF73C654-FC35-4FAD-A45E-542F0666F14C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Security.OpenIddict", "AspNetCore.Security.OpenIddict\AspNetCore.Security.OpenIddict.csproj", "{2F8F84A6-E9EE-492F-BAEF-463F75555F47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{DF73C654-FC35-4FAD-A45E-542F0666F14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF73C654-FC35-4FAD-A45E-542F0666F14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF73C654-FC35-4FAD-A45E-542F0666F14C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F8F84A6-E9EE-492F-BAEF-463F75555F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F8F84A6-E9EE-492F-BAEF-463F75555F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F8F84A6-E9EE-492F-BAEF-463F75555F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F8F84A6-E9EE-492F-BAEF-463F75555F47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
