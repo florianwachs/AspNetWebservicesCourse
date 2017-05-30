@@ -131,7 +131,7 @@ namespace AspNetCore.Security.OpenIddict
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
-                Authority = "http://localhost:1881/",
+                Authority = "http://localhost:28476/",
                 Audience = "resource_server",
                 RequireHttpsMetadata = false,
                 TokenValidationParameters = new TokenValidationParameters
