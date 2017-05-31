@@ -42,7 +42,7 @@ namespace AspNetCore.Security.OpenIddict.Client
                             {"grant_type","password"},
                             {"username", username},
                             {"password", password},
-                            {"scope","openid+email+name+profile+roles" }
+                            {"scope","openid+email+name+profile+roles+offline_access" }
                         };
 
                         var loginContent = new FormUrlEncodedContent(formValues);
