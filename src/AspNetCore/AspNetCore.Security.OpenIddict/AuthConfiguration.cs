@@ -82,8 +82,9 @@ namespace AspNetCore.Security.OpenIddict
                 options.AddEntityFrameworkCoreStores<IdentityContext>();
 
                 // ModelBinder von OpenIddict registerieren.
-                // Damit können Request-Parameter wieOpenIdConnectRequest oder OpenIdConnectResponse verwendet werden.
-                // Diese werden meist in einem AuthorizationController verwendet um einen Autorisierungsrequest verarbeiten zu können.
+                // Damit können Request-Parameter wieOpenIdConnectRequest oder
+                // OpenIdConnectResponse verwendet werden.Diese werden meist in 
+                // einem AuthorizationController verwendet um einen Autorisierungsrequest verarbeiten zu können.
                 options.AddMvcBinders();
 
                 // Endpunkte aktivieren
