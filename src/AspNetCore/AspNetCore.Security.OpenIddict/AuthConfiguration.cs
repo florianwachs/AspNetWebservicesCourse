@@ -113,12 +113,15 @@ namespace AspNetCore.Security.OpenIddict
         {
             services.AddAuthorization(options =>
             {
+                // Die Konfiguration der Policies kann beim Starten der Anwendung
+                // dynamisch und individuell konfiguriert werden
                 options.AddPolicy(AppPolicies.CanAccessCustomerSaleHistory, policy => policy.RequireClaim(AppClaimTypes.ManagerId));
                 options.AddPolicy(AppPolicies.CanReadCustomerAge, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement));
                 options.AddPolicy(AppPolicies.CanDeleteCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement));
                 options.AddPolicy(AppPolicies.CanUpdateCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement, Departments.CustomerSupport));
                 options.AddPolicy(AppPolicies.CanCreateCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement, Departments.CustomerSupport));
 
+                // Die Definition von Policies kann auch aus mehreren Requirements zusammengesetzt werden
                 options.AddPolicy("TopSecret", policy =>
                 {
                     policy.RequireClaim(AppClaimTypes.AccessLevel, "A1")
