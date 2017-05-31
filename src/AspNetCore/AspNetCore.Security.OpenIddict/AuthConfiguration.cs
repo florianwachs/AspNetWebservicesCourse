@@ -193,13 +193,17 @@ namespace AspNetCore.Security.OpenIddict
 
         private static async Task AddUser(UserManager<ApplicationUser> manager, string username, string email, string password, IEnumerable<Claim> claims)
         {
+            // Prüfen ob User schon vorhanden ist
             var user = await manager.FindByNameAsync(username);
             if (user != null)
                 return;
 
+            // User mit Passwort erzeugen und in DB ablegen
             var result = await manager.CreateAsync(new ApplicationUser { UserName = username, Email = email }, password);
 
+            // Den angelegten User laden und Claims hinzufügen
             user = await manager.FindByNameAsync(username);
+
             await manager.AddClaimsAsync(user, claims);
         }
 
