@@ -41,16 +41,21 @@ namespace AspNetCore.Security.OpenIddict
 
         private void ConfigureAuth(IServiceCollection services)
         {
-            // Register the Identity services.
+            // Die Services für Identity konfigurieren            
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
 
+            // Entity Framework bezogene Configuration für OpenIddict
             services.AddDbContext<IdentityContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:IdentityContext"]);
+
+                // Fügt die von OpenIddict benötigten Entitäten und Modelklassen
+                // dem Entity Framework Context hinzu
                 options.UseOpenIddict();
             });
+
 
             services.AddAuthorization(options =>
             {
@@ -69,10 +74,11 @@ namespace AspNetCore.Security.OpenIddict
                             claim.Type == AppClaimTypes.Age && int.TryParse(claim.Value, out int age) && age > 18));
                 });
             });
-
-            // Die JWT-Token-Claims statt den WS-Federation verwenden (die nimmt Identity by default)
+            
             services.Configure<IdentityOptions>(options =>
             {
+                // Die JWT-Token-Claims statt den WS-Federation verwenden (die nimmt Identity by default)
+                // Identity verwendet standardmäßig nicht die JWT-Tokens, kann aber hiermit umkonfiguriert werden
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
                 options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
                 options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
@@ -83,6 +89,9 @@ namespace AspNetCore.Security.OpenIddict
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
+
+                // Auch Regeln für den Usernamen können festgelegt werden
+                //options.User.AllowedUserNameCharacters = "";
             });
 
             services.AddOpenIddict(options =>
@@ -90,25 +99,25 @@ namespace AspNetCore.Security.OpenIddict
                 // Register the Entity Framework stores.
                 options.AddEntityFrameworkCoreStores<IdentityContext>();
 
-                // Register the ASP.NET Core MVC binder used by OpenIddict.
-                // Note: if you don't call this method, you won't be able to
-                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
+                // ModelBinder von OpenIddict registerieren.
+                // Damit können Request-Parameter wieOpenIdConnectRequest oder OpenIdConnectResponse verwendet werden.
+                // Diese werden meist in einem AuthorizationController verwendet um einen Autorisierungsrequest verarbeiten zu können.
                 options.AddMvcBinders();
 
                 // Endpunkte aktivieren
+                // Hier wird registriert unter welchem Endpunkt ein Token angefragt werden kann.
                 options.EnableTokenEndpoint("/connect/token")
                 .EnableUserinfoEndpoint("/api/userinfo");
 
-                // Note: the Mvc.Client sample only uses the code flow and the password flow, but you
-                // can enable the other flows if you need to support implicit or client credentials.
+                // Der OAuth-Standard definiert verschiedene Möglichkeiten sich zu authentifizieren
+                // und einen Token zu erhalten. Eine Möglichkeit ist der PasswordFlow.
                 options.AllowPasswordFlow()
                        .AllowRefreshTokenFlow();
 
-                // During development, you can disable the HTTPS requirement.
+                // Das erleichert die Entwicklung in Produktion aber ein no go
                 options.DisableHttpsRequirement();
 
-                // Note: to use JWT access tokens instead of the default
-                // encrypted format, the following lines are required:
+                // Dies aktiviert die Anwendung des JWT-Standards
                 options.UseJsonWebTokens();
 
                 // Für die Signierung der JWT-Tokens wird ein Zertifikat benötigt.
@@ -123,12 +132,16 @@ namespace AspNetCore.Security.OpenIddict
             loggerFactory.AddDebug();
 
             // Automatisches Mapping von JWT auf WS-Federation (Legacy) Tokens unterbinden
+            // Identity probiert Claims automatisch zu mappen. Durch das zurücksetzen
+            // der Mappingtabellen werden die Tokens nicht modifiziert
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
 
-            app.UseOAuthValidation();
-            //app.UseIdentity();
 
+            // Die OAuth-Middleware muss möglichst früh in der Pipeline registriert werden.            
+            app.UseOAuthValidation();
+
+            // Die JWT-Middleware kann den Token aus dem Header extrahieren und das Request-Objekt damit erweitern
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 Authority = "http://localhost:28476/",
@@ -140,13 +153,13 @@ namespace AspNetCore.Security.OpenIddict
                     RoleClaimType = OpenIdConnectConstants.Claims.Role,
                 }
             });
-
-
-
+            
             app.UseOpenIddict();
 
             app.UseMvc();
 
+
+            // Sicherstellen das ein paar User in der DB vorhanden sind.
             InitializeAuthDb(app.ApplicationServices).Wait();
         }
 
