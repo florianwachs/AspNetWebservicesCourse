@@ -25,7 +25,8 @@ namespace AspNetCore.Security.OpenIddict.Client
             {
                 try
                 {
-                    Console.WriteLine("Enter Method: (login/logout/get/getall/insert/update/delete)");
+                    Console.Clear();
+                    Console.WriteLine("Enter Method: (login/logout/get/getall/insert/update/delete/exit)");
                     string method = Console.ReadLine();
 
                     // einloggen
@@ -50,6 +51,11 @@ namespace AspNetCore.Security.OpenIddict.Client
                         var tokenResponse = await response.Content.ReadAsAsync<TokenResponse>();
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.Access_Token);
                         Console.WriteLine($"Eingeloggt als {username}");
+                    }
+
+                    if (method.Equals("exit"))
+                    {
+                        Environment.Exit(0);
                     }
 
                     if (method.Equals("logout"))
@@ -128,8 +134,10 @@ namespace AspNetCore.Security.OpenIddict.Client
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Do you want to continue? (Y)");
-            } while (string.Equals(Console.ReadLine(), "Y", StringComparison.OrdinalIgnoreCase));
+                Console.WriteLine("Weiter mit dem [Any] Key, aber NUR DEM!");
+                Console.ReadKey();
+
+            } while (true);
         }
 
         private static void LogToConsole(Customer p)
