@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpenIddict.Core;
 using AspNetCore.Security.OpenIddict.Models;
+using System.Security.Claims;
 
 namespace AspNetCore.Security.OpenIddict.Controllers
 {
@@ -139,7 +140,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                 });
             }
 
-            // Ensure the user is still allowed to sign in.
+            // Sicherstellen das der User immer noch einloggen darf
             if (!await _signInManager.CanSignInAsync(user))
             {
                 return BadRequest(new OpenIdConnectResponse
@@ -204,8 +205,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                     continue;
                 }
 
-                // Only add the iterated claim to the id_token if the corresponding scope was granted to the client application.
-                // The other claims will only be added to the access_token, which is encrypted when using the default format.
+                // Nur die Claims an den IdentityToken hängen für die die Scopes angefragt wurden
                 if ((claim.Type == OpenIdConnectConstants.Claims.Name && ticket.HasScope(OpenIdConnectConstants.Scopes.Profile)) ||
                     (claim.Type == OpenIdConnectConstants.Claims.Email && ticket.HasScope(OpenIdConnectConstants.Scopes.Email)) ||
                     (claim.Type == OpenIdConnectConstants.Claims.Role && ticket.HasScope(OpenIddictConstants.Claims.Roles)))
@@ -217,8 +217,16 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                     claim.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken);
                 }
             }
+
+            AddDynamicClaims(ticket);
         }
 
-
+        private void AddDynamicClaims(AuthenticationTicket ticket)
+        {
+            // Über die ClaimsIdentity können weitere Claims dynamisch hinzugefügt werden
+            // z.B. aus Dritt- / Legacysystemen
+            var claimsIdentity = ticket.Principal.Identity as ClaimsIdentity;
+            claimsIdentity.AddClaim("CustomClaimType", "CustomClaimValue", OpenIdConnectConstants.Destinations.AccessToken);
+        }
     }
 }
