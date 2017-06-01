@@ -60,7 +60,8 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                 return error;
 
             var ticket = await CreateTicketAsync(request, user, new AuthenticationProperties());
-            // Sign in the user
+
+            // Tokengenerieren und an den Aufrufer schicken
             return SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
         }
 
@@ -76,8 +77,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                 });
             }
 
-            // Check that the user can sign in and is not locked out.
-            // If two-factor authentication is supported, it would also be appropriate to check that 2FA is enabled for the user
+            // Prüfen ob sich der Benutzer noch einloggen darf
             if (!await _signInManager.CanSignInAsync(user) ||
                 (_userManager.SupportsUserLockout && await _userManager.IsLockedOutAsync(user)))
             {
@@ -91,7 +91,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
 
             if (!await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                // Return bad request if the password is invalid
+                // Passwort überprüfen
                 return BadRequest(new OpenIdConnectResponse
                 {
                     Error = OpenIdConnectConstants.Errors.InvalidGrant,
@@ -99,7 +99,6 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                 });
             }
 
-            // The user is now validated, so reset lockout counts, if necessary
             if (_userManager.SupportsUserLockout)
             {
                 await _userManager.ResetAccessFailedCountAsync(user);
@@ -158,9 +157,25 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             // Aus dem User ein ClaimsPrincipal erzeugen dem die Claims hinzugefügt werden
             var principal = await _signInManager.CreateUserPrincipalAsync(user);
 
-            // Create a new authentication ticket holding the user identity.
+            // Für die letztendliche Erzeugung eines Token nutzt OpenIddict einen Ticket-Typ der alle benötigten
+            // Informationen zur Generierung enthält
             var ticket = new AuthenticationTicket(principal, properties, OpenIdConnectServerDefaults.AuthenticationScheme);
 
+            SetSupportedScopes(request, ticket);
+
+            // Optional: Es kann festgelegt werden für welche Ressourcen ein Token Gültigkeit hat
+            // Damit lassen sich einem AccessToken klare Wirksamkeitsgrenzen setzen
+            ticket.SetResources("resource_server");
+
+            ProcessClaims(ticket);
+
+            return ticket;
+        }
+
+        private static void SetSupportedScopes(OpenIdConnectRequest request, AuthenticationTicket ticket)
+        {
+            // Für den Refresh-Token werden die gleichen Scopes wiederverwendet
+            // und müssen nicht explizit gesetzt werden
             if (!request.IsRefreshTokenGrantType())
             {
                 // Hinweis: Der Scope "offline_access" wird benötigt das OpenIddict einen
@@ -175,16 +190,15 @@ namespace AspNetCore.Security.OpenIddict.Controllers
 
                 }.Intersect(request.GetScopes()));
             }
+        }
 
-            // TODO Explain
-            ticket.SetResources("resource_server");
-
+        private void ProcessClaims(AuthenticationTicket ticket)
+        {
             // Claims werden nicht automatisch von OpenIddict an den access oder identity Token gehängt.
             // Über die Destinations kann festgehalten werden an welchen Token die Claims serialisiert werden sollen.
             foreach (var claim in ticket.Principal.Claims)
             {
-                // TODO: why
-                // Never include the security stamp in the access and identity tokens, as it's a secret value.
+                // Der SecurityStampClaim sollte niemals an den User ausgeliefert werden
                 if (claim.Type == _identityOptions.Value.ClaimsIdentity.SecurityStampClaimType)
                 {
                     continue;
@@ -203,8 +217,8 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                     claim.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken);
                 }
             }
-
-            return ticket;
         }
+
+
     }
 }

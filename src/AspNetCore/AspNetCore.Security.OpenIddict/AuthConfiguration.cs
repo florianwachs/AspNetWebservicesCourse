@@ -95,13 +95,13 @@ namespace AspNetCore.Security.OpenIddict
                 // Der OAuth-Standard definiert verschiedene Möglichkeiten sich zu authentifizieren
                 // und einen Token zu erhalten. Eine Möglichkeit ist der PasswordFlow.
                 options.AllowPasswordFlow()
-                       .AllowRefreshTokenFlow();
-
-                // Das erleichert die Entwicklung in Produktion aber ein no go
-                options.DisableHttpsRequirement();
+                       .AllowRefreshTokenFlow();               
 
                 // Dies aktiviert die Anwendung des JWT-Standards
                 options.UseJsonWebTokens();
+
+                // Das erleichert die Entwicklung in Produktion aber ein no go
+                options.DisableHttpsRequirement();
 
                 // Für die Signierung der JWT-Tokens wird ein Zertifikat benötigt.
                 // Für DEV-Zwecke kann ein Key dynamisch erzeugt werden.
