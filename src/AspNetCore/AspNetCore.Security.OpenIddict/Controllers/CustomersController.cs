@@ -33,7 +33,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
 
         private async Task<IEnumerable<Customer>> GetSecuredData()
         {
-            var includeAge = await FullfilesPolicy(AppPolicies.CanReadCustomerAge);
+            var includeAge = await FulfillsPolicy(AppPolicies.CanReadCustomerAge);
             return people.Values
                 .Select(p =>
                     new Customer
@@ -94,7 +94,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
         {
             return (id++).ToString();
         }
-        private Task<bool> FullfilesPolicy(string policy)
+        private Task<bool> FulfillsPolicy(string policy)
         {
             return _authorizationService.AuthorizeAsync(User, policy);
         }
