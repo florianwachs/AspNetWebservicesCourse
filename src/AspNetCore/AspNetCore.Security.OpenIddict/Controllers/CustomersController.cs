@@ -8,7 +8,7 @@ using AspNetCore.Security.OpenIddict.Models;
 
 namespace AspNetCore.Security.OpenIddict.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class CustomersController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
@@ -25,7 +25,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             _authorizationService = authorizationService;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public Task<IEnumerable<Customer>> Get()
         {
             return GetSecuredData();
@@ -44,7 +44,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
                     }).ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), AllowAnonymous]
         public async Task<IActionResult> GetById(string id)
         {
             Customer p;
@@ -57,8 +57,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return NotFound();
         }
 
-        [Authorize(Policy = AppPolicies.CanCreateCustomer)]
-        [HttpPost]
+        [HttpPost, Authorize(Policy = AppPolicies.CanCreateCustomer)]
         public IActionResult InsertCustomer(Customer p)
         {
             p.Id = GetUniqueId();
@@ -66,8 +65,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return Ok(p);
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Policy = AppPolicies.CanUpdateCustomer)]
+        [HttpPut("{id}"), Authorize(Policy = AppPolicies.CanUpdateCustomer)]
         public IActionResult UpdateCustomer(string id, Customer p)
         {
             if (!people.ContainsKey(id))
@@ -80,8 +78,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return Ok(p);
         }
 
-        [HttpDelete("{id}")]
-        [Authorize(Policy = AppPolicies.CanDeleteCustomer)]
+        [HttpDelete("{id}"), Authorize(Policy = AppPolicies.CanDeleteCustomer)]
         public IActionResult DeleteCustomer(string id)
         {
             if (!people.ContainsKey(id))
