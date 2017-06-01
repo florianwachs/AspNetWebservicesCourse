@@ -95,7 +95,7 @@ namespace AspNetCore.Security.OpenIddict
                 // Der OAuth-Standard definiert verschiedene Möglichkeiten sich zu authentifizieren
                 // und einen Token zu erhalten. Eine Möglichkeit ist der PasswordFlow.
                 options.AllowPasswordFlow()
-                       .AllowRefreshTokenFlow();               
+                       .AllowRefreshTokenFlow();
 
                 // Dies aktiviert die Anwendung des JWT-Standards
                 options.UseJsonWebTokens();
@@ -113,26 +113,9 @@ namespace AspNetCore.Security.OpenIddict
         {
             services.AddAuthorization(options =>
             {
-                // Die Konfiguration der Policies kann beim Starten der Anwendung
-                // dynamisch und individuell konfiguriert werden
-                options.AddPolicy(AppPolicies.CanAccessCustomerSaleHistory, policy => policy.RequireClaim(AppClaimTypes.ManagerId));
-                options.AddPolicy(AppPolicies.CanReadCustomerAge, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement));
-                options.AddPolicy(AppPolicies.CanDeleteCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement));
-                options.AddPolicy(AppPolicies.CanUpdateCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement, Departments.CustomerSupport));
-                options.AddPolicy(AppPolicies.CanCreateCustomer, policy => policy.RequireClaim(AppClaimTypes.Department, Departments.CustomerManagement, Departments.CustomerSupport));
-
-                // Die Definition von Policies kann auch aus mehreren Requirements zusammengesetzt werden
-                options.AddPolicy("TopSecret", policy =>
-                {
-                    policy.RequireClaim(AppClaimTypes.AccessLevel, "A1")
-                    .RequireRole("Executive Manager")
-                    .RequireAssertion(authContext =>
-                        authContext.User.HasClaim(claim =>
-                            claim.Type == AppClaimTypes.Age && int.TryParse(claim.Value, out int age) && age > 18));
-                });
+                // TODO Policies
             });
         }
-
         public static IApplicationBuilder UseAuth(this IApplicationBuilder app)
         {
             DisableAutoTokenMapping();

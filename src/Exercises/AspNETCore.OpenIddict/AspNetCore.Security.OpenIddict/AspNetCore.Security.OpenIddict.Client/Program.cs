@@ -37,19 +37,12 @@ namespace AspNetCore.Security.OpenIddict.Client
                         Console.WriteLine("Enter password: ");
                         var password = Console.ReadLine();
 
-                        var formValues = new Dictionary<string, string>
-                        {
-                            {"grant_type","password"},
-                            {"username", username},
-                            {"password", password},
-                            {"scope","openid+email+name+profile+roles+offline_access" }
-                        };
+                        // TODO Client
+                        // TODO: FormValues für Token-Request bauen
+                        // TODO: Token-Request an /connect/token schicken
+                        // TODO: TokenResponse parsen
+                        // TODO: DefaultRequestHeader um Bearer-Token erweitern
 
-                        var loginContent = new FormUrlEncodedContent(formValues);
-                        var response = await client.PostAsync("connect/token", loginContent);
-                        response.EnsureSuccessStatusCode();
-                        var tokenResponse = await response.Content.ReadAsAsync<TokenResponse>();
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.Access_Token);
                         Console.WriteLine($"Eingeloggt als {username}");
                     }
 

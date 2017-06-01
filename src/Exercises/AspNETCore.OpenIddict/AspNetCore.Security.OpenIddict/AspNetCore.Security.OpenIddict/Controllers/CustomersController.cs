@@ -9,10 +9,9 @@ using System.Threading;
 
 namespace AspNetCore.Security.OpenIddict.Controllers
 {
-    [Route("api/[controller]"), Authorize]
+    [Route("api/[controller]")]
     public class CustomersController : Controller
     {
-        private readonly IAuthorizationService _authorizationService;
         private static int id = 4;
 
         // Nur für Übungszwecke, Dictionary ist nicht Threadsafe!
@@ -22,44 +21,22 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             {"3", new Customer{Id="3", Name="Tony Stark", Age="40"}},
         };
 
-        public CustomersController(IAuthorizationService authorizationService)
+        [HttpGet]
+        public async Task<IEnumerable<Customer>> Get()
         {
-            _authorizationService = authorizationService;
+            return people.Values;
         }
 
-        [HttpGet, AllowAnonymous]
-        public Task<IEnumerable<Customer>> Get()
-        {
-            return GetSecuredData();
-        }
-
-        private async Task<IEnumerable<Customer>> GetSecuredData()
-        {
-            var includeAge = await FulfillsPolicy(AppPolicies.CanReadCustomerAge);
-            return people.Values
-                .Select(p =>
-                    new Customer
-                    {
-                        Name = p.Name,
-                        Id = p.Id,
-                        Age = includeAge ? p.Age : "TOP SECRET"
-                    }).ToList();
-        }
-
-        [HttpGet("{id}"), AllowAnonymous]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            Customer p;
-            var map = (await GetSecuredData()).ToDictionary(x => x.Id);
-            if (map.TryGetValue(id, out p))
-            {
-                return Ok(p);
-            }
+            if (people.TryGetValue(id, out Customer c))
+                return Ok(c);
 
             return NotFound();
         }
 
-        [HttpPost, Authorize(Policy = AppPolicies.CanCreateCustomer)]
+        [HttpPost]
         public IActionResult InsertCustomer(Customer p)
         {
             p.Id = GetUniqueId();
@@ -67,7 +44,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return Ok(p);
         }
 
-        [HttpPut("{id}"), Authorize(Policy = AppPolicies.CanUpdateCustomer)]
+        [HttpPut("{id}")]
         public IActionResult UpdateCustomer(string id, Customer p)
         {
             if (!people.ContainsKey(id))
@@ -80,7 +57,7 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return Ok(p);
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = AppPolicies.CanDeleteCustomer)]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(string id)
         {
             if (!people.ContainsKey(id))
@@ -97,9 +74,5 @@ namespace AspNetCore.Security.OpenIddict.Controllers
             return (Interlocked.Increment(ref id)).ToString();
         }
 
-        private Task<bool> FulfillsPolicy(string policy)
-        {
-            return _authorizationService.AuthorizeAsync(User, policy);
-        }
     }
 }
