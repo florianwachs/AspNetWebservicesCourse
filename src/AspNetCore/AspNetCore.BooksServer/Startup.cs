@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using AspNetCore.BooksServer.Repositories;
 using AspNetCore.BooksServer.Infrastructure;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace AspNetCore.BooksServer
 {
@@ -36,6 +38,13 @@ namespace AspNetCore.BooksServer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Awesome Book API", Version = "v1" });
+
+                // Damit XML-Comments ausgewertet werden muss in den Properties des Projekts noch
+                // die Generierung der XML-Comments aktiviert werden
+                // => Properties -> Build:Output-> XML Documentation File Option aktivieren
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "AspNetCore.BooksServer.xml");
+                c.IncludeXmlComments(xmlPath);
             });
 
             // Pro Request wird ein neuer Bookservice erzeugt

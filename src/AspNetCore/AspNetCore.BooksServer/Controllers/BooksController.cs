@@ -35,7 +35,25 @@ namespace AspNetCore.BooksServer.Controllers
             return book != null ? (IActionResult)Ok(book) : NotFound();
         }
 
+        // Diese Kommentare werden mit in Swagger generiert wenn die XML-Comments Option aktiviert ist (siehe Startup.cs)
+        /// <summary>
+        /// Creates a Book.
+        /// </summary>
+        /// <remarks>
+        ///     POST /books
+        ///     {
+        ///        "isbn": "12345678910",
+        ///        "title": "50 Shades of Chuck Norris"
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="book"></param>
+        /// <returns>New Created Todo Item</returns>
+        /// <response code="201">Returns the newly created book</response>
+        /// <response code="400">If the book is null or invalid data</response>
         [HttpPost]
+        [ProducesResponseType(typeof(Book), 201)]
+        [ProducesResponseType(typeof(Book), 400)]        
         public IActionResult CreateBook([FromBody] Book book)
         {
             // Während des Model Bindings werden die Validatoren
