@@ -7,8 +7,8 @@ using Rating.API.Infrastructure;
 
 namespace Rating.API.Migrations
 {
-    [DbContext(typeof(RaitingContext))]
-    [Migration("20170629124240_init")]
+    [DbContext(typeof(RatingContext))]
+    [Migration("20170629163904_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,7 +17,7 @@ namespace Rating.API.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Rating.API.Models.BookRaiting", b =>
+            modelBuilder.Entity("Rating.API.Models.BookRating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -28,7 +28,7 @@ namespace Rating.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookRaitings");
+                    b.ToTable("BookRatings");
                 });
         }
     }

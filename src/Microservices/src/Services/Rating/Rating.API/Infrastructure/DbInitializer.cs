@@ -9,24 +9,24 @@ namespace Rating.API.Infrastructure
     {
         private static Random random = new Random();
 
-        public static void Initialize(RaitingContext context, bool resetDb)
+        public static void Initialize(RatingContext context, bool resetDb)
         {
             if (resetDb)
                 context.Database.EnsureDeleted();
 
             context.Database.Migrate();
 
-            if (context.BookRaitings.Any())
+            if (context.BookRatings.Any())
                 return;
 
             AddRatings(context);
         }
 
-        private static void AddRatings(RaitingContext context)
+        private static void AddRatings(RatingContext context)
         {
-            var ratings = Enumerable.Range(0, 100).Select(bookId => new BookRaiting { BookId = bookId, Rating = random.Next(0, 11) });
+            var ratings = Enumerable.Range(0, 100).Select(bookId => new BookRating { BookId = bookId, Rating = random.Next(0, 11) });
 
-            context.BookRaitings.AddRange(ratings);
+            context.BookRatings.AddRange(ratings);
             context.SaveChanges();
         }
     }

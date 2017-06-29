@@ -4,8 +4,8 @@ using WebMVC.Models;
 
 namespace WebMVC.Services
 {
-    public interface IRaitingService
+    public interface IRatingService
     {
-        Task<RaitingResponse> GetRatingsForBooks(IEnumerable<Book> books);
+        Task<RatingResponse> GetRatingsForBooks(IEnumerable<Book> books);
     }
 }

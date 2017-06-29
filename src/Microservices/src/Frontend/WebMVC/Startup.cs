@@ -29,7 +29,7 @@ namespace WebMVC
             services.AddSingleton<IHttpClient, ResilientHttpClient>();
             services.AddTransient<IBookCatalogService, BookCatalogService>();
             services.AddTransient<IPricingService, PricingService>();
-            services.AddTransient<IRaitingService, RaitingService>();
+            services.AddTransient<IRatingService, RatingService>();
 
             services.AddMvc();
         }

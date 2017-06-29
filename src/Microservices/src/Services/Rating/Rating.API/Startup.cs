@@ -48,11 +48,11 @@ namespace Rating.API
             services.AddMvc();
 
             var connection = Configuration["ConnectionString"];
-            services.AddDbContext<RaitingContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<RatingContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RaitingContext ratingContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, RatingContext ratingContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

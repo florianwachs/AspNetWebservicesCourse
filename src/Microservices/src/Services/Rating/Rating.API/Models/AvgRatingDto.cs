@@ -1,8 +1,8 @@
 ﻿namespace Rating.API.Models
 {
-    public class AvgRaitingDto
+    public class AvgRatingDto
     {
         public int BookId { get; set; }
-        public double AvgRaiting { get; set; }
+        public double AvgRating { get; set; }
     }
 }
