@@ -1,6 +1,7 @@
 ﻿using AspNetCore.BooksServer.Infrastructure;
 using AspNetCore.BooksServer.Models;
 using AspNetCore.BooksServer.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -52,8 +53,8 @@ namespace AspNetCore.BooksServer.Controllers
         /// <response code="201">Returns the newly created book</response>
         /// <response code="400">If the book is null or invalid data</response>
         [HttpPost]
-        [ProducesResponseType(typeof(Book), 201)]
-        [ProducesResponseType(typeof(Book), 400)]        
+        [ProducesResponseType(typeof(Book), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Book), StatusCodes.Status400BadRequest)]        
         public IActionResult CreateBook([FromBody] Book book)
         {
             // Während des Model Bindings werden die Validatoren
