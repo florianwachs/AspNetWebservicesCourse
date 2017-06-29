@@ -13,9 +13,9 @@ namespace WebMVC.Controllers
     {
         private readonly IBookCatalogService _bookCatalog;
         private readonly IPricingService _priceService;
-        private readonly IRaitingService _ratingService;
+        private readonly IRatingService _ratingService;
 
-        public HomeController(IBookCatalogService bookCatalog, IPricingService priceService, IRaitingService ratingService)
+        public HomeController(IBookCatalogService bookCatalog, IPricingService priceService, IRatingService ratingService)
         {
             _bookCatalog = bookCatalog;
             _priceService = priceService;
@@ -34,10 +34,10 @@ namespace WebMVC.Controllers
             return View(bookCatalogVm);
         }
 
-        private BookCatalog BuildBookCatalogVm(IEnumerable<Book> books, PriceResponse prices, RaitingResponse ratings)
+        private BookCatalog BuildBookCatalogVm(IEnumerable<Book> books, PriceResponse prices, RatingResponse ratings)
         {
             var priceMap = prices.Prices.ToDictionary(p => p.BookId);
-            var ratingMap = ratings.Raitings.ToDictionary(p => p.BookId);
+            var ratingMap = ratings.Ratings.ToDictionary(p => p.BookId);
 
             var catalogItems = books.Select(b =>
             new BookCatalogItem
@@ -47,7 +47,7 @@ namespace WebMVC.Controllers
                 Title = b.Title,
                 ReleaseDate = b.ReleaseDate,
                 Price = priceMap.TryGetValue(b.Id, out Price price) ? price.Amount : 0m,
-                Rating = ratingMap.TryGetValue(b.Id, out BookRating rating) ? rating.AvgRaiting : 0
+                Rating = ratingMap.TryGetValue(b.Id, out BookRating rating) ? rating.AvgRating : 0
             }).ToArray();
 
             return new BookCatalog { Books = catalogItems };

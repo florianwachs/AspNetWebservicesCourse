@@ -3,6 +3,6 @@
     public class BookRating
     {
         public int BookId { get; set; }        
-        public double AvgRaiting { get; set; }
+        public double AvgRating { get; set; }
     }
 }

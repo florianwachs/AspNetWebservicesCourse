@@ -7,29 +7,29 @@ using System.Linq;
 namespace Rating.API.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class RaitingsController : Controller
+    public class RatingsController : Controller
     {
-        private readonly RaitingContext _context;
+        private readonly RatingContext _context;
 
-        public RaitingsController(RaitingContext context)
+        public RatingsController(RatingContext context)
         {
             _context = context;
         }
 
         [HttpPost("bookratings")]
-        public IActionResult GetRatingForBook([FromBody]RaitingRequest request)
+        public IActionResult GetRatingForBook([FromBody]RatingRequest request)
         {
             var bookIds = request?.BookIds ?? Array.Empty<int>();
-            var avgRating = _context.BookRaitings
+            var avgRating = _context.BookRatings
                 .Where(rating => bookIds.Contains(rating.BookId))
                 .GroupBy(b => b.BookId)
                 .Select(grp =>
-                new AvgRaitingDto
+                new AvgRatingDto
                 {
                     BookId = grp.Key,
-                    AvgRaiting = Math.Round(grp.Select(r => r.Rating).Average(), 1)
+                    AvgRating = Math.Round(grp.Select(r => r.Rating).Average(), 1)
                 }).ToArray();
-            var result = new RaitingResponse { Raitings = avgRating };
+            var result = new RatingResponse { Ratings = avgRating };
             return Ok(result);
         }
     }

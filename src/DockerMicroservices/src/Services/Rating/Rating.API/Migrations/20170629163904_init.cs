@@ -10,7 +10,7 @@ namespace Rating.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BookRaitings",
+                name: "BookRatings",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -20,14 +20,14 @@ namespace Rating.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookRaitings", x => x.Id);
+                    table.PrimaryKey("PK_BookRatings", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookRaitings");
+                name: "BookRatings");
         }
     }
 }
