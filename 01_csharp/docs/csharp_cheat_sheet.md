@@ -1,4 +1,4 @@
-# CSharp Cheat Sheet
+# C# Cheat Sheet
 
 Dies ist eine Zusammenfassung der Grundlagen der C# Sprache. Während der Vorlesung gehen wir auf alle notwendigen Konstrukte ein. Die [Microsoft Docs](https://docs.microsoft.com) sind eine hervorragende Quelle weiterer Informationen.
 
