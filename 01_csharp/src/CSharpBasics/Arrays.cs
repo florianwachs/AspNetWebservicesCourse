@@ -26,11 +26,11 @@ namespace CSharpLanguageBasics
         {
             // Multidimensionale Arrays
 
-            var rectangular = new int[3, 3] 
-            { 
-                { 0, 1, 2 }, 
-                { 3, 4, 5 }, 
-                { 6, 7, 8 } 
+            var rectangular = new int[3, 3]
+            {
+                { 0, 1, 2 },
+                { 3, 4, 5 },
+                { 6, 7, 8 }
             };
             var valueFirstRowSecondColumn = rectangular[0, 1]; // 1
 
