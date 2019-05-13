@@ -1276,3 +1276,442 @@ public void NotDoneYet()
 }
 
 ```
+
+## Expression-bodied Functions und Properties (C# 6)
+
+```csharp
+// Normale Methode
+private string CalculateBestHero(int inYear)
+{
+    return "Chuck Norris! EVERY YEAR";
+}
+
+// Methode mit Expression-Body
+private string CalculateBestHero2(int inYear) => "Chuck Norris! EVERY YEAR";
+
+// Normale berechnete Property
+public string CompleteName
+{
+    get
+    {
+        return FirstName + LastName;
+    }
+}
+
+// Property mit Expression-Body
+public string CompleteName2 => FirstName + LastName;
+
+```
+
+## Null-Conditional Operator (C# 6)
+
+```csharp
+public static void BeforeCSharp6()
+{
+    var s = GetStudent(123);
+
+    // Alle Null-Checks durchführen bevor wir auf Count zugreifen können
+    int addressCount = s != null
+        && s.Contact != null
+        && s.Contact.Addresses != null ? s.Contact.Addresses.Count : 0;
+}
+
+
+
+public static void WithCSharp6()
+{
+    var s = GetStudent(123);
+
+    // Code hinter "?" wird nur ausgeführt wenn davor ein Non-Null Wert ermittelt wurde
+    int addressCount = s?.Contact?.Addresses?.Count ?? 0;
+}
+```
+
+## String Interpolation
+
+```csharp
+public static void WithoutInterpolation()
+{
+    var p = GetPerson();
+    // Verwendung von numerierten Platzhaltern im String
+    var text = string.Format("Der User {0} {1} wurde am {2} erzeugt.", p.FirstName, p.LastName, 		p.Created);
+    Console.WriteLine(text);
+}
+
+
+
+public static void WithInterpolation()
+{
+    var p = GetPerson();
+
+    // Direkte Verwendung von Variablen im String. "$" ermöglicht die Interpolation
+    var text = $"Der User {p.FirstName} {p.LastName} wurde am {p.Created} erzeugt.";
+    Console.WriteLine(text);
+}
+
+```
+
+## Anonyme Typen
+
+- Innerhalb einer Property oder Methode kann ein anonymer Typ erzeugt werden
+- Anonym, da keine explizite Klassendefinition vorhanden sein muss. Der Compiler erzeugt eine Klasse und implementiert Equals(), GetHashCode() und ToString()
+- Er kann die Property oder Methode nur durch einen Cast auf object verlassen, was aber nicht empfohlen wird
+- Das Einsatzgebiet ergibt sich im Zusammenspiel mit LINQ
+
+```csharp
+// Der Compiler implementiert automatisch eine
+// Klasse und implementiert ToString Equals und GetHashCode
+// Die Klasse leitet direkt von Object an
+var person1 = new { FirstName = "Jason", LastName = "Bourne" };
+Console.WriteLine(person1);
+
+
+// Für person2 wird die gleiche Klasse
+// verwendet wie für Person 1
+var person2 = new { FirstName = "Jason", LastName = "Bourne" };
+
+Console.WriteLine(person1.Equals(person2)); // true
+
+// Für person3 erzeugt der Compiler eine neue
+// Klasse, es kommt auf die Reihenfolge der
+// Properties an
+var person3 = new { LastName = "Bourne", FirstName = "Jason" };
+
+Console.WriteLine(person1.Equals(person3)); // false
+
+```
+
+### Verwendung in LINQ
+
+```csharp
+var query = Enumerable.Range(0, 5).Select(n => new
+{
+    Number = n,
+    Square = n * n,
+    Sqrt = Math.Sqrt(n)
+});
+
+foreach (var item in query)
+{
+    Console.WriteLine("Number: {0}, Square: {1}, Sqrt: {2}", item.Number, item.Square, item.Sqrt);
+}
+
+var query = from person in GetTestPersons()
+            group person by person.FirstName[0] into grp
+            orderby grp.Key
+            select new { FirstLetter = grp.Key, Personen = grp };
+
+foreach (var gruppe in query)
+{
+    Console.WriteLine("First Letter: " + gruppe.FirstLetter);
+    foreach (var person in gruppe.Personen)
+    {
+        Console.WriteLine("\t" + person.ToString());
+    }
+}
+
+```
+
+## Yield
+
+- Das `yield`-Keyword ist eine Erleichterung des Compilers, um einen Enumerator zu erzeugen
+- `yield return <Expression>` liefert einen Wert an den Aufrufer zurück. Die Kontrolle über die weitere Iteration wird ebenfalls an den Aufrufer zurück gegeben
+- Mit `yield break` kann dem Aufrufer mitgeteilt werden, das nicht weiter iteriert werden kann
+
+```csharp
+// die Verwendung von yield erspart die Definition
+// einer eigenen Klasse die IEnumerator und IEnumerable implementiert
+public static IEnumerable<int> GetRandom(int count)
+{
+    var rnd = new Random();
+    var hardBreak = 100;
+    for (int i = 0; i < count; i++)
+    {
+        if (i == hardBreak)
+        {
+            yield break;
+        }
+        // yield return gibt die Kontrolle an
+        // den Aufrufer zurück. Erst wenn der Aufrufer
+        // wieder weiter iteriert, wird hier weiter gemacht
+        yield return rnd.Next();
+    }
+}
+
+// Obwohl wir max. 10000 Randoms
+// generieren wolle, wird die Generierung
+// nach 5 beendet
+var query = GetRandom(10000).Take(5);
+
+var i = 1;
+foreach (var item in query)
+{
+    Console.WriteLine("{0}: {1}", i++, item);
+}
+
+```
+
+## Optionale Parameter
+
+```csharp
+public static void WriteToConsole(string msg, ConsoleColor forgroundColor = ConsoleColor.Blue, bool useTimeStamp = false)
+{
+    // ...
+}
+
+// nur der erforderliche Parameter wurde gesetzt
+// für alle anderen wird der Standard verwendet
+WriteToConsole("Hi there");
+
+// alle Parameter können auch einfach angegeben werden
+WriteToConsole("Alarmstufe ROT", ConsoleColor.Red, false);
+
+```
+
+## Named Parameter
+
+```csharp
+public static void WriteToConsole(string msg, ConsoleColor forgroundColor = ConsoleColor.Blue, bool useTimeStamp = false)
+{
+    // ...
+}
+
+// es können beliebige optionale Parameter als named Parameter gefüllt werden
+WriteToConsole("What´s the time? Oh there it is...", useTimeStamp: true);
+
+```
+
+## Partial
+
+### Klassen
+
+- Definition einer Klasse oder Methode kann auf mehrere Dateien aufgeteilt werden
+- partial Methoden können nur `void` als Rückgabewert haben
+- Sehr nützlich im Zusammenspiel mit Codegeneratoren
+- Wird eine partial Methode nicht implementiert, entfernt der Compiler den Aufruf
+- Der Compiler fügt alle Partial-Definitionen zu einer Datei zusammen
+
+```csharp
+// PartialClass.generated.cs
+partial class PartialClass
+{
+    private int? generatedField;
+    public int? GeneratedField
+    {
+        get
+        {
+            Getting(ref generatedField);
+            return generatedField;
+        }
+        set
+        {
+            var old = generatedField;
+            if (old != value)
+            {
+                generatedField = value;
+                Changed(old, value);
+            }
+        }
+    }
+    // Wenn die Methoden nicht implementiert werden
+    // entfernt der Compiler die Aufrufe
+    partial void Changed(int? oldValue, int? newValue);
+    partial void Getting(ref int? value);
+}
+```
+
+```csharp
+
+// PartialClass.css
+
+public partial class PartialClass
+{
+    public DateTime? LastChanged { get; private set; }
+
+    // partial Methode wird implementiert und
+    // damit vom Compiler auch berücksichtigt
+    partial void Changed(int? oldValue, int? newValue)
+    {
+        LastChanged = DateTime.Now;
+    }
+}
+
+```
+
+## Extension Methods
+
+- syntactic sugar für den Aufruf von statischen Methoden
+- LINQ nutzt Extension Methods um IEnumerable<> zu erweitern
+- Extension Methods müssen als statische Klasse mit statischen Methoden implementiert werden. Mit this wird der zu erweiternde Typ angegeben
+  - `public static string MyCustomDateTimeFormat(this DateTime time);`
+- Extension Methods haben nur Zugriff auf die public-Member des erweiterten Types
+- Die Klassendefinition wird nicht beeinflusst
+
+```csharp
+// Extension Methods müssen in einer
+// static class definiert sein
+// damit sie auf den "erweiterten" Typen angewendet werden
+// können, muss diese Klasse entweder im gleichen Namepace
+// liegen oder der Namespace per using importiert werden.
+public static class PersonExtensions
+{
+    // mit this wird
+    // Extension-Methods sind normale statische Methoden,
+    // können also auch weitere Parameter enthalten
+    public static string GetFullName(this Person person, string prefix = null)
+    {
+        // Extension-Methods sind syntactic sugar.
+        // Sie erweitern nicht die Klassendefinition,
+        // sie können nur auf die public-Member zugreifen
+        return prefix + person.FirstName + " " + person.LastName;
+    }
+}
+
+var p = new Person("Franzi", "Maier");
+// Für den Aufrufer sieht es so aus,
+// als wäre GetFullName() teil der Klassendefinition
+Console.WriteLine(p.GetFullName());
+// in Wirklichkeit wird aber nur folgendes aufgerufen
+Console.WriteLine(PersonExtensions.GetFullName(p));
+```
+
+## Using
+
+- Import von Namespaces
+  - using System.Linq
+- Definition von Typ oder Namespace Aliasen
+  - `using MyVector = System.Tuple<int,int,int>;`
+  - Verwendung: `MyVector v = new MyVector(1,2,3);`
+  - `using SqlStuff = System.Data.SqlClient;`
+- Verwendung mit IDisposable Objekten
+  - Beispiel folgt
+
+```csharp
+namespace System
+{
+    // Summary:
+    //     Defines a method to release allocated resources.
+    [ComVisible(true)]
+    public interface IDisposable
+    {
+        // Summary:
+        //     Performs application-defined tasks associated with freeing, releasing, or
+        //     resetting unmanaged resources.
+        void Dispose();
+    }
+}
+
+public class MyResource : IDisposable
+{
+    public MyResource()
+    {
+    }
+
+    public void DoStuff()
+    {
+        // Framework Guideline
+        EnsureNotDisposed();
+    }
+    public void Dispose()
+    {
+        // Framework Guideline:
+        // Dispose kann mehrfach aufgerufen werden
+        if (!disposed)
+        {
+            Console.WriteLine("MyResource Aufräumarbeiten");
+        }
+    }
+}
+
+```
+
+- Klassen die interne Ressourcen verwalten oder selbst eine Ressource darstellen sollten das `IDisposable`-Interface implementieren
+- In der implementierten `Dispose()`-Methode, werden alle Ressourcen freigegeben, welche vom Objekt für die Aufgabenerfüllung benötigt werden
+  - .z.B. File- oder Network-Handles, Datenbankverbindungen
+- **Regel**: Ein Objekt das Disposed wurde darf nicht weiter verwendet werden. Viele Framework-Objekte werfen eine Exception, wenn man es trotzdem macht
+- Der Aufruf von Dispose führt nicht automatisch zu einem Garbage Collect
+- Es ist viel mehr dem Interesse geschuldet, verwendete Ressourcen möglichst schnell freizugeben und zu signalisieren, dass das Objekt nicht weiter verwendet werden soll
+- der Garbage Collector räumt in der Regel etwas später auf (der GC ist ein interessanter eigener Themenkomplex…)
+
+> Guidelines des .NET Frameworks
+> Einmal disposed darf ein Objekt nicht reaktiviert werden. >Ein Aufruf der Methoden und Properties sollte eine >ObjectDisposedException werfen
+> Dispose() darf beliebig oft aufgerufen werden
+> Wenn ein Disposable-Objekt selbst Objekte enthält die IDisposable implementieren, so sollte auch Dispose auf diesen Child-Ressourcen aufgerufen werden
+
+```csharp
+// using als Direktive
+
+using (var res = new MyResource())
+{
+    Console.WriteLine("Verwende MyResource");
+}
+
+// Gleichbedeutend zu:
+MyResource res2 = new MyResource();
+try
+{
+    Console.WriteLine("Verwende MyResource");
+}
+finally
+{
+    if (res2 != null)
+    {
+        res2.Dispose();
+    }
+}
+
+```
+
+## Async / Await
+
+- Zum Verständnis von `async` / `await` muss erst noch Einführung in .NET Threading erfolgen
+- Das Feature wurde mit C# 5 hinzugefügt und ermöglicht asynchronen Code auf synchrone Weise zu schreiben
+- Gerade bei aufeinander folgenden Serviceaufrufen ist die Erleichterung für den Entwickler enorm
+
+> **Disclaimer**: Multithreading richtig umzusetzen ist hart und >erfordert viel Wissen und Erfahrung. Nachfolgend wird nur >das absolute Minimum erklärt, um Async / Await zu verwenden  
+> Weitere Ressourcen:
+> C# in a Nutshell, Albahari
+> Concurrent Programming on Windows, Duffy
+
+- Klasse Thread in System.Threading als „Urgestein“ des Threading
+- .NET verwendet einen Thread Pool der von der Runtime verwaltet wird
+- Verschiedenste Pattern für den Aufruf von asynchronen Methoden
+  - APM: Begin[OperationName] End[OperationName]
+  - EventBased: WebClient.DownloadStringAsync, WebClient.DownloadStringCompleted
+
+### Task
+
+- Repräsentiert eine asynchrone Operation
+- Können durch Continuations verkettet werden
+- Können ein Result liefern oder void sein
+  \_ Task <> Thread: Der Task Scheduler entscheidet ob und wie parallel ausgeführt wird
+- Task.Run() scheduled eine Operation, die standardmäßig im .NET Thread Pool ausgeführt wird
+- Task.Result : Liefert das Ergebnis des Tasks, blockiert den aktuellen Thread falls das Ergebnis noch nicht vorhanden ist
+- Task.Wait(): Blockiert den aktuellen Thread, bis der Task beendet ist
+- Task.FromResult(): Wrappt einen Completed Task um einen Wert
+
+### TaskScheduler
+
+- Weiß wie ein Task auszuführen ist
+- Custom TaskScheduler möglich
+- .NET Framework liefert einen Standard Scheduler
+- Blockieren ist in der Regel unerwünscht da,
+  - in GUI Applikationen die Oberfläche „einfriert“ da keine Nachrichten in der Message Loop des UI-Threads mehr abgearbeitet werden
+  - in Webanwendungen eine begrenzte Anzahl an Worker Threads zur Verfügung steht, um eingehende Requests zu bearbeiten
+  - Optimal: Alles im Hintergrund erledigen und nur das Ergebnis in den Synchronsationskontext (UI-Thread, Worker-Thread) dispatchen
+
+### async / await
+
+- `async` teilt dem Compiler mit, dass im folgenden Codeblock der await nicht als Identifier (z.B. für eine Variable) sondern als Keyword verwendet wird
+- `await` lässt den Compiler eine State-Machine bauen. Liefert GetStringAsync einen Task der bereits Completed ist, wird die Methode weiter ausgeführt. Falls nicht, wird der nach dem await folgende Codeblock in eine Task-Continuation gepackt und die Methode wird verlassen. Wenn
+
+```csharp
+public static async Task<string> GetChucksWisdomAsync(string authToken)
+{
+    var api = "http://api.icndb.com/jokes/random";
+    var client = new HttpClient();
+
+    var rawJson = await client.GetStringAsync(api);
+    return GetJokeFromJSON(rawJson);
+}
+```
