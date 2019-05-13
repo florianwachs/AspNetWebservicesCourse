@@ -1,5 +1,7 @@
 ﻿using System.Net;
+using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 
 namespace CSharpAdvancedLanguageFeatures
 {
@@ -11,11 +13,11 @@ namespace CSharpAdvancedLanguageFeatures
             {
                 // Do Stuff
             }
-            catch (HttpException ex) when (ex.ErrorCode == (int)HttpStatusCode.InternalServerError)
+            catch (HttpResponseException ex) when (ex.Response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 // Handle 500 - Internal Server Error
             }
-            catch (HttpException ex) when (ex.ErrorCode == (int)HttpStatusCode.NotFound)
+            catch (HttpResponseException ex) when (ex.Response.StatusCode == HttpStatusCode.NotFound)
             {
                 // Handle 404 - Not Found
             }
