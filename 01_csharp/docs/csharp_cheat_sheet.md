@@ -1715,3 +1715,404 @@ public static async Task<string> GetChucksWisdomAsync(string authToken)
     return GetJokeFromJSON(rawJson);
 }
 ```
+
+## Dynamic
+
+- Funktioniert nicht bei
+  - ExtensionMethods (ist compile-time syntactic sugar)
+  - Base-Members die von einer Sub-Klasse versteckt werden
+  - Interface-Methoden wenn ein Object zuerst gecastet werden müsste um
+- var != dynamic
+  - var: Compiler findet den Typ zur compile-time heraus
+  - var x = „Hallo“ => static type ist string, runtime type ist string
+  - dynamic: Typ wird zur Laufzeit ermittelt
+    \_dynamic x =„Hallo“ => static type ist dynamic, runtime type ist string
+- dynamic != Reflection
+  - dynamic hat keinen Zugriff auf private Member
+- "Performance Hit"
+
+### dynamic vs. static binding
+
+```csharp
+public class Chuck
+{
+    public string GetWisdom()
+    {
+        return "Chuck Norris doesn't need to use AJAX "+
+                "because pages are too afraid to postback anyways.";
+    }
+}
+
+```
+
+```csharp
+// static binding
+Chuck chuck = new Chuck();
+// Zur compile-time steht fest, dass GetWisdom()
+// am Objekt chuck verfügbar ist
+chuck.GetWisdom();
+
+// Durch die Zuweisung auf object gehen die
+// Typinformationen von chuck "verloren"
+object chuckObj = chuck;
+
+// der Compiler sieht nur object und dessen Member
+// folgendes führt zu einem compile-time error
+chuckObj.GetWisdom();
+
+```
+
+```csharp
+// dynamic binding
+
+Chuck chuck = new Chuck();
+
+chuck.GetWisdom();
+
+object chuckObj = chuck;
+
+// dynamic sagt dem Compiler, dass das typechecking
+// erst zur Laufzeit stattfinden soll
+dynamic chuckDynamic = chuckObj;
+chuckDynamic.GetWisdom();
+```
+
+### dynamic als Reflection Ersatz
+
+```csharp
+private class NotRelated
+{
+    public void LogStatus()
+    {
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("Status looks good");
+        Console.ResetColor();
+    }
+}
+
+private class NotRelatedEither
+{
+    public void LogStatus()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("Could be better");
+        Console.ResetColor();
+    }
+}
+
+private static void BetterCallLog(dynamic o)
+{
+    o.LogStatus();
+}
+
+// Verwendung
+public static void ReplaceReflectionDemo()
+{
+    var obj1 = new NotRelated();
+    var obj2 = new NotRelatedEither();
+
+    BetterCallLog(obj1);
+    BetterCallLog(obj2);
+}
+
+```
+
+### ExpandoObject
+
+```csharp
+// ExpandoObject ist wie ein PropertyBag / Dictionary
+// Member können einfach ergänzt werden
+dynamic obj = new ExpandoObject();
+
+obj.Test = "Hi";
+obj.Crazy = (Func<bool>)(() => true);
+
+// ExpandoObject implementiert INotifyPropertyChanged
+((INotifyPropertyChanged) obj).PropertyChanged += (PropertyChangedEventHandler)((s, e) =>
+{
+    Console.WriteLine("Change: " + e.PropertyName);
+});
+
+Console.WriteLine(obj.Test);
+Console.WriteLine(obj.Crazy());
+
+obj.Test = "Servus";
+
+try
+{
+    Console.WriteLine(obj.GibtsNicht());
+}
+catch (RuntimeBinderException ex)
+{
+    Console.WriteLine("Diesen Member gibt es nicht");
+}
+
+```
+
+### DynamicObject
+
+```csharp
+public class DynamicChuck : DynamicObject
+{
+    public override bool TryGetMember(GetMemberBinder binder, out object result)
+    {
+        result = binder.Name;
+        if (binder.Name == "Name")
+        {
+            result = "Norris, Chuck Norris";
+        }
+        return true;
+    }
+
+    public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+    {
+        result = "YOU WANT ME TO " + binder.Name + "? Prepare for a Round House KICK!!";
+        return true;
+    }
+}
+
+public static void DynamicObjectProviderDemo()
+{
+    dynamic dynamicChuck = new DynamicChuck();
+    Console.WriteLine(dynamicChuck.Name); // Noris, Chuck Norris
+    Console.WriteLine(dynamicChuck.NotThere); // NotThere
+    Console.WriteLine(dynamicChuck.SaySomething()); // YOU WANT ME TO SaySomething? Prepare for a Round House KICK!!
+    Console.WriteLine(dynamicChuck.BegForForgiveness()); // YOU WANT ME TO BegForForgiveness? Prepare for a Round House KICK!!
+}
+
+```
+
+### JSON.NET
+
+```csharp
+var rawJson = @"
+                {
+                    ""name"":""Jason"",
+                    ""address"" : {
+                                    ""street"":""Unknownstreet""
+                                    },
+                    ""identities"" :[""Franz"", ""Xaver"",""Hiasi"" ]
+                }
+                ";
+
+dynamic o = JsonConvert.DeserializeObject(rawJson);
+
+Console.WriteLine(o.name.Value);
+Console.WriteLine(o.address.street.Value);
+
+foreach (dynamic identity in o.identities)
+{
+    Console.WriteLine(identity.Value);
+}
+```
+
+### Einsatzgebiete
+
+- COM-Interop
+- „natürlicherer“ Zugriff auf XML und JSON
+- Dynamische Skriptsprachen in .NET
+  - IronRuby, IronPython
+- Kann oft statt Reflection angewendet werden und führt zu „schönerem“ Code
+- Eigene Proxy-Objekte mit DynamicObject
+
+## using static
+
+```csharp
+public static void UsingNormalMath(int value) => Console.WriteLine(Math.Abs(value) * Math.PI);
+
+
+
+// Mit using static können Methoden aus einem Typen direkt importiert werden
+using static System.Math;
+using static System.Console;
+public static void UsingStaticMath(int value) => WriteLine(Abs(value) * PI);
+
+```
+
+## nameof
+
+```csharp
+public class Nameof
+{
+    public string FirstName { get; set; }
+
+    public void UseNameof()
+    {
+        Console.WriteLine(nameof(CSharpAdvancedLanguageFeatures));  // CSharpAdvancedLanguageFeatures
+        Console.WriteLine(nameof(FirstName));                       // FirstName
+        // es wird nur der letzte Identifier ausgewertet
+        Console.WriteLine(nameof(Console.WriteLine));               // WriteLine
+    }
+
+    public void WhoIsYourGreatestHero(string heroName)
+    {
+	// wird nun bei Refactorings auch in der Exception angepasst
+        if (heroName != "Chuck Norris")
+            throw new ArgumentException("Der Parameter ist ungültig", nameof(heroName));
+    }
+}
+```
+
+## Exception Filters
+
+```csharp
+public class ExceptionFilters
+{
+    public void DoStuffThatThrows()
+    {
+        try
+        {
+            // Do Stuff
+        }
+        catch (HttpException ex) when (ex.ErrorCode == (int)HttpStatusCode.InternalServerError)
+        {
+            // Handle 500 - Internal Server Error
+        }
+        catch (HttpException ex) when (ex.ErrorCode == (int)HttpStatusCode.NotFound)
+        {
+            // Handle 404 - Not Found
+        }
+        catch
+        {
+            // The Rest
+        }
+    }
+}
+```
+
+## Tuples
+
+```csharp
+public class Tuples
+{
+    // Tuple ist als Reference Type implementiert
+    public Tuple<decimal, decimal> GetAmountAndDiscountTuple() => Tuple.Create(100m, 20m);
+
+
+    // Liefern beide ValueTuples welche als Value Type implementiert sind
+    // Für .NET Framework < v4.7 muss das NuGet-Package System.ValueTuple vorhanden sein
+    public (decimal, decimal) GetAmountAndDiscountValueTupleNoName() => (100m, 20m);
+
+
+
+    public (decimal amount, decimal discountInPercent) GetAmountAndDiscountValueTupleWithName()
+    {
+        return (100m, 20m);
+    }
+}
+```
+
+```csharp
+public class Tuples
+{
+
+    public void UseTuples()
+    {
+        var t1 = GetAmountAndDiscountTuple();
+        Console.WriteLine($"Amount {t1.Item1} with Discount {t1.Item2}");
+
+        var t2 = GetAmountAndDiscountValueTupleNoName();
+        Console.WriteLine($"Amount {t2.Item1} with Discount {t2.Item2}");
+
+        var t3 = GetAmountAndDiscountValueTupleWithName();
+        Console.WriteLine($"Amount {t3.amount} with Discount {t3.discountInPercent}");
+
+        // Tuple lassen sich auf direkt in lokale Variablen übertragen
+        var (betrag, rabatt) = GetAmountAndDiscountValueTupleNoName();
+
+        var (betrag2, rabatt2) = GetAmountAndDiscountValueTupleWithName();
+    }
+}
+```
+
+## Pattern Matching
+
+```csharp
+
+### is-Expression
+public void IsExpressionWithPatterns(object o)
+{
+    if (o is null) return;     // constant pattern "null"
+    if (o is int i) // type pattern "int i"
+    {
+        // Der if-Block wird nur betreten wenn es sich um ein int handelt
+        // die Variable i ist nur innerhalb des if-Blocks zugewiesen
+        Console.WriteLine(i);
+    }
+
+    if (!(o is decimal d))
+        return;
+
+    // Ab hier weiß der Compiler das o ein decimal sein muss
+    Console.WriteLine(d);
+}
+
+```
+
+### switch
+
+```csharp
+public void SwitchWithPatterns(Shape shape)
+{
+    switch (shape)
+    {
+        case Circle c:
+            WriteLine($"circle with radius {c.Radius}");
+            break;
+        // Es können auch Bedingungen mit when definiert werden
+        case Rectangle s when (s.Length == s.Height):
+            WriteLine($"{s.Length} x {s.Height} square");
+            break;
+        case Rectangle r:
+            WriteLine($"{r.Length} x {r.Height} rectangle");
+            break;
+        default:
+            WriteLine("<unknown shape>");
+            break;
+        case null:
+            throw new ArgumentNullException(nameof(shape));
+    }
+}
+
+```
+
+## out-Variablen
+
+```csharp
+decimal q;
+if (!map.TryGetValue("AUD", out q))
+{
+    q = 10;
+}
+
+// C# 7: out-Variables
+// amount ist nur innerhalb des if-Blocks zugewiesen
+if (map.TryGetValue("USD", out decimal amount))
+{
+    q = amount;
+}
+
+```
+
+## Local Functions
+
+```csharp
+public class LocalFunctions
+{
+    public int Fibonacci(int x)
+    {
+        if (x < 0) throw new ArgumentException("Less negativity please!", nameof(x));
+        return Fib(x).current; // Hier endet die eigentliche Funktion
+
+        // Lokale Funktion mit ValueTuple als return Type
+        // Kann auch auf lokale Variablen der umgebenden Funktion zugreifen
+        (int current, int previous) Fib(int i)
+        {
+            if (i == 0) return (1, 0);
+            var (p, pp) = Fib(i - 1);
+            return (p + pp, p);
+        }
+    }
+}
+
+```
