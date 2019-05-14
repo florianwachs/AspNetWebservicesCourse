@@ -50,7 +50,7 @@ namespace ChuckNorrisService
 
         private static async Task OutputRandomJokeFromFileSystemAsync()
         {
-            var provider = new FileSystemJokesProvider();
+            var provider = new FileSystemJokeProvider();
             var joke = await provider.GetRandomJokeAsync();
             Console.WriteLine(joke.Value);
         }

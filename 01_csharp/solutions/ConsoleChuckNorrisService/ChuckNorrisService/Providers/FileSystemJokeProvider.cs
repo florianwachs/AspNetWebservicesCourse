@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
 {
-    public class FileSystemJokesProvider : IJokeProvider
+    public class FileSystemJokeProvider : IJokeProvider
     {
         private static readonly Random random = new Random();
         private const string JokeFilePath = "Data\\jokes.json";
@@ -32,7 +32,6 @@ namespace ChuckNorrisService.Providers
 
             var rawJson = await File.ReadAllTextAsync(JokeFilePath);
             _jokes = JsonConvert.DeserializeObject<List<Joke>>(rawJson);
-
         }
     }
 }
