@@ -23,7 +23,7 @@ In dieser Aufgabe implementieren wir unsere erste C# Klasse.
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
 > Hinweise:
-> `Task.FromResult`
+> `Task.FromResult`, `Console.WriteLine`
 
 ## Aufgabe 3
 
