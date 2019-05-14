@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Client
@@ -15,10 +14,10 @@ namespace ChuckNorrisService.Client
 
         public async Task<ChuckNorrisJoke> GetRandomJokeFromCategory(JokeCategories category)
         {
-            var result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
+            HttpResponseMessage result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
             result.EnsureSuccessStatusCode();
 
-            var joke = await result.Content.ReadAsAsync<ChuckNorrisJoke>();
+            ChuckNorrisJoke joke = await result.Content.ReadAsAsync<ChuckNorrisJoke>();
 
             return joke;
         }
@@ -26,8 +25,8 @@ namespace ChuckNorrisService.Client
         public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(JokeCategories category, int maxJokes)
         {
             maxJokes = Math.Clamp(maxJokes, 1, MaxJokesPerRequest);
-            var result = await Task.WhenAll(Enumerable.Range(0, maxJokes).Select(_ => GetRandomJokeFromCategory(category)));
-            var uniqueIds = new HashSet<string>();
+            ChuckNorrisJoke[] result = await Task.WhenAll(Enumerable.Range(0, maxJokes).Select(_ => GetRandomJokeFromCategory(category)));
+            HashSet<string> uniqueIds = new HashSet<string>();
             return result.Where(joke => uniqueIds.Add(joke.Id)).ToArray();
         }
 
@@ -42,6 +41,11 @@ namespace ChuckNorrisService.Client
             public Uri Url { get; set; }
 
             public string Value { get; set; }
+
+            public Joke AsJoke()
+            {
+                return new Joke { Id = Id, Value = Value };
+            }
         }
     }
 }

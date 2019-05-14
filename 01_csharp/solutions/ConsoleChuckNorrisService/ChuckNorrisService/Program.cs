@@ -12,24 +12,18 @@ namespace ChuckNorrisService
     {
         static async Task Main(string[] args)
         {
-            // Aufgabe 1
-            await OutputRandomJokeFromApiAsync();
-
-            // Aufgabe 2
-            await SaveJokesToFileAsync();
-
-            // Aufgabe 3
-            await OutputRandomJokeFromFileSystemAsync();
+            await PrintJoke(new DummyJokeProvider());
+            await PrintJoke(new FileSystemJokeProvider());
+            await PrintJoke(new ApiJokeProvider());
         }
 
-        private static async Task OutputRandomJokeFromApiAsync()
+        private static async Task PrintJoke(IJokeProvider jokeProvider)
         {
-            var api = new ChuckNorrisApi();
-            var randomJoke = await api.GetRandomJokeFromCategory(JokeCategories.Dev);
-            Console.WriteLine(randomJoke.Value);
+            var joke = await jokeProvider.GetRandomJokeAsync();
+            Console.WriteLine(joke.Value);
         }
 
-        private static async Task SaveJokesToFileAsync()
+        private static async Task SaveJokesToFile()
         {
             var api = new ChuckNorrisApi();
             var result = await api.GetRandomJokesFromCategory(JokeCategories.Dev, 10);
@@ -46,13 +40,6 @@ namespace ChuckNorrisService
                 var raw = JsonConvert.SerializeObject(jokesToSerialize);
                 File.WriteAllText($"jokes_{DateTime.Now.Ticks}.json", raw);
             }
-        }
-
-        private static async Task OutputRandomJokeFromFileSystemAsync()
-        {
-            var provider = new FileSystemJokesProvider();
-            var joke = await provider.GetRandomJokeAsync();
-            Console.WriteLine(joke.Value);
         }
     }
 }
