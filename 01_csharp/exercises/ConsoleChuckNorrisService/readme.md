@@ -2,6 +2,7 @@
 
 In dieser Übung geht es darum, sich mit .NET, C# und Visual Studio vertraut zu machen.
 Kommen Sie bei Fragen gerne auf mich zu!
+Nutzen Sie auch [Microsoft Docs](https://docs.microsoft.com).
 
 ## Aufgabe 1
 
