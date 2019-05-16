@@ -22,8 +22,13 @@ In dieser Aufgabe implementieren wir unsere erste C# Klasse.
 - `DummyJokeProvider` soll schlicht einen beliebigen Witz zurück geben.
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
+### Erweiterung
+- Wählen Sie eine geeignete Speicherstruktur um mehrere Witze zur Laufzeit hinterlegen zu können.
+- Fügen Sie dieser Struktur mehrere Witze hinzu
+- Geben Sie einen zufälligen Witz auf die Console aus.
+
 > Hinweise:
-> `Task.FromResult`, `Console.WriteLine`
+> `Task.FromResult`, `Console.WriteLine`, `Random`
 
 ## Aufgabe 3
 
