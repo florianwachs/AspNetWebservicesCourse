@@ -12,7 +12,7 @@ namespace ChuckNorrisService.Providers
     public class FileSystemJokeProvider : IJokeProvider
     {
         private static readonly Random random = new Random();
-        private const string JokeFilePath = "Data\\jokes.json";
+        private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
         private List<Joke> _jokes;
         public async Task<Joke> GetRandomJokeAsync()
         {
