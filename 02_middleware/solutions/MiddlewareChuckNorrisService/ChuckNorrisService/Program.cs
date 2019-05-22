@@ -1,45 +1,21 @@
-﻿using ChuckNorrisService.Client;
-using ChuckNorrisService.Models;
-using ChuckNorrisService.Providers;
-using Newtonsoft.Json;
-using System;
-using System.IO;
+﻿using ChuckNorrisService.Startups;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService
 {
-    class Program
+    internal class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            await PrintJoke(new DummyJokeProvider());
-            await PrintJoke(new FileSystemJokeProvider());
-            await PrintJoke(new ApiJokeProvider());
+            IWebHostBuilder builder = CreateWebHostBuilder<StartupExercise1>(args);
+            builder.Build().Run();
         }
 
-        private static async Task PrintJoke(IJokeProvider jokeProvider)
+        private static IWebHostBuilder CreateWebHostBuilder<TStartup>(string[] args) where TStartup : class
         {
-            var joke = await jokeProvider.GetRandomJokeAsync();
-            Console.WriteLine(joke.Value);
-        }
-
-        private static async Task SaveJokesToFile()
-        {
-            var api = new ChuckNorrisApi();
-            var result = await api.GetRandomJokesFromCategory(JokeCategories.Dev, 10);
-
-            SaveJokes(result);
-
-            void SaveJokes(ChuckNorrisApi.ChuckNorrisJoke[] jokesToSerialize)
-            {
-                // TODO: Nur für Vorlesungszwecke! Das referenzieren von Strings erzeugt
-                // eine Kopie, problematisch bei großen strings (LOH)
-                // Mit .net core 3.0 wird es performantere Möglichkeiten zur
-                // Serialisierung und Deserialisierung geben.
-
-                var raw = JsonConvert.SerializeObject(jokesToSerialize);
-                File.WriteAllText($"jokes_{DateTime.Now.Ticks}.json", raw);
-            }
+            return WebHost.CreateDefaultBuilder(args).UseStartup<TStartup>();
         }
     }
 }
