@@ -1,0 +1,1066 @@
+[
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "73fgwax6s6eukfwgiuqrxq",
+    "Url": "https://api.chucknorris.io/jokes/73fgwax6s6eukfwgiuqrxq",
+    "Value": "Chuck Norris doesn't use GUI, he prefers COMMAND line."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "uhcflvv3qfatx2ku9npdrg",
+    "Url": "https://api.chucknorris.io/jokes/uhcflvv3qfatx2ku9npdrg",
+    "Value": "Each hair in Chuck Norris's beard contributes to make the world's largest DDOS."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "rhvv9w42qka07narzt47da",
+    "Url": "https://api.chucknorris.io/jokes/rhvv9w42qka07narzt47da",
+    "Value": "Chuck Norris' Internet connection is faster upstream than downstream because even data has more incentive to run from him than to him."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "rrt0vtiiqyi66shbp4qhiw",
+    "Url": "https://api.chucknorris.io/jokes/rrt0vtiiqyi66shbp4qhiw",
+    "Value": "MySpace actually isn't your space, it's Chuck's (he just lets you use it)."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "e2gyguu0tg6di7-qykdjnw",
+    "Url": "https://api.chucknorris.io/jokes/e2gyguu0tg6di7-qykdjnw",
+    "Value": "Chuck Norris originally appeared in the \"Street Fighter II\" video game, but was removed by Beta Testers because every button caused him to do a roundhouse kick. When asked about this glitch, Norris replied \"That's no glitch.\""
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "4rfk-ymnth28ny8q2pbrow",
+    "Url": "https://api.chucknorris.io/jokes/4rfk-ymnth28ny8q2pbrow",
+    "Value": "Chuck Norris went out of an infinite loop."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "oe071v9ht0qphuzwgzxaoq",
+    "Url": "https://api.chucknorris.io/jokes/oe071v9ht0qphuzwgzxaoq",
+    "Value": "If you try to kill -9 Chuck Norris's programs, it backfires."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "nzf46249t8cf7wgz3rf_rg",
+    "Url": "https://api.chucknorris.io/jokes/nzf46249t8cf7wgz3rf_rg",
+    "Value": "Chuck Norris doesn't have disk latency because the hard drive knows to hurry the hell up."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "nmlts0sqrwifigqta-rv_g",
+    "Url": "https://api.chucknorris.io/jokes/nmlts0sqrwifigqta-rv_g",
+    "Value": "Chuck Norris's log statements are always at the FATAL level."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "vhyuanawsl-rpq18bwwgfq",
+    "Url": "https://api.chucknorris.io/jokes/vhyuanawsl-rpq18bwwgfq",
+    "Value": "Chuck Norris programs occupy 150% of CPU, even when they are not executing."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "0gno3wclrfohs9a_mlx7rw",
+    "Url": "https://api.chucknorris.io/jokes/0gno3wclrfohs9a_mlx7rw",
+    "Value": "No one has ever spoken during review of Chuck Norris' code and lived to tell about it."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "jfbsb24mtawqb-s5zlx8mg",
+    "Url": "https://api.chucknorris.io/jokes/jfbsb24mtawqb-s5zlx8mg",
+    "Value": "Chuck Norris does not code in cycles, he codes in strikes."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "dpk2_epftfgo0cgpfqcpgq",
+    "Url": "https://api.chucknorris.io/jokes/dpk2_epftfgo0cgpfqcpgq",
+    "Value": "Chuck Norris can install iTunes without installing Quicktime."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "ughqsstqtmihbbknicskaq",
+    "Url": "https://api.chucknorris.io/jokes/ughqsstqtmihbbknicskaq",
+    "Value": "Chuck Norris does not need try-catch blocks, exceptions are too afraid to raise."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "mgdb9q1wqb6_gurzp_5bga",
+    "Url": "https://api.chucknorris.io/jokes/mgdb9q1wqb6_gurzp_5bga",
+    "Value": "Chuck Norris writes code that optimizes itself."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "zuuj_duotuww3z6c5w9ahq",
+    "Url": "https://api.chucknorris.io/jokes/zuuj_duotuww3z6c5w9ahq",
+    "Value": "Chuck Norris can write infinite recursion functions and have them return."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "each6usssvavuwtvv3r95q",
+    "Url": "https://api.chucknorris.io/jokes/each6usssvavuwtvv3r95q",
+    "Value": "The class object inherits from Chuck Norris"
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "caghe37xsemyequkhrpzcg",
+    "Url": "https://api.chucknorris.io/jokes/caghe37xsemyequkhrpzcg",
+    "Value": "With Chuck Norris P = NP. There's no nondeterminism with Chuck Norris decisions."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hwv5daessqqk0n_sczyima",
+    "Url": "https://api.chucknorris.io/jokes/hwv5daessqqk0n_sczyima",
+    "Value": "No statement can catch the ChuckNorrisException."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "bwoz2uwsqnwmyawyxdvo1w",
+    "Url": "https://api.chucknorris.io/jokes/bwoz2uwsqnwmyawyxdvo1w",
+    "Value": "Chuck Norris finished World of Warcraft."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hzuvgphrtdmmbjdpnaxskw",
+    "Url": "https://api.chucknorris.io/jokes/hzuvgphrtdmmbjdpnaxskw",
+    "Value": "Chuck Norris breaks RSA 128-bit encrypted codes in milliseconds."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "p4tviyvmrbkcjbqsydybuq",
+    "Url": "https://api.chucknorris.io/jokes/p4tviyvmrbkcjbqsydybuq",
+    "Value": "Chuck Norris can retrieve anything from /dev/null."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "7tuczvb2rpy-xn7alkmz0w",
+    "Url": "https://api.chucknorris.io/jokes/7tuczvb2rpy-xn7alkmz0w",
+    "Value": "Chuck Norris's OSI network model has only one layer - Physical."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "iy5n_afwrrqrj9wb6n21ww",
+    "Url": "https://api.chucknorris.io/jokes/iy5n_afwrrqrj9wb6n21ww",
+    "Value": "Chuck Norris doesn't need garbage collection because he doesn't call .Dispose(), he calls .DropKick()."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hcakrd4frju3vd-jakidqq",
+    "Url": "https://api.chucknorris.io/jokes/hcakrd4frju3vd-jakidqq",
+    "Value": "If you Google search \"Chuck Norris getting his ass kicked\" you will generate zero results. It just doesn't happen."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "i8k15bwdq4iwpdz3__u8fg",
+    "Url": "https://api.chucknorris.io/jokes/i8k15bwdq4iwpdz3__u8fg",
+    "Value": "Chuck Norris' programs never exit, they terminate."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "ye0_hnd3rgq68e_pfvsqqg",
+    "Url": "https://api.chucknorris.io/jokes/ye0_hnd3rgq68e_pfvsqqg",
+    "Value": "Chuck Norris can instantiate an abstract class."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "poqerqlpqz2en3hacikbjw",
+    "Url": "https://api.chucknorris.io/jokes/poqerqlpqz2en3hacikbjw",
+    "Value": "Chuck Norris doesn't use reflection, reflection asks politely for his help."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "medf6licr1kzvma_mo_r4a",
+    "Url": "https://api.chucknorris.io/jokes/medf6licr1kzvma_mo_r4a",
+    "Value": "Chuck Norris doesn't need an OS."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "espieyuysgeopdhgcdrmjw",
+    "Url": "https://api.chucknorris.io/jokes/espieyuysgeopdhgcdrmjw",
+    "Value": "Chuck Norris can't test for equality because he has no equal."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "lkor-8baqmcjoftr-am_qw",
+    "Url": "https://api.chucknorris.io/jokes/lkor-8baqmcjoftr-am_qw",
+    "Value": "Project managers never ask Chuck Norris for estimations... ever."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "urzvrrpnttmipfzzpkvblq",
+    "Url": "https://api.chucknorris.io/jokes/urzvrrpnttmipfzzpkvblq",
+    "Value": "Chuck Norris doesn't need to use AJAX because pages are too afraid to postback anyways."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "7y7l53dhrjey2iz4xwv4rw",
+    "Url": "https://api.chucknorris.io/jokes/7y7l53dhrjey2iz4xwv4rw",
+    "Value": "\"It works on my machine\" always holds true for Chuck Norris."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "7ver3y48qqsfktpelir7ua",
+    "Url": "https://api.chucknorris.io/jokes/7ver3y48qqsfktpelir7ua",
+    "Value": "Don't worry about tests, Chuck Norris's test cases cover your code too."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "s4ymkruzsks7loog8eqsya",
+    "Url": "https://api.chucknorris.io/jokes/s4ymkruzsks7loog8eqsya",
+    "Value": "Chuck Norris hosting is 101% uptime guaranteed."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "6sdvoj-msgi6miv07ekctq",
+    "Url": "https://api.chucknorris.io/jokes/6sdvoj-msgi6miv07ekctq",
+    "Value": "Chuck Norris is currently suing myspace for taking the name of what he calls everything around you."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "ag_6paerrkg-mxfjjqw4ba",
+    "Url": "https://api.chucknorris.io/jokes/ag_6paerrkg-mxfjjqw4ba",
+    "Value": "Chuck Norris's beard can type 140 wpm."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hpves7kxrm68d_rvcuuivg",
+    "Url": "https://api.chucknorris.io/jokes/hpves7kxrm68d_rvcuuivg",
+    "Value": "Chuck Norris does infinit loops in 4 seconds."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "wft-ksbrqncyrcg0k8cpzw",
+    "Url": "https://api.chucknorris.io/jokes/wft-ksbrqncyrcg0k8cpzw",
+    "Value": "Chuck Norris does not need to type-cast. The Chuck-Norris Compiler (CNC) sees through things. All way down. Always."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "y7_p2-52sc2t7ho1hjtwcq",
+    "Url": "https://api.chucknorris.io/jokes/y7_p2-52sc2t7ho1hjtwcq",
+    "Value": "Chuck Norris can write multi-threaded applications with a single thread."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "gll-vunmsluzrad8sfafwg",
+    "Url": "https://api.chucknorris.io/jokes/gll-vunmsluzrad8sfafwg",
+    "Value": "No one has ever pair-programmed with Chuck Norris and lived to tell about it."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "mbxkx1y8qgwbu5ld3qen4w",
+    "Url": "https://api.chucknorris.io/jokes/mbxkx1y8qgwbu5ld3qen4w",
+    "Value": "Chuck Norris compresses his files by doing a flying round house kick to the hard drive."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hvj9bov5qoscyakmzylsag",
+    "Url": "https://api.chucknorris.io/jokes/hvj9bov5qoscyakmzylsag",
+    "Value": "Chuck Norris uses canvas in IE."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "41rkit60rnklc8w7fox1cq",
+    "Url": "https://api.chucknorris.io/jokes/41rkit60rnklc8w7fox1cq",
+    "Value": "Chuck Norris can access the DB from the UI."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "ae-78cogr-cb6x9hluwqtw",
+    "Url": "https://api.chucknorris.io/jokes/ae-78cogr-cb6x9hluwqtw",
+    "Value": "There is no Esc key on Chuck Norris' keyboard, because no one escapes Chuck Norris."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "reo41iwasygr5trac08e9g",
+    "Url": "https://api.chucknorris.io/jokes/reo41iwasygr5trac08e9g",
+    "Value": "Chuck Norris is the ultimate mutex, all threads fear him."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "2c_aavbjsig1x1p6h8huuw",
+    "Url": "https://api.chucknorris.io/jokes/2c_aavbjsig1x1p6h8huuw",
+    "Value": "Chuck Norris can compile syntax errors."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "tanwfuavq82zn1y6t645bw",
+    "Url": "https://api.chucknorris.io/jokes/tanwfuavq82zn1y6t645bw",
+    "Value": "Chuck Norris can access private methods."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "uq-vwbx5t2g5xp95aggyxa",
+    "Url": "https://api.chucknorris.io/jokes/uq-vwbx5t2g5xp95aggyxa",
+    "Value": "When Chuck Norris break the build, you can't fix it, because there is not a single line of code left."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "nsle0zt-sis8fnwkrytwma",
+    "Url": "https://api.chucknorris.io/jokes/nsle0zt-sis8fnwkrytwma",
+    "Value": "Chuck Norris can delete the Recycling Bin."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "90mdw_2uq2anw-r0fakc0w",
+    "Url": "https://api.chucknorris.io/jokes/90mdw_2uq2anw-r0fakc0w",
+    "Value": "Chuck Norris can dereference NULL."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "gyha_1u2t66xgarrowtlva",
+    "Url": "https://api.chucknorris.io/jokes/gyha_1u2t66xgarrowtlva",
+    "Value": "Chuck Norris can overflow your stack just by looking at it."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "aybvxdnmr82jc_jssvkegw",
+    "Url": "https://api.chucknorris.io/jokes/aybvxdnmr82jc_jssvkegw",
+    "Value": "When Chuck Norris throws exceptions, it's across the room."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "1jgggc4rruety6zvlvb5ag",
+    "Url": "https://api.chucknorris.io/jokes/1jgggc4rruety6zvlvb5ag",
+    "Value": "Google won't search for Chuck Norris because it knows you don't find Chuck Norris, he finds you."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "yrvjrpx3t4qxqmowpyvxbq",
+    "Url": "https://api.chucknorris.io/jokes/yrvjrpx3t4qxqmowpyvxbq",
+    "Value": "Chuck Norris protocol design method has no status, requests or responses, only commands."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "elgv2wkvt8ioag6xywykbq",
+    "Url": "https://api.chucknorris.io/jokes/elgv2wkvt8ioag6xywykbq",
+    "Value": "Chuck Norris's keyboard doesn't have a Ctrl key because nothing controls Chuck Norris."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "rmmcukl2t6sottj2rvuuvg",
+    "Url": "https://api.chucknorris.io/jokes/rmmcukl2t6sottj2rvuuvg",
+    "Value": "Chuck Norris can unit test entire applications with a single assert."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "lxygnv_ctv-39bwayrqqug",
+    "Url": "https://api.chucknorris.io/jokes/lxygnv_ctv-39bwayrqqug",
+    "Value": "Chuck Norris doesn't pair program."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "mmwqlubbs5-eh2zqbndzeg",
+    "Url": "https://api.chucknorris.io/jokes/mmwqlubbs5-eh2zqbndzeg",
+    "Value": "Chuck Norris solved the halting problem."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "etd9c1v9smqxo2xonfm2lq",
+    "Url": "https://api.chucknorris.io/jokes/etd9c1v9smqxo2xonfm2lq",
+    "Value": "Chuck Norris doesn't need a debugger, he just stares down the bug until the code confesses."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "H9ASnHczQBG0Dj_a7eoRhw",
+    "Url": "https://api.chucknorris.io/jokes/H9ASnHczQBG0Dj_a7eoRhw",
+    "Value": "Everybody thinks the Galaxy Note 7 is explosive. In fact it is only Chuck Norris who tries to send a WhatsApp message with a selfie to his fans."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "qgshozvsrboyqdbqa-vz3q",
+    "Url": "https://api.chucknorris.io/jokes/qgshozvsrboyqdbqa-vz3q",
+    "Value": "To Chuck Norris, everything contains a vulnerability."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "koujbr9ms0ejs7-_mub34q",
+    "Url": "https://api.chucknorris.io/jokes/koujbr9ms0ejs7-_mub34q",
+    "Value": "Chuck Norris knows the last digit of PI."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "hlsa0rurqwyqanmszx0miq",
+    "Url": "https://api.chucknorris.io/jokes/hlsa0rurqwyqanmszx0miq",
+    "Value": "Scientists have estimated that the energy given off during the Big Bang is roughly equal to 1CNRhK (Chuck Norris Roundhouse Kick)."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "2nd0jxvvqnwpvagswww-lg",
+    "Url": "https://api.chucknorris.io/jokes/2nd0jxvvqnwpvagswww-lg",
+    "Value": "Chuck Norris insists on strongly-typed programming languages."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "jqgu04prsomr9uiwbyzebq",
+    "Url": "https://api.chucknorris.io/jokes/jqgu04prsomr9uiwbyzebq",
+    "Value": "For Chuck Norris, NP-Hard = O(1)."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "63pymsysqiexzldn5-wdzq",
+    "Url": "https://api.chucknorris.io/jokes/63pymsysqiexzldn5-wdzq",
+    "Value": "Chuck Norris's database has only one table, 'Kick', which he DROPs frequently."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "o6dsz6earzip2ivqoipamg",
+    "Url": "https://api.chucknorris.io/jokes/o6dsz6earzip2ivqoipamg",
+    "Value": "All browsers support the hex definitions #chuck and #norris for the colors black and blue."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "c4dlzikztk-vqqvhbzdqyg",
+    "Url": "https://api.chucknorris.io/jokes/c4dlzikztk-vqqvhbzdqyg",
+    "Value": "All arrays Chuck Norris declares are of infinite size, because Chuck Norris knows no bounds."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "74ipdu8erx6sqzutjhmgbq",
+    "Url": "https://api.chucknorris.io/jokes/74ipdu8erx6sqzutjhmgbq",
+    "Value": "Chuck Norris does not need to know about class factory pattern. He can instantiate interfaces."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "zhh3ckdztwcincr40fmgpq",
+    "Url": "https://api.chucknorris.io/jokes/zhh3ckdztwcincr40fmgpq",
+    "Value": "Chuck Norris can binary search unsorted data."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "qwv-rz6xtjmhiayprtgnvw",
+    "Url": "https://api.chucknorris.io/jokes/qwv-rz6xtjmhiayprtgnvw",
+    "Value": "Chuck Norris's keyboard has the Any key."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "va5aaacnq3yhx5wvfwtinw",
+    "Url": "https://api.chucknorris.io/jokes/va5aaacnq3yhx5wvfwtinw",
+    "Value": "Chuck Norris burst the dot com bubble."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "vugxeryxthmn186raqgnng",
+    "Url": "https://api.chucknorris.io/jokes/vugxeryxthmn186raqgnng",
+    "Value": "When Chuck Norris is web surfing websites get the message \"Warning: Internet Explorer has deemed this user to be malicious or dangerous. Proceed?\"."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "a1whrz_crhgykfuah1mrmw",
+    "Url": "https://api.chucknorris.io/jokes/a1whrz_crhgykfuah1mrmw",
+    "Value": "Chuck Norris doesn't need sudo, he just types \"Chuck Norris\" before his commands."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "bg_h3xursougaxzprcrl0q",
+    "Url": "https://api.chucknorris.io/jokes/bg_h3xursougaxzprcrl0q",
+    "Value": "Chuck Norris programs do not accept input."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "fivi0z5lt8gp_6vt3cc8pw",
+    "Url": "https://api.chucknorris.io/jokes/fivi0z5lt8gp_6vt3cc8pw",
+    "Value": "If Chuck Norris writes code with bugs, the bugs fix themselves."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "2wzginmks8azrbaxnamxdw",
+    "Url": "https://api.chucknorris.io/jokes/2wzginmks8azrbaxnamxdw",
+    "Value": "Every SQL statement that Chuck Norris codes has an implicit \"COMMIT\" in its end."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "cvwhdzuoryulqbyermgdxw",
+    "Url": "https://api.chucknorris.io/jokes/cvwhdzuoryulqbyermgdxw",
+    "Value": "Chuck Norris types with one finger. He points it at the keyboard and the keyboard does the rest."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "zdj0bfkjsmup6pkb2rpmbw",
+    "Url": "https://api.chucknorris.io/jokes/zdj0bfkjsmup6pkb2rpmbw",
+    "Value": "Chuck Norris is the only human being to display the Heisenberg uncertainty principle - you can never know both exactly where and how quickly he will roundhouse-kick you in the face."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "wb1kcp6itj-5pk9md1-tiq",
+    "Url": "https://api.chucknorris.io/jokes/wb1kcp6itj-5pk9md1-tiq",
+    "Value": "Chuck Norris invented the internet? just so he had a place to store his porn."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "nwklry_-spcowdv1lhuwsw",
+    "Url": "https://api.chucknorris.io/jokes/nwklry_-spcowdv1lhuwsw",
+    "Value": "Chuck Norris can solve the Towers of Hanoi in one move."
+  },
+  {
+    "Category": [ "dev" ],
+    "IconUrl": null,
+    "Id": "wlmypgkkrlgjguoyhc2e0q",
+    "Url": "https://api.chucknorris.io/jokes/wlmypgkkrlgjguoyhc2e0q",
+    "Value": "Chuck Norris doesn't go on the internet, he has every internet site stored in his memory. He refreshes webpages by blinking."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "lqo-nouprm-jfl9eojtana",
+    "Url": "https://api.chucknorris.io/jokes/lqo-nouprm-jfl9eojtana",
+    "Value": "When in a bar, you can order a drink called a \"Chuck Norris\". It is also known as a \"Bloody Mary\", if your name happens to be Mary."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "8danvsbpq_sa8uluveqn4a",
+    "Url": "https://api.chucknorris.io/jokes/8danvsbpq_sa8uluveqn4a",
+    "Value": "Chuck Norris ordered a Big Mac at Burger King, and got one."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "wwejtx8ascmzfkc6gjqmqa",
+    "Url": "https://api.chucknorris.io/jokes/wwejtx8ascmzfkc6gjqmqa",
+    "Value": "Chuck Norris kills anyone that asks: \"Do you want fries with that?\". Because by now everyone should know that Chuck doesn't want fries with anything. Ever."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "-gpz270mr76inxsqt3bzqa",
+    "Url": "https://api.chucknorris.io/jokes/-gpz270mr76inxsqt3bzqa",
+    "Value": "Chuck Norris can drink an entire gallon of milk in thirty-seven seconds."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "9lmuhabxqoq5avwlqs0qpa",
+    "Url": "https://api.chucknorris.io/jokes/9lmuhabxqoq5avwlqs0qpa",
+    "Value": "When Chuck Norris wants an egg, he cracks open a chicken."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "Tuk9RfV7T92nPhH-sxPCfQ",
+    "Url": "https://api.chucknorris.io/jokes/Tuk9RfV7T92nPhH-sxPCfQ",
+    "Value": "Chuck Norris double batters his chicken and fish in cocaine & gorilla milk/egg wash."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "rmippwentlkoza8wlv_vjg",
+    "Url": "https://api.chucknorris.io/jokes/rmippwentlkoza8wlv_vjg",
+    "Value": "Some people like to eat frogs' legs. Chuck Norris likes to eat lizard legs. Hence, snakes."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "egthskxhteihhte-olhghg",
+    "Url": "https://api.chucknorris.io/jokes/egthskxhteihhte-olhghg",
+    "Value": "Chuck Norris likes his coffee half and half: half coffee grounds, half wood-grain alcohol."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "yzcafw1xtf2s63xse15qug",
+    "Url": "https://api.chucknorris.io/jokes/yzcafw1xtf2s63xse15qug",
+    "Value": "When Chuck Norris goes to out to eat, he orders a whole chicken, but he only eats its soul."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "4uqhu_nmtncleixytkl0pq",
+    "Url": "https://api.chucknorris.io/jokes/4uqhu_nmtncleixytkl0pq",
+    "Value": "A man once taunted Chuck Norris with a bag of Lay's potato chips, saying \"Betcha can't eat just one!\" Chuck Norris proceeded to eat the chips, the bag, and the man in one deft move."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "czip-do5sbcehb7meep_hq",
+    "Url": "https://api.chucknorris.io/jokes/czip-do5sbcehb7meep_hq",
+    "Value": "Chuck Norris's version of a \"chocolate milkshake\" is a raw porterhouse wrapped around ten Hershey bars, and doused in diesel fuel."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "fw_gwlvrsl-7fxjvezotuq",
+    "Url": "https://api.chucknorris.io/jokes/fw_gwlvrsl-7fxjvezotuq",
+    "Value": "Chuck Norris doesn't believe in ravioli. He stuffs a live turtle with beef and smothers it in pig's blood."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "ixljkjuwsdwxnlmmjwqsfg",
+    "Url": "https://api.chucknorris.io/jokes/ixljkjuwsdwxnlmmjwqsfg",
+    "Value": "With the rising cost of gasoline, Chuck Norris is beginning to worry about his drinking habit."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "srx_bhymq5mcdnqtd7htja",
+    "Url": "https://api.chucknorris.io/jokes/srx_bhymq5mcdnqtd7htja",
+    "Value": "When Chuck Norris makes a burrito, its main ingredient is real toes."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "ojw-faz_tbglq0q4sgwt8w",
+    "Url": "https://api.chucknorris.io/jokes/ojw-faz_tbglq0q4sgwt8w",
+    "Value": "Chuck Norris doesn't churn butter. He roundhouse kicks the cows and the butter comes straight out."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "4zavbyaktuqhluply6eqmw",
+    "Url": "https://api.chucknorris.io/jokes/4zavbyaktuqhluply6eqmw",
+    "Value": "Chuck Norris uses tabasco sauce instead of visine."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "ugysngkxr2uvqdpqzr9brg",
+    "Url": "https://api.chucknorris.io/jokes/ugysngkxr2uvqdpqzr9brg",
+    "Value": "Chuck Norris once ordered a steak in a restaurant. The steak did what it was told."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "o-c_rdw5sweexosfwefcpg",
+    "Url": "https://api.chucknorris.io/jokes/o-c_rdw5sweexosfwefcpg",
+    "Value": "Most tough men eat nails for breakfast. Chuck Norris does all of his grocery shopping at Home Depot."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "2okswpdgsxygovph4hlwng",
+    "Url": "https://api.chucknorris.io/jokes/2okswpdgsxygovph4hlwng",
+    "Value": "Chuck Norris' favorite cereal is Kellogg's Nails 'N' Gravel."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "xnuwaugts-kehep-plwhpw",
+    "Url": "https://api.chucknorris.io/jokes/xnuwaugts-kehep-plwhpw",
+    "Value": "Chuck Norris invented Kentucky Fried Chicken's famous secret recipe with eleven herbs and spices. Nobody ever mentions the twelfth ingredient: Fear."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "t3bkbda-s06y4vgzun7xaa",
+    "Url": "https://api.chucknorris.io/jokes/t3bkbda-s06y4vgzun7xaa",
+    "Value": "Chuck Norris drinks napalm to quell his heartburn."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "ckg3rsihqvar2uqltyx58q",
+    "Url": "https://api.chucknorris.io/jokes/ckg3rsihqvar2uqltyx58q",
+    "Value": "When Chuck Norris was denied an Egg McMuffin at McDonald's because it was 10:35, he roundhouse kicked the store so hard it became a Wendy's."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "11m4u2vyriuhrpbag0w7sa",
+    "Url": "https://api.chucknorris.io/jokes/11m4u2vyriuhrpbag0w7sa",
+    "Value": "Chuck Norris eats beef jerky and craps gunpowder. Then, he uses that gunpowder to make a bullet, which he uses to kill a cow and make more beef jerky. Some people refer to this as the \"Circle of Life.\""
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "6n17og8kt4e2bae8a4v7zq",
+    "Url": "https://api.chucknorris.io/jokes/6n17og8kt4e2bae8a4v7zq",
+    "Value": "Chuck Norris once sued Burger King after they refused to put razor wire in his Whopper Jr, insisting that that actually is \"his\" way."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "lsgbshl3ragvgicq7u9wsw",
+    "Url": "https://api.chucknorris.io/jokes/lsgbshl3ragvgicq7u9wsw",
+    "Value": "In honor of Chuck Norris, all McDonald's in Texas have an even larger size than the super-size. When ordering, just ask to be Chucksized."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "WH43t47JTBeOs-Or4pE81g",
+    "Url": "https://api.chucknorris.io/jokes/WH43t47JTBeOs-Or4pE81g",
+    "Value": "You may check your room for monsters but monsters check their room for Chuck Norris."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "ly8tk-datoctdh3fftyh-q",
+    "Url": "https://api.chucknorris.io/jokes/ly8tk-datoctdh3fftyh-q",
+    "Value": "Chuck Norris recently had the idea to sell his urine as a canned beverage. We know this beverage as Red Bull."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "e690xhz_te2hnf7nk7ppfq",
+    "Url": "https://api.chucknorris.io/jokes/e690xhz_te2hnf7nk7ppfq",
+    "Value": "Chuck Norris eats steak for every single meal. Most times he forgets to kill the cow."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "muujj6xvr16hazym0b5tjw",
+    "Url": "https://api.chucknorris.io/jokes/muujj6xvr16hazym0b5tjw",
+    "Value": "When Chuck Norris was a baby, he didn't suck his mother's breast. His mother served him whiskey, straight out of the bottle."
+  },
+  {
+    "Category": [ "food" ],
+    "IconUrl": null,
+    "Id": "-ojrkppmrqmwrn9e5huydq",
+    "Url": "https://api.chucknorris.io/jokes/-ojrkppmrqmwrn9e5huydq",
+    "Value": "Chuck Norris starts everyday with a protein shake made from Carnation Instant Breakfast, one dozen eggs, pure Colombian cocaine, and rattlesnake venom. He injects it directly into his neck with a syringe."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "hy1jtzj8svq3mpr6pv6lfg",
+    "Url": "https://api.chucknorris.io/jokes/hy1jtzj8svq3mpr6pv6lfg",
+    "Value": "Godzilla is a Japanese rendition of Chuck Norris' first visit to Tokyo."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "etu5stytromsxrgybafqca",
+    "Url": "https://api.chucknorris.io/jokes/etu5stytromsxrgybafqca",
+    "Value": "In the X-Men movies, none of the X-Men super-powers are done with special effects. Chuck Norris is the stuntman for every character."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "ehkte1k5qtutxao9e15ulw",
+    "Url": "https://api.chucknorris.io/jokes/ehkte1k5qtutxao9e15ulw",
+    "Value": "Chuck Norris has never won an Academy Award for acting... because he's not acting."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "ujpvtgwptxeptcxes33dng",
+    "Url": "https://api.chucknorris.io/jokes/ujpvtgwptxeptcxes33dng",
+    "Value": "Chuck Norris doesn't see dead people. He makes people dead."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "uxohgpg8seo16qzc5xnbdw",
+    "Url": "https://api.chucknorris.io/jokes/uxohgpg8seo16qzc5xnbdw",
+    "Value": "\"Brokeback Mountain\" is not just a movie. It's also what Chuck Norris calls the pile of dead ninjas in his front yard."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "dol4jfp2sdmfrkx3srhrmg",
+    "Url": "https://api.chucknorris.io/jokes/dol4jfp2sdmfrkx3srhrmg",
+    "Value": "Teenage Mutant Ninja Turtles is based on a true story: Chuck Norris once swallowed a turtle whole, and when he crapped it out, the turtle was six feet tall and had learned karate."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "k2edfs9vtaqtrdn4sj7wlg",
+    "Url": "https://api.chucknorris.io/jokes/k2edfs9vtaqtrdn4sj7wlg",
+    "Value": "The pie scene in \"American Pie\" is based on a dare Chuck Norris took when he was younger. However, in Chuck Norris' case, the \"pie\" was the molten crater of an active volcano."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "HNTUHUUDSMObOHUHJul5sw",
+    "Url": "https://api.chucknorris.io/jokes/HNTUHUUDSMObOHUHJul5sw",
+    "Value": "For Bruce Willis' birthday, he received a DVD of Chuck Norris banging Demi Moore while repeatedly yelling 'Yippee Ki Yay, Motherfucker'. Norris then felt a rare twinge of guilt, so he then sent Willis a DVD of him pummeling Ashton Kutcher with Charlie Sheen."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "gcu1ibbzsyootruza5rsya",
+    "Url": "https://api.chucknorris.io/jokes/gcu1ibbzsyootruza5rsya",
+    "Value": "When Arnold says \"I'll be back\" in Terminator movie it is implied that he's going to ask Chuck Norris for help."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "ux5mdkg3ssujpmgao3uzvg",
+    "Url": "https://api.chucknorris.io/jokes/ux5mdkg3ssujpmgao3uzvg",
+    "Value": "President Roosevelt once rode his horse 100 miles. Chuck Norris carried his the same distance in half the time."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "xtuqmvbvrzc9tob-a1s7ta",
+    "Url": "https://api.chucknorris.io/jokes/xtuqmvbvrzc9tob-a1s7ta",
+    "Value": "Some people wear Superman pajamas. Superman wears Chuck Norris pajamas."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "9KQZrE1KRoG29dU4QvZ3vQ",
+    "Url": "https://api.chucknorris.io/jokes/9KQZrE1KRoG29dU4QvZ3vQ",
+    "Value": "If Chuck Norris where to meet Arnold Schwarzenegger the world would end of the action packed that would follow"
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "dJQ2OqkBQPqfksj9maoxYQ",
+    "Url": "https://api.chucknorris.io/jokes/dJQ2OqkBQPqfksj9maoxYQ",
+    "Value": "Chuck Norris can beat Arnie in an Arnold Schwarzenegger Impersonation contest."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "dP_0_ITOTom4xnxLkOr7HQ",
+    "Url": "https://api.chucknorris.io/jokes/dP_0_ITOTom4xnxLkOr7HQ",
+    "Value": "Arnold Schwarzenegger says \"I'll be back!\". Chuck Norris says \"I'm back!\""
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "h6t1xcbws6m8k_pduoznwg",
+    "Url": "https://api.chucknorris.io/jokes/h6t1xcbws6m8k_pduoznwg",
+    "Value": "MacGyver can build an airplane out of gum and paper clips, but Chuck Norris can roundhouse-kick his head through a wall and take it."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "udiwfiwnqpqsyhoj_fjuba",
+    "Url": "https://api.chucknorris.io/jokes/udiwfiwnqpqsyhoj_fjuba",
+    "Value": "James Cameron wanted Chuck Norris to play the Terminator. However, upon reflection, he realized that would have turned his movie into a documentary, so he went with Arnold Schwarzenegger."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "wrL_bWmWSiO2SNnt1_Uqog",
+    "Url": "https://api.chucknorris.io/jokes/wrL_bWmWSiO2SNnt1_Uqog",
+    "Value": "Chuck Norris has five children whose names are: - Van Damme - Arnold Schwarzenegger - Clint Eastwood - Steven Seagal - Joe Pesci"
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "5e4voyf7t_yw-9qi8ppy6w",
+    "Url": "https://api.chucknorris.io/jokes/5e4voyf7t_yw-9qi8ppy6w",
+    "Value": "The original draft of The Lord of the Rings featured Chuck Norris instead of Frodo Baggins. It was only 5 pages long, as Chuck roundhouse-kicked Sauron's ass halfway through the first chapter."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "pn_y-heotimuyfatmsvzng",
+    "Url": "https://api.chucknorris.io/jokes/pn_y-heotimuyfatmsvzng",
+    "Value": "When Bruce Banner gets mad, he turns into the Hulk. When the Hulk gets mad, he turns into Chuck Norris."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "4-516mfmty6qt5e8hubllq",
+    "Url": "https://api.chucknorris.io/jokes/4-516mfmty6qt5e8hubllq",
+    "Value": "In a fight between Batman and Darth Vader, the winner would be Chuck Norris."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "0JqamoTkR_GK0DYbigQ5cw",
+    "Url": "https://api.chucknorris.io/jokes/0JqamoTkR_GK0DYbigQ5cw",
+    "Value": "Arnold Schwarzenegger always says he'll be back. But Chuck Norris always handles things the first time"
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "6ilnkzwert6gpoebamjffw",
+    "Url": "https://api.chucknorris.io/jokes/6ilnkzwert6gpoebamjffw",
+    "Value": "A movie scene depicting Chuck Norris losing a fight with Bruce Lee was the product of history's most expensive visual effect. When adjusted for inflation, the effect cost more than the Gross National Product of Paraguay."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "sudkgw_tr_ejehjag7cqwq",
+    "Url": "https://api.chucknorris.io/jokes/sudkgw_tr_ejehjag7cqwq",
+    "Value": "The opening scene of the movie \"Saving Private Ryan\" is loosely based on games of dodgeball Chuck Norris played in second grade."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "5vpoprx6sy-ssxbtas2uka",
+    "Url": "https://api.chucknorris.io/jokes/5vpoprx6sy-ssxbtas2uka",
+    "Value": "Everybody loves Raymond. Except Chuck Norris."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "iceymh7_siixjrhoqgnwgq",
+    "Url": "https://api.chucknorris.io/jokes/iceymh7_siixjrhoqgnwgq",
+    "Value": "Scotty in Star Trek often says \"Ye cannae change the laws of physics.\" This is untrue. Chuck Norris can change the laws of physics. With his fists."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "Y5da3-IRTBurGfuFZgKIRg",
+    "Url": "https://api.chucknorris.io/jokes/Y5da3-IRTBurGfuFZgKIRg",
+    "Value": "Scientists created Arnold Schwarzenegger, Sly Stallone, Jean-Claude Van Damme, Vin Diesel, and Hulk Hogan by using urine samples from a toilet Chuck Norris once pissed in."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "zc2g3me0rnqbfankmo99hq",
+    "Url": "https://api.chucknorris.io/jokes/zc2g3me0rnqbfankmo99hq",
+    "Value": "MacGyver immediately tried to make a bomb out of some Q-Tips and Gatorade, but Chuck Norris roundhouse-kicked him in the solar plexus. MacGyver promptly threw up his own heart."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "1vmkq9bltgyjcj01c1eajg",
+    "Url": "https://api.chucknorris.io/jokes/1vmkq9bltgyjcj01c1eajg",
+    "Value": "Superman once watched an episode of Walker, Texas Ranger. He then cried himself to sleep."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "Z_9zGThoRuCxkU08yvHBxQ",
+    "Url": "https://api.chucknorris.io/jokes/Z_9zGThoRuCxkU08yvHBxQ",
+    "Value": "Arnold Schwarzenegger would never ask Chuck Norris to \"DO IT NOW\" because he knows Chuck will"
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "bEfuO4msQ12ub8S1ZKJqvw",
+    "Url": "https://api.chucknorris.io/jokes/bEfuO4msQ12ub8S1ZKJqvw",
+    "Value": "In the director's cut of \"The End of Days,\" Arnold Schwarzenegger is fighting a losing battle with the Devil until he prays to a stained glass window of Chuck Norris putting on a pair of jeans. They had to use CGI to superimpose a crucified Jesus for the theatrical release."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "qaetpus9twgdkckd70jisw",
+    "Url": "https://api.chucknorris.io/jokes/qaetpus9twgdkckd70jisw",
+    "Value": "The movie \"Delta Force\" was extremely hard to make because Chuck had to downplay his abilities. The first few cuts were completely unbelievable."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "c-3yrrglr0ouxifeo2rzsw",
+    "Url": "https://api.chucknorris.io/jokes/c-3yrrglr0ouxifeo2rzsw",
+    "Value": "In the movie \"The Matrix\", Chuck Norris is the Matrix. If you pay close attention in the green \"falling code\" scenes, you can make out the faint texture of his beard."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "te2c64-ls3owmuy5amehtg",
+    "Url": "https://api.chucknorris.io/jokes/te2c64-ls3owmuy5amehtg",
+    "Value": "The original title for Alien vs. Predator was Alien and Predator vs Chuck Norris. The film was cancelled shortly after going into preproduction. No one would pay nine dollars to see a movie fourteen seconds long."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "fdwytur3tpgz48-mdd1amg",
+    "Url": "https://api.chucknorris.io/jokes/fdwytur3tpgz48-mdd1amg",
+    "Value": "The original title for Star Wars was \"Skywalker: Texas Ranger\". Starring Chuck Norris."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "mb3nrbmjq3guzb0jg8femg",
+    "Url": "https://api.chucknorris.io/jokes/mb3nrbmjq3guzb0jg8femg",
+    "Value": "Jack Bauer tried to use his detailed knowledge of torture techniques, but to no avail: Chuck Norris thrives on pain. Chuck Norris then ripped off Jack Bauer's arm and beat him to death with it. Game, set, match."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "1fkrltd6skk9tj3nm9xphq",
+    "Url": "https://api.chucknorris.io/jokes/1fkrltd6skk9tj3nm9xphq",
+    "Value": "Movie trivia: The movie \"Invasion U.S.A.\" is, in fact, a documentary."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "nuvacfzeqomvab8yfeskxq",
+    "Url": "https://api.chucknorris.io/jokes/nuvacfzeqomvab8yfeskxq",
+    "Value": "They had to edit the first ending of 'Lone Wolf McQuade' after Chuck Norris kicked David Carradine's ass, then proceeded to barbecue and eat him."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "yfo2yjqlsrc5ksiimbpqig",
+    "Url": "https://api.chucknorris.io/jokes/yfo2yjqlsrc5ksiimbpqig",
+    "Value": "In the first Jurassic Park movie, the Tyrannosaurus Rex wasn't chasing the jeep. Chuck Norris was chasing the Tyrannosaurus AND the jeep."
+  },
+  {
+    "Category": [ "movie" ],
+    "IconUrl": null,
+    "Id": "s4gbskbvscsc4zzybwhh3q",
+    "Url": "https://api.chucknorris.io/jokes/s4gbskbvscsc4zzybwhh3q",
+    "Value": "Jean-Claude Van Damme once kicked Chuck Norris' ass. He was then awakened from his dream by a roundhouse kick to the face."
+  }
+]
