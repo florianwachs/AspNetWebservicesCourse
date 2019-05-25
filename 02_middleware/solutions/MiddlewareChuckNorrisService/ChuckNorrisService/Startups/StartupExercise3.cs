@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Startups
 {
-    public class StartupExcercise3
+    public class StartupExercise3
     {
         public void Configure(IApplicationBuilder app)
         {
