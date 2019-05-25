@@ -36,4 +36,4 @@ Diese Middleware soll nur im `DEV`-Environment in die Pipeline eingehängt werde
 
 Bisher reagiert unser Service auf jeden Request mit der gleichen Antwort. Wir wollen eine API implementieren, welche nur beim Aufruf von `api/jokes/random` mittels eines [GET]-Requests eine zufälligen Witz liefert. Nutzen Sie dazu die Routing-Komponente des MVC-Frameworks. In allen anderen Fällen soll dem Aufrufer eine Antwort mit dem Statuscode `404 Bad Request` zurückgegeben werden.
 
-> **Hinweise**: `app.Use`, `app.Run`, `app.Map`
+> **Hinweise**: `RouteBuilder`, `app.AddRouter`, `app.UseRouter`
