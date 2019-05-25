@@ -21,10 +21,11 @@ namespace ChuckNorrisService.Startups
 
             app.Use(async (context, next) =>
             {
-                var watch = Stopwatch.StartNew();
+                // Wir führen den Request aus
                 await next();
-                watch.Stop();
-                Console.WriteLine($"This request took {watch.ElapsedMilliseconds} ms.");
+
+                // und verzögern die Antwort
+                await Task.Delay(TimeSpan.FromSeconds(2));
             });
 
             app.Run(async context =>

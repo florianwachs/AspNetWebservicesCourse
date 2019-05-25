@@ -22,7 +22,7 @@ Während der Vorlesung haben wir behandelt, wie sie die Middleware-Pipeline sowo
 
 ## Aufgabe 3
 
-Implementieren Sie bitte eine Middleware, welche die Zeit für die Bearbeitung eines Requests aufzeichnet und auf der Console ausgibt. Der zufällige Witz aus **Aufgabe 2** soll weiterhin ausgegeben werden.
+Implementieren Sie bitte eine Middleware, welche die Antwort an den Client um 2s verzögert mittels `app.Use`. Der zufällige Witz aus **Aufgabe 2** soll weiterhin in der eigenständigen Middleware-Komponente ausgegeben werden.
 
 ### Zusatzaufgabe
 
