@@ -9,7 +9,8 @@ namespace ChuckNorrisService
     {
         private static async Task Main(string[] args)
         {
-            IWebHostBuilder builder = CreateWebHostBuilder<StartupExercise1>(args);
+            // var builder = CreateWebHostBuilder<StartupExercise1_and_2>(args);
+            var builder = CreateWebHostBuilder<StartupExcercise3>(args);
             builder.Build().Run();
         }
 

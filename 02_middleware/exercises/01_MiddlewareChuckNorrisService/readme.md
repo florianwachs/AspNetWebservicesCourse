@@ -22,25 +22,18 @@ Während der Vorlesung haben wir behandelt, wie sie die Middleware-Pipeline sowo
 
 ## Aufgabe 3
 
-Implementieren Sie bitte eine Middleware, welche die Zeit eines ... Der zufällige Witz aus **Aufgabe 2** soll weiterhin ausgegeben werden.
+Implementieren Sie bitte eine Middleware, welche die Zeit für die Bearbeitung eines Requests aufzeichnet und auf der Console ausgibt. Der zufällige Witz aus **Aufgabe 2** soll weiterhin ausgegeben werden.
 
 ### Zusatzaufgabe
 
 Diese Middleware soll nur im `DEV`-Environment in die Pipeline eingehängt werden.
 
-> **Hinweise**: `app.Use`, `app.Run`
+> **Hinweise**: `app.Use`, `app.Run`, `Environment`, `Stopwatch`, `Console`
 
-// TODO Add DI Sample before?
+// TODO: REST erklären
+
 ## Aufgabe 4
 
-Bisher reagiert unser Service auf jeden Request mit der gleichen Antwort. Implementieren Sie bitte folgende Middleware Pipeline:
-
-// TODO Bild Middleware Pipeline
+Bisher reagiert unser Service auf jeden Request mit der gleichen Antwort. Wir wollen eine API implementieren, welche nur beim Aufruf von `api/jokes/random` mittels eines [GET]-Requests eine zufälligen Witz liefert. Nutzen Sie dazu die Routing-Komponente des MVC-Frameworks. In allen anderen Fällen soll dem Aufrufer eine Antwort mit dem Statuscode `404 Bad Request` zurückgegeben werden.
 
 > **Hinweise**: `app.Use`, `app.Run`, `app.Map`
-
-## Aufgabe 5
-
-Implementieren Sie folgende Middleware Pipeline mittels **Endpoint-Routing**:
-
-// TODO Bild Middleware Pipeline
