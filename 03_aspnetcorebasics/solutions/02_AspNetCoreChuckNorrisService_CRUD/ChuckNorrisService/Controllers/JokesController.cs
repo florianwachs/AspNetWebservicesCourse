@@ -13,9 +13,9 @@ namespace ChuckNorrisService.Controllers
     [Route("api/[controller]")]
     public class JokesController : ControllerBase
     {
-        private readonly IJokeProvider _jokeProvider;
+        private readonly IJokeRepository _jokeProvider;
 
-        public JokesController(IJokeProvider jokeProvider)
+        public JokesController(IJokeRepository jokeProvider)
         {
             _jokeProvider = jokeProvider;
         }

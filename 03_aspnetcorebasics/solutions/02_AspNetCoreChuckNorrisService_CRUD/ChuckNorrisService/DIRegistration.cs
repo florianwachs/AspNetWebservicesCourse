@@ -9,7 +9,7 @@ namespace ChuckNorrisService
     {
         public static IServiceCollection AddJokesServices(this IServiceCollection services)
         {
-            services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
+            services.AddSingleton<IJokeRepository, InMemoryJokeRepository>();
             return services;
         }
     }
