@@ -28,5 +28,3 @@ Bisher haben wir den `JokesProvider` immer direkt instanziert. Das hat eine enge
 ### Zusatzaufgabe
 
 Die `ConfigureServices`-Methode kann schnell unübersichtlich werden. Um den Überblick zu behalten, definieren Sie bitte eine Extension-Method namens `AddJokes` und registrieren sie dort Ihren Provider.
-
-## Aufgabe 4
