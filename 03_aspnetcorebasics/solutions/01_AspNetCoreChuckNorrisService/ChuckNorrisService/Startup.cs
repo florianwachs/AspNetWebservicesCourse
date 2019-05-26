@@ -17,7 +17,7 @@ namespace ChuckNorrisService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
+            services.AddJokesServices();
         }
 
         public void Configure(IApplicationBuilder app)
