@@ -14,16 +14,14 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request erfolgreich 
 
 ## Aufgabe 2
 
-- [x] Implementieren Sie
+- [ ] Erweitern Sie die Api um `Create`, `Update` und `Delete` Endpunkte.
+- [ ] Ergänzen Sie die fehlende Implementierung in `JokesProvider`
+- [ ] Testen Sie Ihre API mit Postman, Fiddler, ...
 
-> Hinweise: `ControllerBase`, `HttpGet`
+> Hinweise: **Sie müssen die Änderungen nicht wieder in die JSON-Datei zurückspeichern! Führen Sie die Änderungen bitte nur In-Memory aus.** Hint-Tags: `ControllerBase`, `Http[Verb]`
 
 ## Aufgabe 3
 
-Bisher haben wir den `JokesProvider` immer direkt instanziert. Das hat eine enge Koppelung von `JokesController` zur `JokesProvider` Implementierung zur Folge. Nutzen Sie das Dependency Injection System um eine Instanz eines JokesProviders über Constructor-Injection im Controller zu erhalten.
+// TODO ModelValidation mittels Annotations
+// TODO ModelValidations mittels Fluent Validation
 
-Überlegen Sie sich, welche Lifetime für Ihren `JokesProvider` angebracht ist.
-
-### Zusatzaufgabe
-
-Die `ConfigureServices`-Methode kann schnell unübersichtlich werden. Um den Überblick zu behalten, definieren Sie bitte eine Extension-Method namens `AddJokes` und registrieren sie dort Ihren Provider.
