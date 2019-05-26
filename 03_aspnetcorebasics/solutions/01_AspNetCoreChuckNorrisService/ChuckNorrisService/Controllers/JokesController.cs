@@ -13,17 +13,17 @@ namespace ChuckNorrisService.Controllers
     [Route("api/[controller]")]
     public class JokesController : ControllerBase
     {
-        private readonly FileSystemJokeProvider _jokesProvider;
+        private readonly IJokeProvider _jokeProvider;
 
-        public JokesController()
+        public JokesController(IJokeProvider jokeProvider)
         {
-           _jokesProvider = new FileSystemJokeProvider();
+            _jokeProvider = jokeProvider;
         }
 
         [HttpGet("random")]
         public async Task<ActionResult<Joke>> GetRandomJoke()
         {
-            return Ok(await _jokesProvider.GetRandomJokeAsync());
+            return Ok(await _jokeProvider.GetRandomJokeAsync());
         }
     }
 }

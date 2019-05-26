@@ -17,9 +17,13 @@ Stellen Sie sicher, dass Sie die MVC-Middleware in Ihrer `Startup.cs` korrekt ei
 
 Erstellen Sie sich einen neuen Unterordner `Controllers`. Implementieren Sie dort einen `Controller` welcher beim Aufruf von `api/jokes/random` einen zufälligen Witz zurückliefert.
 
+> Hinweise: `ControllerBase`, `HttpGet`
+
 ## Aufgabe 3
 
 Bisher haben wir den `JokesProvider` immer direkt instanziert. Das hat eine enge Koppelung von `JokesController` zur `JokesProvider` Implementierung zur Folge. Nutzen Sie das Dependency Injection System um eine Instanz eines JokesProviders über Constructor-Injection im Controller zu erhalten.
+
+Überlegen Sie sich, welche Lifetime für Ihren `JokesProvider` angebracht ist.
 
 ### Zusatzaufgabe
 

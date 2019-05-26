@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ChuckNorrisService.Models;
+using ChuckNorrisService.Providers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,7 @@ namespace ChuckNorrisService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
         }
 
         public void Configure(IApplicationBuilder app)
