@@ -23,7 +23,7 @@ namespace ChuckNorrisService.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<Joke>> GetRandomJoke()
         {
-            return Ok(await _jokeProvider.GetRandomJokeAsync());
+            return Ok(await _jokeProvider.GetRandomJoke());
         }
     }
 }

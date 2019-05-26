@@ -11,9 +11,15 @@ namespace ChuckNorrisService.Providers
 {
     public class InMemoryJokeRepository : IJokeRepository
     {
+        private readonly object lockObj = new object();
         private static readonly Random random = new Random();
         private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
-        private List<Joke> _jokes;
+        private Dictionary<string, Joke> _jokes;
+
+        public InMemoryJokeRepository()
+        {
+            Init();
+        }
 
         public Task<Joke> Add(Joke joke)
         {
@@ -30,10 +36,9 @@ namespace ChuckNorrisService.Providers
             throw new NotImplementedException();
         }
 
-        public async Task<Joke> GetRandomJokeAsync()
+        public async Task<Joke> GetRandomJoke()
         {
-            await InitIfNecessary();
-            return _jokes[random.Next(0, _jokes.Count + 1)];
+            return _jokes.Values.ToList()[random.Next(0, _jokes.Count + 1)];
         }
 
         public Task<Joke> Update(Joke joke)
@@ -41,19 +46,16 @@ namespace ChuckNorrisService.Providers
             throw new NotImplementedException();
         }
 
-        private async Task InitIfNecessary()
+        private void Init()
         {
-            if (_jokes?.Any() == true)
-                return;
-
             if (!File.Exists(JokeFilePath))
             {
                 throw new InvalidOperationException($"no jokes file located in {JokeFilePath}");
             }
 
-            var rawJson = await File.ReadAllTextAsync(JokeFilePath);
+            var rawJson = File.ReadAllText(JokeFilePath);
             var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
-            _jokes = GetJokesFromDtos(jokeDtos);
+            _jokes = GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id);
         }
 
         private List<Joke> GetJokesFromDtos(List<JokeDto> jokeDtos)
@@ -65,8 +67,10 @@ namespace ChuckNorrisService.Providers
             {
                 Id = dto.Id,
                 JokeText = dto.JokeText,
-                Categories = dto.Category?.Select(cat => categoryMap[cat]).ToArray() ?? Array.Empty<JokeCategory>()
+                Categories = GetMatchingCategoriesOrEmpty(dto)
             }).ToList();
+
+            JokeCategory[] GetMatchingCategoriesOrEmpty(JokeDto dto) => dto.Category?.Select(cat => categoryMap[cat]).ToArray() ?? Array.Empty<JokeCategory>();
         }
     }
 }

@@ -8,6 +8,6 @@ namespace ChuckNorrisService.Models
         Task<Joke> Add(Joke joke);
         Task<Joke> Update(Joke joke);
         Task<Joke> Delete(string id);
-        Task<Joke> GetRandomJokeAsync();
+        Task<Joke> GetRandomJoke();
     }
 }
