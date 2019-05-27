@@ -22,6 +22,23 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request erfolgreich 
 
 ## Aufgabe 3
 
-// TODO ModelValidation mittels Annotations
-// TODO ModelValidations mittels Fluent Validation
+"Never trust the client" ist eine Regel die es stets zu befolgen gilt. Ein Ansatz gegen korrupte Daten ist ModelValidation. Nutzen Sie die aus der Vorlesung bekannten Data-Annotations.
+Sorgen Sie bitte dafür das:
 
+- [ ] ein Witz einen JokeText enthält
+- [ ] der JokeText nicht länger als 500 Zeichen beträgt.
+
+## Aufgabe 4
+
+Bei der Anwendung von Domain Driven Design wird besonders Wert darauf gelegt, das das Domänenmodell keinerlei Framework spezifische Abhängigkeiten hat. Selbst unsere Data-Annotations sollen vermieden werden.
+
+- [ ] Implementieren Sie die die Validierungskriterien auf Aufgabe 3 mittels des Fluent-Validation-Frameworks aus der Vorlesung.
+- Implementieren Sie einen Validator welcher falls Kategorien angegeben sind, sicherstellt das die Werte nur jeweils einmal vorkommen.
+
+> Diskussion: Ihre Meinung ist gefragt. Welche Vor- / Nachteile haben die beiden Ansätze Ihrer Meinung nach? Welchen Ansatz würden Sie bevorzugen?
+
+## Aufgabe 5
+
+Sie haben nun die API direkt mittels Middleware implementiert und anschließend über die Controller-Abstraktion des MVC Frameworks
+
+> Diskussion: Was sind Ihre Eindrücke zu den bisherigen Ansätzen. Können Sie sich Fälle vorstellen, in welchen Sie die direkte Middleware Implementierung bevorzugen?
