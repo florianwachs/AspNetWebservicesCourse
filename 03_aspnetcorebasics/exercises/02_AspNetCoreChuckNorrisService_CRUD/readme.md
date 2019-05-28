@@ -25,6 +25,8 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 - [ ] Erweitern Sie die Api um einen partiellen Update Endpunkt (PATCH)
 - [ ] Testen Sie das teilweise Aktualisieren mittels eines HTTP-Clients ihrer Wahl (z.B. Postman)
 
+> Hinweise: [Microsoft Docs HTTP Patch](https://docs.microsoft.com/de-de/aspnet/core/web-api/jsonpatch?view=aspnetcore-2.2)
+
 ## Aufgabe 4
 
 "Never trust the client" ist eine Regel die es stets zu befolgen gilt. Ein Ansatz gegen korrupte Daten ist ModelValidation. Nutzen Sie die aus der Vorlesung bekannten Data-Annotations.
@@ -38,7 +40,7 @@ Sorgen Sie bitte dafür das:
 Bei der Anwendung von Domain Driven Design wird besonders Wert darauf gelegt, das das Domänenmodell keinerlei Framework spezifische Abhängigkeiten hat. Selbst unsere Data-Annotations sollen vermieden werden.
 
 - [ ] Implementieren Sie die die Validierungskriterien auf Aufgabe 3 mittels des Fluent-Validation-Frameworks aus der Vorlesung.
-- Implementieren Sie einen Validator welcher falls Kategorien angegeben sind, sicherstellt das die Werte nur jeweils einmal vorkommen.
+- [ ] Implementieren Sie einen Validator welcher falls Kategorien angegeben sind, sicherstellt das die Werte nur jeweils einmal vorkommen.
 
 > Diskussion: Ihre Meinung ist gefragt. Welche Vor- / Nachteile haben die beiden Ansätze Ihrer Meinung nach? Welchen Ansatz würden Sie bevorzugen?
 
