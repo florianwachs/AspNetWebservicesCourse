@@ -1,9 +1,12 @@
 ﻿using ChuckNorrisService.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +14,9 @@ namespace ChuckNorrisService.Providers
 {
     public class InMemoryJokeRepository : IJokeRepository
     {
-        private readonly object lockObj = new object();
         private static readonly Random random = new Random();
         private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
-        private Dictionary<string, Joke> _jokes;
+        private ConcurrentDictionary<string, Joke> _jokes;
 
         public InMemoryJokeRepository()
         {
@@ -23,27 +25,40 @@ namespace ChuckNorrisService.Providers
 
         public Task<Joke> Add(Joke joke)
         {
-            throw new NotImplementedException();
+            EnsureId(joke);
+            _jokes.AddOrUpdate(joke.Id, joke, (id, existingJoke) => joke);
+            return Task.FromResult(joke);
         }
 
-        public Task<Joke> Delete(string id)
+        private void EnsureId(Joke joke)
         {
-            throw new NotImplementedException();
+            joke.Id = string.IsNullOrWhiteSpace(joke.Id) ? Guid.NewGuid().ToString() : joke.Id;
+        }
+
+        public Task Delete(string id)
+        {
+            _jokes.Remove(id, out _);
+            return Task.CompletedTask;
         }
 
         public Task<Joke> GetById(string id)
         {
-            throw new NotImplementedException();
+            var result = _jokes.TryGetValue(id, out var joke) ? joke : default;
+            return Task.FromResult(result);
         }
 
-        public async Task<Joke> GetRandomJoke()
+        public Task<Joke> GetRandomJoke()
         {
-            return _jokes.Values.ToList()[random.Next(0, _jokes.Count + 1)];
+            return Task.FromResult(_jokes.Values.ToList()[random.Next(0, _jokes.Count + 1)]);
         }
 
         public Task<Joke> Update(Joke joke)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(joke.Id))
+                throw new InvalidOperationException("no joke.Id provided");
+
+            _jokes.AddOrUpdate(joke.Id, joke, (existingKey, existingJoke) => joke);
+            return Task.FromResult(joke);
         }
 
         private void Init()
@@ -55,7 +70,7 @@ namespace ChuckNorrisService.Providers
 
             var rawJson = File.ReadAllText(JokeFilePath);
             var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
-            _jokes = GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id);
+            _jokes = new ConcurrentDictionary<string, Joke>(GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id));
         }
 
         private List<Joke> GetJokesFromDtos(List<JokeDto> jokeDtos)
