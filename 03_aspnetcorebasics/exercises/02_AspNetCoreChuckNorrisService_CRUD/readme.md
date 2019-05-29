@@ -33,7 +33,8 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 Sorgen Sie bitte dafür das:
 
 - [ ] ein Witz einen JokeText enthält
-- [ ] der JokeText nicht länger als 500 Zeichen beträgt.
+- [ ] der JokeText nicht länger als 500 Zeichen beträgt
+- [ ] Versuchen Sie gültige / ungültige Witze an Ihre API zu schicken, nutzen Sie den Debugger um sich die Validierung im Controller anzusehen
 
 ## Aufgabe 5
 

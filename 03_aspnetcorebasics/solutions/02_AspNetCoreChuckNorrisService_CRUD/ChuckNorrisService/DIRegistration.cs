@@ -1,5 +1,6 @@
 using ChuckNorrisService.Models;
 using ChuckNorrisService.Providers;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChuckNorrisService
@@ -10,6 +11,7 @@ namespace ChuckNorrisService
         public static IServiceCollection AddJokesServices(this IServiceCollection services)
         {
             services.AddSingleton<IJokeRepository, InMemoryJokeRepository>();
+            services.AddTransient<IValidator<Joke>, JokeValidator>();
             return services;
         }
     }

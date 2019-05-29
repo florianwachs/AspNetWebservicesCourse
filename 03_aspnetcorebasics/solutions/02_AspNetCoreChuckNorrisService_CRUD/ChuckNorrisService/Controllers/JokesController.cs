@@ -36,6 +36,11 @@ namespace ChuckNorrisService.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNew([FromBody]Joke joke)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _jokeProvider.Add(joke);
             return Ok(result);
         }
