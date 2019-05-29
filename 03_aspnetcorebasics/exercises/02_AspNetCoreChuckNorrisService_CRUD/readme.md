@@ -14,9 +14,9 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 
 ## Aufgabe 2
 
-- [ ] Erweitern Sie die Api um `Create (POST)`, `Update (PUT)` und `Delete (DELETE)` Endpunkte.
+- [ ] Erweitern Sie die Api um `Create (POST)`, `Read (GET)`, `Update (PUT)` und `Delete (DELETE)` Endpunkte.
 - [ ] Ergänzen Sie die fehlende Implementierung in `JokesProvider`
-- [ ] Testen Sie Ihre API mit Postman, Fiddler, ...
+- [ ] Testen Sie Ihre API mit Postman, Fiddler, VS Code ...
 
 > Hinweise: **Sie müssen die Änderungen nicht wieder in die JSON-Datei zurückspeichern! Führen Sie die Änderungen bitte nur In-Memory aus.** Hint-Tags: `ControllerBase`, `Http[Verb]`
 
