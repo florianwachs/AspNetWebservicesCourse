@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChuckNorrisService.Models
 {
     public class JokeCategory : IEquatable<JokeCategory>
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
         public string Name { get; set; }
         public static JokeCategory FromName(string name) 
