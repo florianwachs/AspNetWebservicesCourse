@@ -42,7 +42,7 @@ namespace ChuckNorrisService.Controllers
             }
 
             var result = await _jokeProvider.Add(joke);
-            return Ok(result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]

@@ -21,7 +21,9 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegang
 > Hinweise: `InMemoryJokeRepository.Init`, [Async Startup Task](https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/)
 
 ## Aufgabe 3
-
+- [ ] Implementieren Sie eine Klasse `EFJokeRepository` welche das Interface `IJokeRepository` implementiert und Ihren `JokeDbContext` verwendet.
+- [ ] Registrieren Sie dieses `EFJokeRepository` in Ihrem DI-System
+- [ ] Testen Sie die API mit einem HTTP-Client Ihrer Wahl
 
 
 ## Aufgabe 4
