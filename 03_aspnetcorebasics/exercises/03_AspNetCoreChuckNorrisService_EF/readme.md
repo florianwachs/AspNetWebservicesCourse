@@ -14,11 +14,11 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegang
 
 ## Aufgabe 2
 - [ ] Ergänzen Sie `Joke` und `JokeCategory` um notwendige Attribute, wir möchten nicht das die Ids von der Datenbank generiert werden
-- [ ] Implementieren Sie einen DbJokeContext für die Modelklassen `Joke` und `JokeCategories`
+- [ ] Implementieren Sie einen `DbJokeContext` für die Modelklassen `Joke` und `JokeCategories`
 - [ ] Registrieren Sie den Context im DI-System und verwenden Sie die In-Memory-Database des EF Core Frameworks
 - [ ] Sorgen Sie dafür, dass Ihre Datenbank beim Starten mit Witzen und Kategorien gefüllt werden
 
-> Hinweise: `InMemoryJokeRepository.Init`
+> Hinweise: `InMemoryJokeRepository.Init`, [Async Startup Task](https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/)
 
 ## Aufgabe 3
 

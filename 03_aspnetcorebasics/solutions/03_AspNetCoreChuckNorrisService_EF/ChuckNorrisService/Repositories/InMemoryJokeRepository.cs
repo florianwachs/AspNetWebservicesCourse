@@ -68,9 +68,14 @@ namespace ChuckNorrisService.Providers
                 throw new InvalidOperationException($"no jokes file located in {JokeFilePath}");
             }
 
+            _jokes = new ConcurrentDictionary<string, Joke>(GetJokes().ToDictionary(k => k.Id));
+        }
+
+        private List<Joke> GetJokes()
+        {
             var rawJson = File.ReadAllText(JokeFilePath);
             var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
-            _jokes = new ConcurrentDictionary<string, Joke>(GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id));
+            return GetJokesFromDtos(jokeDtos);
         }
 
         private List<Joke> GetJokesFromDtos(List<JokeDto> jokeDtos)

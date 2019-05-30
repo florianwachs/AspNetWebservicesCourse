@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using ChuckNorrisService.DataAccess;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,7 @@ namespace ChuckNorrisService
             services.AddJokesServices();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, JokeDbContext db)
         {
             app.UseMvc();
         }
