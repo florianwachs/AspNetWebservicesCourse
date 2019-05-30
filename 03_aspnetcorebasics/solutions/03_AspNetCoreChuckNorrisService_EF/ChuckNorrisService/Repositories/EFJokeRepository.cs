@@ -65,6 +65,5 @@ namespace ChuckNorrisService.Repositories
             return joke;
         }
 
-
     }
 }
