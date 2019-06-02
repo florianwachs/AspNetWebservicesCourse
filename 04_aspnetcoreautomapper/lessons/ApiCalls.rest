@@ -1,0 +1,52 @@
+# Rufen wir von der API zuerst alle Daten ab
+GET https://localhost:44374/api/v1/userprofiles HTTP/1.1
+
+###
+# Als Jason Bourne wollen wir unser Dasein nicht länger als normaler User
+# fristen. Schöne wäre es doch auch, wenn Chuck für uns bezahlt.
+PUT https://localhost:44374/api/v1/userprofiles/2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": "2",
+    "firstName": "Jason",
+    "lastName": "Bourne",
+    "age": 18,
+    "isAdmin": true,
+    "creditCardNumber": "12345"
+}
+
+###
+# Sehen wir uns an was nun zurückgegeben wird...
+GET https://localhost:44374/api/v1/userprofiles HTTP/1.1
+
+# Wir sind Opfer von Overposting geworden, 
+# da wir unsere Entität ein 1:1 Mapping mit unserer API hat
+
+###
+# Mittels ViewModels lässt sich dieses Problem umgehen
+# Hier kommen nur noch die Eigenschaften zurück, die
+# von der View benötigt werden.
+GET https://localhost:44374/api/v2/userprofiles HTTP/1.1
+
+###
+PUT https://localhost:44374/api/v2/userprofiles/2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": "2",
+    "firstName": "Jason",
+    "lastName": "Bourne",
+    "age": 18,
+    "isAdmin": true,
+    "creditCardNumber": "12345"
+}
+
+# Da das Editmodel keine Property "IsAdmin" mehr besitzt,
+# besteht auch keine Möglichkeit für den Modelbuilder
+# diesen Wert zu binden.
+
+###
+GET https://localhost:44374/api/v2/userprofiles HTTP/1.1
+
+# die Admin-Property bleibt unberührt.

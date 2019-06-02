@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomapperLesson", "AutomapperLesson\AutomapperLesson.csproj", "{70575D56-06A6-4CB8-9135-8765D0543A5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomapperLesson.Domain", "AutomapperLesson.Domain\AutomapperLesson.Domain.csproj", "{D590F4AA-9D66-4863-8C97-6C0397C1CB68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomapperLesson.Infrastructure", "AutomapperLesson.Infrastructure\AutomapperLesson.Infrastructure.csproj", "{6AF88A1F-6C0D-4879-BAA3-0DD5CE5A448D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70575D56-06A6-4CB8-9135-8765D0543A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70575D56-06A6-4CB8-9135-8765D0543A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70575D56-06A6-4CB8-9135-8765D0543A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70575D56-06A6-4CB8-9135-8765D0543A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D590F4AA-9D66-4863-8C97-6C0397C1CB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D590F4AA-9D66-4863-8C97-6C0397C1CB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D590F4AA-9D66-4863-8C97-6C0397C1CB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D590F4AA-9D66-4863-8C97-6C0397C1CB68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF88A1F-6C0D-4879-BAA3-0DD5CE5A448D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF88A1F-6C0D-4879-BAA3-0DD5CE5A448D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF88A1F-6C0D-4879-BAA3-0DD5CE5A448D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF88A1F-6C0D-4879-BAA3-0DD5CE5A448D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF646D88-688F-4C5F-AD3D-2189C56CA96A}
+	EndGlobalSection
+EndGlobal
