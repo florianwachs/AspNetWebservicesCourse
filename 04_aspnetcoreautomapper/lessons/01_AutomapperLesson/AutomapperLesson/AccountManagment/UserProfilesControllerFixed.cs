@@ -2,15 +2,10 @@
 using AutomapperLesson.AccountManagment.ViewModels;
 using AutomapperLesson.Domain.AccountManagement;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutomapperLesson.AccountManagment
-{  
+{
     [ApiController]
     [Route("api/v2/userprofiles")]
     public class UserProfilesControllerFixed : ControllerBase
@@ -18,6 +13,7 @@ namespace AutomapperLesson.AccountManagment
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IMapper _mapper;
 
+        // Eine konfigurierte Automapper-Instanz lässt sich vom DI-System anfordern
         public UserProfilesControllerFixed(IUserProfileRepository userProfileRepository, IMapper mapper)
         {
             _userProfileRepository = userProfileRepository;
@@ -35,7 +31,9 @@ namespace AutomapperLesson.AccountManagment
         {
             var userProfile = _userProfileRepository.GetById(id);
             if (userProfile == null)
+            {
                 return BadRequest();
+            }
 
             _mapper.Map(userProfileUpdate, userProfile);
 
