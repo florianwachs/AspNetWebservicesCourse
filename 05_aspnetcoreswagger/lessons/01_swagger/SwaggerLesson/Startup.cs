@@ -34,6 +34,7 @@ namespace SwaggerLesson
             {
                 c.SwaggerDoc("v1", new Info {Title = "Jokes API", Version = "v1"});
                 
+                // C# XML-Kommentare für API-Beschreibung nutzen
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
@@ -56,7 +57,7 @@ namespace SwaggerLesson
             app.UseHttpsRedirection();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Joke API V1"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 
             app.UseMvc();
         }
