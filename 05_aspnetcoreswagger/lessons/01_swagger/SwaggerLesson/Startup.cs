@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace SwaggerLesson
 {
@@ -25,8 +26,10 @@ namespace SwaggerLesson
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddJokesServices(Configuration);
 
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Jokes API", Version = "v1"}); });
+
+            services.AddJokesServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,6 +44,10 @@ namespace SwaggerLesson
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Joke API V1"); });
+
             app.UseMvc();
         }
     }
