@@ -11,7 +11,6 @@ namespace SwaggerLesson.DataAccess
 
         public DbSet<Joke> Jokes { get; set; }
         public DbSet<JokeCategory> JokeCategories { get; set; }
-
-        
+        public DbSet<Author> Authors { get; set; }
     }
 }

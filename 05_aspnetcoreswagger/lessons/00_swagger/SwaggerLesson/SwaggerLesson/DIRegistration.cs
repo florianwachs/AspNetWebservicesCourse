@@ -12,7 +12,8 @@ namespace SwaggerLesson
         public static IServiceCollection AddJokesServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddTransient<IJokeRepository, EFJokeRepository>();
+            services.AddTransient<IJokeRepository, JokeRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddDbContext<JokeDbContext>(options => options.UseInMemoryDatabase("JokesDb"));
             return services;
         }

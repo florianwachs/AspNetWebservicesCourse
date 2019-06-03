@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +11,17 @@ namespace SwaggerLesson.Models
 {
     public static class JokeDbSeeder
     {
+        private static readonly Random rnd = new Random();
         private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
-        
+
+        private static readonly List<Author> DummyAuthors = new List<Author>
+        {
+            Author.NewFrom("Chuck", "Norris"),
+            Author.NewFrom("Jason", "Bourne"),
+            Author.NewFrom("Jean Claude", "Van Damme"),
+            Author.NewFrom("Arnold", "Schwarzenegger")
+        };
+
         public static async Task Seed(JokeDbContext dbContext)
         {
             if (await dbContext.Jokes.AnyAsync())
@@ -39,10 +49,12 @@ namespace SwaggerLesson.Models
             {
                 Id = dto.Id,
                 JokeText = dto.JokeText,
-                Categories = GetMatchingCategories(dto)
+                Categories = GetMatchingCategories(dto),
+                Author = DummyAuthors[rnd.Next(0, DummyAuthors.Count)]
             }).ToList();
 
-            List<JokeCategory> GetMatchingCategories(JokeDto dto) => dto.Category?.Select(cat => categoryMap[cat]).ToList();
+            List<JokeCategory> GetMatchingCategories(JokeDto dto) =>
+                dto.Category?.Select(cat => categoryMap[cat]).ToList();
         }
     }
 }

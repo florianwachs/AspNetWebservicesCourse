@@ -8,12 +8,12 @@ using SwaggerLesson.Models;
 
 namespace SwaggerLesson.Repositories
 {
-    public class EFJokeRepository : IJokeRepository
+    public class JokeRepository : IJokeRepository
     {
         private static readonly Random rnd = new Random();
         private readonly JokeDbContext _dbContext;
 
-        public EFJokeRepository(JokeDbContext dbContext)
+        public JokeRepository(JokeDbContext dbContext)
         {
             _dbContext = dbContext;
         }
