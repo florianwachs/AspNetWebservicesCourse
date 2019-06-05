@@ -10,7 +10,7 @@ namespace SwaggerLesson.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public ICollection<Book> Books { get; set; }
+        public ICollection<Joke> Jokes { get; set; }
 
         public static Author NewFrom(string firstName, string lastName) => new Author
         {

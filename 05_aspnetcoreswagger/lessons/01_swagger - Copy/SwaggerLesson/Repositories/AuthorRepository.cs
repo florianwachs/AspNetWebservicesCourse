@@ -8,9 +8,9 @@ namespace SwaggerLesson.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        private readonly BookDbContext _dbContext;
+        private readonly JokeDbContext _dbContext;
 
-        public AuthorRepository(BookDbContext dbContext)
+        public AuthorRepository(JokeDbContext dbContext)
         {
             _dbContext = dbContext;
         }

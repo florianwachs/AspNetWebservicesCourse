@@ -9,12 +9,12 @@ namespace SwaggerLesson
 {
     public static class DIRegistration
     {
-        public static IServiceCollection AddBooksServices(this IServiceCollection services,
+        public static IServiceCollection AddJokesServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IJokeRepository, JokeRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddDbContext<BookDbContext>(options => options.UseInMemoryDatabase("BooksDb"));
+            services.AddDbContext<JokeDbContext>(options => options.UseInMemoryDatabase("JokesDb"));
             return services;
         }
     }

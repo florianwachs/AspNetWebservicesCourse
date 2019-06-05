@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerLesson.Models;
@@ -21,7 +22,7 @@ namespace SwaggerLesson.Api.Authors
         /// </summary>
         /// <returns>All authors</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAll()
         {
             return Ok(await _authorRepository.GetAll());
         }

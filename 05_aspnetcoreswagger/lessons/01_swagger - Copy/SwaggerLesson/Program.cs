@@ -26,8 +26,8 @@ namespace SwaggerLesson
         {
             using (var scope = host.Services.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<BookDbContext>();
-                await BookDbSeeder.Seed(dbContext);
+                var dbContext = scope.ServiceProvider.GetRequiredService<JokeDbContext>();
+                await JokeDbSeeder.Seed(dbContext);
             }
         }
 
