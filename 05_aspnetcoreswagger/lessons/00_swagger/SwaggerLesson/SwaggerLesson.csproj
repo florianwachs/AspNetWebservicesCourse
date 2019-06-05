@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="Data\jokes.json">
+      <Content Update="Data\books.json">
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
