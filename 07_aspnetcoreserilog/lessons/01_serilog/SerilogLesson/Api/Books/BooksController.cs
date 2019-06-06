@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SerilogLesson.Models;
 
 namespace SerilogLesson.Api.Books
@@ -9,10 +10,13 @@ namespace SerilogLesson.Api.Books
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
+        private readonly ILogger _logger;
 
-        public BooksController(IBookRepository bookRepository)
+
+        public BooksController(IBookRepository bookRepository, ILogger<BooksController> logger)
         {
             _bookRepository = bookRepository;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -27,6 +31,7 @@ namespace SerilogLesson.Api.Books
             var book = await _bookRepository.GetById(id);
             if (book == null)
             {
+                _logger.LogWarning("No book found with id {bookId}", id);
                 return NotFound();
             }
 
@@ -52,7 +57,14 @@ namespace SerilogLesson.Api.Books
 
             if (!exists)
             {
-                return BadRequest();
+                _logger.LogWarning("No book found with id {bookId}", id);
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Book with Id {bookId} can´t be updated because of Validation Errors {@errors}", id,
+                    new SerializableError(ModelState));
             }
 
             var result = await _bookRepository.Update(book);
