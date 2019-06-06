@@ -12,14 +12,9 @@ Verbesserungsvorschläge / Ideen sind immer willkommen!
 
 Vorgegeben ist eine Solution welche bereits das Grundgerüst aus einer vorangegangenen Übung enthält. Stellen Sie mit einem HttpClient Ihrer Wahl sicher, das die API auf Ihrem System funktioniert.
 
+
+
 ## Aufgabe 2
-
-- [ ] Erweitern Sie `AuthorRepository` um eine Methode `Task<Author> Update(Author author)` (ergänzen Sie diese auch im Interface).
-- [ ] Erweitern Sie `AuthorController` um einen Endpunkt zum Aktualisieren eines kompletten Authorobjektes.
-- [ ] Rufen Sie den Endpunkt mittels eines HttpClients auf, und verändern Sie einen bestehenden Author.
-- [ ] Denken Sie an die Vorlesung und überlegen Sie sich bitte welche Probleme bei diesem Ansatz auftreten können.
-
-## Aufgabe 3
 
 - [ ] Fügen Sie Automapper ihrem Projekt hinzu.
 - [ ] Für den `GET` der Autoren soll folgendes JSON zurückgegeben werden:
@@ -27,12 +22,22 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus einer vorangega
 ```json
 {
   "fullName": "Chuck Norris",
-  "displayName": "Chuck Norris (28)"
+  "displayName": "Chuck Norris (28)",
+  "age": 28
 }
 ```
 
 - [ ] Implementieren Sie eine geeignete DTO-Klasse und ein Automapper Profil.
 - [ ] Testen Sie Ihren Endpunkt.
+
+## Aufgabe 3
+
+- [ ] Erweitern Sie `AuthorRepository` um eine Methode `Task<Author> Update(Author author)` (ergänzen Sie diese auch im Interface).
+- [ ] Erweitern Sie `AuthorController` um einen Endpunkt zum Aktualisieren eines kompletten Authorobjektes.
+- [ ] Rufen Sie den Endpunkt mittels eines HttpClients auf, und verändern Sie einen bestehenden Author.
+- [ ] Denken Sie an die Vorlesung und überlegen Sie sich bitte welche Probleme bei diesem Ansatz auftreten können.
+
+> Hinweis: Sie werden auf ein Problem beim Update stoßen!. Überlegen Sie kurz was das Problem ist
 
 ## Aufgabe 4
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspNetCoreAutomapper.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreAutomapper.Api.Authors
@@ -10,16 +11,19 @@ namespace AspNetCoreAutomapper.Api.Authors
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorRepository _authorRepository;
+        private readonly IMapper _mapper;
 
-        public AuthorsController(IAuthorRepository authorRepository)
+        public AuthorsController(IAuthorRepository authorRepository, IMapper mapper)
         {
             _authorRepository = authorRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAll()
+        public async Task<ActionResult<IEnumerable<AuthorVm>>> GetAll()
         {
-            return Ok(await _authorRepository.GetAll());
+            var authors = await _authorRepository.GetAll();
+            return Ok(_mapper.Map<IEnumerable<AuthorVm>>(authors));
         }
 
         [HttpPut("{id}")]
