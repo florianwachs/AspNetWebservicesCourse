@@ -21,10 +21,10 @@ namespace AspNetCoreAutomapper.Api.Authors
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AuthorVm>>> GetAll()
+        public async Task<ActionResult<IEnumerable<AuthorWithJokesVm>>> GetAll()
         {
-            var authors = await _authorRepository.GetAll();
-            return Ok(_mapper.Map<IEnumerable<AuthorVm>>(authors));
+            var authors = await _authorRepository.GetAllWithJokes();
+            return Ok(_mapper.Map<IEnumerable<AuthorWithJokesVm>>(authors));
         }
 
         [HttpPut("{id}")]
