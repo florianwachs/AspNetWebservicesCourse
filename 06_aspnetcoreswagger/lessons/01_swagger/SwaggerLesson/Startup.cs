@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace SwaggerLesson
 {
     public class Startup
