@@ -20,5 +20,12 @@ namespace AspNetCoreAutomapper.Repositories
             var result = await _dbContext.Authors.ToListAsync();
             return result;
         }
+        
+        public async Task<Author> Update(Author author)
+        {
+            var updated = _dbContext.Authors.Update(author);
+            await _dbContext.SaveChangesAsync();
+            return updated.Entity;
+        }
     }
 }

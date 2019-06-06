@@ -19,5 +19,6 @@ namespace AspNetCoreAutomapper.Api.Authors
         {
             return Ok(await _authorRepository.GetAll());
         }
+        
     }
 }

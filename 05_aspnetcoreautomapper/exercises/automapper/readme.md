@@ -10,26 +10,45 @@ Verbesserungsvorschläge / Ideen sind immer willkommen!
 
 ## Aufgabe 1
 
-Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegangenen CRUD Übung enthält. Stellen Sie mit einem HttpClient Ihrer Wahl sicher, das die API auf Ihrem System funktioniert.
+Vorgegeben ist eine Solution welche bereits das Grundgerüst aus einer vorangegangenen Übung enthält. Stellen Sie mit einem HttpClient Ihrer Wahl sicher, das die API auf Ihrem System funktioniert.
 
 ## Aufgabe 2
 
-- [ ] Fügen Sie Automapper ihrem Projekt hinzu
-- 
-
-
-> Hinweise: `InMemoryJokeRepository.Init`, [Async Startup Task](https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-2/)
+- [ ] Erweitern Sie `AuthorRepository` um eine Methode `Task<Author> Update(Author author)` (ergänzen Sie diese auch im Interface).
+- [ ] Erweitern Sie `AuthorController` um einen Endpunkt zum Aktualisieren eines kompletten Authorobjektes.
+- [ ] Rufen Sie den Endpunkt mittels eines HttpClients auf, und verändern Sie einen bestehenden Author.
+- [ ] Denken Sie an die Vorlesung und überlegen Sie sich bitte welche Probleme bei diesem Ansatz auftreten können.
 
 ## Aufgabe 3
 
-- [ ] Implementieren Sie eine Klasse `EFJokeRepository` welche das Interface `IJokeRepository` implementiert und Ihren `JokeDbContext` verwendet.
-- [ ] Registrieren Sie dieses `EFJokeRepository` in Ihrem DI-System
-- [ ] Testen Sie die API mit einem HTTP-Client Ihrer Wahl
+- [ ] Fügen Sie Automapper ihrem Projekt hinzu.
+- [ ] Für den `GET` der Autoren soll folgendes JSON zurückgegeben werden:
+
+```json
+{
+  "fullName": "Chuck Norris",
+  "displayName": "Chuck Norris (28)"
+}
+```
+
+- [ ] Implementieren Sie eine geeignete DTO-Klasse und ein Automapper Profil.
+- [ ] Testen Sie Ihren Endpunkt.
 
 ## Aufgabe 4
 
-- [ ] Nutzen Sie statt der In-Memory-Datenbank den SQL-Provider mit der LocalDb (sollte ihr System keine LocalDb haben, versuchen Sie bitte SQLite)
-- [ ] Erstellen Sie eine initiale Migration mit dem dotnet ef Tool
-- [ ] Führen Sie die Migration gegen die Datenbank aus
+- [ ] Es soll am `AuthorController` für einen Aufrufer nur möglich sein, Vorname, Name und Alter zu ändern. Implementieren Sie dies bitte mittels Automapper.
+- [ ] Testen Sie Ihren Endpunkt.
 
-> Hinweise: Googlen Sie den Connection-String für die LocalDb (oder Ihre Datenbank)
+## Aufgabe 5
+
+- [ ] `GET` am `AuthorController` soll zusätzlich die Witze eines Authors mit ausgeben. Dabei ist aber darauf zu achten, das nur der Witztext zurückgegeben wird.
+
+```json
+{
+  "fullName": "Chuck Norris",
+  "displayName": "Chuck Norris (28)",
+  "jokes": ["Joke 1", "Joke 2"]
+}
+```
+
+- [ ] Implementieren Sie, dass nur die ersten 5 Witze eines jeden Authors zurückgegeben werden.
