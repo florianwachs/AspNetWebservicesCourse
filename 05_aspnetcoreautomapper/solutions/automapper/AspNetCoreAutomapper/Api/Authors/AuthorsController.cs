@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspNetCoreAutomapper.Models;
@@ -27,9 +28,15 @@ namespace AspNetCoreAutomapper.Api.Authors
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Author>> UpdateAuthor(string id, [FromBody] Author author)
+        public async Task<ActionResult<AuthorVm>> UpdateAuthor(Guid id, [FromBody] AuthorEditVm update)
         {
-            return Ok(await _authorRepository.Update(author));
+            var existingAuthor = await _authorRepository.GetById(id);
+            if (existingAuthor == null)
+                return NotFound();
+
+            var updated = _mapper.Map(update, existingAuthor);
+            
+            return Ok(_mapper.Map<AuthorVm>(await _authorRepository.Update(updated)));
         }
     }
 }

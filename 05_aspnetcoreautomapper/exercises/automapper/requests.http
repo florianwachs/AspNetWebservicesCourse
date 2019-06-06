@@ -1,13 +1,13 @@
 GET https://localhost:44366/api/authors HTTP/1.1
 
 ###
-PUT https://localhost:44366/api/authors/f92fe98f-2290-4ac7-813c-725d9638a521 HTTP/1.1
+PUT https://localhost:44366/api/authors/1fccccf5-cfac-4909-84d5-03360ffaf500 HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": "0240dcb5-f767-43f1-a452-8c4545872e76",
-    "firstName": "Jason",
+    "firstName": "Jean",
     "lastName": "Bourne",    
-    "age": 20
+    "age": 20,
+    "monthlyPaymentAmount":120000000
 }
 ###

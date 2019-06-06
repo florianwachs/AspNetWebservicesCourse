@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreAutomapper.DataAccess;
 using AspNetCoreAutomapper.Models;
@@ -26,6 +28,11 @@ namespace AspNetCoreAutomapper.Repositories
             var updated = _dbContext.Authors.Update(author);
             await _dbContext.SaveChangesAsync();
             return updated.Entity;
+        }
+
+        public Task<Author> GetById(Guid id)
+        {
+            return _dbContext.Authors.FindAsync(id);
         }
     }
 }

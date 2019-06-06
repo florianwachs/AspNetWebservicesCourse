@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,5 +8,6 @@ namespace AspNetCoreAutomapper.Models
     {
         Task<IReadOnlyCollection<Author>> GetAll();
         Task<Author> Update(Author author);
+        Task<Author> GetById(Guid id);
     }
 }
