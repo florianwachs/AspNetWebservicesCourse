@@ -38,7 +38,7 @@ namespace SwaggerLesson.Api.Books
         ///
         /// </remarks>
         /// <param name="id">id of the book</param>
-        /// <returns></returns>
+        /// <returns>a book</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetById(string id)
         {
