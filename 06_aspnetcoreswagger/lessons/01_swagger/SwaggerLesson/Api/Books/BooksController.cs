@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerLesson.Models;
@@ -8,7 +9,6 @@ namespace SwaggerLesson.Api.Books
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -23,7 +23,7 @@ namespace SwaggerLesson.Api.Books
         /// </summary>
         /// <returns>all books</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<Book>>> GetAll()
         {
             return Ok(await _bookRepository.GetAll());
         }
@@ -40,7 +40,7 @@ namespace SwaggerLesson.Api.Books
         /// <param name="id">id of the book</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<ActionResult<Book>> GetById(string id)
         {
             var book = await _bookRepository.GetById(id);
             if (book == null)
@@ -51,14 +51,14 @@ namespace SwaggerLesson.Api.Books
             return Ok(book);
         }
 
-        
+
         /// <summary>
         /// Creates a new book
         /// </summary>
         /// <param name="book">data for the book to create</param>
         /// <returns>the newly created book</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNew([FromBody] Book book)
+        public async Task<ActionResult<Book>> CreateNew([FromBody] Book book)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace SwaggerLesson.Api.Books
             }
 
             var result = await _bookRepository.Add(book);
-            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace SwaggerLesson.Api.Books
         /// <param name="book">data of the book</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] Book book)
+        public async Task<ActionResult<Book>> Update(string id, [FromBody] Book book)
         {
             var exists = _bookRepository.GetById(id) != null;
 
@@ -108,7 +108,7 @@ namespace SwaggerLesson.Api.Books
         /// <param name="doc">operations to perform</param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdate(string id, [FromBody] JsonPatchDocument<Book> doc)
+        public async Task<ActionResult<Book>> PartialUpdate(string id, [FromBody] JsonPatchDocument<Book> doc)
         {
             var existing = await _bookRepository.GetById(id);
             if (existing == null)
