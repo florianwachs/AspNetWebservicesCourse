@@ -1,8 +1,10 @@
 ﻿using ChuckNorrisService.DataAccess;
 using ChuckNorrisService.Models;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +15,12 @@ namespace ChuckNorrisService.Repositories
     {
         private static readonly Random rnd = new Random();
         private readonly JokeDbContext _dbContext;
+        private readonly DbConnectionString _dbConnectionString;
 
-        public EFJokeRepository(JokeDbContext dbContext)
+        public EFJokeRepository(JokeDbContext dbContext, DbConnectionString dbConnectionString)
         {
             _dbContext = dbContext;
+            _dbConnectionString = dbConnectionString;
         }
 
         public async Task<Joke> Add(Joke joke)
@@ -65,5 +69,13 @@ namespace ChuckNorrisService.Repositories
             return joke;
         }
 
+        public async Task<IReadOnlyCollection<JokeOnly>> GetJokes()
+        {
+            using (var connection = new SqlConnection(_dbConnectionString.ConnectionString))
+            {
+                var jokes = (await connection.QueryAsync<JokeOnly>("Select * FROM jokes")).ToList();
+                return jokes;
+            }
+        }
     }
 }

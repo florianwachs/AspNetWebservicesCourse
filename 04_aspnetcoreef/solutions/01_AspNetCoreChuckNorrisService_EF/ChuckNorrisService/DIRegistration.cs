@@ -1,6 +1,5 @@
 using ChuckNorrisService.DataAccess;
 using ChuckNorrisService.Models;
-using ChuckNorrisService.Providers;
 using ChuckNorrisService.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +15,8 @@ namespace ChuckNorrisService
             services.AddTransient<IJokeRepository, EFJokeRepository>();
             // services.AddDbContext<JokeDbContext>(options => options.UseInMemoryDatabase("JokesDb"));
 
-            var connectionString = configuration.GetConnectionString("Default");
+            string connectionString = configuration.GetConnectionString("Default");
+            services.AddSingleton(new DbConnectionString(connectionString));
             services.AddDbContext<JokeDbContext>(options => options.UseSqlServer(connectionString));
             return services;
         }

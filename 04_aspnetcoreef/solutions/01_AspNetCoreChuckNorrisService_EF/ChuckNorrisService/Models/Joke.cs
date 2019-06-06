@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +14,12 @@ namespace ChuckNorrisService.Models
         [StringLength(500)]
         public string JokeText { get; set; }
         public ICollection<JokeCategory> Categories { get; set; }
+    }
+
+    public class JokeOnly
+    {
+        public string Id { get; set; }
+        public string JokeText { get; set; }
     }
 
     public class JokeDto

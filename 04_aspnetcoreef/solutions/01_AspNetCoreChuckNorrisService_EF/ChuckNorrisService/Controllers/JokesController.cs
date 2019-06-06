@@ -1,5 +1,4 @@
 ﻿using ChuckNorrisService.Models;
-using ChuckNorrisService.Providers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -19,6 +18,12 @@ namespace ChuckNorrisService.Controllers
         public JokesController(IJokeRepository jokeProvider)
         {
             _jokeProvider = jokeProvider;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetJokes()
+        {
+            return Ok(await _jokeProvider.GetJokes());
         }
 
         [HttpGet("{id}")]

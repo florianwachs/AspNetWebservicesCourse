@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Models
 {
@@ -9,5 +10,6 @@ namespace ChuckNorrisService.Models
         Task<Joke> Update(Joke joke);
         Task Delete(string id);
         Task<Joke> GetRandomJoke();
+        Task<IReadOnlyCollection<JokeOnly>> GetJokes();
     }
 }
