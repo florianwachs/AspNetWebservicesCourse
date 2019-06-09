@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspNetCoreUnitTests.Domain.Models
 {
@@ -20,65 +16,34 @@ namespace AspNetCoreUnitTests.Domain.Models
         public Kg(decimal amount)
         {
             if (Amount < 0)
+            {
                 throw new InvalidOperationException("there are no negative kgs");
+            }
 
             Amount = amount;
         }
 
-        public static Kg Create(decimal amount)
-        {
-            return new Kg(amount);
-        }
+        public static Kg Create(decimal amount) => new Kg(amount);
 
-        public override string ToString()
-        {
-            return $"{Amount} Kg";
-        }
+        public override string ToString() => $"{Amount} Kg";
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Kg);
-        }
+        public override bool Equals(object obj) => Equals(obj as Kg);
 
-        public bool Equals(Kg other)
-        {
-            return other != null &&
+        public bool Equals(Kg other) => other != null &&
                    Amount == other.Amount;
-        }
 
-        public override int GetHashCode()
-        {
-            return -602769199 + Amount.GetHashCode();
-        }
+        public override int GetHashCode() => -602769199 + Amount.GetHashCode();
 
-        public int CompareTo(Kg other)
-        {
-            return Amount.CompareTo(other.Amount);
-        }
+        public int CompareTo(Kg other) => Amount.CompareTo(other.Amount);
 
-        public static bool operator ==(Kg left, Kg right)
-        {
-            return EqualityComparer<Kg>.Default.Equals(left, right);
-        }
+        public static bool operator ==(Kg left, Kg right) => EqualityComparer<Kg>.Default.Equals(left, right);
 
-        public static bool operator !=(Kg left, Kg right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(Kg left, Kg right) => !(left == right);
 
-        public static Kg operator +(Kg left, Kg right)
-        {
-            return new Kg(left.Amount + right.Amount);
-        }
+        public static Kg operator +(Kg left, Kg right) => new Kg(left.Amount + right.Amount);
 
-        public static bool operator <(Kg left, Kg right)
-        {
-            return left.Amount < right.Amount;
-        }
+        public static bool operator <(Kg left, Kg right) => left.Amount < right.Amount;
 
-        public static bool operator >(Kg left, Kg right)
-        {
-            return left.Amount < right.Amount;
-        }
+        public static bool operator >(Kg left, Kg right) => left.Amount < right.Amount;
     }
 }
