@@ -10,15 +10,15 @@ namespace AspNetCoreUnitTests.Domain.Models
     {
         public string Id { get; private set; }
         public string Name { get; private set; }
-        public Weight CurrentWeight { get; private set; }
-        public Weight MaximumWeight { get; private set; }
+        public Kg CurrentWeight { get; private set; }
+        public Kg MaximumWeight { get; private set; }
         public IReadOnlyCollection<Container> Containers { get; private set; }
 
         private Ship()
         {
             // For EF Core to hydrate entity from database
-            CurrentWeight = Weight.None;
-            MaximumWeight = Weight.None;
+            CurrentWeight = Kg.Zero;
+            MaximumWeight = Kg.Zero;
             Containers = new List<Container>();
         }
     }

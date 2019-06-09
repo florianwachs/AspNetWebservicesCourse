@@ -9,7 +9,7 @@ namespace AspNetCoreUnitTests.Domain.Models
     public class ContainerItem
     {
         public string Id { get; private set; }
-        public Weight Weight { get; private set; }
+        public Kg Weight { get; private set; }
         public bool PassedInspection { get; private set; }
 
         private ContainerItem()

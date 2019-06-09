@@ -70,5 +70,15 @@ namespace AspNetCoreUnitTests.Domain.Models
         {
             return new Kg(left.Amount + right.Amount);
         }
+
+        public static bool operator <(Kg left, Kg right)
+        {
+            return left.Amount < right.Amount;
+        }
+
+        public static bool operator >(Kg left, Kg right)
+        {
+            return left.Amount < right.Amount;
+        }
     }
 }
