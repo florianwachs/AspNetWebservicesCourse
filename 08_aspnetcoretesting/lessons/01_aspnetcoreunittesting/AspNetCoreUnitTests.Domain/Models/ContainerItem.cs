@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AspNetCoreUnitTests.Domain.Models
+﻿namespace AspNetCoreUnitTests.Domain.Models
 {
     public class ContainerItem
     {
@@ -16,5 +10,13 @@ namespace AspNetCoreUnitTests.Domain.Models
         {
             // For EF Core to hydrate entity from database
         }
+
+        private ContainerItem(string id, Kg weight) : this()
+        {
+            Id = id;
+            Weight = weight;
+        }
+
+        public static ContainerItem New(string id, Kg weight) => new ContainerItem(id, weight);
     }
 }

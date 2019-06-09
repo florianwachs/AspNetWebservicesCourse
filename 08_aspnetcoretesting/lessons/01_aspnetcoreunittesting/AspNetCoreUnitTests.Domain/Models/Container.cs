@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspNetCoreUnitTests.Domain.Exceptions;
 
 namespace AspNetCoreUnitTests.Domain.Models
 {
@@ -11,7 +10,7 @@ namespace AspNetCoreUnitTests.Domain.Models
         public string Id { get; protected set; }
         public Kg CurrentWeight { get; protected set; }
         public Kg MaximumWeight { get; protected set; }
-        public IReadOnlyCollection<ContainerItem> Items { get; private set; }
+        public IReadOnlyCollection<ContainerItem> Items { get; protected set; }
 
         private Container()
         {
@@ -26,8 +25,28 @@ namespace AspNetCoreUnitTests.Domain.Models
             MaximumWeight = maximumWeight;
         }
 
+        public virtual void Add(ContainerItem item)
+        {
+            if (Contains(item))
+            {
+                throw new ItemAlreadyInContainerException(item.Id);
+            }
 
-        public bool CanAddItem(ContainerItem itemToAdd)
+            if (!IsWithinWeightLimit(item))
+            {
+                throw new ContainerOverweightException(Id);
+            }
+
+            var newContainerContent = Items.Concat(new[] { item }).ToList();
+            Items = newContainerContent;
+            CurrentWeight = Kg.Create(newContainerContent.Sum(c => c.Weight.Amount));
+        }
+
+        public bool Contains(ContainerItem item) => Items.Any(i => i.Id == item.Id);
+
+        public bool CanAddItem(ContainerItem itemToAdd) => !Contains(itemToAdd) && IsWithinWeightLimit(itemToAdd);
+
+        private bool IsWithinWeightLimit(ContainerItem itemToAdd)
         {
             return (itemToAdd.Weight + CurrentWeight) < MaximumWeight;
         }
@@ -42,9 +61,6 @@ namespace AspNetCoreUnitTests.Domain.Models
         {
         }
 
-        public static EuStandardContainer New()
-        {
-            return new EuStandardContainer(Guid.NewGuid().ToString());
-        }
+        public static EuStandardContainer New() => new EuStandardContainer(Guid.NewGuid().ToString());
     }
 }
