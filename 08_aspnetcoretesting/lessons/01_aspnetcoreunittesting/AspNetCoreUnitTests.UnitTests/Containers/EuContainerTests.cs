@@ -15,6 +15,9 @@ namespace AspNetCoreUnitTests.UnitTests.Containers
         {
             // SUT = System Under Test
             var sut = EuStandardContainer.New();
+
+            // Die Assert-Klasse erlaubt die Validierung des erwarteten Verhaltens
+            // Bei Nichterfüllung schlägt der Test fehl.
             Assert.NotNull(sut);
             Assert.NotEmpty(sut.Id);
             Assert.Equal(0, sut.Items.Count);
