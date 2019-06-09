@@ -24,7 +24,6 @@ namespace AspNetCoreUnitTests.Domain.Models
         public DockStatus Status { get; private set; }
         public bool IsOccupied => !string.IsNullOrWhiteSpace(DockedShipId);
 
-
         public void DockShip(Ship ship)
         {
         }
@@ -32,5 +31,22 @@ namespace AspNetCoreUnitTests.Domain.Models
         public void UndockShip(Ship ship)
         {
         }
+
+        public void BeginLoading()
+        {
+        }
+
+        public void FinishedLoading()
+        {
+        }
+
+        public void BeginUnloading()
+        {
+        }
+
+        public void FinishedUnloading()
+        {
+        }
+
     }
 }
