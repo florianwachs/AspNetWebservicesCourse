@@ -22,8 +22,9 @@ namespace AspNetCoreUnitTests.IntegrationTests.ContainerManagement
         {
             var client = CreateClient();
             var response = await client.GetAsync("/api/containers/infos");
-            Assert.True(response.IsSuccessStatusCode);
 
+            Assert.True(response.IsSuccessStatusCode);
+            
             var infos = await response.Content.ReadAsAsync<IEnumerable<ContainerInfo>>();
             Assert.NotEmpty(infos);
         }
