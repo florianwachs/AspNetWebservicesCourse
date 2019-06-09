@@ -11,6 +11,5 @@ namespace AspNetCoreUnitTests.Api.ShipManagement
     [ApiController]
     public class ShipsController : ControllerBase
     {
-        
     }
 }
