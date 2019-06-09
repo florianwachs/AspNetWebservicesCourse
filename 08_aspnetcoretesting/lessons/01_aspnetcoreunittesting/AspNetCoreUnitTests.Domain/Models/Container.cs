@@ -46,10 +46,7 @@ namespace AspNetCoreUnitTests.Domain.Models
 
         public bool CanAddItem(ContainerItem itemToAdd) => !Contains(itemToAdd) && IsWithinWeightLimit(itemToAdd);
 
-        private bool IsWithinWeightLimit(ContainerItem itemToAdd)
-        {
-            return (itemToAdd.Weight + CurrentWeight) < MaximumWeight;
-        }
+        private bool IsWithinWeightLimit(ContainerItem itemToAdd) => (itemToAdd.Weight + CurrentWeight) < MaximumWeight;
     }
 
     public class EuStandardContainer : Container
