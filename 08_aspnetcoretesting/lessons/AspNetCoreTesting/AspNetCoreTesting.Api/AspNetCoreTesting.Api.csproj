@@ -14,4 +14,8 @@
     <ProjectReference Include="..\AspNetCoreTesting.Infrastructure\AspNetCoreTesting.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StudentManagement\" />
+  </ItemGroup>
+
 </Project>

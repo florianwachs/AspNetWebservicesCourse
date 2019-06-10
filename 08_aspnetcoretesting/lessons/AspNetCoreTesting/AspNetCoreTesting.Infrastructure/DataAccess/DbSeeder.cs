@@ -48,6 +48,8 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
                     Course.Create(id.NewEntityId(), "SelfDefense_1", "Roundhouse Kick", "How to do the perfect Roundhouse Kick."),
                     Course.Create(id.NewEntityId(), "Memory_1", "Memory lost, what now", "Guidelines to cope with memory loss."),
                 });
+
+                dbContext.SaveChanges();
             }
         }
     }
