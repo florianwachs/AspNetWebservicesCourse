@@ -12,8 +12,22 @@ namespace AspNetCoreTesting.Domain.Domain
         public string Identifier { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
+        public string EMail { get; private set; }
 
         private List<Course> _assignedCourses = new List<Course>();
         public IReadOnlyCollection<Course> AssignedCourses => _assignedCourses.AsReadOnly();
+
+        public static Professor Create(string id, string firstName, string lastName, string email, string identifier)
+        {
+            // TODO: Validation
+            return new Professor
+            {
+                Id = id,
+                Identifier = identifier,
+                FirstName = firstName,
+                LastName = lastName,
+                EMail = email,
+            };
+        }
     }
 }
