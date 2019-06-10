@@ -14,15 +14,15 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
         public static void SeedDb(UniversityDbContext dbContext)
         {
             dbContext.Database.EnsureCreated();
-            var idGenerator = new IdGenerator();
+            var id = new IdGenerator();
 
             if (!dbContext.Professors.Any())
             {
                 dbContext.Professors.AddRange(new[]
                 {
-                    Professor.Create(idGenerator.NewEntityId(), "Jason", "Bourne", "jasonbourne@th-norris.de", "JaBo"),
-                    Professor.Create(idGenerator.NewEntityId(), "Chuck", "Norris", "chucknorris@th-norris.de", "ChNo"),
-                    Professor.Create(idGenerator.NewEntityId(), "Katie", "Bouman", "dr.katie.bouman@th-norris.de", "KaBo"),
+                    Professor.Create(id.NewEntityId(), "Jason", "Bourne", "jasonbourne@th-norris.de", "JaBo"),
+                    Professor.Create(id.NewEntityId(), "Chuck", "Norris", "chucknorris@th-norris.de", "ChNo"),
+                    Professor.Create(id.NewEntityId(), "Katie", "Bouman", "dr.katie.bouman@th-norris.de", "KaBo"),
                 });
 
                 dbContext.SaveChanges();
@@ -32,15 +32,16 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
             {
                 dbContext.Students.AddRange(new[]
                 {
-                    Student.Create(idGenerator.NewEntityId(), "Hansi", "Hinterseer", "alpenkasperl@th-norris.de", "MaiHaHi"),
-                    Student.Create(idGenerator.NewEntityId(), "Florian", "Silberfischel", "silberfischel@th-norris.de", "FlSi"),
+                    Student.Create(id.NewEntityId(), "Hansi", "Hinterseer", "alpenkasperl@th-norris.de", "MaiHaHi"),
+                    Student.Create(id.NewEntityId(), "Florian", "Silberfischel", "silberfischel@th-norris.de", "FlSi"),
+                    Student.Create(id.NewEntityId(), "Seven", "Of Nine", "resistenceisfutile@th-norris.de", "SeNi"),
                 });
 
                 dbContext.SaveChanges();
             }
 
-            var students = dbContext.Students.ToList();
-            var professors = dbContext.Professors.Include(p=>p.AssignedCourses).ToList();
+            var students = dbContext.Students.Include(s=>s.EnrolledCourses).Include(s=>s.Grades).ToList();
+            var professors = dbContext.Professors.Include(p => p.AssignedCourses).ToList();
         }
     }
 }

@@ -16,5 +16,7 @@ namespace AspNetCoreTesting.Domain.Domain
 
         private List<StudentCourse> _students = new List<StudentCourse>();
         public IReadOnlyCollection<StudentCourse> Students => _students.AsReadOnly();
+        private List<CourseGrade> _grades = new List<CourseGrade>();
+        public IReadOnlyCollection<CourseGrade> Grades => _grades.AsReadOnly();
     }
 }

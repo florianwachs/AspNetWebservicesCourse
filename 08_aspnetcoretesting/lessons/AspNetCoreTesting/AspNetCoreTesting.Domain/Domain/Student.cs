@@ -15,6 +15,8 @@ namespace AspNetCoreTesting.Domain.Domain
         public string EMail { get; private set; }
         private List<StudentCourse> _enrolledCourses = new List<StudentCourse>();
         public IReadOnlyCollection<StudentCourse> EnrolledCourses => _enrolledCourses.AsReadOnly();
+        private List<CourseGrade> _grades = new List<CourseGrade>();
+        public IReadOnlyCollection<CourseGrade> Grades => _grades.AsReadOnly();
 
         public static Student Create(string id, string firstName, string lastName, string email, string identifier)
         {

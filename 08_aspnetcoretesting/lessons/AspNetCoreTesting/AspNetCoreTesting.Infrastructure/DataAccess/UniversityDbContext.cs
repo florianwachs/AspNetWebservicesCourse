@@ -34,6 +34,7 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
+            builder.Property(s => s.Id).ValueGeneratedNever();
             builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
         }
     }
@@ -42,6 +43,7 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
     {
         public void Configure(EntityTypeBuilder<Professor> builder)
         {
+            builder.Property(p => p.Id).ValueGeneratedNever();
             builder.HasMany(p => p.AssignedCourses).WithOne(c => c.Professor);
             builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
         }
@@ -51,6 +53,7 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
+            builder.Property(c => c.Id).ValueGeneratedNever();
             builder.HasOne(c => c.Professor);
             builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
         }
@@ -60,6 +63,9 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
     {
         public void Configure(EntityTypeBuilder<CourseGrade> builder)
         {
+            builder.HasKey(cg => new { cg.CourseId, cg.StudentId });
+            builder.HasOne(cg => cg.Student).WithMany(s => s.Grades).HasForeignKey(sc => sc.StudentId);
+            builder.HasOne(cg => cg.Course).WithMany(c => c.Grades).HasForeignKey(sc => sc.CourseId);
             builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
         }
     }
