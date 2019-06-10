@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreTesting.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreTesting.Infrastructure", "AspNetCoreTesting.Infrastructure\AspNetCoreTesting.Infrastructure.csproj", "{6A9D01AD-189F-4633-9215-6A312688EDB3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AF2ACC5D-5731-4255-8526-22E723FB3D27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreTesting.IntegrationTests", "AspNetCoreTesting.IntegrationTests\AspNetCoreTesting.IntegrationTests.csproj", "{F6405FAB-7BBD-4910-8823-DEB1C156CEEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +37,17 @@ Global
 		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6405FAB-7BBD-4910-8823-DEB1C156CEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6405FAB-7BBD-4910-8823-DEB1C156CEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6405FAB-7BBD-4910-8823-DEB1C156CEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6405FAB-7BBD-4910-8823-DEB1C156CEEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E2D9F7A-A45A-4F56-8DEB-3ED047A80704} = {AF2ACC5D-5731-4255-8526-22E723FB3D27}
+		{F6405FAB-7BBD-4910-8823-DEB1C156CEEB} = {AF2ACC5D-5731-4255-8526-22E723FB3D27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56B361A4-708A-4B41-B278-DAFD60FCC194}
