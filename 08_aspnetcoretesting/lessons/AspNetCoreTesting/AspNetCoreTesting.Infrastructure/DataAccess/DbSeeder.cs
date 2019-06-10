@@ -40,8 +40,15 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
                 dbContext.SaveChanges();
             }
 
-            var students = dbContext.Students.Include(s=>s.EnrolledCourses).Include(s=>s.Grades).ToList();
-            var professors = dbContext.Professors.Include(p => p.AssignedCourses).ToList();
+            if (!dbContext.Courses.Any())
+            {
+                dbContext.Courses.AddRange(new[]
+                {
+                    Course.Create(id.NewEntityId(), "Physics_1", "How to take a picture of a black hole", "How to take a picture of a black hole"),
+                    Course.Create(id.NewEntityId(), "SelfDefense_1", "Roundhouse Kick", "How to do the perfect Roundhouse Kick."),
+                    Course.Create(id.NewEntityId(), "Memory_1", "Memory lost, what now", "Guidelines to cope with memory loss."),
+                });
+            }
         }
     }
 }

@@ -19,17 +19,21 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
         public DbSet<Professor> Professors { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseGrade> CourseGrades { get; set; }
+        public DbSet<CourseRequest> CourseRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new StudentConfiguration())
+            modelBuilder
+                .ApplyConfiguration(new StudentConfiguration())
                 .ApplyConfiguration(new ProfessorConfiguration())
                 .ApplyConfiguration(new CourseConfiguration())
                 .ApplyConfiguration(new CourseGradeConfiguration())
-                .ApplyConfiguration(new StudentCourseConfiguration());
+                .ApplyConfiguration(new StudentCourseConfiguration())
+                .ApplyConfiguration(new CourseRequestConfiguration());
         }
     }
 
+    #region Entity Configurations
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
         public void Configure(EntityTypeBuilder<Student> builder)
@@ -80,4 +84,16 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
             builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
         }
     }
+
+    public class CourseRequestConfiguration : IEntityTypeConfiguration<CourseRequest>
+    {
+        public void Configure(EntityTypeBuilder<CourseRequest> builder)
+        {
+            builder.HasKey(sc => new { sc.RequestedCourseId, sc.StudentId });
+            builder.HasOne(sc => sc.Student).WithMany(s => s.CoursesRequests).HasForeignKey(sc => sc.StudentId);
+            builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
+        }
+    }
+
+    #endregion
 }

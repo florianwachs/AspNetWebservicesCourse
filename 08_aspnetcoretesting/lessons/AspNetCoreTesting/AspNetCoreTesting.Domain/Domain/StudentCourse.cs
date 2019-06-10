@@ -12,5 +12,9 @@ namespace AspNetCoreTesting.Domain.Domain
         public Student Student { get; private set; }
         public string CourseId { get; private set; }
         public Course Course { get; private set; }
+
+        private StudentCourse()
+        {
+        }
     }
 }

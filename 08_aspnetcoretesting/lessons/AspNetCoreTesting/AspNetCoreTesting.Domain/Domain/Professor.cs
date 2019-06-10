@@ -17,6 +17,10 @@ namespace AspNetCoreTesting.Domain.Domain
         private List<Course> _assignedCourses = new List<Course>();
         public IReadOnlyCollection<Course> AssignedCourses => _assignedCourses.AsReadOnly();
 
+        private Professor()
+        {
+        }
+
         public static Professor Create(string id, string firstName, string lastName, string email, string identifier)
         {
             // TODO: Validation

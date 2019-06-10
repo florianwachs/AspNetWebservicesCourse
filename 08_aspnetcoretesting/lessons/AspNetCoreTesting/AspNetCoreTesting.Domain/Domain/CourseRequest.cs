@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreTesting.Domain.Domain
 {
-    public class CourseGrade
+    public class CourseRequest
     {
-        public string CourseId { get; private set; }
-        public Course Course { get; private set; }
         public string StudentId { get; private set; }
         public Student Student { get; private set; }
-        public decimal Points { get; private set; }
-        public decimal Grade { get; private set; }
+        public string RequestedCourseId { get; private set; }
+        public Course RequestedCourse { get; private set; }
 
-        private CourseGrade()
+        private CourseRequest()
         {
         }
     }
