@@ -14,4 +14,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreTesting.Api\AspNetCoreTesting.Api.csproj" />
+    <ProjectReference Include="..\AspNetCoreTesting.Domain\AspNetCoreTesting.Domain.csproj" />
+    <ProjectReference Include="..\AspNetCoreTesting.Infrastructure\AspNetCoreTesting.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
