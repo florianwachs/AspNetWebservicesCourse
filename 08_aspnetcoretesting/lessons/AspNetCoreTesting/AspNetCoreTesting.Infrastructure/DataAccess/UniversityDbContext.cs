@@ -25,7 +25,8 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
             modelBuilder.ApplyConfiguration(new StudentConfiguration())
                 .ApplyConfiguration(new ProfessorConfiguration())
                 .ApplyConfiguration(new CourseConfiguration())
-                .ApplyConfiguration(new CourseGradeConfiguration());
+                .ApplyConfiguration(new CourseGradeConfiguration())
+                .ApplyConfiguration(new StudentCourseConfiguration());
         }
     }
 
@@ -63,4 +64,14 @@ namespace AspNetCoreTesting.Infrastructure.DataAccess
         }
     }
 
+    public class StudentCourseConfiguration : IEntityTypeConfiguration<StudentCourse>
+    {
+        public void Configure(EntityTypeBuilder<StudentCourse> builder)
+        {
+            builder.HasKey(sc => new { sc.CourseId, sc.StudentId });
+            builder.HasOne(sc => sc.Student).WithMany(s => s.EnrolledCourses).HasForeignKey(sc => sc.StudentId);
+            builder.HasOne(sc => sc.Course).WithMany(c => c.Students).HasForeignKey(sc => sc.CourseId);
+            builder.Metadata.SetNavigationAccessMode(PropertyAccessMode.Field);
+        }
+    }
 }
