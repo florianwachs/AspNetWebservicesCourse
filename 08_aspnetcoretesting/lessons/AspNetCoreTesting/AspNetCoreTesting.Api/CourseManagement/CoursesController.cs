@@ -28,5 +28,17 @@ namespace AspNetCoreTesting.Api.CourseManagement
             var courses = await _dbContext.Courses.ToListAsync();
             return Ok(courses);
         }
+
+        [HttpGet("{courseId}/students")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetCourseStudents(string courseId)
+        {
+            var course = await _dbContext.Courses
+                .Include(c => c.Students)
+                .ThenInclude(sc => sc.Student)
+                .Where(c => c.Id == courseId).FirstOrDefaultAsync();
+
+            var studentsOfCourse = course.Students.Select(sc => sc.Student);
+            return Ok(studentsOfCourse);
+        }
     }
 }

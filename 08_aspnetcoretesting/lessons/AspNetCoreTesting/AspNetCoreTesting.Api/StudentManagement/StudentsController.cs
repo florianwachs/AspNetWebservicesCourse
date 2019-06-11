@@ -28,5 +28,25 @@ namespace AspNetCoreTesting.Api.StudentManagement
             return Ok(courses);
         }
 
+        [HttpGet("{studentId}/enrolledcourses")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetAllEnrolledCourses(string studentId)
+        {
+            var student = await _dbContext.Students.Include(s => s.EnrolledCourses).Where(s => s.Id == studentId).FirstOrDefaultAsync();
+            if (student == null)
+                return NotFound();
+
+            return Ok(student.EnrolledCourses);
+        }
+
+        [HttpGet("{studentId}/courserequests")]
+        public async Task<ActionResult<IEnumerable<CourseRequest>>> GetAllCourseRequests(string studentId)
+        {
+            var student = await _dbContext.Students.Include(s => s.CoursesRequests).Where(s => s.Id == studentId).FirstOrDefaultAsync();
+            if (student == null)
+                return NotFound();
+
+            return Ok(student.CoursesRequests);
+        }
+
     }
 }

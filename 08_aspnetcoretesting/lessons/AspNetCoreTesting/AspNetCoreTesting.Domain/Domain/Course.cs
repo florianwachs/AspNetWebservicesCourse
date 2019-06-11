@@ -6,12 +6,24 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreTesting.Domain.Domain
 {
+    public enum CourseStates
+    {
+        New,
+        OpenForEnrollment,
+        InProgress,
+        Grades,
+        Completed,
+        Canceled,
+    }
+
     public class Course
     {
         public string Id { get; private set; }
         public string Identifier { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public CourseStates State { get; private set; }
+        public string ProfessorId { get; private set; }
         public Professor Professor { get; private set; }
 
         private Course()
@@ -48,6 +60,31 @@ namespace AspNetCoreTesting.Domain.Domain
         public bool IsEnroled(Student student)
         {
             return Students.Any(s => s.StudentId == student.Id);
+        }
+
+        public void AssignProfessorToCourse(Professor professor)
+        {
+            if (!IsProfessorAssignmentAllowed())
+            {
+                throw new ApplicationException("Assignment not allowed at this state");
+            }
+
+            Professor = professor;
+        }
+
+        public bool IsProfessorAssignmentAllowed()
+        {
+            return State == CourseStates.New || State == CourseStates.OpenForEnrollment;
+        }
+
+        public void OpenCourseForEnrollment()
+        {
+            if (State != CourseStates.New)
+            {
+                throw new ApplicationException("Only new courses can be opened for enrollment");
+            }
+
+            State = CourseStates.OpenForEnrollment;
         }
     }
 }
