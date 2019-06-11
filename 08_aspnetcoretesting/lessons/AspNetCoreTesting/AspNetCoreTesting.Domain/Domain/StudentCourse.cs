@@ -16,5 +16,14 @@ namespace AspNetCoreTesting.Domain.Domain
         private StudentCourse()
         {
         }
+
+        internal static StudentCourse Create(Student student, Course course)
+        {
+            return new StudentCourse
+            {
+                StudentId = student.Id,
+                CourseId = course.Id,
+            };
+        }
     }
 }

@@ -34,5 +34,20 @@ namespace AspNetCoreTesting.Domain.Domain
                 Description = description
             };
         }
+
+        public void AcceptEnrollment(Student student)
+        {
+            if (IsEnroled(student))
+            {
+                return;
+            }
+
+            _students.Add(StudentCourse.Create(student, this));
+        }
+
+        public bool IsEnroled(Student student)
+        {
+            return Students.Any(s => s.StudentId == student.Id);
+        }
     }
 }

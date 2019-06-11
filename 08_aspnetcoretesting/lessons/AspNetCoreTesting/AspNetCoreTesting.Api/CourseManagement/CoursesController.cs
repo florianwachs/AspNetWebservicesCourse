@@ -22,6 +22,7 @@ namespace AspNetCoreTesting.Api.CourseManagement
             _dbContext = dbContext;
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetAllCourses()
         {
             var courses = await _dbContext.Courses.ToListAsync();

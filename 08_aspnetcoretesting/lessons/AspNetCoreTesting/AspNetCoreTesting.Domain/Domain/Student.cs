@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspNetCoreTesting.Domain.DomainErrors;
+using Unit = System.ValueTuple;
 
 namespace AspNetCoreTesting.Domain.Domain
 {
@@ -14,23 +13,22 @@ namespace AspNetCoreTesting.Domain.Domain
         public string LastName { get; private set; }
         public string EMail { get; private set; }
 
-        private List<StudentCourse> _enrolledCourses = new List<StudentCourse>();
+        private readonly List<StudentCourse> _enrolledCourses = new List<StudentCourse>();
         public IReadOnlyCollection<StudentCourse> EnrolledCourses => _enrolledCourses.AsReadOnly();
 
-        private List<CourseRequest> _coursesRequests = new List<CourseRequest>();
+        private readonly List<CourseRequest> _coursesRequests = new List<CourseRequest>();
         public IReadOnlyCollection<CourseRequest> CoursesRequests => _coursesRequests.AsReadOnly();
 
-        private List<CourseGrade> _grades = new List<CourseGrade>();
+        private readonly List<CourseGrade> _grades = new List<CourseGrade>();
         public IReadOnlyCollection<CourseGrade> Grades => _grades.AsReadOnly();
 
         private Student()
         {
         }
 
-        public static Student Create(string id, string firstName, string lastName, string email, string identifier)
-        {
+        public static Student Create(string id, string firstName, string lastName, string email, string identifier) =>
             // TODO: Validation
-            return new Student
+            new Student
             {
                 Id = id,
                 Identifier = identifier,
@@ -38,6 +36,24 @@ namespace AspNetCoreTesting.Domain.Domain
                 LastName = lastName,
                 EMail = email,
             };
+
+        public Validation<Unit> RequestCourseEnrolement(Course course)
+        {
+            if (course.IsEnroled(this))
+            {
+                return Validation.Fail(new StudentAlreadyEnrolledInCourse());
+            }
+
+            if (HasRequestedEnrollment(course))
+            {
+                return Validation.Fail(new StudentAlreadyRequestedCourseEnrollment());
+            }
+
+            _coursesRequests.Add(CourseRequest.Create(this, course));
+
+            return Validation.Success();
         }
+
+        public bool HasRequestedEnrollment(Course course) => CoursesRequests.Any(cr => cr.RequestedCourseId == course.Id);
     }
 }

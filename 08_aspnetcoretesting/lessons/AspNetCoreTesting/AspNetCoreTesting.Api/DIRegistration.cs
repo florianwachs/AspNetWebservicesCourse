@@ -9,6 +9,8 @@ using AutoMapper;
 using Microsoft.Data.Sqlite;
 using AspNetCoreTesting.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreTesting.Domain.Domain;
+using AspNetCoreTesting.Api.StudentManagement;
 
 namespace AspNetCoreTesting.Api
 {
@@ -24,7 +26,7 @@ namespace AspNetCoreTesting.Api
                 options.UseSqlite(connection);
             });
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Student), typeof(StudentsController));
         }
     }
 }
