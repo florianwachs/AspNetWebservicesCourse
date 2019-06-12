@@ -19,18 +19,17 @@ namespace SerilogLesson
     internal class Program
     {
         private static async Task Main(string[] args)
-        {
-            // Configuration im Code, so ist aber kein Zugriff auf das Configfile appsettings möglich
-//            Log.Logger = new LoggerConfiguration()
-//                .MinimumLevel.Debug()
-//                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-//                .Enrich.FromLogContext()
-//                .WriteTo.Console()
-//                .CreateLogger();
+        {            
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
 
             try
             {
-                // Log.Information("Starting web host");
+                Log.Information("Starting web host");
                 var host = CreateWebHostBuilder(args).Build();
                 await SeedDb(host);
                 await host.RunAsync();
