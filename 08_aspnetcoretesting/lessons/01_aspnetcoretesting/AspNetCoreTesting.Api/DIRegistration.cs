@@ -18,6 +18,9 @@ namespace AspNetCoreTesting.Api
     {
         public static void AddUniversityServices(this IServiceCollection services)
         {
+            // Manuelles erzeugen der SqliteConection damit sie hier geöffnet werden kann
+            // Sonst schließt der erste DBContext der Disposed wird die Connection und die
+            // Db geht offline
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 

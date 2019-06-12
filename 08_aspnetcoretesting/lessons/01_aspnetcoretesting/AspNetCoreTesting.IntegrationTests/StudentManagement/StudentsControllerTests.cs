@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using AspNetCoreTesting.Domain.Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -17,7 +14,7 @@ namespace AspNetCoreTesting.IntegrationTests.StudentManagement
         }
 
         [Fact]
-        public async Task Should_be_able_to_get_all_container_infos()
+        public async Task Should_be_able_to_get_all_students()
         {
             // Ruft CreateClient() der Basisklasse auf
             var client = CreateClient();
