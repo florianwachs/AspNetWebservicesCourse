@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using StsServerIdentity.Models;
 using Microsoft.AspNetCore.Identity;
-using IdentityServer4;
-using AspNetCoreSecurity.Domain.Domain;
+using StsServerIdentity.Models;
 
 namespace StsServerIdentity
 {
@@ -45,7 +43,7 @@ namespace StsServerIdentity
             {
                 claims.Add(new Claim(JwtClaimTypes.Role, "user"));
             }
-                        
+
             if (!string.IsNullOrWhiteSpace(user.Email))
             {
                 claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));
