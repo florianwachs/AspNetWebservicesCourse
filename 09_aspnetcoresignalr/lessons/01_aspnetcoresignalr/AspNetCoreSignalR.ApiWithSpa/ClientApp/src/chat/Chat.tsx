@@ -1,11 +1,11 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useState } from "react";
 import * as signalR from "@aspnet/signalr";
 import { Layout, Input, Button } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 class Chat extends PureComponent<{}, IChatState> {
   private connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-  state: IChatState = { isConnected: false, text: "", userName: "" };
+  state: IChatState = { isConnected: false, text: "", userName: "", messages: [] };
   componentDidMount() {
     this.connectToSignalR();
   }
@@ -16,7 +16,7 @@ class Chat extends PureComponent<{}, IChatState> {
     }
   }
   render() {
-    const { isConnected, text } = this.state;
+    const { isConnected, text, messages } = this.state;
 
     return (
       <Layout>
@@ -28,7 +28,13 @@ class Chat extends PureComponent<{}, IChatState> {
               Senden
             </Button>
           </div>
-          <div>b</div>
+          <div>
+            <ul>
+              {messages.map(message => (
+                <li>{message}</li>
+              ))}
+            </ul>
+          </div>
         </Content>
         <Footer>{isConnected ? "Mit SignalR verbunden" : "Noop, keine Verbindung"}</Footer>
       </Layout>
@@ -44,7 +50,9 @@ class Chat extends PureComponent<{}, IChatState> {
       .catch(err => document.write(err));
 
     this.connection.on("receiveMessage", (username: string, message: string) => {
-      console.log(message);
+      const oldMessages = this.state.messages;
+      const newMessages = [message, ...oldMessages];
+      this.setState({ messages: newMessages });
     });
   }
 
@@ -60,4 +68,5 @@ interface IChatState {
   isConnected: boolean;
   text: string;
   userName: string;
+  messages: string[];
 }
