@@ -29,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreSecurity.Domain\AspNetCoreSecurity.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="sts_dev_cert.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
