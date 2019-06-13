@@ -8,7 +8,7 @@ using AspNetCoreSecurity.Domain.Domain;
 
 namespace AspNetCoreSecurity.Domain.Data
 {
-    public static class DummyUsers
+    public static class KnownUsers
     {
         public struct UserCreateData
         {

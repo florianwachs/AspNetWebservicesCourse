@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AspNetCoreSecurity.Domain.ApplicationServices;
+using AspNetCoreSecurity.Domain.Data;
 using AspNetCoreSecurity.Domain.Domain;
 
 namespace AspNetCoreSecurity.Infrastructure.DataAccess
@@ -28,12 +28,7 @@ namespace AspNetCoreSecurity.Infrastructure.DataAccess
         {
             if (!dbContext.Students.Any())
             {
-                dbContext.Students.AddRange(new[]
-                {
-                    Student.Create(_id.NewEntityId(), "Hansi", "Hinterseer", "alpenkasperl@th-norris.de", "MaiHaHi"),
-                    Student.Create(_id.NewEntityId(), "Florian", "Silberfischel", "silberfischel@th-norris.de", "FlSi"),
-                    Student.Create(_id.NewEntityId(), "Seven", "Of Nine", "resistenceisfutile@th-norris.de", "SeNi"),
-                });
+                dbContext.Students.AddRange(KnownUsers.Get().Where(u => u.Type == UserTypes.Student).Select(data => Student.Create(data.Id, data.GivenName, data.FamilyName, data.Email, data.Id)));
 
                 dbContext.SaveChanges();
             }
@@ -59,12 +54,7 @@ namespace AspNetCoreSecurity.Infrastructure.DataAccess
         {
             if (!dbContext.Professors.Any())
             {
-                dbContext.Professors.AddRange(new[]
-                {
-                    Professor.Create("jason", "Jason", "Bourne", "jasonbourne@th-norris.de", "JaBo"),
-                    Professor.Create("chuck", "Chuck", "Norris", "chucknorris@th-norris.de", "ChNo"),
-                    Professor.Create("katie", "Katie", "Bouman", "dr.katie.bouman@th-norris.de", "KaBo"),
-                });
+                dbContext.Professors.AddRange(KnownUsers.Get().Where(u => u.Type == UserTypes.Professor || u.Type == UserTypes.Principal).Select(data => Professor.Create(data.Id, data.GivenName, data.FamilyName, data.Email, data.Id)));
 
                 dbContext.SaveChanges();
             }

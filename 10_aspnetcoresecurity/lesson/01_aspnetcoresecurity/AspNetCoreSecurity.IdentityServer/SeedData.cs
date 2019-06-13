@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using StsServerIdentity.Data;
 using StsServerIdentity.Models;
-using static AspNetCoreSecurity.Domain.Data.DummyUsers;
+using static AspNetCoreSecurity.Domain.Data.KnownUsers;
 
 namespace StsServerIdentity
 {
@@ -57,7 +57,7 @@ namespace StsServerIdentity
 
                 var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-                foreach (var userData in DummyUsers.Get())
+                foreach (var userData in KnownUsers.Get())
                 {
                     CreateUser(userMgr, userData);
                 }
