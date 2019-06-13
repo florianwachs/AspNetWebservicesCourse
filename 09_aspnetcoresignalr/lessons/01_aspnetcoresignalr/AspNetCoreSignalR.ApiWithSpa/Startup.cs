@@ -1,3 +1,4 @@
+using AspNetCoreSignalR.ApiWithSpa.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -20,6 +21,7 @@ namespace AspNetCoreSignalR.ApiWithSpa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -43,6 +45,11 @@ namespace AspNetCoreSignalR.ApiWithSpa
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
 
             app.UseMvc(routes =>
             {
