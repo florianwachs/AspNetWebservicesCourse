@@ -62,10 +62,19 @@ namespace AspNetCoreSecurity.Infrastructure.DataAccess
 
         private static void AssignKnownProfessors(UniversityDbContext dbContext)
         {
-            var course = dbContext.Courses.Find("physics_1");
-            var professor = dbContext.Professors.Find("katie");
+            var bouman = dbContext.Professors.Find("katie");
+            var physics = dbContext.Courses.Find("physics_1");
+            var math = dbContext.Courses.Find("math_1");
 
-            course.AssignProfessorToCourse(professor);
+            physics.AssignProfessorToCourse(bouman);
+            math.AssignProfessorToCourse(bouman);
+
+            var norris = dbContext.Professors.Find("chuck");
+            var selfdefense = dbContext.Courses.Find("selfdefense_1");
+            var memory = dbContext.Courses.Find("memory_1");
+
+            selfdefense.AssignProfessorToCourse(norris);
+            memory.AssignProfessorToCourse(norris);
 
             dbContext.SaveChanges();
         }
