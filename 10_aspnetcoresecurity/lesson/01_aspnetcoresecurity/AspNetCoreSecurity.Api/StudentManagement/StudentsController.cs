@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AspNetCoreSecurity.Domain.Domain;
 using AspNetCoreSecurity.Infrastructure.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreSecurity.Api.StudentManagement
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -24,8 +26,8 @@ namespace AspNetCoreSecurity.Api.StudentManagement
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {
-            var courses = await _dbContext.Students.ToListAsync();
-            return Ok(courses);
+            var students = await _dbContext.Students.ToListAsync();
+            return Ok(students);
         }
 
         [HttpGet("{studentId}/enrolledcourses")]

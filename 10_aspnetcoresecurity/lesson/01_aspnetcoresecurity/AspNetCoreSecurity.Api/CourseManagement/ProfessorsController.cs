@@ -7,11 +7,13 @@ using AspNetCoreSecurity.Api.CourseManagement.ViewModels;
 using AspNetCoreSecurity.Domain.Domain;
 using AspNetCoreSecurity.Infrastructure.DataAccess;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreSecurity.Api.CourseManagement
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfessorsController : ControllerBase
@@ -28,8 +30,8 @@ namespace AspNetCoreSecurity.Api.CourseManagement
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Professor>>> GetAllProfessors()
         {
-            var courses = await _dbContext.Professors.ToListAsync();
-            return Ok(courses);
+            var professors = await _dbContext.Professors.ToListAsync();
+            return Ok(professors);
         }
 
         [HttpGet("{professorId}/assignedcourses")]

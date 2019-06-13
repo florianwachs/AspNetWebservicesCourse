@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AspNetCoreSecurity.Domain.Domain;
 using AspNetCoreSecurity.Infrastructure.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreSecurity.Api.CourseManagement
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
