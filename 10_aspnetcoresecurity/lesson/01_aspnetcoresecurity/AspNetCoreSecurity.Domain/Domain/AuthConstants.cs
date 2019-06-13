@@ -23,6 +23,7 @@ namespace AspNetCoreSecurity.Domain.Domain
         public const string CanEditCourse = "CanEditCourse";
         public const string CanDeleteCourse = "CanDeleteCourse";
         public const string CanReadCourses = "CanReadCourses";
+        public const string CanReadCourseGrades = "CanReadCourseGrades";
         public const string CanReadStudentsEnrolledInCourse = "CanReadStudentsEnrolledInCourse";
     }
 }

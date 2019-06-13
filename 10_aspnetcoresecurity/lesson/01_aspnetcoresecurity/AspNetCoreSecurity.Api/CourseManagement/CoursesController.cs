@@ -9,6 +9,7 @@ using AspNetCoreSecurity.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static AspNetCoreSecurity.Api.AuthConfig;
 
 namespace AspNetCoreSecurity.Api.CourseManagement
 {
@@ -18,10 +19,12 @@ namespace AspNetCoreSecurity.Api.CourseManagement
     public class CoursesController : ControllerBase
     {
         private readonly UniversityDbContext _dbContext;
+        private readonly IAuthorizationService _authorizationService;
 
-        public CoursesController(UniversityDbContext dbContext)
+        public CoursesController(UniversityDbContext dbContext, IAuthorizationService authorizationService)
         {
             _dbContext = dbContext;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -38,10 +41,32 @@ namespace AspNetCoreSecurity.Api.CourseManagement
             var course = await _dbContext.Courses
                 .Include(c => c.Students)
                 .ThenInclude(sc => sc.Student)
-                .Where(c => c.Id == courseId).FirstOrDefaultAsync();
+                .Where(c => c.Id == courseId).FirstOrDefaultAsync();           
 
             var studentsOfCourse = course.Students.Select(sc => sc.Student);
             return Ok(studentsOfCourse);
+        }
+               
+        [HttpGet("{courseId}/grades")]
+        public async Task<ActionResult<IEnumerable<CourseGrade>>> GetCourseGrades(string courseId)
+        {
+            var course = await _dbContext.Courses
+                .Include(c => c.Grades)
+                .ThenInclude(sc => sc.Student)
+                .Where(c => c.Id == courseId).FirstOrDefaultAsync();
+
+            if(course == null)
+            {
+                return NotFound();
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, course, new CanReadCourseGradesRequirement());
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            return Ok(course.Grades);
         }
     }
 }

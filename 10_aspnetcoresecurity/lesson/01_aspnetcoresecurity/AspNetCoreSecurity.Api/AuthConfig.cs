@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AspNetCoreSecurity.Domain.Domain;
@@ -48,6 +49,7 @@ namespace AspNetCoreSecurity.Api
             services.AddSingleton<IAuthorizationHandler, IsPrincipalHandler>();
             services.AddSingleton<IAuthorizationHandler, IsProfessorHandler>();
             services.AddSingleton<IAuthorizationHandler, IsUniversityMemberHandler>();
+            services.AddSingleton<IAuthorizationHandler, CanReadCourseGradesHandler>();
         }
 
         private static void ConfigureAuthorization(IServiceCollection services)
@@ -84,6 +86,8 @@ namespace AspNetCoreSecurity.Api
                 {
                     policy.AddRequirements(new UniversityMemberRequirement());
                 });
+
+                options.AddPolicy(AppPolicies.CanReadCourseGrades, policy => policy.AddRequirements(new CanReadCourseGradesRequirement()));
 
             });
         }
@@ -139,6 +143,30 @@ namespace AspNetCoreSecurity.Api
             {
                 var user = context.User;
                 if (user.IsPrincipal() || user.IsProfessor() || user.IsStudent())
+                {
+                    context.Succeed(requirement);
+                }
+
+                return Task.CompletedTask;
+            }
+        }
+
+        // Requirements können sich auch auf Ressourcen beziehen:
+        public class CanReadCourseGradesRequirement : IAuthorizationRequirement
+        {
+        }
+
+        public class CanReadCourseGradesHandler : AuthorizationHandler<CanReadCourseGradesRequirement, Course>
+        {
+            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CanReadCourseGradesRequirement requirement, Course resource)
+            {
+                if (context.User.IsPrincipal())
+                {
+                    context.Succeed(requirement);
+                }
+
+                var userid = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (!string.IsNullOrWhiteSpace(userid) && userid == resource.ProfessorId)
                 {
                     context.Succeed(requirement);
                 }
