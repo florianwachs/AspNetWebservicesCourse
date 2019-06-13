@@ -1,4 +1,5 @@
 using AspNetCoreSignalR.ApiWithSpa.Hubs;
+using AspNetCoreSignalR.ApiWithSpa.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,7 @@ namespace AspNetCoreSignalR.ApiWithSpa
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
+            services.AddSingleton<WeatherServices>();
 
             services.AddSpaStaticFiles(configuration =>
             {

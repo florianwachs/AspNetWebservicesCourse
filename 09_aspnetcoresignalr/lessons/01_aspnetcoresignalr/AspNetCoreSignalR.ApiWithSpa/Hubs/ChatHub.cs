@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreSignalR.ApiWithSpa.Hubs
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub<IChatHub>
     {
         public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await Clients.All.ReceiveMessage(user, message);
         }
+    }
+
+    public interface IChatHub
+    {
+        Task ReceiveMessage(string user, string message);
     }
 }
