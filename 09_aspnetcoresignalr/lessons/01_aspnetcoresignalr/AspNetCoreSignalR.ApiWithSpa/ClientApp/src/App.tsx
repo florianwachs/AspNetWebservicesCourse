@@ -1,12 +1,20 @@
 import React from "react";
-import logo from "./logo.svg";
 import Chat from "./chat/Chat";
 import "./App.css";
+import { Tabs } from "antd";
 
+const { TabPane } = Tabs;
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Chat />
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Chat" key="1">
+          <Chat />
+        </TabPane>
+        <TabPane tab="Wetter" key="2">
+          Content of Tab Pane 2
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
