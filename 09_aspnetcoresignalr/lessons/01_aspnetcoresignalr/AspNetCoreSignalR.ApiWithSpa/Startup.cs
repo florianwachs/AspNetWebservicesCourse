@@ -63,6 +63,7 @@ namespace AspNetCoreSignalR.ApiWithSpa
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chatHub");
+                routes.MapHub<WeatherHub>("/weatherHub");
             });
 
             app.UseMvc(routes =>

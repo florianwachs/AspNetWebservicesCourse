@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Chat from "./chat/Chat";
 import "./App.css";
-import { Tabs } from "antd";
+import Weather from "./weather/Weather";
+import { Button } from "antd";
 
-const { TabPane } = Tabs;
 const App: React.FC = () => {
+  const [showChat, setShowChat] = useState(true);
+
   return (
     <div className="App">
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Chat" key="1">
-          <Chat />
-        </TabPane>
-        <TabPane tab="Wetter" key="2">
-          Content of Tab Pane 2
-        </TabPane>
-      </Tabs>
+      <div>
+        <Button onClick={() => setShowChat(true)}>Chat</Button>
+        <Button onClick={() => setShowChat(false)}>Wetter</Button>
+      </div>
+      {showChat ? <Chat /> : <Weather />}
     </div>
   );
 };

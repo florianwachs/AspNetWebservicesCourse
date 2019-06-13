@@ -1,11 +1,18 @@
 import React, { PureComponent } from "react";
 import * as signalR from "@aspnet/signalr";
-import { Layout, Input, Button } from "antd";
+import { Layout, Input, Button, Card } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 class Weather extends PureComponent<{}, IWeatherState> {
   private connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl("/weatherHub").build();
 
-  state: IWeatherState = { isConnected: false };
+  state: IWeatherState = {
+    isConnected: false,
+    forcast: {
+      summary: "unknown",
+      temperatureC: "unknown",
+      dateFormatted: "unknown"
+    }
+  };
   componentDidMount() {
     this.connectToSignalR();
   }
@@ -21,7 +28,13 @@ class Weather extends PureComponent<{}, IWeatherState> {
     return (
       <Layout>
         <Header>My-Chat</Header>
-        <Content />
+        <Content>
+          <Card>
+            <p>Datum: {forcast.dateFormatted}</p>
+            <p>Temperatur in C: {forcast.temperatureC}</p>
+            <p>Zusammenfassung: {forcast.summary}</p>
+          </Card>
+        </Content>
         <Footer>{isConnected ? "Mit SignalR verbunden" : "Noop, keine Verbindung"}</Footer>
       </Layout>
     );
@@ -46,12 +59,11 @@ export default Weather;
 
 interface IWeatherState {
   isConnected: boolean;
-  forcast?: IWeatherForcast;
+  forcast: IWeatherForcast;
 }
 
 interface IWeatherForcast {
   dateFormatted: string;
-  temperatureC: number;
+  temperatureC: string;
   summary: string;
-  temperatureF: number;
 }
