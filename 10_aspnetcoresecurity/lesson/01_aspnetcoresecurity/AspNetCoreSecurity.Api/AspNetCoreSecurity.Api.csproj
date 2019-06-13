@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreSecurity.Domain\AspNetCoreSecurity.Domain.csproj" />
     <ProjectReference Include="..\AspNetCoreSecurity.Infrastructure\AspNetCoreSecurity.Infrastructure.csproj" />
   </ItemGroup>
 

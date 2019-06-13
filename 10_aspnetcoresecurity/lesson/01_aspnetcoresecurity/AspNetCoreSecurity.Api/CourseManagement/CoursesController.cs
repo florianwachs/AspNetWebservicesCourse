@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreSecurity.Api.CourseManagement
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicies.CanReadCourses)]
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
@@ -31,6 +31,7 @@ namespace AspNetCoreSecurity.Api.CourseManagement
             return Ok(courses);
         }
 
+        [Authorize(Policy = AppPolicies.CanReadStudentsEnrolledInCourse)]
         [HttpGet("{courseId}/students")]
         public async Task<ActionResult<IEnumerable<Student>>> GetCourseStudents(string courseId)
         {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AspNetCoreSecurity.Domain.Domain;
 using AspNetCoreSecurity.Infrastructure.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +16,8 @@ namespace AspNetCoreSecurity.Api
         public static void ConfigureAuth(this IServiceCollection services)
         {
             // 1
-            services.AddAuthorization();
+            ConfigureAuthorization(services);
+            AddAuthorizationHandler(services);
 
             // 2
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
@@ -39,6 +42,52 @@ namespace AspNetCoreSecurity.Api
             services.AddRequireClaimAttributeAuthorization();
         }
 
+        private static void AddAuthorizationHandler(IServiceCollection services)
+        {
+            // Authorization-Handler müssen am DI-System registriert werden.
+            services.AddSingleton<IAuthorizationHandler, IsPrincipalHandler>();
+            services.AddSingleton<IAuthorizationHandler, IsProfessorHandler>();
+            services.AddSingleton<IAuthorizationHandler, IsUniversityMemberHandler>();
+        }
+
+        private static void ConfigureAuthorization(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AppPolicies.CanReadAllStudents, policy =>
+                {
+                    policy.RequireClaim(AuthConstants.PrincipalType);
+                });
+
+                options.AddPolicy(AppPolicies.CanCreateNewStudent, policy =>
+                {
+                    policy.RequireClaim(AuthConstants.PrincipalType);
+                });
+
+                options.AddPolicy(AppPolicies.CanEditCourse, policy =>
+                {
+                    policy.RequireAssertion(authContext => authContext.User.IsPrincipal()
+                    || authContext.User.IsProfessor());
+                });
+
+                options.AddPolicy(AppPolicies.CanDeleteCourse, policy =>
+                {
+                    policy.AddRequirements(new ProfessorOrPrincipalRequirement());
+                });
+
+                options.AddPolicy(AppPolicies.CanReadStudentsEnrolledInCourse, policy =>
+                {
+                    policy.AddRequirements(new ProfessorOrPrincipalRequirement());
+                });
+
+                options.AddPolicy(AppPolicies.CanReadCourses, policy =>
+                {
+                    policy.AddRequirements(new UniversityMemberRequirement());
+                });
+
+            });
+        }
+
         public static void UseAuth(this IApplicationBuilder app)
         {
             // 4
@@ -46,6 +95,56 @@ namespace AspNetCoreSecurity.Api
 
             // 5
             app.UseAuthentication();
+        }
+
+        public class ProfessorOrPrincipalRequirement : IAuthorizationRequirement
+        {
+        }
+
+        public class IsProfessorHandler : AuthorizationHandler<ProfessorOrPrincipalRequirement>
+        {
+            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ProfessorOrPrincipalRequirement requirement)
+            {
+                if (context.User.IsProfessor())
+                {
+                    // Wenn ein Authorization Handler pro Requirement Succeeded, ist das Requirement erfüllt.
+                    context.Succeed(requirement);
+                }
+
+                return Task.CompletedTask;
+            }
+        }
+
+        public class IsPrincipalHandler : AuthorizationHandler<ProfessorOrPrincipalRequirement>
+        {
+            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ProfessorOrPrincipalRequirement requirement)
+            {
+                if (context.User.IsPrincipal())
+                {
+                    // Wenn ein Authorization Handler pro Requirement Succeeded, ist das Requirement erfüllt.
+                    context.Succeed(requirement);
+                }
+
+                return Task.CompletedTask;
+            }
+        }
+
+        public class UniversityMemberRequirement : IAuthorizationRequirement
+        {
+        }
+
+        public class IsUniversityMemberHandler : AuthorizationHandler<UniversityMemberRequirement>
+        {
+            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, UniversityMemberRequirement requirement)
+            {
+                var user = context.User;
+                if (user.IsPrincipal() || user.IsProfessor() || user.IsStudent())
+                {
+                    context.Succeed(requirement);
+                }
+
+                return Task.CompletedTask;
+            }
         }
     }
 }

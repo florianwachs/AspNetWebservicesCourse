@@ -9,6 +9,7 @@ using IdentityServer4.Services;
 using StsServerIdentity.Models;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4;
+using AspNetCoreSecurity.Domain.Domain;
 
 namespace StsServerIdentity
 {
@@ -32,7 +33,8 @@ namespace StsServerIdentity
 
             var claims = principal.Claims.ToList();
 
-            claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+            // Wenn diese Zeile einkommentiert ist, müssen alle Claims an der API Resource aufgelistet sein.
+            // claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
             claims.Add(new Claim(JwtClaimTypes.GivenName, user.UserName));
 
             if (user.IsAdmin)
@@ -43,7 +45,7 @@ namespace StsServerIdentity
             {
                 claims.Add(new Claim(JwtClaimTypes.Role, "user"));
             }
-
+                        
             if (!string.IsNullOrWhiteSpace(user.Email))
             {
                 claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));

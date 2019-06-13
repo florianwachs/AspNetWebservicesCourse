@@ -15,4 +15,14 @@ namespace AspNetCoreSecurity.Domain.Domain
         public const string PrincipalType = "principal";
         public const string ProfessorType = "professor";
     }
+
+    public static class AppPolicies
+    {
+        public const string CanReadAllStudents = "CanReadAllStudents";
+        public const string CanCreateNewStudent = "CanCreateNewStudent";
+        public const string CanEditCourse = "CanEditCourse";
+        public const string CanDeleteCourse = "CanDeleteCourse";
+        public const string CanReadCourses = "CanReadCourses";
+        public const string CanReadStudentsEnrolledInCourse = "CanReadStudentsEnrolledInCourse";
+    }
 }
