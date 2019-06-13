@@ -44,7 +44,10 @@ namespace StsServerIdentity
                 claims.Add(new Claim(JwtClaimTypes.Role, "user"));
             }
 
-            claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));
+            if (!string.IsNullOrWhiteSpace(user.Email))
+            {
+                claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));
+            }
 
             context.IssuedClaims = claims;
         }

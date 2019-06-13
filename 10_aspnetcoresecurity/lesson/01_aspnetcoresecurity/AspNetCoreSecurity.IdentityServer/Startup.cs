@@ -158,6 +158,8 @@ namespace StsServerIdentity
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            SeedData.EnsureSeedUsers(app.ApplicationServices);
+
             app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());
