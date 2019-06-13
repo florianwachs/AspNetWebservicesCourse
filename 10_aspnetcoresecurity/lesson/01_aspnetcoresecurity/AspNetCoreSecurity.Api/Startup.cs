@@ -18,29 +18,8 @@ namespace AspNetCoreSecurity.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation();
             services.AddUniversityServices();
+            services.ConfigureAuth();
 
-            // 1
-            services.AddAuthorization();
-
-            // 2
-            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
-            {
-                // Url des Identity Servers
-                options.Authority = "https://localhost:44318";
-                options.Audience = "api";
-            });
-
-            // 3
-            services.AddCors(options =>
-            {
-                options.AddPolicy("default", policy =>
-                {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, UniversityDbContext universityDb)
@@ -58,11 +37,8 @@ namespace AspNetCoreSecurity.Api
 
             app.UseHttpsRedirection();
 
-            // 4
-            app.UseCors("default");
-
-            // 5
-            app.UseAuthentication();
+            // 4-5
+            app.UseAuth();
 
             // 6
             app.UseMvc();
