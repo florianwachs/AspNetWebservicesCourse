@@ -27,6 +27,24 @@ namespace AspNetCoreSecurity.Api
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+            {
+                // Url des Identity Servers
+                options.Authority = "https://localhost:44318";
+                options.Audience = "api";
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +64,9 @@ namespace AspNetCoreSecurity.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseCors("default");
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
