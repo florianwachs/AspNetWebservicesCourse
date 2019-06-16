@@ -87,13 +87,22 @@ namespace StsServerIdentity
                 // legacy client mit ressource owner password flow
                 new Client
                 {
-                    ClientId = "legacy",
+                    ClientId = "legacy-js",
                     ClientName = "Legacy JS Client",
                     ClientUri = "https://localhost:44387",
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = true,
                     AllowedCorsOrigins = {"https://localhost:44387"},
+                    AllowedScopes = {"openid", "profile", "api1"}
+                },
+
+                new Client
+                {
+                    ClientId = "trusted-client",
+                    ClientName = "Trusted C# Client",
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = {"openid", "profile", "api1"}
                 }
             };
