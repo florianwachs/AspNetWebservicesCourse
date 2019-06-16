@@ -43,41 +43,13 @@ namespace StsServerIdentity
             var useLocalCertStore = Convert.ToBoolean(Configuration["UseLocalCertStore"]);
             var certificateThumbprint = Configuration["CertificateThumbprint"];
 
-            X509Certificate2 cert;
-
-            if (_environment.IsProduction())
-            {
-                if (useLocalCertStore)
-                {
-                    using (X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-                    {
-                        store.Open(OpenFlags.ReadOnly);
-                        var certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false);
-                        cert = certs[0];
-                        store.Close();
-                    }
-                }
-                else
-                {
-                    // Azure deployment, will be used if deployed to Azure
-                    var vaultConfigSection = Configuration.GetSection("Vault");
-                    var keyVaultService = new KeyVaultCertificateService(vaultConfigSection["Url"], vaultConfigSection["ClientId"], vaultConfigSection["ClientSecret"]);
-                    cert = keyVaultService.GetCertificateFromKeyVault(vaultConfigSection["CertificateName"]);
-                }
-            }
-            else
-            {
-                cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "sts_dev_cert.pfx"), "1234");
-            }
+            var cert = SetupCertificate(useLocalCertStore, certificateThumbprint);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<StsConfig>(Configuration.GetSection("StsConfig"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
-
-            services.AddSingleton<LocService>();
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddAuthentication()
                  .AddOpenIdConnect("aad", "Login with Azure AD", options =>
@@ -93,31 +65,7 @@ namespace StsServerIdentity
                 .AddErrorDescriber<StsIdentityErrorDescriber>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<RequestLocalizationOptions>(
-                options =>
-                {
-                    var supportedCultures = new List<CultureInfo>
-                        {
-                            new CultureInfo("en-US"),
-                            new CultureInfo("de-DE"),
-                            new CultureInfo("de-CH"),
-                            new CultureInfo("it-IT"),
-                            new CultureInfo("gsw-CH"),
-                            new CultureInfo("fr-FR"),
-                            new CultureInfo("zh-Hans")
-                        };
-
-                    options.DefaultRequestCulture = new RequestCulture(culture: "de-DE", uiCulture: "de-DE");
-                    options.SupportedCultures = supportedCultures;
-                    options.SupportedUICultures = supportedCultures;
-
-                    var providerQuery = new LocalizationQueryProvider
-                    {
-                        QureyParamterName = "ui_locales"
-                    };
-
-                    options.RequestCultureProviders.Insert(0, providerQuery);
-                });
+            ConfigureLocalization(services);
 
             services.AddMvc(options =>
             {
@@ -134,7 +82,6 @@ namespace StsServerIdentity
                 });
 
             services.AddTransient<IProfileService, IdentityWithAdditionalClaimsProfileService>();
-
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddIdentityServer()
@@ -145,6 +92,35 @@ namespace StsServerIdentity
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
         }
+
+        private static void ConfigureLocalization(IServiceCollection services)
+        {
+            services.AddSingleton<LocService>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(
+                options =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en-US"),
+                        new CultureInfo("de-DE"),
+                        new CultureInfo("de-CH"),
+                        new CultureInfo("it-IT"),
+                        new CultureInfo("gsw-CH"),
+                        new CultureInfo("fr-FR"),
+                        new CultureInfo("zh-Hans")
+                    };
+
+                    options.DefaultRequestCulture = new RequestCulture(culture: "de-DE", uiCulture: "de-DE");
+                    options.SupportedCultures = supportedCultures;
+                    options.SupportedUICultures = supportedCultures;
+
+                    var providerQuery = new LocalizationQueryProvider {QureyParamterName = "ui_locales"};
+
+                    options.RequestCultureProviders.Insert(0, providerQuery);
+                });
+        }
+
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -160,6 +136,20 @@ namespace StsServerIdentity
 
             SeedData.EnsureSeedUsers(app.ApplicationServices);
 
+            SetupAdditionalButRecomendedSecurityOptions(app);
+            
+            app.UseIdentityServer();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+
+        private static void SetupAdditionalButRecomendedSecurityOptions(IApplicationBuilder app)
+        {
             app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());
@@ -186,27 +176,54 @@ namespace StsServerIdentity
                 {
                     if (context.Context.Response.Headers["feature-policy"].Count == 0)
                     {
-                        var featurePolicy = "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'";
+                        var featurePolicy =
+                            "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'";
 
                         context.Context.Response.Headers["feature-policy"] = featurePolicy;
                     }
 
                     if (context.Context.Response.Headers["X-Content-Security-Policy"].Count == 0)
                     {
-                        var csp = "script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';form-action 'self';frame-ancestors 'self';block-all-mixed-content";
+                        var csp =
+                            "script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';form-action 'self';frame-ancestors 'self';block-all-mixed-content";
                         // IE
                         context.Context.Response.Headers["X-Content-Security-Policy"] = csp;
                     }
                 }
             });
-            app.UseIdentityServer();
+        }
 
-            app.UseMvc(routes =>
+        private X509Certificate2 SetupCertificate(bool useLocalCertStore, string certificateThumbprint)
+        {
+            X509Certificate2 cert;
+
+            if (_environment.IsProduction())
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                if (useLocalCertStore)
+                {
+                    using (X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+                    {
+                        store.Open(OpenFlags.ReadOnly);
+                        var certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false);
+                        cert = certs[0];
+                        store.Close();
+                    }
+                }
+                else
+                {
+                    // Azure deployment, will be used if deployed to Azure
+                    var vaultConfigSection = Configuration.GetSection("Vault");
+                    var keyVaultService = new KeyVaultCertificateService(vaultConfigSection["Url"],
+                        vaultConfigSection["ClientId"], vaultConfigSection["ClientSecret"]);
+                    cert = keyVaultService.GetCertificateFromKeyVault(vaultConfigSection["CertificateName"]);
+                }
+            }
+            else
+            {
+                cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "sts_dev_cert.pfx"), "1234");
+            }
+
+            return cert;
         }
     }
 }

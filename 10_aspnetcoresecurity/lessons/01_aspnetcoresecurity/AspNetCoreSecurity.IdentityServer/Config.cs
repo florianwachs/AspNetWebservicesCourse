@@ -58,6 +58,7 @@ namespace StsServerIdentity
                         "university-api"
                     },
                     RequireClientSecret = false,
+                    AlwaysIncludeUserClaimsInIdToken = true
                 },
             };
         }
