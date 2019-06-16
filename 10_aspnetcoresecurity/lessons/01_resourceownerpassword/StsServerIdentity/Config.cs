@@ -52,9 +52,9 @@ namespace StsServerIdentity
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     ClientSecrets = {new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256())},
 
-                    RedirectUris = {"http://localhost:5001/signin-oidc"},
-                    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = {"http://localhost:5001/signout-callback-oidc"},
+                    RedirectUris = {"https://localhost:44386/signin-oidc"},
+                    FrontChannelLogoutUri = "https://localhost:44386/signout-oidc",
+                    PostLogoutRedirectUris = {"https://localhost:44386/signout-callback-oidc"},
 
                     AllowOfflineAccess = true,
                     AllowedScopes = {"openid", "profile", "api1"}
@@ -65,21 +65,21 @@ namespace StsServerIdentity
 //                {
 //                    ClientId = "spa",
 //                    ClientName = "SPA Client",
-//                    ClientUri = "http://identityserver.io",
+//                    ClientUri = "https://localhost:44387",
 //
 //                    AllowedGrantTypes = GrantTypes.Implicit,
 //                    AllowAccessTokensViaBrowser = true,
 //
 //                    RedirectUris =
 //                    {
-//                        "http://localhost:5002/index.html",
-//                        "http://localhost:5002/callback.html",
-//                        "http://localhost:5002/silent.html",
-//                        "http://localhost:5002/popup.html",
+//                        "https://localhost:44386/index.html",
+//                        "https://localhost:44386/callback.html",
+//                        "https://localhost:44386/silent.html",
+//                        "https://localhost:44386/popup.html",
 //                    },
 //
-//                    PostLogoutRedirectUris = {"http://localhost:5002/index.html"},
-//                    AllowedCorsOrigins = {"http://localhost:5002"},
+//                    PostLogoutRedirectUris = {"https://localhost:44386/index.html"},
+//                    AllowedCorsOrigins = {"https://localhost:44387"},
 //
 //                    AllowedScopes = {"openid", "profile", "api1"}
 //                },
@@ -89,11 +89,11 @@ namespace StsServerIdentity
                 {
                     ClientId = "legacy",
                     ClientName = "Legacy JS Client",
-                    ClientUri = "http://identityserver.io",
+                    ClientUri = "https://localhost:44387",
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = true,
-                    AllowedCorsOrigins = {"http://localhost:5002"},
+                    AllowedCorsOrigins = {"https://localhost:44387"},
                     AllowedScopes = {"openid", "profile", "api1"}
                 }
             };
