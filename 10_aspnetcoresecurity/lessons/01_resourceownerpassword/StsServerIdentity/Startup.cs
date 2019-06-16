@@ -33,6 +33,9 @@ namespace StsServerIdentity
                 options.AuthenticationDisplayName = "Windows";
             });
 
+            services.AddCors(policies => policies.AddPolicy("default",
+                options => { options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); }));
+
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -87,6 +90,7 @@ namespace StsServerIdentity
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("default");
             app.UseIdentityServer();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();

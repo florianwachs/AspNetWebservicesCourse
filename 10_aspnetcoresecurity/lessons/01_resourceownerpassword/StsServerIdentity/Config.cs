@@ -94,7 +94,8 @@ namespace StsServerIdentity
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = true,
                     AllowedCorsOrigins = {"https://localhost:44387"},
-                    AllowedScopes = {"openid", "profile", "api1"}
+                    AllowedScopes = {"openid", "profile", "api1"},
+                    RequireClientSecret = false
                 },
 
                 new Client
