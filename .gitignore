@@ -196,3 +196,4 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+/10_aspnetcoresecurity/lessons/01_identityservergrantflows/StsServerIdentity/identityserver4_log.txt

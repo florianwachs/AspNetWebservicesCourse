@@ -61,28 +61,28 @@ namespace StsServerIdentity
                 },
 
                 // SPA client mit implicit flow
-//                new Client
-//                {
-//                    ClientId = "spa",
-//                    ClientName = "SPA Client",
-//                    ClientUri = "https://localhost:44387",
-//
-//                    AllowedGrantTypes = GrantTypes.Implicit,
-//                    AllowAccessTokensViaBrowser = true,
-//
-//                    RedirectUris =
-//                    {
-//                        "https://localhost:44386/index.html",
-//                        "https://localhost:44386/callback.html",
-//                        "https://localhost:44386/silent.html",
-//                        "https://localhost:44386/popup.html",
-//                    },
-//
-//                    PostLogoutRedirectUris = {"https://localhost:44386/index.html"},
-//                    AllowedCorsOrigins = {"https://localhost:44387"},
-//
-//                    AllowedScopes = {"openid", "profile", "api1"}
-//                },
+                new Client
+                {
+                    ClientId = "spa",
+                    ClientName = "SPA Client",
+                    ClientUri = "https://localhost:44387",
+                    RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris =
+                    {
+                        "https://localhost:44387/index.html",
+                        "https://localhost:44387/callback.html",
+                        "https://localhost:44387/silent.html",
+                        "https://localhost:44387/popup.html",
+                    },
+
+                    PostLogoutRedirectUris = {"https://localhost:44386/index.html"},
+                    AllowedCorsOrigins = {"https://localhost:44387"},
+
+                    AllowedScopes = {"openid", "profile", "api1"}
+                },
 
                 // legacy client mit ressource owner password flow
                 new Client

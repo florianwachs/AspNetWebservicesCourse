@@ -24,7 +24,7 @@ const CallApi: React.FC<{ token: string }> = ({ token }) => {
 
   const callApi = async () => {
     var result = await SampleApiClient.getForecasts(token);
-    setData(JSON.stringify(result));
+    setData(JSON.stringify(result, null, 4));
   };
 
   return (
@@ -32,7 +32,9 @@ const CallApi: React.FC<{ token: string }> = ({ token }) => {
       <div>
         <Button onClick={callApi}>Call Api</Button>
       </div>
-      <div>{data}</div>
+      <div>
+        <pre>{data}</pre>
+      </div>
     </div>
   );
 };
