@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Button, Form, Icon, Input } from "antd";
 import querystring from "querystring";
@@ -7,12 +7,30 @@ import SampleApiClient from "../shared/services/SampleApiClient";
 import { User, UserManager } from "oidc-client";
 
 const AuthorizationCodeFlowSample: React.FC<IAuthorizationCodeFlowSampleProps> = () => {
-  const [token, setToken] = useState("");
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const userManager = createUserManager();
+      try {
+        const user = await userManager.getUser();
+
+        if (user && !user.expired) {
+          console.log("loged in");
+          setUser(user);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkUser();
+  }, []);
 
   return (
     <div className="App">
-      {!token && <Login onTokenSuccess={setToken} />}
-      {token && <CallApi token={token} />}
+      {!user && <Login />}
+      {user && <CallApi token={user.access_token} />}
     </div>
   );
 };
@@ -40,7 +58,7 @@ const CallApi: React.FC<{ token: string }> = ({ token }) => {
   );
 };
 
-const Login: React.FC<{ onTokenSuccess: (token: string) => void }> = ({ onTokenSuccess }) => {
+const Login: React.FC = () => {
   return (
     <div>
       <Button type="primary" onClick={loginIfNeeded}>
