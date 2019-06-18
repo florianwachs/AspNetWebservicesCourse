@@ -1,110 +1,123 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import { Button, Form, Icon, Input } from "antd";
-import querystring from "querystring";
-import { RouteComponentProps } from "@reach/router";
+import React, {useState, useEffect} from "react";
+import {Alert, Button, Card, Form, Icon, Input} from "antd";
+import {RouteComponentProps} from "@reach/router";
 import SampleApiClient from "../shared/services/SampleApiClient";
-import { User, UserManager } from "oidc-client";
+import {User, UserManager} from "oidc-client";
+
+const cardStyle = {width: 600, marginTop: "1rem"};
+const headStyle = {backgroundColor: "#90b1ff"};
+
 
 const AuthorizationCodeFlowSample: React.FC<IAuthorizationCodeFlowSampleProps> = () => {
-  const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const userManager = createUserManager();
-      try {
-        const user = await userManager.getUser();
+    useEffect(() => {
+        const checkUser = async () => {
+            const userManager = createUserManager();
+            try {
+                const user = await userManager.getUser();
 
-        if (user && !user.expired) {
-          console.log("loged in");
-          setUser(user);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+                if (user && !user.expired) {
+                    setUser(user);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    checkUser();
-  }, []);
+        checkUser();
+    }, []);
 
-  return (
-    <div className="App">
-      {!user && <Login />}
-      {user && <CallApi token={user.access_token} />}
-    </div>
-  );
+    return (
+        <div className="App">
+            <Login/>
+            <UserInfo user={user}/>
+            <CallApi token={user && user.access_token}/>
+        </div>
+    );
 };
 
 export default AuthorizationCodeFlowSample;
-interface IAuthorizationCodeFlowSampleProps extends RouteComponentProps {}
 
-const CallApi: React.FC<{ token: string }> = ({ token }) => {
-  const [data, setData] = useState();
+interface IAuthorizationCodeFlowSampleProps extends RouteComponentProps {
+}
 
-  const callApi = async () => {
-    var result = await SampleApiClient.getForecasts(token);
-    setData(JSON.stringify(result, null, 4));
-  };
+const UserInfo: React.FC<{ user?: User }> = ({user}) => {
 
-  return (
-    <div>
-      <div>
-        <Button onClick={callApi}>Call Api</Button>
-      </div>
-      <div>
-        <pre>{data}</pre>
-      </div>
-    </div>
-  );
+    return (
+        <Card title="User-Info" style={cardStyle} headStyle={headStyle}>
+            {user ? (<pre>{JSON.stringify(user, null, 4)}</pre>) : (<Alert message="Keine Authorisierung vorhanden"/>)}
+        </Card>
+    )
+};
+
+const CallApi: React.FC<{ token: string | undefined }> = ({token}) => {
+    const [data, setData] = useState();
+
+    const callApi = async () => {
+        const result = await SampleApiClient.getForecasts(token);
+        setData(JSON.stringify(result, null, 4));
+    };
+
+    return (
+        <Card title="API aufrufen" style={cardStyle} headStyle={headStyle}>
+            <div>
+                <Button onClick={callApi}>Call Api</Button>
+            </div>
+            <div>
+                <pre>{data}</pre>
+            </div>
+        </Card>
+    );
 };
 
 const Login: React.FC = () => {
-  return (
-    <div>
-      <Button type="primary" onClick={loginIfNeeded}>
-        Login
-      </Button>
-    </div>
-  );
+    return (
+        <Card title={"Login"} style={cardStyle} headStyle={headStyle}>
+            <Button type="primary" onClick={loginIfNeeded}>
+                Login
+            </Button>
+        </Card>
+    );
 };
 
 const loginIfNeeded = async () => {
-  const userManager = createUserManager();
-  try {
-    const user = await userManager.getUser();
-    if (!user || user.expired) {
-      login();
-      return null;
+    const userManager = createUserManager();
+    try {
+        const user = await userManager.getUser();
+        if (!user || user.expired) {
+            login();
+            return null;
+        }
+        console.log(user);
+        return user;
+    } catch (error) {
+        console.log(error);
+        login();
+        return null;
     }
-    console.log(user);
-    return user;
-  } catch (error) {
-    console.log(error);
-    login();
-    return null;
-  }
 };
 
 const login = () => {
-  const userManager = createUserManager();
-  userManager.signinRedirect({ state: window.location.href });
+    const userManager = createUserManager();
+    userManager.signinRedirect({state: window.location.href});
 };
 
 const createUserManager = () => {
-  const config = {
-    authority: "https://localhost:44386",
-    client_id: "spa",
-    redirect_uri: `https://localhost:44387/callback.html`,
-    response_type: "code",
-    scope: "openid profile api1",
-    post_logout_redirect_uri: `https://localhost:44387/index.html`,
-    automaticSilentRenew: true,
-    silent_redirect_uri: `https://localhost:44387/silentrenew.html`
-  };
-  const um = new UserManager(config);
-  um.events.addSilentRenewError(handleSilentRenewError);
-  return um;
+    const config = {
+        authority: "https://localhost:44386",
+        client_id: "spa",
+        redirect_uri: `https://localhost:44387/callback.html`,
+        response_type: "code",
+        scope: "openid profile api1",
+        post_logout_redirect_uri: `https://localhost:44387/index.html`,
+        automaticSilentRenew: true,
+        silent_redirect_uri: `https://localhost:44387/silentrenew.html`
+    };
+    const um = new UserManager(config);
+    um.events.addSilentRenewError(handleSilentRenewError);
+    return um;
 };
 const handleSilentRenewError = (ev: any[]) => {
-  console.log(ev);
+    console.log(ev);
 };
