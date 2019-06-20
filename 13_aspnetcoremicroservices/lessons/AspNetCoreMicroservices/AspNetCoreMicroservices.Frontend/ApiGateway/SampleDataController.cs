@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreMicroservices.Frontend.ApiGateway
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {

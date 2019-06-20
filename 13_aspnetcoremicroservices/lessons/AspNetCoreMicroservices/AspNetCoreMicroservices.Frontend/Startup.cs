@@ -1,3 +1,4 @@
+using AspNetCoreMicroservices.Frontend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,6 +23,7 @@ namespace AspNetCoreMicroservices.Frontend
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.Configure<ApiConfig>(Configuration.GetSection("Apis"));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
