@@ -3,22 +3,37 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreMicroservices.Jokes.Api.DataAccess;
+using AspNetCoreMicroservices.Jokes.Api.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace AspNetCoreMicroservices.Jokes.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+            await SeedDb(host);
+            await host.RunAsync();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        private static async Task SeedDb(IWebHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<JokeDbContext>();
+                await JokeDbSeeder.Seed(dbContext);
+            }
+        }
+
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+        }
     }
 }

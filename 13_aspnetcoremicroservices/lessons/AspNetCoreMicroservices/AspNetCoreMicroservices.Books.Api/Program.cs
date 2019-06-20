@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCoreMicroservices.Books.Api
 {
-    internal class Program
+    public class Program
     {
         private static async Task Main(string[] args)
         {
