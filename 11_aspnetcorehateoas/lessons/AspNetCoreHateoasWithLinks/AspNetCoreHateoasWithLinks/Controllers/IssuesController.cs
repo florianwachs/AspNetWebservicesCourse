@@ -19,7 +19,7 @@ namespace AspNetCoreHateoasWithLinks.Controllers
 
         public IssuesController(LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor)
         {
-            _linkGenerator = new IssueLinkGenerator(linkGenerator, contextAccessor);
+            _linkGenerator = new IssueLinkGenerator(linkGenerator);
         }
 
         [HttpGet("{id}")]
@@ -99,12 +99,10 @@ namespace AspNetCoreHateoasWithLinks.Controllers
     public class IssueLinkGenerator
     {
         private readonly LinkGenerator _linkGenerator;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public IssueLinkGenerator(LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor)
+        public IssueLinkGenerator(LinkGenerator linkGenerator)
         {
             _linkGenerator = linkGenerator;
-            _contextAccessor = contextAccessor;
         }
 
         public IEnumerable<LinkDto> GetLinks(Issue issue)
