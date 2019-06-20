@@ -1,4 +1,4 @@
-# Web Services Course FH-Rosenheim
+# Web Services Course TH-Rosenheim
 
 ## Hi There
 
