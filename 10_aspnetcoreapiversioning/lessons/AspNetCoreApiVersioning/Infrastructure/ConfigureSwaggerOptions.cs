@@ -35,8 +35,8 @@ namespace AspNetCoreApiVersioning.Infrastructure
                 Title = "Sample API",
                 Version = description.ApiVersion.ToString(),
                 Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
-                Contact = new Contact() { Name = "Bill Mei", Email = "bill.mei@somewhere.com" },
-                TermsOfService = "Shareware",
+                Contact = new Contact() { Name = "Chuck Norris", Email = "chuck.norris@somewhere.com" },
+                TermsOfService = "Bloatware",
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
             };
 
