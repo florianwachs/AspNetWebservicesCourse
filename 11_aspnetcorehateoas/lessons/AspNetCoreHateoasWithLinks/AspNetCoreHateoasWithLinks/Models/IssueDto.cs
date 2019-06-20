@@ -2,13 +2,6 @@
 
 namespace AspNetCoreHateoasWithLinks.Models
 {
-    public enum IssueStates
-    {
-        New,
-        InProgress,
-        Done,
-    }
-
     public class IssueDto : LinkedResourceBaseDto
     {
         public string Id { get; set; }
