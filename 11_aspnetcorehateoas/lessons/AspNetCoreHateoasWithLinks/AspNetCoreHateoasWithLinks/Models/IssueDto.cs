@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace AspNetCoreHateoasWithLinks.Models
 {
@@ -20,7 +22,6 @@ namespace AspNetCoreHateoasWithLinks.Models
                 UserId = issue.UserId,
                 State = issue.State,
             };
-        }
-        
+        }        
     }
 }

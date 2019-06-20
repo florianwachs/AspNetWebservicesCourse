@@ -1,5 +1,7 @@
 ﻿using AspNetCoreHateoasWithLinks.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,11 +15,11 @@ namespace AspNetCoreHateoasWithLinks.Controllers
         {
             ["1"] = Issue.CreateNew("1")
         };
-        private readonly IUrlHelper _urlHelper;
+        private readonly IssueLinkGenerator _linkGenerator;
 
-        public IssuesController(IUrlHelper urlHelper)
+        public IssuesController(LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor)
         {
-            _urlHelper = urlHelper;
+            _linkGenerator = new IssueLinkGenerator(linkGenerator, contextAccessor);
         }
 
         [HttpGet("{id}")]
@@ -89,51 +91,53 @@ namespace AspNetCoreHateoasWithLinks.Controllers
         private IssueDto GetDtoWithLinks(Issue issue)
         {
             var dto = IssueDto.From(issue);
-
+            dto.AddLinks(_linkGenerator.GetLinks(issue));
             return dto;
         }
     }
 
     public class IssueLinkGenerator
     {
-        private readonly IUrlHelper _urlHelper;
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public IssueLinkGenerator(IUrlHelper urlHelper)
+        public IssueLinkGenerator(LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor)
         {
-            _urlHelper = urlHelper;
+            _linkGenerator = linkGenerator;
+            _contextAccessor = contextAccessor;
         }
 
         public IEnumerable<LinkDto> GetLinks(Issue issue)
         {
             yield return new LinkDto(
                        "_self",
-                       _urlHelper.Action(nameof(IssuesController.GetIssueById),
-                       nameof(IssuesController), new { id = issue.Id }), "GET");
+                       _linkGenerator.GetPathByAction(nameof(IssuesController.GetIssueById),
+                       "issues", new { id = issue.Id }), "GET");
 
             switch (issue.State)
             {
                 case IssueStates.New:
                     yield return new LinkDto(
                         "Set_In_Progress",
-                        _urlHelper.Action(nameof(IssuesController.SetIssueInProgress),
-                        nameof(IssuesController), new { id = issue.Id }), "PUT");
+                        _linkGenerator.GetPathByAction(nameof(IssuesController.SetIssueInProgress),
+                        "issues", new { id = issue.Id }), "PUT");
 
                     yield return new LinkDto(
                         "Set_Removed",
-                        _urlHelper.Action(nameof(IssuesController.SetIssueRemoved),
-                        nameof(IssuesController), new { id = issue.Id }), "PUT");
+                        _linkGenerator.GetPathByAction(nameof(IssuesController.SetIssueRemoved),
+                        "issues", new { id = issue.Id }), "PUT");
                     break;
 
                 case IssueStates.InProgress:
                     yield return new LinkDto(
                        "Set_Done",
-                       _urlHelper.Action(nameof(IssuesController.SetIssueDone),
-                       nameof(IssuesController), new { id = issue.Id }), "PUT");
+                       _linkGenerator.GetPathByAction(nameof(IssuesController.SetIssueDone),
+                       "issues", new { id = issue.Id }), "PUT");
 
                     yield return new LinkDto(
                      "Set_Removed",
-                     _urlHelper.Action(nameof(IssuesController.SetIssueRemoved),
-                     nameof(IssuesController), new { id = issue.Id }), "PUT");
+                     _linkGenerator.GetPathByAction(nameof(IssuesController.SetIssueRemoved),
+                     "issues", new { id = issue.Id }), "PUT");
                     break;
             }
 
@@ -141,8 +145,8 @@ namespace AspNetCoreHateoasWithLinks.Controllers
             {
                 yield return new LinkDto(
                       "Get_User",
-                      _urlHelper.Action(nameof(UsersController.GetUserById),
-                      nameof(UsersController), new { id = issue.UserId }), "GET");
+                      _linkGenerator.GetPathByAction(nameof(UsersController.GetUserById),
+                      "users", new { id = issue.UserId }), "GET");
             }
         }
     }

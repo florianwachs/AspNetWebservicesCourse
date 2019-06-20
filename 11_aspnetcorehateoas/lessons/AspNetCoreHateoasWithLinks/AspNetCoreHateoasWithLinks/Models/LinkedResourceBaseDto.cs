@@ -12,9 +12,10 @@ namespace AspNetCoreHateoasWithLinks.Models
             _links = new List<LinkDto>();
         }
 
-        public void Add(LinkDto link)
+        public void AddLinks(IEnumerable<LinkDto> links)
         {
-            _links.Add(link);
+            _links.AddRange(links);
         }
+
     }
 }
