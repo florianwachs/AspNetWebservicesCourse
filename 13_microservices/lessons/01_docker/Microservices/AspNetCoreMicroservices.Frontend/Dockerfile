@@ -5,6 +5,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
+
+# NodeJs ist zum Bauen des Frontends noetig
+RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
+RUN apt-get install -y nodejs
+
 COPY ["AspNetCoreMicroservices.Frontend/AspNetCoreMicroservices.Frontend.csproj", "AspNetCoreMicroservices.Frontend/"]
 RUN dotnet restore "AspNetCoreMicroservices.Frontend/AspNetCoreMicroservices.Frontend.csproj"
 COPY . .

@@ -9,6 +9,7 @@
 **/charts
 **/bin
 **/obj
+**/node_modules/
 **/Dockerfile
 **/Dockerfile.develop
 **/docker-compose.yml
