@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="WCF.AsyncService.AsyncService" CodeBehind="AsyncService.svc.cs" %>
