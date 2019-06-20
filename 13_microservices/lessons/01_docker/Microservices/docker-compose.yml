@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  aspnetcoremicroservices.books.api:
+    image: ${DOCKER_REGISTRY-}aspnetcoremicroservicesbooksapi
+    build:
+      context: .
+      dockerfile: AspNetCoreMicroservices.Books.Api/Dockerfile
+
+  aspnetcoremicroservices.jokes.api:
+    image: ${DOCKER_REGISTRY-}aspnetcoremicroservicesjokesapi
+    build:
+      context: .
+      dockerfile: AspNetCoreMicroservices.Jokes.Api/Dockerfile
+
+
+  aspnetcoremicroservices.frontend:
+    image: ${DOCKER_REGISTRY-}aspnetcoremicroservicesfrontend
+    build:
+      context: .
+      dockerfile: AspNetCoreMicroservices.Frontend/Dockerfile
+    depends_on:
+      - aspnetcoremicroservices.books.api
+      - aspnetcoremicroservices.jokes.api
