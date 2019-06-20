@@ -1,3 +1,4 @@
+using AspNetCoreMicroservices.Frontend.ApiClients;
 using AspNetCoreMicroservices.Frontend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,10 @@ namespace AspNetCoreMicroservices.Frontend
             {
                 services.Configure<ApiConfig>(Configuration.GetSection("Apis"));
             }
+
+            // HttpClientFactory einrichten
+            services.AddHttpClient<IBooksService, BooksService>();
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

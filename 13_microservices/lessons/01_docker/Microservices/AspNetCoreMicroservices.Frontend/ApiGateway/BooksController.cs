@@ -1,4 +1,5 @@
-﻿using AspNetCoreMicroservices.Frontend.Models;
+﻿using AspNetCoreMicroservices.Frontend.ApiClients;
+using AspNetCoreMicroservices.Frontend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -15,23 +16,16 @@ namespace AspNetCoreMicroservices.Frontend.ApiGateway
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        // Naiver Ansatz, besser: HttpClientFactory
-        private static HttpClient _client = new HttpClient();
-        private readonly IOptionsSnapshot<ApiConfig> _config;
-        private readonly Uri _baseUri;
+        private readonly IBooksService _booksService;
 
-        public BooksController(IOptionsSnapshot<ApiConfig> config)
+        public BooksController(IBooksService booksService)
         {
-            _config = config;
-            _baseUri = new Uri(config.Value.BooksServiceBaseUri);
+            _booksService = booksService;
         }
 
         public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
         {
-            var response = await _client.GetAsync(new Uri(_baseUri, "api/books"));
-            response.EnsureSuccessStatusCode();
-
-            return Ok(await response.Content.ReadAsAsync<IEnumerable<BookDto>>());
+            return Ok(await _booksService.GetBooks());
         }
     }
 }
