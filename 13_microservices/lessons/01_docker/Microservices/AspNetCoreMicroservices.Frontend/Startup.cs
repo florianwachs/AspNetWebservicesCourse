@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace AspNetCoreMicroservices.Frontend
 {
     public class Startup
     {
+        // docker stop $(docker ps -a -q)
+        private bool InDocker { get { return Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"; } }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,7 +27,19 @@ namespace AspNetCoreMicroservices.Frontend
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.Configure<ApiConfig>(Configuration.GetSection("Apis"));
+            if (InDocker)
+            {
+                services.Configure<ApiConfig>(
+                    options =>
+                    {
+                        options.BooksServiceBaseUri = "http://booksapi";
+                        options.JokesServiceBaseUri = "http://jokesapi";
+                    });
+            }
+            else
+            {
+                services.Configure<ApiConfig>(Configuration.GetSection("Apis"));
+            }
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -60,7 +76,7 @@ namespace AspNetCoreMicroservices.Frontend
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
+                if (!InDocker && env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
