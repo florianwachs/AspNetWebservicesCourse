@@ -6,17 +6,17 @@ namespace AspNetCoreHateoasWithLinks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksController : ControllerBase
+    public class IssuesController : ControllerBase
     {
-        private static readonly Dictionary<string, TaskDto> _tasks = new Dictionary<string, TaskDto>
+        private static readonly Dictionary<string, Issue> _tasks = new Dictionary<string, Issue>
         {
-            ["1"] = TaskDto.CreateNew("1")
+            ["1"] = Issue.CreateNew("1")
         };
 
         [HttpGet("{id}", Name = "GetTaskById")]
-        public ActionResult<IEnumerable<TaskDto>> GetTaskById(string id)
+        public ActionResult<IEnumerable<IssueDto>> GetTaskById(string id)
         {
-            TaskDto task = _tasks.TryGetValue(id, out TaskDto t) ? t : null;
+            Issue task = _tasks.TryGetValue(id, out Issue t) ? t : null;
             if (task == null)
             {
                 return NotFound();
@@ -26,38 +26,38 @@ namespace AspNetCoreHateoasWithLinks.Controllers
         }
 
         [HttpPut("inprogress/{id}", Name = "SetTaskInProgress")]
-        public ActionResult<IEnumerable<TaskDto>> SetTaskInProgress(string id)
+        public ActionResult<IEnumerable<IssueDto>> SetTaskInProgress(string id)
         {
-            TaskDto task = _tasks.TryGetValue(id, out TaskDto t) ? t : null;
+            Issue task = _tasks.TryGetValue(id, out Issue t) ? t : null;
             if (task == null)
             {
                 return NotFound();
             }
 
-            if (task.TaskState >= TaskStates.InProgress)
+            if (task.State >= IssueStates.InProgress)
             {
                 return BadRequest();
             }
 
-            task.TaskState = TaskStates.InProgress;
+            task.State = IssueStates.InProgress;
             return Ok(task);
         }
 
         [HttpPut("done/{id}", Name = "SetTaskDone")]
-        public ActionResult<IEnumerable<TaskDto>> SetTaskDone(string id)
+        public ActionResult<IEnumerable<IssueDto>> SetTaskDone(string id)
         {
-            TaskDto task = _tasks.TryGetValue(id, out TaskDto t) ? t : null;
+            Issue task = _tasks.TryGetValue(id, out Issue t) ? t : null;
             if (task == null)
             {
                 return NotFound();
             }
 
-            if (task.TaskState >= TaskStates.Done)
+            if (task.State >= IssueStates.Done)
             {
                 return BadRequest();
             }
 
-            task.TaskState = TaskStates.Done;
+            task.State = IssueStates.Done;
             return Ok(task);
         }
     }
