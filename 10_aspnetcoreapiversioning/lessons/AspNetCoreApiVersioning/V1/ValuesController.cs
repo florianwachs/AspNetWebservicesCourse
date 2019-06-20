@@ -5,6 +5,7 @@ namespace AspNetCoreApiVersioning.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ValuesController : ControllerBase
     {
@@ -14,7 +15,7 @@ namespace AspNetCoreApiVersioning.V1
             // API Version kann über eine Extension Method am Context abgerufen werden.
             var apiVersion = HttpContext.GetRequestedApiVersion();
 
-            return new string[] { apiVersion.ToString() };
+            return new [] {apiVersion.ToString()};
         }
 
         [HttpGet("{id}")]
