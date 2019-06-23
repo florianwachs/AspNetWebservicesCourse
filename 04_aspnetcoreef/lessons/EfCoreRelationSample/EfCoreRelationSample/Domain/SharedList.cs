@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EfCoreRelationSample.Domain
+﻿namespace EfCoreRelationSample.Domain
 {
     public class SharedList
     {
@@ -12,5 +6,10 @@ namespace EfCoreRelationSample.Domain
         public string ListId { get; private set; }
         public User User { get; private set; }
         public List List { get; private set; }
+
+        public static SharedList CreateFor(User user, List list)
+        {
+            return new SharedList { ListId = list.Id, UserId = user.Id };
+        }
     }
 }
