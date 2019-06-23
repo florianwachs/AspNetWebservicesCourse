@@ -37,7 +37,6 @@ namespace EfCoreRelationSample.DataAccess
             dbContext.Users.AddRange(new[] { user1, user2, user3 });
 
             dbContext.SaveChanges();
-
         }
 
 
