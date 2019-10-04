@@ -1,7 +1,5 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http;
+﻿using System;
+using System.Net;
 
 namespace CSharpAdvancedLanguageFeatures
 {
@@ -13,11 +11,11 @@ namespace CSharpAdvancedLanguageFeatures
             {
                 // Do Stuff
             }
-            catch (HttpResponseException ex) when (ex.Response.StatusCode == HttpStatusCode.InternalServerError)
+            catch (HttpResponseException ex) when (ex.StatusCode == HttpStatusCode.InternalServerError)
             {
                 // Handle 500 - Internal Server Error
             }
-            catch (HttpResponseException ex) when (ex.Response.StatusCode == HttpStatusCode.NotFound)
+            catch (HttpResponseException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
                 // Handle 404 - Not Found
             }
@@ -26,5 +24,22 @@ namespace CSharpAdvancedLanguageFeatures
                 // The Rest
             }
         }
+    }
+
+    public class HttpResponseException : Exception
+    {
+        public HttpResponseException() : base()
+        {
+        }
+
+        public HttpResponseException(string message) : base(message)
+        {
+        }
+
+        public HttpResponseException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        public HttpStatusCode StatusCode { get; set; }
     }
 }

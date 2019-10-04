@@ -65,6 +65,7 @@ namespace CSharpAdvancedLanguageFeatures
                 if (!disposed)
                 {
                     Console.WriteLine("MyResource Aufräumarbeiten");
+                    disposed = true;
                 }
             }
 

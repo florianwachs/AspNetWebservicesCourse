@@ -53,7 +53,7 @@ namespace CSharpAdvancedLanguageFeatures
             }
             catch (RuntimeBinderException ex)
             {
-                Console.WriteLine("Diesen Member gibt es nicht");
+                Console.WriteLine("Diesen Member gibt es nicht " + ex.ToString());
             }
         }
 
