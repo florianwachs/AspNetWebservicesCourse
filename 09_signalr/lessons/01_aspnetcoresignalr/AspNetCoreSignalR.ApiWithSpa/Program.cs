@@ -1,4 +1,7 @@
+﻿using AspNetCoreSignalR.ApiWithSpa.Jobs;
+using Coravel;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreSignalR.ApiWithSpa
@@ -7,7 +10,14 @@ namespace AspNetCoreSignalR.ApiWithSpa
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+            host.Services.UseScheduler(scheduler =>
+            {
+                scheduler
+                    .Schedule<CheckForWeatherUpdates>()
+                    .EveryFifteenSeconds();
+            });
+            host.Run();
         }
 
         public static IHostBuilder CreateWebHostBuilder(string[] args)
@@ -17,6 +27,10 @@ namespace AspNetCoreSignalR.ApiWithSpa
                 webBuilder
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true");
+            }).ConfigureServices(services =>
+            {
+                services.AddScheduler();
+                services.AddTransient<CheckForWeatherUpdates>();
             });
 
         }

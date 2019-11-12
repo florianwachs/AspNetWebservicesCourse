@@ -10,7 +10,6 @@ namespace AspNetCoreSignalR.ApiWithSpa.Hubs
 {
     public class WeatherHub : Hub<IWeatherHub>
     {
-
     }
 
     public interface IWeatherHub

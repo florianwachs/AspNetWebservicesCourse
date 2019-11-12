@@ -38,6 +38,5 @@ namespace AspNetCoreSignalR.ApiWithSpa.Controllers
         {
             return _services.GetForecasts();
         }
-
     }
 }
