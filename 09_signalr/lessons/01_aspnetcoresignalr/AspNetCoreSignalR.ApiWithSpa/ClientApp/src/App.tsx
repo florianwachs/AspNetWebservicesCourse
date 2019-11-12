@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Chat from "./chat/Chat";
 import "./App.css";
-import Weather from "./weather/Weather";
 import { Button } from "antd";
+import Chat from "./chat/Chat";
+import Weather from "./weather/Weather";
 
 const App: React.FC = () => {
   const [showChat, setShowChat] = useState(true);
