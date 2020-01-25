@@ -1,10 +1,9 @@
 ﻿using ChuckNorrisService.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
@@ -23,15 +22,17 @@ namespace ChuckNorrisService.Providers
         private async Task InitIfNecessary()
         {
             if (_jokes?.Any() == true)
+            {
                 return;
+            }
 
             if (!File.Exists(JokeFilePath))
             {
                 throw new InvalidOperationException($"no jokes file located in {JokeFilePath}");
             }
 
-            var rawJson = await File.ReadAllTextAsync(JokeFilePath);
-            _jokes = JsonConvert.DeserializeObject<List<Joke>>(rawJson);
+            string rawJson = await File.ReadAllTextAsync(JokeFilePath);
+            _jokes = JsonSerializer.Deserialize<List<Joke>>(rawJson);
         }
     }
 }

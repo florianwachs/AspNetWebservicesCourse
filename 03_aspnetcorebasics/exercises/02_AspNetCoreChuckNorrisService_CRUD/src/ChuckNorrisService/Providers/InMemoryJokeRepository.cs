@@ -1,9 +1,9 @@
 ﻿using ChuckNorrisService.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
@@ -56,7 +56,7 @@ namespace ChuckNorrisService.Providers
             }
 
             string rawJson = File.ReadAllText(JokeFilePath);
-            List<JokeDto> jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
+            List<JokeDto> jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson);
             _jokes = GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id);
         }
 
@@ -77,7 +77,6 @@ namespace ChuckNorrisService.Providers
                 return dto.Category?.Select(cat => categoryMap[cat]).ToArray() ?? Array.Empty<JokeCategory>();
             }
         }
-
 
     }
 }
