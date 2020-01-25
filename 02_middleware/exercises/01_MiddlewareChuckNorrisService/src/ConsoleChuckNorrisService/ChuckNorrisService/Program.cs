@@ -1,9 +1,9 @@
 ﻿using ChuckNorrisService.Client;
 using ChuckNorrisService.Models;
 using ChuckNorrisService.Providers;
-using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService
@@ -34,10 +34,10 @@ namespace ChuckNorrisService
             {
                 // TODO: Nur für Vorlesungszwecke! Das referenzieren von Strings erzeugt
                 // eine Kopie, problematisch bei großen strings (LOH)
-                // Mit .net core 3.0 wird es performantere Möglichkeiten zur
-                // Serialisierung und Deserialisierung geben.
+                // Mit .net core 3.1 gibt es performantere Möglichkeiten zur
+                // Serialisierung und Deserialisierung über Streams.
 
-                var raw = JsonConvert.SerializeObject(jokesToSerialize);
+                var raw = JsonSerializer.Serialize(jokesToSerialize);
                 File.WriteAllText($"jokes_{DateTime.Now.Ticks}.json", raw);
             }
         }

@@ -1,6 +1,6 @@
 ﻿using ChuckNorrisService.Startups;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService
@@ -15,9 +15,11 @@ namespace ChuckNorrisService
             builder.Build().Run();
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder<TStartup>(string[] args) where TStartup : class
+        private static IHostBuilder CreateWebHostBuilder<TStartup>(string[] args) where TStartup : class
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<TStartup>();
+            return Host
+                .CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<TStartup>());
         }
     }
 }
