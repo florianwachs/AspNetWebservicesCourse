@@ -17,17 +17,13 @@ namespace ChuckNorrisService.Models
             // refaktoring des Enums möglicherweise eine Umbenennung stattfinden,
             // welche den API-Vertrag bricht.
             // Deshalb sicherheitshalber explizit die Umwandlung angeben.
-            switch (category)
+            return category switch
             {
-                case JokeCategories.Dev:
-                    return "dev";
-                case JokeCategories.Food:
-                    return "food";
-                case JokeCategories.Movie:
-                    return "movie";
-                default:
-                    throw new InvalidOperationException("unknown joke category");
-            }
+                JokeCategories.Dev => "dev",
+                JokeCategories.Food => "food",
+                JokeCategories.Movie => "movie",
+                _ => throw new InvalidOperationException("unknown joke category")
+            };
         }
     }
 }
