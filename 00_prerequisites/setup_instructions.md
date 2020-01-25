@@ -4,7 +4,7 @@ Die Übungen basieren auf .net core, Microsofts plattformunabhängige .NET Techn
 
 - Windows 10 (aktuelle Version)
 - [Visual Studio 2019](https://visualstudio.microsoft.com/) mit dem .NET Core Payload ![](./assets/vs_netcore_payload.png)
-- [.NET Core 2.2 SDK](https://dotnet.microsoft.com/download)
+- [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
 - Docker for Windows (für unsere Container-Übungen)
 
 Mögliche Alternativen:

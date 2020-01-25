@@ -1660,6 +1660,12 @@ finally
     }
 }
 
+// Seit C#8:
+
+using var res = new MyResource();
+// Verwendung von res
+// res wird automatisch Disposed wenn es nicht mehr verwendet wird.
+
 ```
 
 ## Async / Await
