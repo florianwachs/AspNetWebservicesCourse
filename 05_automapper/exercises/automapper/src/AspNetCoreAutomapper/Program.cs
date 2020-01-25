@@ -9,6 +9,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace AspNetCoreAutomapper
@@ -22,7 +23,7 @@ namespace AspNetCoreAutomapper
             await host.RunAsync();
         }
 
-        private static async Task SeedDb(IWebHost host)
+        private static async Task SeedDb(IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -31,9 +32,11 @@ namespace AspNetCoreAutomapper
             }
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return Host
+                .CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
         }
     }
 }

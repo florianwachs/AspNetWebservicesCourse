@@ -1,5 +1,4 @@
 ﻿using ChuckNorrisService.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
@@ -69,7 +69,7 @@ namespace ChuckNorrisService.Providers
             }
 
             var rawJson = File.ReadAllText(JokeFilePath);
-            var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
+            var jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson);
             _jokes = new ConcurrentDictionary<string, Joke>(GetJokesFromDtos(jokeDtos).ToDictionary(k => k.Id));
         }
 

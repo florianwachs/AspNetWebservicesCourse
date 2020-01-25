@@ -1,12 +1,11 @@
 ﻿using ChuckNorrisService.DataAccess;
 using ChuckNorrisService.Models;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Repositories
@@ -26,7 +25,7 @@ namespace ChuckNorrisService.Repositories
         public async Task<Joke> Add(Joke joke)
         {
             EnsureId(joke);
-            var result = await _dbContext.Jokes.AddAsync(joke);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Joke> result = await _dbContext.Jokes.AddAsync(joke);
             await _dbContext.SaveChangesAsync();
             return result.Entity;
         }
@@ -41,39 +40,41 @@ namespace ChuckNorrisService.Repositories
 
         public async Task Delete(string id)
         {
-            var jokeToDelete = await GetById(id);
+            Joke jokeToDelete = await GetById(id);
             if (jokeToDelete == null)
+            {
                 return;
+            }
 
             _dbContext.Jokes.Remove(jokeToDelete);
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task<Joke> GetById(string id)
+        public ValueTask<Joke> GetById(string id)
         {
             return _dbContext.Jokes.FindAsync(id);
         }
 
         public async Task<Joke> Update(Joke joke)
         {
-            var updated = _dbContext.Jokes.Update(joke);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Joke> updated = _dbContext.Jokes.Update(joke);
             await _dbContext.SaveChangesAsync();
             return updated.Entity;
         }
 
         public async Task<Joke> GetRandomJoke()
         {
-            var allIds = await _dbContext.Jokes.Select(j => j.Id).ToListAsync();
-            var randomId = allIds[rnd.Next(0, allIds.Count)];
-            var joke = await GetById(randomId);
+            List<string> allIds = await _dbContext.Jokes.Select(j => j.Id).ToListAsync();
+            string randomId = allIds[rnd.Next(0, allIds.Count)];
+            Joke joke = await GetById(randomId);
             return joke;
         }
 
         public async Task<IReadOnlyCollection<JokeOnly>> GetJokes()
         {
-            using (var connection = new SqlConnection(_dbConnectionString.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_dbConnectionString.ConnectionString))
             {
-                var jokes = (await connection.QueryAsync<JokeOnly>("Select * FROM jokes")).ToList();
+                List<JokeOnly> jokes = (await connection.QueryAsync<JokeOnly>("Select * FROM jokes")).ToList();
                 return jokes;
             }
         }

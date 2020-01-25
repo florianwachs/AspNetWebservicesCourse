@@ -26,7 +26,7 @@ namespace AutomapperLesson
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddSingleton<IUserProfileRepository, UserProfileRepository>();
         }
 
@@ -43,7 +43,12 @@ namespace AutomapperLesson
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

@@ -9,6 +9,6 @@ namespace AspNetCoreAutomapper.Models
         Task<IReadOnlyCollection<Author>> GetAll();
         Task<IReadOnlyCollection<Author>> GetAllWithJokes();
         Task<Author> Update(Author author);
-        Task<Author> GetById(Guid id);
+        ValueTask<Author> GetById(Guid id);
     }
 }

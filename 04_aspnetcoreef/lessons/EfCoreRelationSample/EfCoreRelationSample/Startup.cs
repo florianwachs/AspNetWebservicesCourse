@@ -1,7 +1,6 @@
 ﻿using EfCoreRelationSample.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,10 +19,10 @@ namespace EfCoreRelationSample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
 
             ConfigureDb(services);
-        }      
+        }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, DemoDbContext dbContext)
         {
@@ -39,7 +38,12 @@ namespace EfCoreRelationSample
             DbSeeder.SeedDb(dbContext);
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private static void ConfigureDb(IServiceCollection services)
@@ -47,7 +51,7 @@ namespace EfCoreRelationSample
             // Manuelles erzeugen der SqliteConection damit sie hier geöffnet werden kann
             // Sonst schließt der erste DBContext der Disposed wird die Connection und die
             // Db geht offline
-            var connection = new SqliteConnection("DataSource=:memory:");
+            SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
             services.AddDbContext<DemoDbContext>(options =>

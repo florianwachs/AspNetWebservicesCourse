@@ -1,12 +1,7 @@
 ﻿using ChuckNorrisService.Models;
-using ChuckNorrisService.Providers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Controllers
@@ -24,7 +19,7 @@ namespace ChuckNorrisService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var joke = await _jokeProvider.GetById(id);
+            Joke joke = await _jokeProvider.GetById(id);
             if (joke == null)
             {
                 return NotFound();
@@ -41,21 +36,21 @@ namespace ChuckNorrisService.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _jokeProvider.Add(joke);
+            Joke result = await _jokeProvider.Add(joke);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody]Joke joke)
         {
-            var exists = _jokeProvider.GetById(id) != null;
+            bool exists = _jokeProvider.GetById(id) != null;
 
             if (!exists)
             {
                 return BadRequest();
             }
 
-            var result = await _jokeProvider.Update(joke);
+            Joke result = await _jokeProvider.Update(joke);
             return Ok(result);
         }
 
@@ -69,14 +64,14 @@ namespace ChuckNorrisService.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdate(string id, [FromBody] JsonPatchDocument<Joke> doc)
         {
-            var existing = await _jokeProvider.GetById(id);
+            Joke existing = await _jokeProvider.GetById(id);
             if (existing == null)
             {
                 return NotFound();
             }
 
             doc.ApplyTo(existing);
-            var result = await _jokeProvider.Update(existing);
+            Joke result = await _jokeProvider.Update(existing);
 
             return Ok(result);
         }

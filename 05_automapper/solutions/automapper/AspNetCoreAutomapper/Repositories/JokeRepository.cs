@@ -50,7 +50,7 @@ namespace AspNetCoreAutomapper.Repositories
             return jokes;
         }
 
-        public Task<Joke> GetById(string id)
+        public ValueTask<Joke> GetById(string id)
         {
             return _dbContext.Jokes.FindAsync(id);
         }

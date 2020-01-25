@@ -25,7 +25,7 @@ namespace AspNetCoreAutomapper
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddJokesServices(Configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
@@ -42,7 +42,12 @@ namespace AspNetCoreAutomapper
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

@@ -36,7 +36,7 @@ namespace AspNetCoreAutomapper.Repositories
             return updated.Entity;
         }
 
-        public Task<Author> GetById(Guid id)
+        public ValueTask<Author> GetById(Guid id)
         {
             return _dbContext.Authors.FindAsync(id);
         }

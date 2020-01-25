@@ -1,13 +1,10 @@
 ﻿using ChuckNorrisService.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
@@ -43,7 +40,7 @@ namespace ChuckNorrisService.Providers
 
         public Task<Joke> GetById(string id)
         {
-            var result = _jokes.TryGetValue(id, out var joke) ? joke : default;
+            Joke result = _jokes.TryGetValue(id, out Joke joke) ? joke : default;
             return Task.FromResult(result);
         }
 
@@ -55,7 +52,9 @@ namespace ChuckNorrisService.Providers
         public Task<Joke> Update(Joke joke)
         {
             if (string.IsNullOrWhiteSpace(joke.Id))
+            {
                 throw new InvalidOperationException("no joke.Id provided");
+            }
 
             _jokes.AddOrUpdate(joke.Id, joke, (existingKey, existingJoke) => joke);
             return Task.FromResult(joke);
@@ -73,15 +72,15 @@ namespace ChuckNorrisService.Providers
 
         private List<Joke> GetJokes()
         {
-            var rawJson = File.ReadAllText(JokeFilePath);
-            var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
+            string rawJson = File.ReadAllText(JokeFilePath);
+            List<JokeDto> jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson);
             return GetJokesFromDtos(jokeDtos);
         }
 
         private List<Joke> GetJokesFromDtos(List<JokeDto> jokeDtos)
         {
-            var allCategoryNames = jokeDtos.SelectMany(jokeDto => jokeDto.Category).Distinct();
-            var categoryMap = allCategoryNames.Select(JokeCategory.FromName).ToDictionary(k => k.Name);
+            IEnumerable<string> allCategoryNames = jokeDtos.SelectMany(jokeDto => jokeDto.Category).Distinct();
+            Dictionary<string, JokeCategory> categoryMap = allCategoryNames.Select(JokeCategory.FromName).ToDictionary(k => k.Name);
 
             return jokeDtos.Select(dto => new Joke
             {
@@ -90,7 +89,10 @@ namespace ChuckNorrisService.Providers
                 Categories = GetMatchingCategoriesOrEmpty(dto)
             }).ToList();
 
-            JokeCategory[] GetMatchingCategoriesOrEmpty(JokeDto dto) => dto.Category?.Select(cat => categoryMap[cat]).ToArray() ?? Array.Empty<JokeCategory>();
+            JokeCategory[] GetMatchingCategoriesOrEmpty(JokeDto dto)
+            {
+                return dto.Category?.Select(cat => categoryMap[cat]).ToArray() ?? Array.Empty<JokeCategory>();
+            }
         }
     }
 }

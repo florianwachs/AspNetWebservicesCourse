@@ -1,11 +1,9 @@
 ﻿using ChuckNorrisService.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Models
@@ -13,29 +11,31 @@ namespace ChuckNorrisService.Models
     public static class JokeDbSeeder
     {
         private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
-        
+
         public static async Task Seed(JokeDbContext dbContext)
         {
             if (await dbContext.Jokes.AnyAsync())
+            {
                 return;
+            }
 
-            var jokes = GetJokes();
+            List<Joke> jokes = GetJokes();
             await dbContext.Jokes.AddRangeAsync(jokes);
             await dbContext.SaveChangesAsync();
         }
 
         private static List<Joke> GetJokes()
         {
-            var rawJson = File.ReadAllText(JokeFilePath);
-            var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
-            var jokes = GetJokesFromDtos(jokeDtos);
+            string rawJson = File.ReadAllText(JokeFilePath);
+            List<JokeDto> jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson);
+            List<Joke> jokes = GetJokesFromDtos(jokeDtos);
             return jokes;
         }
 
         private static List<Joke> GetJokesFromDtos(List<JokeDto> jokeDtos)
         {
-            var allCategoryNames = jokeDtos.SelectMany(jokeDto => jokeDto.Category).Distinct();
-            var categoryMap = allCategoryNames.Select(JokeCategory.FromName).ToDictionary(k => k.Name);
+            IEnumerable<string> allCategoryNames = jokeDtos.SelectMany(jokeDto => jokeDto.Category).Distinct();
+            Dictionary<string, JokeCategory> categoryMap = allCategoryNames.Select(JokeCategory.FromName).ToDictionary(k => k.Name);
 
             return jokeDtos.Select(dto => new Joke
             {
@@ -44,7 +44,10 @@ namespace ChuckNorrisService.Models
                 Categories = GetMatchingCategories(dto)
             }).ToList();
 
-            List<JokeCategory> GetMatchingCategories(JokeDto dto) => dto.Category?.Select(cat => categoryMap[cat]).ToList();
+            List<JokeCategory> GetMatchingCategories(JokeDto dto)
+            {
+                return dto.Category?.Select(cat => categoryMap[cat]).ToList();
+            }
         }
     }
 }
