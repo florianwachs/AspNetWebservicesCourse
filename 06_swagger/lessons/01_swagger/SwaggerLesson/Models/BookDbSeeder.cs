@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SwaggerLesson.DataAccess;
 
 namespace SwaggerLesson.Models
@@ -35,7 +35,7 @@ namespace SwaggerLesson.Models
         private static List<Book> GetBooksFromDtos()
         {
             var rawJson = File.ReadAllText(BookFilePath);
-            var bookDtos = JsonConvert.DeserializeObject<List<BookDto>>(rawJson);
+            var bookDtos = JsonSerializer.Deserialize<List<BookDto>>(rawJson);
             var books = GetBooksFromDtos(bookDtos);
             return books;
         }

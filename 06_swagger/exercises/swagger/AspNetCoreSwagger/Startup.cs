@@ -24,7 +24,7 @@ namespace AspNetCoreSwagger
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddJokesServices(Configuration);
 
         }
@@ -41,7 +41,12 @@ namespace AspNetCoreSwagger
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

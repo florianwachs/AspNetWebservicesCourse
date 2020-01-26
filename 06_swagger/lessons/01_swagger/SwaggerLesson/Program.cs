@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using SwaggerLesson.DataAccess;
 using SwaggerLesson.Models;
+using System.Threading.Tasks;
 
 namespace SwaggerLesson
 {
@@ -17,23 +11,23 @@ namespace SwaggerLesson
     {
         private static async Task Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IHost host = CreateWebHostBuilder(args).Build();
             await SeedDb(host);
             await host.RunAsync();
         }
 
-        private static async Task SeedDb(IWebHost host)
+        private static async Task SeedDb(IHost host)
         {
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope scope = host.Services.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<BookDbContext>();
+                BookDbContext dbContext = scope.ServiceProvider.GetRequiredService<BookDbContext>();
                 await BookDbSeeder.Seed(dbContext);
             }
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webHost => webHost.UseStartup<Startup>());
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SwaggerLesson.DataAccess;
 using SwaggerLesson.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SwaggerLesson.Repositories
 {
@@ -20,7 +19,7 @@ namespace SwaggerLesson.Repositories
         public async Task<Book> Add(Book book)
         {
             EnsureId(book);
-            var result = await _dbContext.Books.AddAsync(book);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Book> result = await _dbContext.Books.AddAsync(book);
             await _dbContext.SaveChangesAsync();
             return result.Entity;
         }
@@ -35,9 +34,11 @@ namespace SwaggerLesson.Repositories
 
         public async Task Delete(string id)
         {
-            var jokeToDelete = await GetById(id);
+            Book jokeToDelete = await GetById(id);
             if (jokeToDelete == null)
+            {
                 return;
+            }
 
             _dbContext.Books.Remove(jokeToDelete);
             await _dbContext.SaveChangesAsync();
@@ -45,18 +46,18 @@ namespace SwaggerLesson.Repositories
 
         public async Task<IReadOnlyCollection<Book>> GetAll()
         {
-            var jokes = await _dbContext.Books.ToListAsync();
+            List<Book> jokes = await _dbContext.Books.ToListAsync();
             return jokes;
         }
 
-        public Task<Book> GetById(string id)
+        public ValueTask<Book> GetById(string id)
         {
             return _dbContext.Books.FindAsync(id);
         }
 
         public async Task<Book> Update(Book book)
         {
-            var updated = _dbContext.Books.Update(book);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Book> updated = _dbContext.Books.Update(book);
             await _dbContext.SaveChangesAsync();
             return updated.Entity;
         }
