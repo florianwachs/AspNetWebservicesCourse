@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AspNetCoreSerilog.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace AspNetCoreSerilog.Models
 {
@@ -35,7 +35,7 @@ namespace AspNetCoreSerilog.Models
         private static List<Joke> GetJokes()
         {
             var rawJson = File.ReadAllText(JokeFilePath);
-            var jokeDtos = JsonConvert.DeserializeObject<List<JokeDto>>(rawJson);
+            var jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson);
             var jokes = GetJokesFromDtos(jokeDtos);
             return jokes;
         }

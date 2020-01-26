@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using FluentValidation.AspNetCore;
+﻿using AspNetCoreTesting.Api.StudentManagement;
+using AspNetCoreTesting.Domain.Domain;
+using AspNetCoreTesting.Infrastructure.DataAccess;
 using AutoMapper;
 using Microsoft.Data.Sqlite;
-using AspNetCoreTesting.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using AspNetCoreTesting.Domain.Domain;
-using AspNetCoreTesting.Api.StudentManagement;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCoreTesting.Api
 {

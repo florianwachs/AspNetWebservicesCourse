@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AspNetCoreSerilog.DataAccess;
+﻿using AspNetCoreSerilog.DataAccess;
 using AspNetCoreSerilog.Models;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace AspNetCoreSerilog
 {
@@ -17,23 +11,23 @@ namespace AspNetCoreSerilog
     {
         private static async Task Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IHost host = CreateWebHostBuilder(args).Build();
             await SeedDb(host);
             await host.RunAsync();
         }
 
-        private static async Task SeedDb(IWebHost host)
+        private static async Task SeedDb(IHost host)
         {
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope scope = host.Services.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<JokeDbContext>();
+                JokeDbContext dbContext = scope.ServiceProvider.GetRequiredService<JokeDbContext>();
                 await JokeDbSeeder.Seed(dbContext);
             }
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webHost => webHost.UseStartup<Startup>());
         }
     }
 }

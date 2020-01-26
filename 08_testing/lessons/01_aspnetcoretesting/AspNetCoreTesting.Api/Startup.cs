@@ -2,9 +2,9 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreTesting.Api
 {
@@ -16,11 +16,11 @@ namespace AspNetCoreTesting.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation();
+            services.AddMvc().AddFluentValidation();
             services.AddUniversityServices();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UniversityDbContext universityDb)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UniversityDbContext universityDb)
         {
             if (env.IsDevelopment())
             {
@@ -34,7 +34,12 @@ namespace AspNetCoreTesting.Api
             DbSeeder.SeedDb(universityDb);
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

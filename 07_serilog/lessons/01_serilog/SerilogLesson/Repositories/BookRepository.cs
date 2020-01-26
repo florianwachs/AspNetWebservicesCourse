@@ -60,7 +60,7 @@ namespace SerilogLesson.Repositories
             return jokes;
         }
 
-        public Task<Book> GetById(string id)
+        public ValueTask<Book> GetById(string id)
         {
             return _dbContext.Books.FindAsync(id);
         }
