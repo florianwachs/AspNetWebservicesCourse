@@ -1,10 +1,9 @@
 ﻿using ChuckNorrisService.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Providers
@@ -31,7 +30,7 @@ namespace ChuckNorrisService.Providers
             }
 
             var rawJson = await File.ReadAllTextAsync(JokeFilePath);
-            _jokes = JsonConvert.DeserializeObject<List<Joke>>(rawJson);
+            _jokes = JsonSerializer.Deserialize<List<Joke>>(rawJson);
         }
     }
 }
