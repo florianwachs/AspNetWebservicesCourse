@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SerilogLesson
 {
-    internal class Program
+    internal static class Program
     {
         private static async Task Main(string[] args)
         {
