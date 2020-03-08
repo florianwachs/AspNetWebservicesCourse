@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
-using System.Text;
-using System.Threading;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CSharpAdvancedLanguageFeatures
@@ -66,7 +61,7 @@ namespace CSharpAdvancedLanguageFeatures
 
         private static string GetJokeFromJSON(string json)
         {
-            var jsonObj = JObject.Parse(json);
+            var jsonObj = JsonSerializer.Deserialize<dynamic>(json);
             var joke = jsonObj["value"]["joke"].ToString();
             return joke;
         }

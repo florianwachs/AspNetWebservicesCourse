@@ -1,13 +1,8 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace CSharpAdvancedLanguageFeatures
 {
@@ -112,7 +107,7 @@ namespace CSharpAdvancedLanguageFeatures
                 }
                 ";
 
-            dynamic o = JsonConvert.DeserializeObject(rawJson);
+            dynamic o = JsonSerializer.Deserialize<dynamic>(rawJson);
 
             Console.WriteLine(o.name.Value);
             Console.WriteLine(o.address.street.Value);
@@ -122,7 +117,6 @@ namespace CSharpAdvancedLanguageFeatures
                 Console.WriteLine(identity.Value);
             }
         }
-
 
         public class DynamicChuck : DynamicObject
         {
