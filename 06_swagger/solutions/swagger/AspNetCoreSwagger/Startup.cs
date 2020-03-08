@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -26,7 +28,7 @@ namespace AspNetCoreSwagger
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Jokes API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Jokes API", Version = "v1" });
 
                 // C# XML-Kommentare für API-Beschreibung nutzen
                 string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -37,7 +39,7 @@ namespace AspNetCoreSwagger
             services.AddJokesServices(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
