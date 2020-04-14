@@ -13,8 +13,8 @@ I'm looking forward to show you what .NET and Web Services are capable of.
 
 I can't wait to learn new stuff together!
 
-> Content is currently in german, but I hope to translate the course in the future
+> Content is currently in German, but I hope to translate the course in the future
 
-## Getting Started
+## Let's go
 
-Für die Vorlesung benötigt Ihr einen eigenen Laptop und die Tools aus der [Installationsanleitung](./00_prerequisites/setup_instructions.md)
+You can find the course here 👉 [Web Services Course](course/00_intro/readme.md)
