@@ -4,14 +4,21 @@ Willkommen zum FWPF **Web Services mit .NET** der [TH Rosenheim](https://www.th-
 
 ## Informationen zum Ablauf (2020)
 
-Da Jahr 2020 stellt uns bisher vor große Herausforderungen. Derzeit gibt es noch Abstimmungen, wie und wann die Online-Termine gestaltet werden können.
+Da Jahr 2020 stellt uns bisher vor große Herausforderungen. Derzeit gibt es noch Abstimmungen, wie und wann die Online-Termine gestaltet werden können. Sobald ich mehr Informationen habe werde ich sie zur Verfügung stellen.
+
+## Allgemeines zur Veranstaltung
+Ich freue mich das Ihr Euch für das FWPF Web Services entschieden habt. Die bisherigen Vorlesungen wurden immer als Präsenzveranstaltung abgehalten. Das wird nach aktuellem Stand leider nicht möglich sein und ist für Euch und für mich eine neue Situation. Das Essentielle bleibt aber: Bei meinem Lehrauftrag geht es mir darum, Euch mit den aktuellen Ansätzen für die Umsetzung von Webservices mit .NET als Technologie-Stack vertraut zu machen. Wie auch die Jahre zuvor, ist mir Euer Feedback besonders wichtig. Einige von Euch arbeiten evtl. schon mit anderen Technologien wie Java und NodeJS um Webservices umzusetzen. Für andere ist das Thema völlig neu. Mir ist es wichtig, dass alle etwas aus der Veranstaltung mitnehmen können.
+
+Deshalb würde ich mich auch dieses Mal sehr über Eure aktive Beteiligung freuen. Stellt Fragen, gebt Feedback und wenn Ihr Verbesserungsvorschläge habt lasst es mich wissen. Mein Ziel ist es , zusammen mit Euch, die Veranstaltung voranzubringen (ok, ja, gute Noten sind Euch auch wichtig 😉). Eure Beiträge / Projekte sind immer eine Bereicherung für die Veranstaltung.
+
+Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in der Projektarbeit nicht weiterkommt oder sonstige Unterstützung benötigt, lasst es mich bitte wissen.
 
 ## Vorbereitung Entwicklungsumgebung
 
-Für die Vorlesung benötigt Ihr einen eigenen Laptop und die Tools aus der [Installationsanleitung](../../00_prerequisites/setup_instructions.md)
+Für die Vorlesung benötigt Ihr einige Tools aus der [Installationsanleitung](../../00_prerequisites/setup_instructions.md)
 
 
-## Vorbereitungsmaterial CSharp
+## Vorbereitungsmaterial C\# (csharp)
 
 Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Ressourcen zum Einstieg in `C#`. Das Durcharbeiten des Vorbereitungsmaterials ist **nicht zwingend erforderlich** zur Teilnahme. Wir werden uns gemeinsam das benötigte C#-Wissen aneignen.
 
