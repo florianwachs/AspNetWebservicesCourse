@@ -13,9 +13,9 @@ Deshalb würde ich mich auch dieses Mal sehr über Eure aktive Beteiligung freue
 
 Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in der Projektarbeit nicht weiterkommt oder sonstige Unterstützung benötigt, lasst es mich bitte wissen.
 
-## Vorbereitung Entwicklungsumgebung
+## Vorbereitung Entwicklungsumgebung / Repository
 
-Für die Vorlesung benötigt Ihr einige Tools aus der [Installationsanleitung](../../00_prerequisites/setup_instructions.md)
+Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](../../00_prerequisites/setup_instructions.md)
 
 
 ## Vorbereitungsmaterial C\# (csharp)
