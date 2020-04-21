@@ -25,7 +25,7 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 | Beschreibung                                            | Link                                                                               |
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                    |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](../../01_csharp/lessons/docs/csharp_cheat_sheet.md)                  |
+| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](../../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                  |
 | Vorlesungsskript für C#                                 | [Slides C#](../slides/CSharp%20Language.pdf)                                       |
 | Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha |
 | Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |

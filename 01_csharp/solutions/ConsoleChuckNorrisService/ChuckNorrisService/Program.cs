@@ -15,6 +15,15 @@ namespace ChuckNorrisService
             await PrintJoke(new DummyJokeProvider());
             await PrintJoke(new FileSystemJokeProvider());
             await PrintJoke(new ApiJokeProvider());
+
+            WaitForUser();
+        }
+
+        private static void WaitForUser()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Please press the any-Key and only the any-Key");
+            Console.ReadKey();
         }
 
         private static async Task PrintJoke(IJokeProvider jokeProvider)
@@ -23,6 +32,10 @@ namespace ChuckNorrisService
             Console.WriteLine(joke.Value);
         }
 
+        /// <summary>
+        /// Hilfs Methode welche von der Jokes-API die Witze lädt und lokal abspeichert
+        /// </summary>
+        /// <returns></returns>
         private static async Task SaveJokesToFile()
         {
             var api = new ChuckNorrisApi();
@@ -34,9 +47,6 @@ namespace ChuckNorrisService
             {
                 // TODO: Nur für Vorlesungszwecke! Das referenzieren von Strings erzeugt
                 // eine Kopie, problematisch bei großen strings (LOH)
-                // Mit .net core 3.0 wird es performantere Möglichkeiten zur
-                // Serialisierung und Deserialisierung geben.
-
                 var raw = JsonSerializer.Serialize(jokesToSerialize);
                 File.WriteAllText($"jokes_{DateTime.Now.Ticks}.json", raw);
             }

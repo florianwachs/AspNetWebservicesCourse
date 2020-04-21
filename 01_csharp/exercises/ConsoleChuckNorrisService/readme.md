@@ -35,12 +35,12 @@ In dieser Aufgabe implementieren wir unsere erste C# Klasse.
 
 In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen ein NuGet-Paket um eine JSON-Datei einzulesen.
 
-- Fügen Sie ihrem Projekt das NuGet-Paket `JSON.NET` in der aktuellen Version hinzu.
+- Wir nutzen `System.Text.Json`
 - Implementieren Sie eine Klasse `FileSystemJokeProvider` welche die Witze aus der Datei `Data\jokes.json` einliest und einen zufälligen (nutzen Sie `Random`) Witz ausgiebt.
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
 > Hinweise:
-> `JsonConvert.DeserializeObject`,`File.ReadAllTextAsync`, `File.ReadAllTextAsync`
+> `JsonSerializer.Deserialize`,`File.ReadAllTextAsync`, `File.ReadAllTextAsync`
 
 # Aufgabe 4
 
