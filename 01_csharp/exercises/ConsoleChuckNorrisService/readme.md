@@ -33,10 +33,10 @@ In dieser Aufgabe implementieren wir unsere erste C# Klasse.
 
 ## Aufgabe 3
 
-In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen ein NuGet-Paket um eine JSON-Datei einzulesen.
+In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen `System.Text.Json` um eine JSON-Datei einzulesen.
 
 - Wir nutzen `System.Text.Json`
-- Implementieren Sie eine Klasse `FileSystemJokeProvider` welche die Witze aus der Datei `Data\jokes.json` einliest und einen zufälligen (nutzen Sie `Random`) Witz ausgiebt.
+- Implementieren Sie eine Klasse `FileSystemJokeProvider` welche die Witze aus der Datei `Data\jokes.json` einliest und einen zufälligen (nutzen Sie `Random`) Witz ausgibt.
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
 > Hinweise:
@@ -46,10 +46,10 @@ In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen ein NuGet-Paket 
 
 In dieser Aufgabe rufen wir eine API mittels `HttpClient` auf.
 
-- Implementieren Sie eine Klasse `ApiJokeProvider`, welche die API `https://api.chucknorris.io/jokes/random` aufruft und den zurückgelieferten Witz auf der Console ausgiebt.
+- Implementieren Sie eine Klasse `ApiJokeProvider`, welche die API `https://api.chucknorris.io/jokes/random` aufruft und den zurück gelieferten Witz auf der Console ausgibt.
 
 > Hinweise:
-> Rufen sie [https://api.chucknorris.io/jokes/random](https://api.chucknorris.io/jokes/random) im Browser / Postman auf. Implementieren Sie eine Klasse, welche die zurückgelieferten JSON-Daten abbildet. Nutzen sie [Microsoft Docs](https://docs.microsoft.com) Beispiele für die Verwendung von `HttpClient` zu finden.
+> Rufen sie [https://api.chucknorris.io/jokes/random](https://api.chucknorris.io/jokes/random) im Browser / Postman auf. Implementieren Sie eine Klasse, welche die zurück gelieferten JSON-Daten abbildet. Nutzen sie [Microsoft Docs](https://docs.microsoft.com) Beispiele für die Verwendung von `HttpClient` zu finden.
 > `HttpClient`, `GetAsync`, `Content.ReadAsAsync`
 
 # Viel Erfolg
