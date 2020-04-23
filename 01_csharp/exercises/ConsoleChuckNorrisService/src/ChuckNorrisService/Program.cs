@@ -9,6 +9,7 @@ namespace ChuckNorrisService
         static async Task Main(string[] args)
         {
             // Hier könnte IHR CODE STEHEN!!!
+            Console.WriteLine("Hello World");
         }
     }
 }

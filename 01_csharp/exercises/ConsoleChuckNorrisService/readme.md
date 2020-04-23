@@ -24,6 +24,7 @@ In dieser Aufgabe implementieren wir unsere erste C# Klasse.
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
 ### Erweiterung
+
 - Wählen Sie eine geeignete Speicherstruktur um mehrere Witze zur Laufzeit hinterlegen zu können.
 - Fügen Sie dieser Struktur mehrere Witze hinzu
 - Geben Sie einen zufälligen Witz auf die Console aus.
@@ -46,10 +47,13 @@ In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen `System.Text.Jso
 
 In dieser Aufgabe rufen wir eine API mittels `HttpClient` auf.
 
+- Stellen Sie sicher das sie das NuGet-Package `System.Net.Http.Json` in Ihrem Projekt eingebunden haben. ACHTUNG: Es ist derzeit ein Preview-Package.
 - Implementieren Sie eine Klasse `ApiJokeProvider`, welche die API `https://api.chucknorris.io/jokes/random` aufruft und den zurück gelieferten Witz auf der Console ausgibt.
 
 > Hinweise:
 > Rufen sie [https://api.chucknorris.io/jokes/random](https://api.chucknorris.io/jokes/random) im Browser / Postman auf. Implementieren Sie eine Klasse, welche die zurück gelieferten JSON-Daten abbildet. Nutzen sie [Microsoft Docs](https://docs.microsoft.com) Beispiele für die Verwendung von `HttpClient` zu finden.
-> `HttpClient`, `GetAsync`, `Content.ReadAsAsync`
+> `HttpClient`, `GetAsync`, `Content.ReadAsAsync`  
+> [Cheat-Sheet Visual Studio](../../../00_cheatsheets/visual_studio/readme.md)  
+> [Cheat-Sheet C#](../../../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)
 
 # Viel Erfolg
