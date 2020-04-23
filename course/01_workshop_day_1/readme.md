@@ -9,8 +9,9 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 - Vorstellungsrunde
 - Besprechung des Vorlesungsablaufs inkl. Prüfung
 - Besprechung der Teambildung
-- Einführung Web-Services
-- Einführung C#
+- Einführung Web-Services ([Slides](../slides/Introduction.pdf))
+- Vorstellung .NET ([Slides](../slides/NET%20Overview.pdf))
+- Einführung C# ([Slides](../slides/CSharp%20Language.pdf))
 
 ## Erforderliche Ergebnisse
 
