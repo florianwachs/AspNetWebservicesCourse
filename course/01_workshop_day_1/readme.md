@@ -22,3 +22,11 @@ Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon ei
 ### Code-Repository mit Zugang (bis 2020-05-01)
 
 Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim solltet Ihr Gitlab bekommen, Ihr könnt aber auch gerne Github & Co. nutzen. Einzige Voraussetzung ist, dass ich Zugriff darauf habe. [Mehr Infos](../../00_prerequisites/setup_instructions.md)
+
+## Übungen
+
+Folgende Übungen sind für den Tag vorgesehen:
+
+| Übung                                                     | Lösung                                                        |
+| --------------------------------------------------------- | ------------------------------------------------------------- |
+| [C#](../../01_csharp/exercises/ConsoleChuckNorrisService) | [Lösung](../../01_csharp/solutions/ConsoleChuckNorrisService) |
