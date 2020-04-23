@@ -10,9 +10,13 @@ In dieser Aufgabe stellen wir sicher, dass Ihre Entwicklungsumgebung funktionier
 
 - Öffnen Sie die Solution `ChuckNorrisService.sln` im Ordner `ConsoleChuckNorrisService` in Visual Studio.
 - Builden Sie die Solution und stellen Sie sicher das keine Kompilerfehler im Output-Window angezeigt werden.
+- Geben Sie in `Program.cs` einen beliebigen Text auf der Console aus
+- Setzen Sie einen `Breakpoint` für den Debugger an der Stelle wo Sie den Text auf die Console ausgeben.
+- Starten Sie das Debuggen Ihrer Anwendung und stellen Sie sicher das der Debugger an Ihrem `Breakpoint` stehen bleibt.
 
 > Sollte Ihr Visual Studio kein Output-Window anzeigen, können Sie im Menü unter
-> View->Output einblenden.
+> View->Output einblenden.  
+> `Console.WriteLine`
 
 ## Aufgabe 2
 
