@@ -1,4 +1,4 @@
-# Projektideen aus vergangenen Jahren
+# Projektideen
 
 - Bestehende Dienste erweitern / zusammenführen
   - Z.B. Facebook und Twitter
@@ -7,6 +7,8 @@
 - Bücherverwaltungsservice
 - Pomodoro Time Tracker mit Analyse
 - Spiel z.B. über WebSockets (SignalR)
+- Realtime Whiteboard mit SignalR und httpcanvas
+- Corona Tracker
 
 Projekte aus letzten Jahren:
 
