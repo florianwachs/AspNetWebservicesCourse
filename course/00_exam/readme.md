@@ -46,9 +46,10 @@ Am Prüfungstag (6-ter Workshop Tag)
 
 - ca. 45 min. Präsentation (inkl. 10-15min Fragen) (50 Punkte)
 - Jedes Mitglied muss einen Teil präsentieren
-- Tipp: Sprechzeit gut zwischen den Teammitgliedern aufteilen
 - Sourcecode in einem Repository
   - Jedes Mitglied muss am Code mitgearbeitet haben
+
+> Tips: Sprechzeit gut zwischen den Teammitgliedern aufteilen, Live-Demo, Ansprechen was gut / schlecht lief
 
 ## Bewertung
 
@@ -58,5 +59,5 @@ Am Prüfungstag (6-ter Workshop Tag)
 ## Tips und Beispiele
 
 - [Auzug von Projekten aus vergangenen Jahren](project_ideas.md)
-- TODO: Beispiel [Abschlusspräsentation]
-- TODO: Beispiel [Abschlusspräsentation]
+- Beispiel [Abschlusspräsentation](Example%20Presentation1.pdf)
+- Beispiel [Abschlusspräsentation](Example%20Presentation2.pdf)
