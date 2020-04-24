@@ -45,7 +45,7 @@ In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen `System.Text.Jso
 - Rufen Sie ihre Implementierung in der `Programm.cs` auf.
 
 > Hinweise:
-> `JsonSerializer.Deserialize`,`File.ReadAllTextAsync`, `File.ReadAllTextAsync`
+> `JsonSerializer.Deserialize`,`File.ReadAllTextAsync`
 
 # Aufgabe 4
 
