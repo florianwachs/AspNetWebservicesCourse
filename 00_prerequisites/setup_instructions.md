@@ -42,3 +42,41 @@ Gerade bei der Entwicklung von Web-Apis hat man nicht immer auch gleich eine Obe
 | [Postman](https://www.postman.com/downloads/)                                        | Derzeit bekanntestes Tool                |
 | [Fiddler](https://www.telerik.com/fiddler)                                           | Mächtiger Debugger für alle HTTP-Belange |
 | [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) | Extension für den VS Code Editor         |
+
+## Vorschläge für Extensions
+
+Falls Ihr Extensions habt die hier fehlen unbedingt Info an mich, Danke!
+
+### VS Code
+
+- https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+- https://marketplace.visualstudio.com/items?itemName=josefpihrt-vscode.roslynator
+- https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour
+- https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks
+- https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2
+- https://marketplace.visualstudio.com/items?itemName=ban.spellright
+- https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight
+- https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode
+- https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker
+- https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens
+- https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
+- https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
+- https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one
+- https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
+- https://marketplace.visualstudio.com/items?itemName=vsls-contrib.gistfs
+- https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
+- https://marketplace.visualstudio.com/items?itemName=ms-edgedevtools.vscode-edge-devtools
+- https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github
+- https://marketplace.visualstudio.com/items?itemName=alexanderte.dainty-vscode
+- https://marketplace.visualstudio.com/items?itemName=alexanderte.dainty-nord-vscode
+- https://marketplace.visualstudio.com/items?itemName=sdras.night-owl
+
+### Visual Studio
+
+- Roslynator 2019
+- Add New File
+
+### Rider
+
+- Markdown
+- 
