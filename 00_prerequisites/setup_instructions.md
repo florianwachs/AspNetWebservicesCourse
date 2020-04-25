@@ -23,7 +23,7 @@ Ihr habt dazu freie Wahl, solange ich einen Zugang zum Repository bekomme 😉.
 
 ### GitLab
 
-Die TH-Rosenheim bietet GitLab an, wer sein Projekt dort hosted kann mich mit dem User `wafl861` berechtigen.
+Die TH-Rosenheim bietet GitLab an, wer sein Projekt dort hosted kann mich mit dem User `florian.wachs` berechtigen.
 
 ### GitHub
 
