@@ -1,5 +1,5 @@
 * linguist-vendored
-*.csharp linguist-vendored=false
+*.cs linguist-vendored=false
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
