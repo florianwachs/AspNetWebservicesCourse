@@ -1,3 +1,6 @@
+* linguist-vendored
+*.csharp linguist-vendored=false
+
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
