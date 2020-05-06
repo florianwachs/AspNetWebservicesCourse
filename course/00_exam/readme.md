@@ -6,7 +6,8 @@ Bei `Web Services` besteht die Gesamtnote aus der Bewertung einzelner Meilenstei
 
 ### Zeitpunkt
 
-Am oder um den 2-ten Workshop Tag
+13.5 - 15.5
+Wir werden Termine für die einzelnen Gruppen vereinbaren die gut für Euch passen.
 
 ### Inhalte / Ablauf
 
