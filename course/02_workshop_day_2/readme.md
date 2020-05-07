@@ -2,7 +2,7 @@
 
 ## Ablauf Tag 2 (2020-05-08, 8:30-12:30)
 
-Heute geht es mit [Asp.Net Core]() los.
+Heute geht es mit [Asp.Net Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) los.
 
 💁‍♀️Den Link zum Live Stream mit Zoom findet Ihr kurz vor 8:30 in der Learn Community
 
