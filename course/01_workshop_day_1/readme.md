@@ -4,7 +4,7 @@
 
 Endlich geht es los! Hier ein Überblick was wir vor haben.
 
-💁‍♀️Den Link zum Live Stream findet Ihr in der Lern Community
+💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
 - Vorstellungsrunde
 - Besprechung des Vorlesungsablaufs inkl. Prüfung

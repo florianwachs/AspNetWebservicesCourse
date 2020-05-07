@@ -1,8 +1,8 @@
-# Übung AspNetCoreChuckNorrisService
+# Übung AspNetCoreChuckNorrisService mit Create / Read / Update / Delete
 
 Bisher haben wir lediglich `GET`-Requests behandelt. Es wird Zeit, Create-Read-Update-Delete (CRUD) zu ermöglichen. In der Vorlesung haben Sie gelernt, welche Http-Verben für welchen Fall am geeignetsten sind. In dieser Übung wollen wir das Gelernte praktisch anwenden.
 
-Viel Spaß dabei! :tada:
+Viel Spaß dabei! 🎉
 
 > Nutzen Sie auch [Microsoft Docs](https://docs.microsoft.com).
 
@@ -14,15 +14,15 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 
 ## Aufgabe 2
 
-- [ ] Erweitern Sie die Api um `Create (POST)`, `Read (GET)`, `Update (PUT)` und `Delete (DELETE)` Endpunkte.
+- [ ] Erweitern Sie die API um `Create (POST)`, `Read (GET)`, `Update (PUT)` und `Delete (DELETE)` Endpunkte.
 - [ ] Ergänzen Sie die fehlende Implementierung in `JokesProvider`
 - [ ] Testen Sie Ihre API mit Postman, Fiddler, VS Code ...
 
-> Hinweise: **Sie müssen die Änderungen nicht wieder in die JSON-Datei zurückspeichern! Führen Sie die Änderungen bitte nur In-Memory aus.** Hint-Tags: `ControllerBase`, `Http[Verb]`
+> Hinweise: **Sie müssen die Änderungen nicht wieder in die JSON-Datei zurück speichern! Führen Sie die Änderungen bitte nur In-Memory aus.** Hint-Tags: `[ApiController]`, `ControllerBase`, `Http[Verb]`
 
 ## Aufgabe 3
 
-- [ ] Erweitern Sie die Api um einen partiellen Update Endpunkt (PATCH)
+- [ ] Erweitern Sie die API um einen partiellen Update Endpunkt (PATCH)
 - [ ] Testen Sie das teilweise Aktualisieren mittels eines HTTP-Clients ihrer Wahl (z.B. Postman)
 
 > Hinweise: [Microsoft Docs HTTP Patch](https://docs.microsoft.com/de-de/aspnet/core/web-api/jsonpatch?view=aspnetcore-2.2)

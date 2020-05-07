@@ -1,8 +1,8 @@
 # Übung AspNetCoreChuckNorrisService
 
-Bisher haben sie schon einiges erreicht! Ihren eigenen Service samt Routing nur mit Middleware aufgebaut. Web Services benötigen aber häufig noch viele **Cross-Cutting-Features**, wie z.B. Autentifizierung / Authorisierung, Logging, Request-Filterung, usw. Dies alles mit den bisherigen Möglichkeiten die Sie kennen umzusetzen ist mühsam. Deshalb bietet das Asp.Net Core Framework eine MVC-Komponente. In der Vorlesung haben Sie bereits gelernt, was ein `Controller` ist und wie er definiert wird. In dieser Übung wollen wir das gelernte nun vertiefen. Statt wie bisher mittels direktem definieren über Middleware, bauen wir unsere API mit Hilfe von Controller auf.
+Bisher haben sie schon einiges erreicht! Ihren eigenen Service samt Routing nur mit Middleware aufgebaut. Web Services benötigen aber häufig noch viele **Cross-Cutting-Features**, wie z.B. Authentifizierung / Autorisierung, Logging, Request-Filterung, usw. Dies alles mit den bisherigen Möglichkeiten die Sie kennen umzusetzen ist mühsam. Deshalb bietet das Asp.Net Core Framework eine MVC-Komponente. In der Vorlesung haben Sie bereits gelernt, was ein `Controller` ist und wie er definiert wird. In dieser Übung wollen wir das gelernte nun vertiefen. Statt wie bisher mittels direktem definieren über Middleware, bauen wir unsere API mit Hilfe von Controller auf.
 
-Viel Spaß dabei!
+Viel Spaß dabei! 🎉
 
 > Nutzen Sie auch [Microsoft Docs](https://docs.microsoft.com).
 
@@ -15,13 +15,13 @@ Stellen Sie sicher, dass Sie die MVC-Middleware in Ihrer `Startup.cs` korrekt ei
 
 ## Aufgabe 2
 
-Erstellen Sie sich einen neuen Unterordner `Controllers`. Implementieren Sie dort einen `Controller` welcher beim Aufruf von `api/jokes/random` einen zufälligen Witz zurückliefert.
+Erstellen Sie sich einen neuen Unterordner `Controllers`. Implementieren Sie dort einen `Controller` welcher beim Aufruf von `api/jokes/random` einen zufälligen Witz zurück liefert.
 
-> Hinweise: `ControllerBase`, `HttpGet`
+> Hinweise: `[ApiController]`, `ControllerBase`, `HttpGet`
 
 ## Aufgabe 3
 
-Bisher haben wir den `JokesProvider` immer direkt instanziert. Das hat eine enge Koppelung von `JokesController` zur `JokesProvider` Implementierung zur Folge. Nutzen Sie das Dependency Injection System um eine Instanz eines JokesProviders über Constructor-Injection im Controller zu erhalten.
+Bisher haben wir den `JokesProvider` immer direkt instanziiert. Das hat eine enge Koppelung von `JokesController` zur `JokesProvider` Implementierung zur Folge. Nutzen Sie das Dependency Injection System um eine Instanz eines JokesProviders über Constructor-Injection im Controller zu erhalten.
 
 Überlegen Sie sich, welche Lifetime für Ihren `JokesProvider` angebracht ist.
 
