@@ -26,21 +26,26 @@ namespace ChuckNorrisService.Startups
 
             RouteBuilder routes = new RouteBuilder(app);
 
-            routes.MapGet("api/jokes/random", async context =>
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(await GetSerializedJoke(jokeProvider), Encoding.UTF8);
+            app.UseRouting();
 
+            app.UseEndpoints(endpoints =>
+            {
+
+                endpoints.MapGet("api/jokes/random", async context =>
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                context.Response.ContentType = "application/json";
+                                await context.Response.WriteAsync(await GetSerializedJoke(jokeProvider), Encoding.UTF8);
+                            });
+
+                endpoints.MapGet("{*path}", context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return context.Response.WriteAsync("Well, IT'S YOUR FAULT!");
+                });
             });
 
-            routes.MapGet("{*path}", context =>
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return context.Response.WriteAsync("Well, IT'S YOUR FAULT!");
-            });
 
-            app.UseRouter(routes.Build());
         }
 
         private async Task<string> GetSerializedJoke(IJokeProvider provider)

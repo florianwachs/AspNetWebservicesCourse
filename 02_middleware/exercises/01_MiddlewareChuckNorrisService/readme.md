@@ -18,7 +18,7 @@ In der Vorlesung haben Sie gelernt, das zum Ausführen einer Asp.Net Core Applik
 
 Während der Vorlesung haben wir behandelt, wie sie die Middleware-Pipeline sowohl durch NuGet-Pakete, als auch eigene Definitionen um Funktionalität anreichern können. Implementieren Sie bitte eine **Short-Circuit** Middleware, welche jeden Request mit einem zufälligen Witz als JSON beantwortet.
 
-> **Hinweise**: `app.Run`, `JsonConvert`
+> **Hinweise**: `app.Run`, `JsonSerializer`
 
 ## Aufgabe 3
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Client
@@ -17,7 +18,8 @@ namespace ChuckNorrisService.Client
             HttpResponseMessage result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
             result.EnsureSuccessStatusCode();
 
-            return await result.Content.ReadAsAsync<ChuckNorrisJoke>();
+            var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
+            return joke;
         }
 
         public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(JokeCategories category, int maxJokes)
@@ -31,10 +33,15 @@ namespace ChuckNorrisService.Client
         public class ChuckNorrisJoke
         {
             public string[] Category { get; set; }
+
             public Uri IconUrl { get; set; }
+
             public string Id { get; set; }
+
             public Uri Url { get; set; }
+
             public string Value { get; set; }
+
             public Joke AsJoke()
             {
                 return new Joke { Id = Id, Value = Value };
