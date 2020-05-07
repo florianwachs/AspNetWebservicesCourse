@@ -9,6 +9,7 @@ Heute geht es mit [Asp.Net Core]() los.
 - Kurze Feedbackrunde / Klärung von Fragen
 - Besprechung Präsentationstermine
 - Einführung in Asp.Net Core ([Slides](../slides/AspNetCore.pdf))
+- Live Coding
 
 ## Übungen
 
