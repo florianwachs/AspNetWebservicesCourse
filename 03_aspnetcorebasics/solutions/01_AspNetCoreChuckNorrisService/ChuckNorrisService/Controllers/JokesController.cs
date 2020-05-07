@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace ChuckNorrisService.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class JokesController : ControllerBase
     {
         private readonly IJokeProvider _jokeProvider;

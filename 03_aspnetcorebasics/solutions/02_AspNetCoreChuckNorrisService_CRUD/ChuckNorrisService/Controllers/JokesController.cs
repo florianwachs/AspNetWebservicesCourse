@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ChuckNorrisService.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class JokesController : ControllerBase
     {
         private readonly IJokeRepository _jokeProvider;

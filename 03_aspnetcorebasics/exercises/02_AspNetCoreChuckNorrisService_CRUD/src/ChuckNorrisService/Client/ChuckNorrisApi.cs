@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisService.Client
@@ -17,8 +18,7 @@ namespace ChuckNorrisService.Client
             HttpResponseMessage result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
             result.EnsureSuccessStatusCode();
 
-            ChuckNorrisJoke joke = await result.Content.ReadAsAsync<ChuckNorrisJoke>();
-
+            var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
             return joke;
         }
 

@@ -25,7 +25,7 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 - [ ] Erweitern Sie die API um einen partiellen Update Endpunkt (PATCH)
 - [ ] Testen Sie das teilweise Aktualisieren mittels eines HTTP-Clients ihrer Wahl (z.B. Postman)
 
-> Hinweise: [Microsoft Docs HTTP Patch](https://docs.microsoft.com/de-de/aspnet/core/web-api/jsonpatch?view=aspnetcore-2.2)
+> Hinweise: [Microsoft Docs HTTP Patch](https://docs.microsoft.com/de-de/aspnet/core/web-api/jsonpatch?view=aspnetcore-3.1)
 
 ## Aufgabe 4
 

@@ -8,10 +8,10 @@ namespace ChuckNorrisService
     {
         private static async Task Main(string[] args)
         {
-            CreateWebHostBuilder<Startup>(args).Build().Run();
+            CreateHostBuilder<Startup>(args).Build().Run();
         }
 
-        private static IHostBuilder CreateWebHostBuilder<TStartup>(string[] args) where TStartup : class
+        private static IHostBuilder CreateHostBuilder<TStartup>(string[] args) where TStartup : class
         {
             return Host
                 .CreateDefaultBuilder(args)
