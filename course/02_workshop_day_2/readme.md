@@ -31,3 +31,5 @@ Die Vorstellung der Projekte legen wir in den Zeitraum vom 13.5 - 15.5. Bitte sc
 ## Hilfreiche Ressourcen
 - https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1
 - https://github.com/dodyg/practical-aspnetcore
+- https://docs.microsoft.com/en-us/samples/browse/
+
