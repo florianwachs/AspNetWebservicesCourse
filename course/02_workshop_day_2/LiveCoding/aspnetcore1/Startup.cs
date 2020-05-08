@@ -41,7 +41,6 @@ namespace aspnetcore1
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -52,12 +51,7 @@ namespace aspnetcore1
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/api/jokes/random", async context =>
-                {
-                    await context.Response.WriteAsync("Chuck Noris hat bis Unendlich gezählt... 2 mal !", Encoding.UTF8);
-                });
-               
-                // endpoints.MapControllers();
+                endpoints.MapControllers();
             });
         }
     }
