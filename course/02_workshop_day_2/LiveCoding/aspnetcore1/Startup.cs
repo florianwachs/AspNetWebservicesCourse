@@ -48,9 +48,16 @@ namespace aspnetcore1
 
             app.UseAuthorization();
 
+            // GET api/jokes/random
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapGet("/api/jokes/random", async context =>
+                {
+                    await context.Response.WriteAsync("Chuck Noris hat bis Unendlich gezählt... 2 mal !", Encoding.UTF8);
+                });
+               
+                // endpoints.MapControllers();
             });
         }
     }
