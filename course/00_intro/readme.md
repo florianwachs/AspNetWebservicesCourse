@@ -35,7 +35,7 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 |                  |                        |                                                  |
 | ---------------- | ---------------------- | ------------------------------------------------ |
 | Workshop Tag 1 ✔ | 2020-04-24, 8:30-12:30 | [Workshop Tag 1](../01_workshop_day_1/readme.md) |
-| Workshop Tag 2   | 2020-05-08, 8:30-12:30 | [Workshop Tag 2](../02_workshop_day_2/readme.md) |
+| Workshop Tag 2 ✔ | 2020-05-08, 8:30-12:30 | [Workshop Tag 2](../02_workshop_day_2/readme.md) |
 | Workshop Tag 3   | 2020-07-10, 8:30-12:30 | Workshop Tag 3                                   |
 | Workshop Tag 4   | 2020-07-17, 8:30-12:30 | Workshop Tag 4                                   |
 | Workshop Tag 5   | 2020-07-24, 8:30-12:30 | Workshop Tag 5                                   |
