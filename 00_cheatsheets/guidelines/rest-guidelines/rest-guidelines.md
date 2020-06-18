@@ -21,7 +21,6 @@
   - [Zu bedenken](#zu-bedenken)
   - [Ressourcen](#ressourcen)
 
-
 > Im folgenden werden einige Guidelines / Best Practices für REST-Schnittstellen vorgestellt.
 > Mir ist wichtig, darauf hinzuweisen das REST kein zertifizierter Standard ist, sondern dies Guidelines
 > viel mehr auf Erfahrungen basieren. Manche dieser Guidelines machen für Euren Anwendungsfall evtl. keinen Sinn
@@ -139,16 +138,29 @@ Unterstützung in ASPNET CORE für Versionierung:
 ## Filtern, Suchen, Sortieren
 
 Filterung
+
+```http
 GET /orders?state=completed
+```
 
 Sortierung
+
+```http
 GET /orders?sort=createdDate
+```
 
 Suchen
+
+```http
 GET /customers?q=Maier
+```
 
 Kombination
+
+```http
 GET /customers?q=Maier&state=new&sort=created,firstname
+```
+
 Liefert Kunden deren Name Maier enthält, im Zustand New sind und sortiert diese nach created und firstname
 
 > Nicht mit den Filtermöglichkeiten übertreiben.
@@ -235,4 +247,3 @@ Cache-Control: no-cache
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 - https://developer.github.com/
 - https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-
