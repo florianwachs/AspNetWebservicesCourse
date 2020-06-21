@@ -30,6 +30,18 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 | Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha |
 | Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |
 
+## Zusätzliches Material
+
+Hier ist zusätzliches Material zum Selbststudium für aufgekommene Fragen während unserer Vorlesung.
+Vielen Dank für Euren Input!
+
+### Pattern
+
+- [Repository Pattern](../../00_cheatsheets/patterns/repository/repository-pattern.md)
+
+### Guidelines
+- [REST-Schnittstellen Guidelines](../../00_cheatsheets/guidelines/rest-guidelines/rest-guidelines.md)
+
 ## Schedule
 
 |                  |                        |                                                  |

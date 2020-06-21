@@ -27,9 +27,8 @@ Folgende Übungen sind für den Tag vorgesehen:
 
 Die Vorstellung der Projekte legen wir in den Zeitraum vom 13.5 - 15.5. Bitte schickt mir Euren Wunschtermin an dem wir Euer Projekt besprechen können. Bitte schickt mir wann es für Euer Team am besten passt.
 
-
 ## Hilfreiche Ressourcen
+
 - https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1
 - https://github.com/dodyg/practical-aspnetcore
 - https://docs.microsoft.com/en-us/samples/browse/
-
