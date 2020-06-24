@@ -82,7 +82,6 @@ Die Versionierung erfolgt mittels des `[ApiVersion]`-Attributes. Da ein Controll
 [Route("api/v{version:apiVersion}/[controller]")]
 public class ValuesController : ControllerBase
 {
-
 }
 ```
 
@@ -105,3 +104,13 @@ public ActionResult<string> Get(int id, ApiVersion apiVersion)
     return apiVersion.ToString();
 }
 ```
+
+### Neuer Controller für V2
+
+Eine Möglichkeit eine neue Version unseres Controllers anzulegen, ist folgende Projektstruktur.
+
+![Projektstruktur](assets/versionedstructure.png)
+
+### Hinweise zur Versionierung
+
+Es lassen sich auch einzelne `ControllerActions` versionieren. Meiner Erfahrung nach ist es aber meist verständlicher, einen neuen `Controller` zu definieren.
