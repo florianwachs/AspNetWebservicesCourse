@@ -145,4 +145,174 @@ Es lassen sich auch einzelne `ControllerActions` versionieren. Meiner Erfahrung 
 
 ## API Dokumentation mit Swagger
 
+Jeder Entwickler kennt das Problem, dass die Dokumentation einer Softwarelösung meist mehr oder weniger stark von der tatsächlichen Implementierung abweicht. Um diesem Problem etwas entgegenzusetzen, hat die [OpenAPI Initiative](https://www.openapis.org/) (ehemals Swagger) einen Ansatz für die automatische Dokumentation einer REST-Schnittstelle inkl. maschinenlesbarem Format definiert. Der große Vorteil ist, dass die Beschreibung direkt aus dem Code bzw. zur Laufzeit der API generiert wird. Es gibt eine Vielzahl von Frameworks für praktisch alle Sprachen mit denen Web-APIs erstellt werden, welche den OpenAPI Ansatz umsetzen. Die bekannteste für .NET ist **Swashbuckle**. Swashbuckle besteht aus einzelnen Komponenten, unter anderem des Beschreibngsmoduls, einer Web-Oberfläche und einigen hilfreichen anderen Modulen.
+
+### Swashbuckle installieren
+
+Um Swashbuckle im Projekt zu verwenden müssen folgende Nuget Pakete installiert werden:
+
+- `Swashbuckle.AspNetCore`
+- `Swashbuckle.AspNetCore.Swagger`
+
+### Swashbuckle registrieren
+
+Auch Swashbuckle ist als Middleware umgesetzt, d.h. wir müssen es in unserer `Startup.cs` registrieren.
+
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddMvc();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Jokes API", Version = "v1" });
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+}
+```
+
+`AddSwaggerGen()` registriert die benötigten Services für OpenAPI. Optional können noch Informationen über die API, Ansprechpartner, usw. angegeben werden.
+
+Die folgenden beiden Zeilen hängen Swagger in die Request-Pipeline ein.
+
+```csharp
+app.UseSwagger();
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+```
+
+Hier geben wir an, dass wir sowohl die Basisfunktionalität von Swagger als auch die Web-App nutzen wollen.
+Mittels `SwaggerEndpoint` kann festgelegt werden, unter welcher URL die maschinenlesbare Version abgelegt wird.
+
+### Swagger UI
+
+Startet man nun das Projekt, steht die Web-App unter der Standard-URL /swagger zur Verfügung.
+
+![Swagger Web App](assets/swagger_simple.gif)
+
+### XML Kommentare einbeziehen
+
+In C# gibt es eine zusätzliche Art von Kommentaren die mit `///` eingeleitet werden. Damit lassen sich Beschreibungen für Klassen, Methoden und eben auch Endpunkte erstellen. Hier ein Beispiel.
+
+```csharp
+/// <summary>
+/// Returns all books
+/// </summary>
+/// <returns>all books</returns>
+[HttpGet]
+public async Task<ActionResult<IEnumerable<Book>>> GetAll()
+{
+    // ...
+}
+
+/// <summary>
+/// Returns a single book
+/// </summary>
+/// /// <remarks>
+/// Sample request:
+///
+///     GET /books/1
+///
+/// </remarks>
+/// <param name="id">id of the book</param>
+/// <returns>a book</returns>
+[HttpGet("{id}")]
+public async Task<ActionResult<Book>> GetById(string id)
+{
+   // ...
+}
+
+
+/// <summary>
+/// Creates a new book
+/// </summary>
+/// <param name="book">data for the book to create</param>
+/// <returns>the newly created book</returns>
+[HttpPost]
+public async Task<ActionResult<Book>> CreateNew([FromBody] Book book)
+{
+    // ...
+}
+
+/// <summary>
+/// Complete update of a book
+/// </summary>
+/// <param name="id">id of the book to update</param>
+/// <param name="book">data of the book</param>
+/// <returns></returns>
+[HttpPut("{id}")]
+public async Task<ActionResult<Book>> Update(string id, [FromBody] Book book)
+{
+    // ...
+}
+
+```
+
+Swagger kann so konfiguriert werden, dass diese Kommentare ebenfalls in die Dokumentation einfließen.
+Dazu müssen wir zuerst unser Projekt so konfigurieren, dass die XML-Kommentare in einem File abgelegt werden.
+Dies kann über das `*.csproj` File angepasst werden. In einer beliebigen `<PropertyGroup>` muss `<GenerateDocumentationFile>true</GenerateDocumentationFile>` eingefügt werden. Das kann am Ende so aussehen:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>
+
+```
+
+Nun müssen wir noch Swagger mitteilen, dass es diese XML-Kommentare berücksichtigen soll.
+Hierzu passen wir unsere `ConfigureServices` an.
+
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddMvc();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Jokes API", Version = "v1" });
+
+            // C# XML-Kommentare für API-Beschreibung nutzen
+            string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath);
+        });
+    }
+}
+```
+
+Starten wir nun wieder die Anwendung, sehen wir die zusätzlichen Informationen direkt in der Schnittstellendokumentation.
+
+![Swagger XML Doc](assets/swagger_xmldoc.gif)
+
 ## Versionierung und Dokumentation
+
+Zuletzt wollen wir API-Versionierung und die Dokumentation mit OpenAPI (Swagger / Swashbuckle) kombinieren.
+Dazu ist etwas mehr Implementierungsarbeit notwendig, allerdings gibt es hier ein Sample das die Verwendung (Copy & Paste) vereinfacht [Code](https://github.com/microsoft/aspnet-api-versioning/tree/master/samples/aspnetcore/SwaggerSample).
+
+Eine lauffähige Implementierung findet Ihr hier: https://github.com/florianwachs/AspNetWebservicesCourse/tree/main/10_apiversioning/lessons.
+
+Damit werden die unterschiedlichen Versionen automatisch erfasst.
+![With Versions](assets/swagger_withversion.gif)
