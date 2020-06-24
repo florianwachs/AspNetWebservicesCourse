@@ -111,6 +111,38 @@ Eine Möglichkeit eine neue Version unseres Controllers anzulegen, ist folgende 
 
 ![Projektstruktur](assets/versionedstructure.png)
 
+Nun können wir mit Hilfe der Attribute die gewünschte Versionierung definieren.
+
+Version 1
+
+```csharp
+[ApiController]
+[ApiVersion("1.0")]
+[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class ValuesController : ControllerBase
+{
+    // ...
+}
+```
+
+Version 2
+
+```csharp
+[ApiController]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class ValuesController : ControllerBase
+{
+    // ...
+}
+
+```
+
 ### Hinweise zur Versionierung
 
-Es lassen sich auch einzelne `ControllerActions` versionieren. Meiner Erfahrung nach ist es aber meist verständlicher, einen neuen `Controller` zu definieren.
+Es lassen sich auch einzelne `ControllerActions` versionieren. Meiner Erfahrung nach ist es aber meist verständlicher, einen neuen `Controller` zu definieren. Die Möglichkeiten der Library sind umfangreich, ein Wiki beschreibt die Verwendung sehr gut: https://github.com/microsoft/aspnet-api-versioning/wiki .
+
+## API Dokumentation mit Swagger
+
+## Versionierung und Dokumentation
