@@ -31,8 +31,8 @@ namespace SwaggerLesson
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Jokes API", Version = "v1" });
 
                 // C# XML-Kommentare für API-Beschreibung nutzen
-                string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
 

@@ -15,7 +15,7 @@ namespace AspNetCoreApiVersioning.V1
             // API Version kann über eine Extension Method am Context abgerufen werden.
             var apiVersion = HttpContext.GetRequestedApiVersion();
 
-            return new [] {apiVersion.ToString()};
+            return new[] { apiVersion.ToString() };
         }
 
         [HttpGet("{id}")]
