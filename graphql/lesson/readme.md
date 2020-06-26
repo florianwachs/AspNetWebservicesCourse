@@ -2,7 +2,7 @@
 
 GraphQL ist ein von Facebook definierter Ansatz zur Erstellung von Webschnittstellen. Im Gegensatz zu `REST` gibt es nur einen Endpunkt an den alle Abfragen (`Queries`) und Änderungen (`Mutations`) geschickt werden. Die Abfragen können dabei definieren, welche Daten von welchen Datenstrukturen benötigt werden. Somit lassen sich exakt die Daten für einen View abfragen und es können Round-Trips zum Server eingespart werden.
 
-Den Code aus der Vorlesung findet Ihr [hier](graphqlservice/)
+Den Code aus der Vorlesung findet Ihr [hier](graphqlservice/).
 
 ## Kleiner REST-Primer
 
