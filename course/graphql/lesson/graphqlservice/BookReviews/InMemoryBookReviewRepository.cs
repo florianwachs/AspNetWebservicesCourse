@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace graphqlservice.BookReviews
 {
-    public class BookReviewRepository
+    public class InMemoryBookReviewRepository : IBookReviewRepository
     {
         private static int fakeId = 0;
         private static readonly List<BookReview> _bookReviews = new List<BookReview>()

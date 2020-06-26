@@ -7,7 +7,7 @@ namespace graphqlservice.GraphQL
 {
     public class BookStoreMutation : ObjectGraphType
     {
-        public BookStoreMutation(BookReviewRepository bookReviewRepository, BookRepository bookRepository)
+        public BookStoreMutation(IBookReviewRepository bookReviewRepository, IBookRepository bookRepository)
         {
             // 👇 FieldAsync damit wir await im Resolver verwenden können
             FieldAsync<BookReviewType>("createReview", //                      👇 Unser InputType

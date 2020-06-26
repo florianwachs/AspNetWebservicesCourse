@@ -6,7 +6,7 @@ namespace graphqlservice.GraphQL.Types
 {
     public class BookType : ObjectGraphType<Book>
     {
-        public BookType(BookReviewRepository bookReviewRepository)
+        public BookType(IBookReviewRepository bookReviewRepository)
         {
             Field(b => b.Id);
             Field(b => b.Isbn);

@@ -7,7 +7,7 @@ namespace graphqlservice.GraphQL
     public class BookStoreQuery : ObjectGraphType
     {
 
-        public BookStoreQuery(BookRepository bookRepository)
+        public BookStoreQuery(IBookRepository bookRepository)
         {
             Field<ListGraphType<BookType>>(
                 "books",

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace graphqlservice.Books
 {
-    public class BookRepository
+    public class InMemoryBookRepository : IBookRepository
     {
         private static readonly List<Book> _books = new List<Book>()
     {

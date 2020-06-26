@@ -33,8 +33,8 @@ namespace graphqlservice
         public void ConfigureServices(IServiceCollection services)
         {
             // Repositories registrieren
-            services.AddScoped<BookRepository>();
-            services.AddScoped<BookReviewRepository>();
+            services.AddScoped<IBookRepository, InMemoryBookRepository>();
+            services.AddScoped<IBookReviewRepository, InMemoryBookReviewRepository>();
 
             // GraphQL.NET verwendet eine eigene Resolver Abstraktion
             // Hier wird der AspNetCore-Resolver verwendet
