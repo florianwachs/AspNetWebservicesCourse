@@ -141,11 +141,11 @@ public class ValuesController : ControllerBase
 
 ### Hinweise zur Versionierung
 
-Es lassen sich auch einzelne `ControllerActions` versionieren. Meiner Erfahrung nach ist es aber meist verständlicher, einen neuen `Controller` zu definieren. Die Möglichkeiten der Library sind umfangreich, ein Wiki beschreibt die Verwendung sehr gut: https://github.com/microsoft/aspnet-api-versioning/wiki .
+Es lassen sich auch einzelne `ControllerActions` versioniern. Meiner Erfahrung nach ist es aber meist verständlicher, einen neuen `Controller` zu definieren. Die Möglichkeiten der Library sind umfangreich, ein Wiki beschreibt die Verwendung sehr gut: https://github.com/microsoft/aspnet-api-versioning/wiki .
 
 ## API Dokumentation mit Swagger
 
-Jeder Entwickler kennt das Problem, dass die Dokumentation einer Softwarelösung meist mehr oder weniger stark von der tatsächlichen Implementierung abweicht. Um diesem Problem etwas entgegenzusetzen, hat die [OpenAPI Initiative](https://www.openapis.org/) (ehemals Swagger) einen Ansatz für die automatische Dokumentation einer REST-Schnittstelle inkl. maschinenlesbarem Format definiert. Der große Vorteil ist, dass die Beschreibung direkt aus dem Code bzw. zur Laufzeit der API generiert wird. Es gibt eine Vielzahl von Frameworks für praktisch alle Sprachen mit denen Web-APIs erstellt werden, welche den OpenAPI Ansatz umsetzen. Die bekannteste für .NET ist **Swashbuckle**. Swashbuckle besteht aus einzelnen Komponenten, unter anderem des Beschreibngsmoduls, einer Web-Oberfläche und einigen hilfreichen anderen Modulen.
+Jeder Entwickler kennt das Problem, dass die Dokumentation einer Softwarelösung meist mehr oder weniger stark von der tatsächlichen Implementierung abweicht. Um diesem Problem etwas entgegenzusetzen, hat die [OpenAPI Initiative](https://www.openapis.org/) (ehemals Swagger) einen Ansatz für die automatische Dokumentation einer REST-Schnittstelle inkl. maschinenlesbarem Format definiert. Der große Vorteil ist, dass die Beschreibung direkt aus dem Code bzw. zur Laufzeit der API generiert wird. Es gibt eine Vielzahl von Frameworks für praktisch alle Sprachen mit denen Web-APIs erstellt werden, welche den OpenAPI Ansatz umsetzen. Die bekannteste für .NET ist **Swashbuckle**. Swashbuckle besteht aus einzelnen Komponenten, unter anderem des Beschreibungsmoduls, einer Web-Oberfläche und einigen hilfreichen anderen Modulen.
 
 ### Swashbuckle installieren
 
@@ -306,6 +306,8 @@ public class Startup
 Starten wir nun wieder die Anwendung, sehen wir die zusätzlichen Informationen direkt in der Schnittstellendokumentation.
 
 ![Swagger XML Doc](assets/swagger_xmldoc.gif)
+
+Ein lauffähiges Beispiel findet Ihr [hier](https://github.com/florianwachs/AspNetWebservicesCourse/tree/main/06_swagger/lessons/01_swagger)
 
 ## Versionierung und Dokumentation
 
