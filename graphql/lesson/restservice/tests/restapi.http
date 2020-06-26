@@ -1,0 +1,15 @@
+# Bücher abfragen
+GET https://localhost:5001/api/books
+
+###
+
+GET https://localhost:5001/api/books/book1
+
+###
+
+# Reviews abfragen
+GET https://localhost:5001/api/bookreviews
+
+###
+
+GET https://localhost:5001/api/books/book1/reviews
