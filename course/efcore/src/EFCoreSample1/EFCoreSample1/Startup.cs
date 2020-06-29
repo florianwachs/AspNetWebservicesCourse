@@ -25,6 +25,10 @@ namespace EFCoreSample1
     
     public class Startup
     {
+        // ACHTUNG: Wenn der DbMode geändert wird müsst Ihr die Migrations im Order "Migrations" löschen,
+        // das Projekt builden und über die Konsole "dotnet ef migrations add [Name]" aufrufen.
+        // Anschließend könnt Ihr "dotnet ef database update" aufrufen um die Migrationen auszuführen.
+        // Sonst passen die Migrationen nicht zu Eurer DB-Technologie
         private DbModes DbMode = DbModes.SqlLiteInMemory;
         public Startup(IConfiguration configuration)
         {
@@ -60,13 +64,21 @@ namespace EFCoreSample1
         
         private void UseSqlServerLocalDb(IServiceCollection services)
         {
-            throw new NotImplementedException();
+            services.AddDbContext<BookDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("LocalDb")));
         }
 
         private void UseDockerPostgreSql(IServiceCollection services)
         {
             // Achtung: Vorher muss per Docker Compose oder direkt mit Docker ein Docker Container gestartet werden.
-            throw new NotImplementedException();
+            // Docker Container mit folgendem Befehl starten
+            // docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 postgres
+            // Dieser Befehl startet einen postgres Container und entfernt ihn samt Daten wenn er gestoppt wird.
+            services.AddDbContext<BookDbContext>(options =>
+            {
+                
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlDocker"));
+            });
         }
         
         private static void UseInMemorySqlLiteDb(IServiceCollection services)

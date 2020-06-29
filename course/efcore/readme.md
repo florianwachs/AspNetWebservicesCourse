@@ -222,14 +222,76 @@ Will man es doch automatisch durchführen, so ist die empfohlene Stelle direkt n
 Man findet noch häufig Beispiele welche die Migration in `Startup.Configure()` durchführen, davon wird jedoch abgeraten.
 
 ```csharp
+public static async Task Main(string[] args)
+{
+    var host = CreateHostBuilder(args).Build();
+    await MigrateAndSeedDb(host);
+    await host.RunAsync();
+}
 
+private static async Task MigrateAndSeedDb(IHost host)
+{
+    // Um auf das DI-System zuzugreifen muss ein neuer Scope erstellt werden,
+    // in dem die erzeugten Objekte "leben"
+    using var scope = host.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<BookDbContext>();
+    
+    // Mittels Migrate werden alle ausstehenden Db-Migrationen angewendet.
+    // Vorsicht wenn mehrere Instanzen versuchen das Upgrade der DB auszuführen.
+    // In Produktivsystemen führt man das DB-Upgrade meist getrennt vom Applikationsstart aus.
+    await dbContext.Database.MigrateAsync();
+
+    // Häufig werden beim initialen Anlegen der DB einige Stammdaten benötigt.
+    // Der Prozess des Befüllens wird oft als Seeding bezeichnet.
+    // ...   
+}
 ```
-
-// TODO:
 
 ## Grundbefüllung der Datenbank (Seeding)
 
-// TODO:
+Häufig werden in einer neuen Datenbank einige Stammdaten benötigt. Diese wird häufig als **Seeding** bezeichnet.
+Eine gute Stelle ist, wie bei den Migrationen, kurz vor dem Starten des Hosts.
+
+```csharp
+public static async Task Main(string[] args)
+{
+    var host = CreateHostBuilder(args).Build();
+    await MigrateAndSeedDb(host);
+    await host.RunAsync();
+}
+
+private static async Task MigrateAndSeedDb(IHost host)
+{
+    // ...
+
+    // Häufig werden beim initialen Anlegen der DB einige Stammdaten benötigt.
+    // Der Prozess des Befüllens wird oft als Seeding bezeichnet.
+    await SeedDb(dbContext);
+}
+
+private static async Task SeedDb(BookDbContext dbContext)
+{
+    // Zuerst prüfen wir ob schon etwas in der DB liegt
+    if (dbContext.Books.Any() || dbContext.Authors.Any())
+    {
+        return;
+    }
+    
+    // Falls nicht, legen wir ein paar Daten an
+    var authors = new List<Author>()
+    {
+        new Author(){ Id = 1, Age = 40, FirstName = "Alice", LastName = "Walker"}, // The Color Purple, Possessing the Secret of Joy, The Temple of My Familiar
+        new Author(){ Id = 2, Age = 30, FirstName = "Barbara", LastName = "Oakley"}, // A Mind for Numbers: How to Excel at Math and Science (Even If You Flunked Algebra)
+        new Author(){ Id = 3, Age = 20, FirstName = "Chuck", LastName = "Norris"} // The Perfect Roundhouse Kick
+    };
+
+    await dbContext.Authors.AddRangeAsync(authors);
+    await dbContext.SaveChangesAsync();
+
+}
+
+```
+
 
 ## Alternativen
 

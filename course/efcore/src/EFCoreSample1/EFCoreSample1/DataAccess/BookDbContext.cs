@@ -26,7 +26,7 @@ namespace EFCoreSample1.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             //                                                        👇 EF versucht automatisch den passenden Datentypen für die Tabellenspalte zu erkennen, dies kann hier festgelegt werden.
-            modelBuilder.Entity<Book>().Property(b => b.ReleaseDate).HasColumnType("datetime2");
+            //modelBuilder.Entity<Book>().Property(b => b.ReleaseDate).HasColumnType("datetime2");
 
             // m:n Relationen können aktuell von EF nicht automatisch erkannt werden
             // Daher muss die Beziehung manuell definiert werden und eine Zwischentabelle für das Mapping
