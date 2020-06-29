@@ -189,7 +189,80 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Datenprovider konfigurieren
 
-// TODO:
+Je nach Typ des Providers muss eine Konfiguration in `Startup.ConfigureServices()` erfolgen.
+Hier einige Beispiele:
+
+```csharp
+// SQLite
+public void ConfigureServices(IServiceCollection services)
+{
+    // Manuelles erzeugen der SqliteConection damit sie hier geöffnet werden kann
+    // Sonst schließt der erste DBContext der Disposed wird die Connection und die
+    // Db geht offline
+    SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+    connection.Open();
+
+    services.AddDbContext<BookDbContext>(options => { options.UseSqlite(connection); });
+}
+```
+
+```csharp
+// SQLite
+public void ConfigureServices(IServiceCollection services)
+{
+    // Manuelles erzeugen der SqliteConection damit sie hier geöffnet werden kann
+    // Sonst schließt der erste DBContext der Disposed wird die Connection und die
+    // Db geht offline
+    SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+    connection.Open();
+
+    services.AddDbContext<BookDbContext>(options => { options.UseSqlite(connection); });
+}
+```
+
+```csharp
+// SQL Server
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<BookDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("LocalDb")));
+}
+```
+
+```csharp
+// PostgreSQL
+public void ConfigureServices(IServiceCollection services)
+{
+    // Achtung: Vorher muss per Docker Compose oder direkt mit Docker ein Docker Container gestartet werden.
+    // Docker Container mit folgendem Befehl starten
+    // docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 postgres
+    // Dieser Befehl startet einen postgres Container und entfernt ihn samt Daten wenn er gestoppt wird.
+    services.AddDbContext<BookDbContext>(options =>
+    {
+        options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlDocker"));
+    });
+    }
+```
+
+hier noch die `appsettings.json` mit der Konfiguration der Connection-Strings.
+
+```json
+{
+  "ConnectionStrings": {
+    "LocalDb": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookStoreSample;Integrated Security=SSPI",
+    "PostgreSqlDocker": "Host=localhost;Database=bookstoredemo1;Username=postgres;Password=docker"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+```
 
 ## Migrationen für das Datenmodell generieren
 
@@ -294,7 +367,7 @@ private static async Task SeedDb(BookDbContext dbContext)
 
 ## Beispiel
 
-Ein Beispiel für SqlLite, LocalDb (Nur Windows mit Visual Studio) und Postgres (mit Docker) findet Ihr [hier](src/EFCoreSample1)
+Ein Beispiel für SqlLite, LocalDb (Nur Windows mit Visual Studio) und Postgres (mit Docker) findet Ihr [hier](src/EFCoreSample1).
 
 
 ## Alternativen

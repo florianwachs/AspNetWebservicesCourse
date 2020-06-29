@@ -38,11 +38,11 @@ namespace EFCoreSample1
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            ConfigureEntityFramework(services);
-        }
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers();
+    ConfigureEntityFramework(services);
+}
 
         private void ConfigureEntityFramework(IServiceCollection services)
         {
@@ -76,7 +76,6 @@ namespace EFCoreSample1
             // Dieser Befehl startet einen postgres Container und entfernt ihn samt Daten wenn er gestoppt wird.
             services.AddDbContext<BookDbContext>(options =>
             {
-                
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlDocker"));
             });
         }
