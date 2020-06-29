@@ -47,6 +47,8 @@ Pro Datenbank benötigt EF Core einen Provider, welche die Kommunikation mit der
 
 Mindestens ein Provider muss installiert werden.
 
+Möchte man Migrationen anlegen können, dass sind Klassen welche Code zum Erstellen / Änderung von Tabellen enthalten, muss noch das Design Paket `Microsoft.EntityFrameworkCore.Design` hinzugefügt werden.
+
 ## EF Core Building Blocks
 
 Der Einsatz von EF Core im Projekt kann in folgende Bereiche aufgeteilt werden:
