@@ -193,17 +193,39 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Migrationen für das Datenmodell generieren
 
+Um das Datenmodell auf Tabellen in einer Datenbank abzubilden sind in der Regel SQL-Skripte notwendig. Dadurch entstehen jedoch eine
+Vielzahl von Herausforderungen was Versions-Upgrades oder -Downgrades angeht.
+**Migrationen** versuchen diese Probleme zu Lösen, indem sie die Logik für Up- und Downgrades in C# formulieren. Soll manuell oder automatisch
+die DB aktualisiert werden, wird es vom EF Core Provider in SQL-Anweisungen übersetzt und ausgeführt.
+
 https://docs.microsoft.com/de-de/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli
 
+Mit Hilfe des Tools `dotnet ef` können neue Migrationen angelegt werden. Wichtig ist, dass der Befehl in dem Projekt ausgeführt wird, in dem der DbContext vorhanden ist.
+Eine neue Migration lässt sich mit folgendem Befehl anlegen.
 
-// TODO:
+```powershell
+dotnet ef migrations add [Name der Migration]
+```
+
+![dotnet ef migrations add](assets/efcore_addmigrations.gif)
 
 ## Migrationen auf die Datenbank anwenden
 
-dotnet ef database update
+Man kann Migrationen manuell in die Datenbank übertragen.
+Hierzu dient der Befehl `dotnet ef database update`.
+
+Zusätzlich besteht die Möglichkeit, die Migration auch beim Starten der Applikation durchzuführen.
+Der Vorteil ist, dass man dies nicht manuell machen muss. Der größte Nachteil ist, dass die Gefahr besteht
+das mehrere Instanzen gleichzeitig versuchen eine Migration auszuführen. In der Praxis wird meinst der manuelle Ansatz gewählt.
+
+Will man es doch automatisch durchführen, so ist die empfohlene Stelle direkt nach dem Erzeugen des WebHosts aber noch vor dem Starten.
+Man findet noch häufig Beispiele welche die Migration in `Startup.Configure()` durchführen, davon wird jedoch abgeraten.
+
+```csharp
+
+```
 
 // TODO:
-
 
 ## Grundbefüllung der Datenbank (Seeding)
 
