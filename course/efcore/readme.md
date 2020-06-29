@@ -292,6 +292,10 @@ private static async Task SeedDb(BookDbContext dbContext)
 
 ```
 
+## Beispiel
+
+Ein Beispiel für SqlLite, LocalDb (Nur Windows mit Visual Studio) und Postgres (mit Docker) findet Ihr [hier](src/EFCoreSample1)
+
 
 ## Alternativen
 
