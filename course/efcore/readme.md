@@ -185,6 +185,28 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
+## Datenprovider konfigurieren
+
+// TODO:
+
+## Migrationen für das Datenmodell generieren
+
+https://docs.microsoft.com/de-de/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli
+
+
+// TODO:
+
+## Migrationen auf die Datenbank anwenden
+
+dotnet ef database update
+
+// TODO:
+
+
+## Grundbefüllung der Datenbank (Seeding)
+
+// TODO:
+
 ## Alternativen
 
 EF Core ist nicht der einzige OR-Mapper für .Net Core. Bekannte Alternativen sind `NHibernate` und `Dapper`.
