@@ -35,6 +35,18 @@ Im Folgenden wollen wir uns die Grundlagen des Entity Frameworks ansehen. EF ist
 - Queries können inperformant werden (n+1 Problem)
 - Insgesamt ist die Performance relativ gesehen zur direkten Implementierung langsamer (high-traffic)
 
+## EF Core im Projekt verwenden
+
+Auch EF Core besteht aus einer Reihe von `Nuget`-Paketen welche im Projekt eingebunden werden müssen. Dabei trennen sich die Pakete in die abstrakte Hauptimplementierung von EF Core `Microsoft.EntityFrameworkCore` und sog. Provider.
+Pro Datenbank benötigt EF Core einen Provider, welche die Kommunikation mit der Datenbank zur Ausführung der Befehle steuert. Es gibt eine Vielzahl von offiziellen und 3rd Party Providern für EF Core.
+
+- `Microsoft.EntityFrameworkCore.InMemory`
+- `Microsoft.EntityFrameworkCore.SqlLite`
+- `Microsoft.EntityFrameworkCore.SqlServer`
+- `Npgsql.EntityFrameworkCore.PostgreSQL`
+
+Mindestens ein Provider muss installiert werden.
+
 ## EF Core Building Blocks
 
 Der Einsatz von EF Core im Projekt kann in folgende Bereiche aufgeteilt werden:
@@ -115,9 +127,74 @@ public class BookDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         //                                                        👇 EF versucht automatisch den passenden Datentypen für die Tabellenspalte zu erkennen, dies kann hier festgelegt werden.
         modelBuilder.Entity<Book>().Property(b => b.ReleaseDate).HasColumnType("datetime2");
+
+        // m:n Relationen können aktuell von EF nicht automatisch erkannt werden
+        // Daher muss die Beziehung manuell definiert werden und eine Zwischentabelle für das Mapping
+        // angelegt werden
+        modelBuilder.Entity<BookAuthorRel>()
+            .HasKey(t => new { t.BookId, t.AuthorId }); // 👈 Definition eines zusammengesetzten Schlüssels (Composite-Key)
+
+        modelBuilder.Entity<BookAuthorRel>()
+            .HasOne(pt => pt.Book)
+            .WithMany(p => p.Authors)
+            .HasForeignKey(pt => pt.BookId);
+
+        modelBuilder.Entity<BookAuthorRel>()
+            .HasOne(pt => pt.Author)
+            .WithMany(t => t.Books)
+            .HasForeignKey(pt => pt.AuthorId);
+
     }
 }
 ```
 
 EF Core hat eine vielzahl von Konventionen die automatisch angewendet werden um möglichst wenig zusätzliche Konfiguration erstellen zu müssen.
 Über Attribute in den Entitäten und / oder in `OnModelCreating()` kann das Modell und die angewendeten Konventionen nach Bedarf geändert werden.
+
+Über `EntityConfiguration` kann verhindert werden, dass `OnModelCreating()` zu unübersichtlich wird.
+
+```csharp
+public class Book
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Isbn { get; set; }
+    public DateTime ReleaseDate { get; set; }
+    public ICollection<BookAuthorRel> Authors { get; set; }
+}
+```
+
+```csharp
+public class BookConfiguration : IEntityTypeConfiguration<Book>
+{
+    public void Configure(EntityTypeBuilder<Book> builder)
+    {
+        builder.Property(b => b.Isbn).IsRequired();
+        builder.Property(b => b.Title).IsRequired().HasMaxLength(500);
+    }
+}
+```
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    // ...
+
+    //👇 die Konfiguration kann auch in eigene Klassen ausgelagert werden
+    modelBuilder.ApplyConfiguration(new BookConfiguration());
+}
+```
+
+## Alternativen
+
+EF Core ist nicht der einzige OR-Mapper für .Net Core. Bekannte Alternativen sind `NHibernate` und `Dapper`.
+`Dapper`ist dabei besonders schlank designt und hat deutlich weniger OR-Mapper Features, im Gegenzug ist es in einigen Fällen erheblich performanter.
+
+### Dapper
+
+- Erfunden und gepflegt von den StackOverflow-Betreibern
+- Dünner Layer über ADO.NET (SQL-Connections)
+- Weniger Abstraktion als EF Core, dafür aber deutlich höhere Performance
+- Trotzdem den Vorteil des Objekt-Mappings
+- https://github.com/StackExchange/Dapper
+- Kein Konzept von „Migrationen“ wie bei EF Core

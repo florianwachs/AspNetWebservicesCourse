@@ -1,10 +1,6 @@
 ﻿using EFCoreSample1.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EFCoreSample1.DataAccess
 {
@@ -31,6 +27,36 @@ namespace EFCoreSample1.DataAccess
             base.OnModelCreating(modelBuilder);
             //                                                        👇 EF versucht automatisch den passenden Datentypen für die Tabellenspalte zu erkennen, dies kann hier festgelegt werden.
             modelBuilder.Entity<Book>().Property(b => b.ReleaseDate).HasColumnType("datetime2");
+
+            // m:n Relationen können aktuell von EF nicht automatisch erkannt werden
+            // Daher muss die Beziehung manuell definiert werden und eine Zwischentabelle für das Mapping
+            // angelegt werden
+            modelBuilder.Entity<BookAuthorRel>()
+                .HasKey(t => new { t.BookId, t.AuthorId }); // 👈 Definition eines zusammengesetzten Schlüssels (Composite-Key)
+
+            modelBuilder.Entity<BookAuthorRel>()
+                .HasOne(pt => pt.Book)
+                .WithMany(p => p.Authors)
+                .HasForeignKey(pt => pt.BookId);
+
+            modelBuilder.Entity<BookAuthorRel>()
+                .HasOne(pt => pt.Author)
+                .WithMany(t => t.Books)
+                .HasForeignKey(pt => pt.AuthorId);
+
+            //👇 die Konfiguration kann auch in eigene Klassen ausgelagert werden
+            modelBuilder.ApplyConfiguration(new BookConfiguration());
+
         }
     }
+
+    public class BookConfiguration : IEntityTypeConfiguration<Book>
+    {
+        public void Configure(EntityTypeBuilder<Book> builder)
+        {
+            builder.Property(b => b.Isbn).IsRequired();
+            builder.Property(b => b.Title).IsRequired().HasMaxLength(500);
+        }
+    }
+
 }
