@@ -8,4 +8,4 @@
 - [Eine Einführung in GraphQL mit .NET](https://github.com/florianwachs/AspNetWebservicesCourse/tree/main/course/graphql/lesson)
 
 ### 2020-06-29
-- [EF Core]
+- [EF Core](https://github.com/florianwachs/AspNetWebservicesCourse/tree/main/course/efcore)
