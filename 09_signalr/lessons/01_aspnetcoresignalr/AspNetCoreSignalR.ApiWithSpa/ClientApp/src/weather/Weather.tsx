@@ -27,7 +27,7 @@ class Weather extends PureComponent<{}, IWeatherState> {
 
     return (
       <Layout>
-        <Header>My-Chat</Header>
+        <Header className="header">Weather</Header>
         <Content>
           <Card>
             <p>Datum: {forcast.dateFormatted}</p>
