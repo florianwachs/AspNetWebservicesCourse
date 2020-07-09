@@ -64,3 +64,105 @@ SignalR wird auch in der neuesten Web-UI Technologie `Blazor` (server-side) eing
 
 ## Konfigurieren von SignalR
 
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // ...
+        services.AddSignalR();
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseRouting();
+
+        // ...
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapHub<ChatHub>("/chatHub");
+        });
+    }
+}
+```
+
+## Hubs
+
+Hubs sind die High-Level-API von SignalR. In einem Hub werden die Methoden definiert, welche von Clients aufgerufen werden können.
+Zusätzlich sind Methoden in Hubs in der Lage ihrerseits Methoden auf dem Client auszulösen.
+Die Verbindung zu Hubs wir vom Client-SDK hergestellt. Jede Verbindung zum Hub bekommt ihre eigene ConnectionId. Das kann auch passieren,
+wenn das gleiche Browserfenster die Verbindung erneut zum Hub aufbaut.
+
+```csharp
+public class ChatHub : Hub<IChatHub>
+{
+    public async Task SendMessage(string user, string message)
+    {
+        // Aufruf nur beim Aufrufer des Hubs
+        await Clients.Caller.ReceiveMessage(user, message);
+
+        // Aufruf bei allen mit dem Hub verbundenen Clients
+        await Clients.All.ReceiveMessage(user, message);
+
+        // Aufruf bei allen Usern ausgenommen dem Aufrufer des Hubs
+        await Clients.Others.ReceiveMessage(user, message);
+    }
+}
+
+public interface IChatHub
+{
+    Task ReceiveMessage(string user, string message);
+}
+```
+
+Nachrichten können auch außerhalb des Hubs an die Clients geschickt werden. Zu bedenken ist aber, dass es hier keinen `Caller` gibt.
+
+```csharp
+public class WeatherServices
+{
+    //                     👇 Ein Hub-Context kann über das DI System angefragt werden
+    public WeatherServices(IHubContext<WeatherHub, IWeatherHub> hub)
+    {
+        _hub = hub;
+    }
+
+    private void UpdateWeather(object state)
+    {
+        // 👇 Es können Nachrichten an Alle oder Gruppen geschickt werden
+        _hub.Clients.All.WeatherUpdated(forecast);
+    }
+}
+```
+
+## Clients
+
+Clients müssen die Verbindung zu einem Hub herstellen. Für einige Sprachen gibt es bereits SDKs, welche die Nutzung von SignalR ermöglichen.
+
+Für JavaScript kann das npm-Paket `@aspnet/signalr` verwendet werden.
+
+```typescript
+import * as signalR from "@aspnet/signalr";
+
+
+const connection: signalR.HubConnection = new signalR.HubConnectionBuilder() // 👈 Der Builder kümmert sich um die Konfiguration
+                                            .withUrl("/chatHub") // 👈 Per Convention ist die Url zu einem Hub [HubName]Hub
+                                            .build(); // 👈 Hier wird noch keine Verbindung aufgebaut, nur konfiguriert
+
+
+//               👇 Diese Methode wird vom Server in den Clients aufgerufen
+connection.on("receiveMessage", (username: string, message: string) => {
+  // ...
+});
+
+function send() {
+    //          👇 Mittels send können Methoden auf Serverseite aufgerufen werden, auch mit komplexen Parametern
+    connection.send("sendMessage", this.state.userName, this.state.text);
+}
+
+
+connection
+  .start() // 👈 Der Verbindungsaufbau muss manuell ausgelöst werden
+  .then(() => {/*connected*/})
+  .catch((err) => /*...*/);
+```
