@@ -40,6 +40,7 @@ Vielen Dank für Euren Input!
 - [Repository Pattern](../../00_cheatsheets/patterns/repository/repository-pattern.md)
 
 ### Guidelines
+
 - [REST-Schnittstellen Guidelines](../../00_cheatsheets/guidelines/rest-guidelines/rest-guidelines.md)
 
 ## Schedule
@@ -48,7 +49,7 @@ Vielen Dank für Euren Input!
 | ---------------- | ---------------------- | ------------------------------------------------ |
 | Workshop Tag 1 ✔ | 2020-04-24, 8:30-12:30 | [Workshop Tag 1](../01_workshop_day_1/readme.md) |
 | Workshop Tag 2 ✔ | 2020-05-08, 8:30-12:30 | [Workshop Tag 2](../02_workshop_day_2/readme.md) |
-| Workshop Tag 3   | 2020-07-10, 8:30-12:30 | Workshop Tag 3                                   |
+| Workshop Tag 3   | 2020-07-10, 8:30-12:30 | [Workshop Tag 3](../03_workshop_day_3/readme.md) |
 | Workshop Tag 4   | 2020-07-17, 8:30-12:30 | Workshop Tag 4                                   |
 | Workshop Tag 5   | 2020-07-24, 8:30-12:30 | Workshop Tag 5                                   |
 | Prüfung          | 2020-07-31             | Prüfung                                          |
