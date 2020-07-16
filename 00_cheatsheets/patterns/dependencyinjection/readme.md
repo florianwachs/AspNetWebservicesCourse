@@ -100,3 +100,40 @@ Zur Registrierung stehen uns verschiedene `Lifetimes` zur Auswahl.
 
 DI-Systeme sind haben, wie alles, Vor- und Nachteile.
 Einerseits ermögliche sie den einfachen Austausch von Implementierungen z.B. für Unittests. Zum anderen bieten es neue Fehlerquellen wie z.B. nicht registrierte Abhängigkeiten die zur Laufzeit Fehler erzeugen.
+
+## Clean Code
+
+Bei vielen Services die am DI System registriert werden müssen kann es schnell unübersichtlich werden. Die C# [Extension-Methods](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/00_cheatsheets/csharplanguage/csharp_cheat_sheet.md#extension-methods) können helfen, Services unserer Anwendung gebündelt zu registrieren.
+
+```csharp
+public static class DiRegistrationExtensions
+{
+    //                                                      👇 "this" ist wichtig damit es eine Extension Method ist
+    public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddSingleton<ICountryRepository, CountryRepository>();
+        services.AddSingleton<ICustomerRepository, CustomerRepository>();
+        services.AddSingleton<IMachineTypeRepository, MachineTypeRepository>();
+        services.AddSingleton<ITenantRepository, TenantRepository>();
+        services.AddSingleton<IBranchesOfIndustryRepository, BranchesOfIndustryRepository>();
+        services.AddSingleton<IUserSettingRepository, UserSettingRepository>();
+        services.AddSingleton<ITopicRepository, TopicRepository>();
+        services.AddSingleton<IDepartmentRepository, DepartmentRepository>();
+        services.AddSingleton<IMasterDataService, MasterDataService>();
+        services.AddSingleton<IMailTaskRepository, MailTaskRepository>();
+
+        return services;
+    }
+}
+```
+
+Damit können wir in unserer `Startup.cs` folgendes schreiben.
+
+```csharp
+ public void ConfigureServices(IServiceCollection services)
+{
+    //...
+    services.AddDataAccessServices();
+    //...
+```
