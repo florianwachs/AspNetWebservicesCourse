@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSecurity.Api", "AspNetCoreSecurity.Api\AspNetCoreSecurity.Api.csproj", "{AFCF4599-E4F5-44B6-9E69-9F5395FFCCE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSecurity.Domain", "AspNetCoreSecurity.Domain\AspNetCoreSecurity.Domain.csproj", "{D7560D4C-9C07-4CB4-9172-30C9B70E8ACF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSecurity.Infrastructure", "AspNetCoreSecurity.Infrastructure\AspNetCoreSecurity.Infrastructure.csproj", "{6A9D01AD-189F-4633-9215-6A312688EDB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A9CA989-E013-4447-9252-69F6BCFD7D33}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StsServerIdentity", "AspNetCoreSecurity.IdentityServer\StsServerIdentity.csproj", "{26D8B03D-3502-41BF-AC35-3DB7ED48CF4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFCF4599-E4F5-44B6-9E69-9F5395FFCCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCF4599-E4F5-44B6-9E69-9F5395FFCCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCF4599-E4F5-44B6-9E69-9F5395FFCCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCF4599-E4F5-44B6-9E69-9F5395FFCCE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7560D4C-9C07-4CB4-9172-30C9B70E8ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7560D4C-9C07-4CB4-9172-30C9B70E8ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7560D4C-9C07-4CB4-9172-30C9B70E8ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7560D4C-9C07-4CB4-9172-30C9B70E8ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9D01AD-189F-4633-9215-6A312688EDB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D8B03D-3502-41BF-AC35-3DB7ED48CF4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D8B03D-3502-41BF-AC35-3DB7ED48CF4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D8B03D-3502-41BF-AC35-3DB7ED48CF4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D8B03D-3502-41BF-AC35-3DB7ED48CF4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56B361A4-708A-4B41-B278-DAFD60FCC194}
+	EndGlobalSection
+EndGlobal
