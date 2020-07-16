@@ -25,7 +25,7 @@ namespace AspNetCoreSecurity.Api.StudentManagement
         }
 
         [HttpGet]
-        [RequireClaim("CanReadAllStudents")]
+        [Authorize(Policy = "CanReadAllStudents")]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {
             var students = await _dbContext.Students.ToListAsync();

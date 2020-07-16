@@ -16,10 +16,9 @@ namespace AspNetCoreSecurity.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation();
+            services.AddMvc().AddFluentValidation();
             services.AddUniversityServices();
             services.ConfigureAuth();
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, UniversityDbContext universityDb)
@@ -37,11 +36,18 @@ namespace AspNetCoreSecurity.Api
 
             app.UseHttpsRedirection();
 
-            // 4-5
-            app.UseAuth();
+            app.UseCors("default");
 
-            // 6
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(config =>
+            {
+                config.MapControllers();
+            });
+
         }
     }
 }

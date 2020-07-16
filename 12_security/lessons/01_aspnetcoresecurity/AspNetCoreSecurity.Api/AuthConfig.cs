@@ -39,8 +39,6 @@ namespace AspNetCoreSecurity.Api
                         .AllowAnyHeader();
                 });
             });
-
-            services.AddRequireClaimAttributeAuthorization();
         }
 
         private static void AddAuthorizationHandler(IServiceCollection services)
@@ -92,14 +90,6 @@ namespace AspNetCoreSecurity.Api
             });
         }
 
-        public static void UseAuth(this IApplicationBuilder app)
-        {
-            // 4
-            app.UseCors("default");
-
-            // 5
-            app.UseAuthentication();
-        }
 
         public class ProfessorOrPrincipalRequirement : IAuthorizationRequirement
         {
