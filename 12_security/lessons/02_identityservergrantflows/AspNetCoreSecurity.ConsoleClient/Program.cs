@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 
@@ -49,7 +50,7 @@ namespace AspNetCoreSecurity.ConsoleClient
 
             var text = await client.GetStringAsync("https://localhost:44387/api/sampledata/weatherforecasts");
 
-            var forecasts = await weatherResponse.Content.ReadAsAsync<Forecast[]>();
+            var forecasts = await weatherResponse.Content.ReadFromJsonAsync<Forecast[]>();
 
             foreach (var forecast in forecasts)
             {
