@@ -91,12 +91,12 @@ REST Schnittstellen sind **zustandlos** d.h. sie speichern keinen Zustand der Sc
 Manche Aktionen lassen sich nicht leicht in die RESTful-Struktur übersetzen, z.B. Favoritenmarkierung von Büchern.
 
 > Wichtig: Nicht in den RPC-Style zurück fallen
-> Don`t: PUT /books/1/setasfavorite=true
+> Don`t: PATCH /books/1/setasfavorite=true
 
 - Alternative
-  - isFavorite als Feld in der Ressource aufnehmen und mit einem PUT aktualisieren
+  - isFavorite als Feld in der Ressource aufnehmen und mit einem PATCH aktualisieren
 - Alternative 2
-  - `POST` oder PUT /books/1/favorites
+  - `POST` /books/1/favorites
   - `DELETE` /books/1/favorites
 
 ## Dokumentation der API
