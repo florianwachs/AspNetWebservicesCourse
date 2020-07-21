@@ -318,3 +318,18 @@ Eine lauffähige Implementierung findet Ihr hier: https://github.com/florianwach
 
 Damit werden die unterschiedlichen Versionen automatisch erfasst.
 ![With Versions](assets/swagger_withversion.gif)
+
+
+## HowTos
+
+### Urls in Kleinschreibung
+
+Standardmäßig tauchen die `Controller` in Swagger mit Großbuchstaben auf, z.B. `api/v1/Users`.
+Dieses Verhalten kann wie folgt geändert werden-
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddRouting(options => options.LowercaseUrls = true);
+}
+```
