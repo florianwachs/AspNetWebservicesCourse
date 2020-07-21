@@ -30,6 +30,9 @@ namespace AspNetCoreApiVersioning
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddApiVersioning(
                 options =>
                 {
