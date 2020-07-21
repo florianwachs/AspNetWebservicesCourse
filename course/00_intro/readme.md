@@ -57,3 +57,16 @@ Vielen Dank für Euren Input!
 ## Prüfung
 
 Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](../00_exam/readme.md)
+
+## Aktuelle Informationen zur Abschlusspräsentation
+
+ich konnte mit Prof. Dr. Hüttl die Modalitäten der Abschlusspräsentation (2020-07-31) klären: 
+
+- Sie findet Vor-Ort in der TH statt (Raum wird noch bekannt gegeben)
+- Beamer steht zur Verfügung
+- Wir werden darauf achten das wir alle den Sicherheitsabstand einhalten
+- Zwischen den Teampräsentationen wird desinfiziert, bevor das nächste Team drankommt
+- Nur das präsentierende Team, Prof. Dr. Hüttl und ich sind im Raum anwesend
+- Zeitslots für die einzelnen Teams werden noch bekannt gegeben 
+
+Falls Ihr noch Fragen habt beantworte ich sie gerne! 
