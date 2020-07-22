@@ -1,4 +1,5 @@
 ﻿using Grpc.Core;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace AspNetCoreGrpc.Api.Services
 {
     public class SensorService: SensorReadingService.SensorReadingServiceBase
     {
+        public SensorService(ILogger<SensorService> logger)
+        {
+            Logger = logger;
+        }
+
+        public ILogger<SensorService> Logger { get; }
+
         public override Task<SensorResponseMessage> AddReading(SensorReadingPackage request, ServerCallContext context)
         {
             // Do Stuff
@@ -16,7 +24,7 @@ namespace AspNetCoreGrpc.Api.Services
 
             foreach (var sensorData in request.Readings)
             {
-                // Save all readings
+                Logger.LogInformation("{SensorId} {Humidity}", sensorData.SensorId, sensorData.Humidity);
             }
 
             return Task.FromResult(result);

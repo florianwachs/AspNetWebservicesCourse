@@ -4,6 +4,9 @@ option csharp_namespace = "AspNetCoreGrpc.Api.Services";
 
 import "google/protobuf/timestamp.proto";
 
+// damit der Import funktioniert muss in der csproj der Rootfolder gesetzt werden.
+import "enums.proto";
+
 service SensorReadingService{
 	rpc AddReading(SensorReadingPackage) returns (SensorResponseMessage);
 }
@@ -17,7 +20,7 @@ message SensorReadingMessage{
 	int32 temperatureInC = 2;
 	int32 humidity = 3;
 	int32 atmosphericPressure= 4;
-	string sensorHealth = 5;
+	SensorStatus sensorStatus = 5;
 	google.protobuf.Timestamp timestamp = 6;
 }
 

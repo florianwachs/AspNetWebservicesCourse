@@ -22,11 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Protos\enums.proto" />
     <None Remove="Protos\WeatherSensor.proto" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\WeatherSensor.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\enums.proto" GrpcServices="None" ProtoRoot="Protos\"/>
+    <Protobuf Include="Protos\WeatherSensor.proto" GrpcServices="Server" ProtoRoot="Protos\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
