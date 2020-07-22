@@ -52,9 +52,11 @@ namespace AspNetCoreGrpc.Api
 
             app.UseRouting();
 
+            app.UseGrpcWeb();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<SensorService>();
+                endpoints.MapGrpcService<SensorService>().EnableGrpcWeb();
 
                 endpoints.MapControllerRoute(
                     name: "default",
