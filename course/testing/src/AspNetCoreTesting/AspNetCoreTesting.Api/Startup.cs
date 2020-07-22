@@ -1,3 +1,4 @@
+using AspNetCoreTesting.Api.ApplicationServices;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,7 @@ namespace AspNetCoreTesting.Api
         {
             services.AddMvc().AddFluentValidation();
             services.AddJokesServices();
+            services.AddSingleton<WeatherMoodConverter>();
             services.AddHealthChecks();
         }
 
