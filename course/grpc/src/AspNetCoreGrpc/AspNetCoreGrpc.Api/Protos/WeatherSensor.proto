@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "AspNetCoreGrpc.Api.Services";
+
+import "google/protobuf/timestamp.proto";
+
+service SensorReadingService{
+	rpc AddReading(SensorReadingPackage) returns (SensorResponseMessage);
+}
+
+message SensorReadingPackage{
+	repeated SensorReadingMessage readings = 1;
+}
+
+message SensorReadingMessage{
+	int32 sensorId = 1;
+	int32 temperatureInC = 2;
+	int32 humidity = 3;
+	int32 atmosphericPressure= 4;
+	string sensorHealth = 5;
+	google.protobuf.Timestamp timestamp = 6;
+}
+
+message SensorResponseMessage{
+	bool success = 1;
+	string message = 2;
+}
