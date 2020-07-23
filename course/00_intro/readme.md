@@ -62,11 +62,14 @@ Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer
 
 ich konnte mit Prof. Dr. Hüttl die Modalitäten der Abschlusspräsentation (2020-07-31) klären:
 
-- Sie findet Vor-Ort in der TH statt (Raum wird noch bekannt gegeben)
+- Sie findet Vor-Ort in der TH statt, Raum A0.03 von 9-14 Uhr
 - Beamer steht zur Verfügung
 - Wir werden darauf achten das wir alle den Sicherheitsabstand einhalten
 - Zwischen den Teampräsentationen wird desinfiziert, bevor das nächste Team drankommt
 - Nur das präsentierende Team, Prof. Dr. Hüttl und ich sind im Raum anwesend
 - Zeitslots für die einzelnen Teams werden noch bekannt gegeben
+- Seid bitte rechtzeitig zu Eurem Zeitslot da
+- Bitte achtet jederzeit auf ausreichend Abstand
 
 Falls Ihr noch Fragen habt beantworte ich sie gerne!
+
