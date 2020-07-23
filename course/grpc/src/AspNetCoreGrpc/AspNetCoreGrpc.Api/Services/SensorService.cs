@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreGrpc.Api.Services
 {
-    public class SensorService: SensorReadingService.SensorReadingServiceBase
+    public class SensorService : SensorReadingService.SensorReadingServiceBase
     {
         private static ConcurrentQueue<SensorReadingMessage> _sensorReadings = new ConcurrentQueue<SensorReadingMessage>();
 
@@ -37,11 +37,11 @@ namespace AspNetCoreGrpc.Api.Services
 
         public override async Task GetUpdates(Empty request, IServerStreamWriter<SensorReadingMessage> responseStream, ServerCallContext context)
         {
-            
+
             while (!context.CancellationToken.IsCancellationRequested)
             {
 
-                if(_sensorReadings.TryDequeue(out var reading))
+                if (_sensorReadings.TryDequeue(out var reading))
                 {
                     await responseStream.WriteAsync(reading);
                     Logger.LogInformation("Sending sensor reading response");
@@ -50,7 +50,7 @@ namespace AspNetCoreGrpc.Api.Services
                 {
                     await Task.Delay(TimeSpan.FromSeconds(2));
                 }
-                
+
             }
         }
     }
