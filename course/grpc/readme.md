@@ -31,7 +31,7 @@
 
 ![](assets/grpcperf.png)
 
-## gRPC und procobuf
+## gRPC und protobuf
 
 - gRPC nutzt Protocol Buffers (protobuf)
 - Interface Definition Language
