@@ -16,6 +16,7 @@ using SimpleJwt.DataAccess;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SimpleJwt.Models;
 
 namespace SimpleJwt
 {
@@ -39,8 +40,8 @@ namespace SimpleJwt
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var jwtSection = Configuration.GetSection("JwtBearerTokenSettings");
-            services.Configure<JwtTokenSettings>(jwtSection);
-            var jwtBearerTokenSettings = jwtSection.Get<JwtTokenSettings>();
+            services.Configure<JwtBearerTokenSettings>(jwtSection);
+            var jwtBearerTokenSettings = jwtSection.Get<JwtBearerTokenSettings>();
             var key = Encoding.UTF8.GetBytes(jwtBearerTokenSettings.SecretKey);
 
             services.AddAuthentication(options =>

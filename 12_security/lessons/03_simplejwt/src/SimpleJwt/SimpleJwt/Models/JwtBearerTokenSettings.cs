@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleJwt
+namespace SimpleJwt.Models
 {
-    public class JwtTokenSettings
+    public class JwtBearerTokenSettings
     {
         public string SecretKey { get; set; }
         public string Audience { get; set; }
