@@ -2,6 +2,17 @@
 
 Willkommen zum FWPF **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenheim.de/).
 
+## Schedule
+
+|                |                        |                                                      |
+| -------------- | ---------------------- | ---------------------------------------------------- |
+| Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
+| Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| Workshop Tag 4 | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
+| Workshop Tag 5 | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
+| Prüfung        | 2021-06-25             | Prüfung                                              |
+
 ## Hi There
 
 This repository contains source code for the **Web Services with .NET** course. It's used during the presentation so that the students can follow along more easily.
@@ -22,17 +33,6 @@ Ich freue mich das Ihr Euch für das FWPF Web Services entschieden habt. Die bis
 Deshalb würde ich mich auch dieses Mal sehr über Eure aktive Beteiligung freuen. Stellt Fragen, gebt Feedback und wenn Ihr Verbesserungsvorschläge habt lasst es mich wissen. Mein Ziel ist es , zusammen mit Euch, die Veranstaltung voranzubringen (ok, ja, gute Noten sind Euch auch wichtig 😉). Eure Beiträge / Projekte sind immer eine Bereicherung für die Veranstaltung.
 
 Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in der Projektarbeit nicht weiterkommt oder sonstige Unterstützung benötigt, lasst es mich bitte wissen.
-
-## Schedule
-
-|                |                        |                                                      |
-| -------------- | ---------------------- | ---------------------------------------------------- |
-| Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| Workshop Tag 4 | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
-| Workshop Tag 5 | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
-| Prüfung        | 2021-06-25             | Prüfung                                              |
 
 ## Prüfung
 
