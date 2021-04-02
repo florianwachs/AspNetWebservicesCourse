@@ -4,16 +4,10 @@ Willkommen zum FWPF **Web Services mit .NET** der [TH Rosenheim](https://www.th-
 
 ## Hi There
 
-This repository contains source code for the **Web Services with .NET** course. It's used during the presentation so that the students can follow
-along more easily.
-
-I try to always deliver up-to-date content during the course. The .NET (Core) World moves fast!
-
-You can find older course material inside the archive folder.
+This repository contains source code for the **Web Services with .NET** course. It's used during the presentation so that the students can follow along more easily.
 
 I'm looking forward to show you what .NET and Web Services are capable of.
-
-I can't wait to learn new stuff together!
+**I can't wait to learn new stuff together!**
 
 > Content is currently in German, but I hope to translate the course in the future
 
@@ -28,6 +22,31 @@ Ich freue mich das Ihr Euch für das FWPF Web Services entschieden habt. Die bis
 Deshalb würde ich mich auch dieses Mal sehr über Eure aktive Beteiligung freuen. Stellt Fragen, gebt Feedback und wenn Ihr Verbesserungsvorschläge habt lasst es mich wissen. Mein Ziel ist es , zusammen mit Euch, die Veranstaltung voranzubringen (ok, ja, gute Noten sind Euch auch wichtig 😉). Eure Beiträge / Projekte sind immer eine Bereicherung für die Veranstaltung.
 
 Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in der Projektarbeit nicht weiterkommt oder sonstige Unterstützung benötigt, lasst es mich bitte wissen.
+
+## Schedule
+
+|                |                        |                                                      |
+| -------------- | ---------------------- | ---------------------------------------------------- |
+| Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
+| Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| Workshop Tag 4 | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
+| Workshop Tag 5 | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
+| Prüfung        | 2021-06-25             | Prüfung                                              |
+
+## Prüfung
+
+Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](course/00_exam/readme.md)
+
+### Aktuelle Informationen zur Abschlusspräsentation
+
+Die Prüfung wird voraussichtlich Vor-Ort in der TH stattfinden. Bitte habt Verständnis das Raum und genauer Ablauf erst noch bekannt gegeben werden, da dies zumindest 2020 stark von Covid-19 Vorgaben abhängig war welche sich erst kurzfristig ergeben haben.
+
+- Zeitslots für die einzelnen Teams werden noch bekannt gegeben
+- Seid bitte rechtzeitig zu Eurem Zeitslot da
+- Bitte achtet jederzeit auf ausreichend Abstand
+
+Falls Ihr noch Fragen habt beantworte ich sie gerne!
 
 ## Vorbereitung Entwicklungsumgebung / Repository
 
@@ -44,31 +63,6 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 | Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha |
 | Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |
 
-## Schedule
-
-|                |                        |                                                      |
-| -------------- | ---------------------- | ---------------------------------------------------- |
-| Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| Workshop Tag 4 | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
-| Workshop Tag 5 | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
-| Prüfung        | 2021-06-25             | Prüfung                                              |
-
-## Prüfung
-
-Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](../00_exam/readme.md)
-
-### Aktuelle Informationen zur Abschlusspräsentation
-
-Die Prüfung wird voraussichtlich Vor-Ort in der TH stattfinden. Bitte habt Verständnis das Raum und genauer Ablauf erst noch bekannt gegeben werden, da dies zumindest 2020 stark von Covid-19-Vorgaben abhängig war welche sich erst kurzfristig ergeben haben.
-
-- Zeitslots für die einzelnen Teams werden noch bekannt gegeben
-- Seid bitte rechtzeitig zu Eurem Zeitslot da
-- Bitte achtet jederzeit auf ausreichend Abstand
-
-Falls Ihr noch Fragen habt beantworte ich sie gerne!
-
 ## Zusätzliches Material
 
 Hier ist zusätzliches Material zum Selbststudium für aufgekommene Fragen während unserer Vorlesung.
@@ -76,8 +70,8 @@ Vielen Dank für Euren Input!
 
 ### Pattern
 
-- [Repository Pattern](../../00_cheatsheets/patterns/repository/repository-pattern.md)
+- [Repository Pattern](00_cheatsheets/patterns/repository/repository-pattern.md)
 
 ### Guidelines
 
-- [REST-Schnittstellen Guidelines](../../00_cheatsheets/guidelines/rest-guidelines/rest-guidelines.md)
+- [REST-Schnittstellen Guidelines](00_cheatsheets/guidelines/rest-guidelines/rest-guidelines.md)
