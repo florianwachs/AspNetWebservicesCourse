@@ -4,10 +4,11 @@ Bei `Web Services` besteht die Gesamtnote aus der Bewertung einzelner Meilenstei
 
 ## Vorstellung der Projektidee und Use-Cases
 
+Die Termine der einzelnen Teams werden Euch noch mitgeteilt. Der Termin soll ca. 5-10min. dauern in der Ihr Eure Projektidee vorstellt. Wichtig, es geht nur um eure Idee, nicht um fertige Diagramme oder technische Details (die lernen wir ja erst noch während der Vorlesung). Der Termin dient auch hauptsächlich für mich, um den Schwierigkeitsgrad der Projekte zwischen den Teams anzugleichen und Euch (falls gewünscht) hinsichtlich möglicher Umsetzungsideen zu beraten.
+
 ### Zeitpunkt
 
-13.5 - 15.5
-Wir werden Termine für die einzelnen Gruppen vereinbaren die gut für Euch passen.
+vermutlich am Termin 3 nachmittags **TODO**
 
 ### Inhalte / Ablauf
 
@@ -22,7 +23,7 @@ Wir werden Termine für die einzelnen Gruppen vereinbaren die gut für Euch pass
 
 ### Zeitpunkt
 
-Am oder um den 4-ten Workshop Tag
+Am Termin 5
 
 ### Inhalte / Ablauf
 
@@ -41,7 +42,7 @@ Am oder um den 4-ten Workshop Tag
 
 ### Zeitpunkt
 
-Am Prüfungstag (6-ter Workshop Tag)
+Am Prüfungstag (Termin 6)
 
 ### Inhalte / Ablauf
 

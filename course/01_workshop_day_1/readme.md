@@ -1,10 +1,10 @@
 # Workshop Tag 1
 
-## Ablauf Tag 1 (2020-04-24, 8:30-12:00)
-
-Endlich geht es los! Hier ein Überblick was wir vor haben.
+## Ablauf Tag 1 (2021-04-30)
 
 💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
+
+Endlich geht es los! Hier ein Überblick was wir vor haben.
 
 - Vorstellungsrunde
 - Besprechung des Vorlesungsablaufs inkl. Prüfung
@@ -12,6 +12,7 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 - Einführung Web-Services ([Slides](../slides/Introduction.pdf))
 - Vorstellung .NET ([Slides](../slides/NET%20Overview.pdf))
 - Einführung C# ([Slides](../slides/CSharp%20Language.pdf))
+- Unser erster Webservice mit [Asp.Net 5](https://docs.microsoft.com/en-us/aspnet)
 
 ## Übungen
 
@@ -23,14 +24,10 @@ Folgende Übungen sind für den Tag vorgesehen:
 
 ## Erforderliche Ergebnisse
 
-### Teambildung (am 2020-04-24)
+### Teambildung (am 2021-04-30)
 
 Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
 
-### Code-Repository mit Zugang (bis 2020-05-01)
+### Code-Repository mit Zugang (bis Termin 2)
 
 Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim solltet Ihr Gitlab bekommen, Ihr könnt aber auch gerne Github & Co. nutzen. Einzige Voraussetzung ist, dass ich Zugriff darauf habe. [Mehr Infos](../../00_prerequisites/setup_instructions.md)
-
-### Projekt-Idee (am 2ten Workshop Tag)
-
-- Kleine PowerPoint Vorstellung Eurer Projekt Idee (ca. 5min. pro Team)

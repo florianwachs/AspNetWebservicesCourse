@@ -1,14 +1,16 @@
 # Workshop Tag 5
 
-## Ablauf Tag 5 (2020-07-23, 8:30-12:30)
+## Ablauf Tag 5 (2021-06-11)
 
-💁‍♀️Den Link zum Live Stream mit Zoom findet Ihr in der Learn Community
+💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
 - Feedbackrunde / Klärung von Fragen und Problemen
-- Infos zur Abschlusspräsentation / Ablauf Bewertung
-- [Clean Code](../cleancode) mit [CQRS](../cqrs) und [Testing](../testing)
-- [gRPC Services](../grpc)
-- [Microservices](../microservices)
-- [Serverless](../serverless)
+- Präsentation der Architektur und Schnittstellendefinition
+- Wie kann ich Euch am besten in Euren Projekten unterstützen?
+- **TODO**
 
-Wie immer nehme ich mir gerne die Zeit für Eure Fragen / Projekte!
+## Erforderliche Ergebnisse
+
+siehe [Präsentation der Architektur und Schnittstellendefinition](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#pr%C3%A4sentation-der-architektur-und-schnittstellendefinition)
+
+💁‍♀️Wie immer nehme ich mir gerne die Zeit für Eure Fragen / Projekte!

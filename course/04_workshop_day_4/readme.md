@@ -1,6 +1,6 @@
-# Workshop Tag 3
+# Workshop Tag 4
 
-## Ablauf Tag 3 (2021-05-21)
+## Ablauf Tag 4 (2021-05-28)
 
 💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
@@ -11,7 +11,4 @@
 
 ## Erforderliche Ergebnisse
 
-### Präsentation der Projekt Idee
-
-siehe [](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases)
-
+keine
