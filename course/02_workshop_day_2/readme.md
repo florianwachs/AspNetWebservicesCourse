@@ -1,13 +1,12 @@
 # Workshop Tag 2
 
-## Ablauf Tag 2 (2020-05-08, 8:30-12:30)
+## Ablauf Tag 2 (2021-05-07)
 
-Heute geht es mit [Asp.Net Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) los.
+💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
-💁‍♀️Den Link zum Live Stream mit Zoom findet Ihr in der Learn Community
+Heute steigen wir tiefer in [Asp.Net 5](https://docs.microsoft.com/en-us/aspnet) ein.
 
 - Kurze Feedbackrunde / Klärung von Fragen
-- Besprechung Präsentationstermine
 - Einführung in Asp.Net Core ([Slides](../slides/AspNetCore.pdf))
 - Live Coding
 
@@ -23,12 +22,12 @@ Folgende Übungen sind für den Tag vorgesehen:
 
 ## Erforderliche Ergebnisse
 
-### Wunschtermine für Vorstellung Projekte pro Team bis (2020-05-11)
+### Wunschtermine für Vorstellung Projekte pro Team bis (**TODO**)
 
-Die Vorstellung der Projekte legen wir in den Zeitraum vom 13.5 - 15.5. Bitte schickt mir Euren Wunschtermin an dem wir Euer Projekt besprechen können. Bitte schickt mir wann es für Euer Team am besten passt.
+Die Vorstellung der Projekte legen wir in den Zeitraum vom **TODO** Bitte schickt mir Euren Wunschtermin an dem wir Euer Projekt besprechen können. Bitte schickt mir wann es für Euer Team am besten passt.
 
 ## Hilfreiche Ressourcen
 
-- https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1
+- https://docs.microsoft.com/en-us/aspnet
 - https://github.com/dodyg/practical-aspnetcore
 - https://docs.microsoft.com/en-us/samples/browse/
