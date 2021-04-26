@@ -24,8 +24,6 @@ namespace ChuckNorrisService.Startups
         {
             FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
 
-            RouteBuilder routes = new RouteBuilder(app);
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -33,9 +31,7 @@ namespace ChuckNorrisService.Startups
 
                 endpoints.MapGet("api/jokes/random", async context =>
                             {
-                                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                                context.Response.ContentType = "application/json";
-                                await context.Response.WriteAsync(await GetSerializedJoke(jokeProvider), Encoding.UTF8);
+                                await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
                             });
 
                 endpoints.MapGet("{*path}", context =>
@@ -44,13 +40,6 @@ namespace ChuckNorrisService.Startups
                     return context.Response.WriteAsync("Well, IT'S YOUR FAULT!");
                 });
             });
-
-
-        }
-
-        private async Task<string> GetSerializedJoke(IJokeProvider provider)
-        {
-            return JsonSerializer.Serialize(await provider.GetRandomJokeAsync());
         }
     }
 }

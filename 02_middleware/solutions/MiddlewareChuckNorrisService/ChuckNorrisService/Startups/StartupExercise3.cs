@@ -27,15 +27,8 @@ namespace ChuckNorrisService.Startups
 
             app.Run(async context =>
             {
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(await GetSerializedJoke(jokeProvider), Encoding.UTF8);
+                await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
             });
-        }
-
-        private async Task<string> GetSerializedJoke(IJokeProvider provider)
-        {
-            return JsonSerializer.Serialize(await provider.GetRandomJokeAsync());
         }
     }
 }

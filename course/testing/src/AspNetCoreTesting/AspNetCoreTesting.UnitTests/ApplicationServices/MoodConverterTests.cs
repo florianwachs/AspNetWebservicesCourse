@@ -16,7 +16,6 @@ namespace AspNetCoreTesting.UnitTests.ApplicationServices
             Assert.Equal(expectedEmoji, sut.WeatherToMood(forecast));
         }
 
-
         public static IEnumerable<object[]> GetTestData => new[]
         {
             new object[]{new WeatherForecast { TemperatureC= -80}, "🥶" },
