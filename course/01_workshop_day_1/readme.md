@@ -21,6 +21,8 @@ Folgende Übungen sind für den Tag vorgesehen:
 | Übung                                                     | Lösung                                                        |
 | --------------------------------------------------------- | ------------------------------------------------------------- |
 | [C#](../../01_csharp/exercises/ConsoleChuckNorrisService) | [Lösung](../../01_csharp/solutions/ConsoleChuckNorrisService) |
+| [Middleware](../../02_middleware/exercises/01_MiddlewareChuckNorrisService/readme.md)                   | [Lösung](../../02_middleware/solutions/MiddlewareChuckNorrisService)               |
+
 
 ## Erforderliche Ergebnisse
 
