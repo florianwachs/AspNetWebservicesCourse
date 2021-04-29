@@ -34,9 +34,9 @@ namespace ChuckNorrisService.Startups
             {
 
                 endpoints.MapGet("api/jokes/random", async context =>
-                            {
-                                await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
-                            });
+                {
+                    await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
+                });
 
                 endpoints.MapGet("{*path}", context =>
                 {
