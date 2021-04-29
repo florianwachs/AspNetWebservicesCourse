@@ -24,8 +24,12 @@ namespace ChuckNorrisService.Startups
         {
             FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
 
+            // Hier wird die Routing Middleware eingehängt
+            // Alle nachfolgenden Middlewares erhalten Zugriff auf Informationen über die ausgewählte Route
             app.UseRouting();
 
+            // Definition der verfügbaren Endpunkte unseres Webservices. Dies wird auch als Endpoint-Routing bezeichnet.
+            // Endpunkte haben Zugriff auf die Routing-Pipeline und können somit an Features wie Authorization und Authentication teilnehmen.
             app.UseEndpoints(endpoints =>
             {
 
