@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace CSharpAdvancedLanguageFeatures
 {
@@ -55,15 +56,26 @@ namespace CSharpAdvancedLanguageFeatures
         {
             var api = "http://api.icndb.com/jokes/random";
             var client = new HttpClient();
-            var rawJson = await client.GetStringAsync(api);
-            return GetJokeFromJSON(rawJson);
+            var response = await client.GetFromJsonAsync<JokeResponse>(api);
+            return response.Value.Joke;
         }
 
+        // Dynamische Möglichkeit auf JSON zuzugreifen (nicht empfohlen)
         private static string GetJokeFromJSON(string json)
         {
             var jsonObj = JsonSerializer.Deserialize<dynamic>(json);
             var joke = jsonObj["value"]["joke"].ToString();
             return joke;
+        }
+
+        public class JokeResponse
+        {
+            public JokeValue Value { get; set; }
+        }
+
+        public class JokeValue
+        {
+            public string Joke { get; set; }
         }
     }
 }

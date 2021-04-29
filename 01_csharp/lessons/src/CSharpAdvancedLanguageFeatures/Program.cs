@@ -8,7 +8,7 @@ namespace CSharpAdvancedLanguageFeatures
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //NullConditionalOperators.BeforeCSharp6();
             //NullConditionalOperators.WithCSharp6();
@@ -33,7 +33,7 @@ namespace CSharpAdvancedLanguageFeatures
 
             //AsyncAwait.UseApiBlocking();
             //AsyncAwait.UseApiNonBlocking();
-            //AsyncAwait.UseApiAsync();
+            //await AsyncAwait.UseApiAsync();
 
             //Dynamic.LateBindingDemo();
             //Dynamic.ExpandoObjectDemo();
@@ -41,7 +41,7 @@ namespace CSharpAdvancedLanguageFeatures
             //Dynamic.ReplaceReflectionDemo();
             //Dynamic.DynamicWithJsonNetDemo();
 
-            new Nameof().UseNameof();
+            //new Nameof().UseNameof();
 
             Console.WriteLine();
             Console.WriteLine("Press the [any] key");
