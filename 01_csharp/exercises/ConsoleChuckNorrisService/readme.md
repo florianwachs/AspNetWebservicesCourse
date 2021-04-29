@@ -51,7 +51,7 @@ In dieser Aufgabe greifen wir auf das Dateisystem zu und nutzen `System.Text.Jso
 
 In dieser Aufgabe rufen wir eine API mittels `HttpClient` auf.
 
-- Stellen Sie sicher das sie das NuGet-Package `System.Net.Http.Json` in Ihrem Projekt eingebunden haben. ACHTUNG: Es ist derzeit ein Preview-Package.
+- Stellen Sie sicher das sie das NuGet-Package `System.Net.Http.Json` in Ihrem Projekt eingebunden haben.
 - Implementieren Sie eine Klasse `ApiJokeProvider`, welche die API `https://api.chucknorris.io/jokes/random` aufruft und den zurück gelieferten Witz auf der Console ausgibt.
 
 > Hinweise:
