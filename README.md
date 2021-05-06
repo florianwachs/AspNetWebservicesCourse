@@ -4,14 +4,14 @@ Willkommen zum FWPF **Web Services mit .NET** der [TH Rosenheim](https://www.th-
 
 ## Schedule
 
-|                |                        |                                                      |
-| -------------- | ---------------------- | ---------------------------------------------------- |
-| Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| Workshop Tag 4 | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
-| Workshop Tag 5 | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
-| Prüfung        | 2021-06-25             | Prüfung                                              |
+|                  |                        |                                                      |
+| ---------------- | ---------------------- | ---------------------------------------------------- |
+| ✔ Workshop Tag 1 | 2021-04-30, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
+| Workshop Tag 2   | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| Workshop Tag 3   | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| Workshop Tag 4   | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/03_workshop_day_4/readme.md) |
+| Workshop Tag 5   | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/03_workshop_day_5/readme.md) |
+| Prüfung          | 2021-06-25             | Prüfung                                              |
 
 ## Hi There
 
@@ -50,7 +50,7 @@ Falls Ihr noch Fragen habt beantworte ich sie gerne!
 
 ## Vorbereitung Entwicklungsumgebung / Repository
 
-Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](../../00_prerequisites/setup_instructions.md).
+Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](../00_prerequisites/setup_instructions.md).
 
 ## Vorbereitungsmaterial C\# (csharp)
 
@@ -59,7 +59,7 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 | Beschreibung                                            | Link                                                                               |
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                    |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](../../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)           |
+| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)              |
 | Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha |
 | Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |
 
