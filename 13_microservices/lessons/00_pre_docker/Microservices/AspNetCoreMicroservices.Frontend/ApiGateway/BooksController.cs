@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace AspNetCoreMicroservices.Frontend.ApiGateway
 {
@@ -31,7 +32,7 @@ namespace AspNetCoreMicroservices.Frontend.ApiGateway
             var response = await _client.GetAsync(new Uri(_baseUri, "api/books"));
             response.EnsureSuccessStatusCode();
 
-            return Ok(await response.Content.ReadAsAsync<IEnumerable<BookDto>>());
+            return Ok(await response.Content.ReadFromJsonAsync<IEnumerable<BookDto>>());
         }
     }
 }

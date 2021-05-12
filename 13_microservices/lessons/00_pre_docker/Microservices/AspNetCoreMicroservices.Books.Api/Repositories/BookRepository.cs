@@ -48,9 +48,9 @@ namespace AspNetCoreMicroservices.Books.Api.Repositories
             return jokes;
         }
 
-        public Task<Book> GetById(string id)
+        public async Task<Book> GetById(string id)
         {
-            return _dbContext.Books.FindAsync(id);
+            return await _dbContext.Books.FindAsync(id);
         }
 
         public async Task<Book> Update(Book book)

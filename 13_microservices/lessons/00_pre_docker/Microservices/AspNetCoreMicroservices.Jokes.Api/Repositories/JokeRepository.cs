@@ -50,9 +50,9 @@ namespace AspNetCoreMicroservices.Jokes.Api.Repositories
             return jokes;
         }
 
-        public Task<Joke> GetById(string id)
+        public async Task<Joke> GetById(string id)
         {
-            return _dbContext.Jokes.FindAsync(id);
+            return await _dbContext.Jokes.FindAsync(id);
         }
 
         public async Task<Joke> Update(Joke joke)

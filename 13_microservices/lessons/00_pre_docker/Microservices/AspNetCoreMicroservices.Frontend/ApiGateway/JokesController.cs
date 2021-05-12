@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace AspNetCoreMicroservices.Frontend.ApiGateway
@@ -28,7 +29,7 @@ namespace AspNetCoreMicroservices.Frontend.ApiGateway
             HttpResponseMessage response = await _client.GetAsync(new Uri(_baseUri, "api/jokes"));
             response.EnsureSuccessStatusCode();
 
-            return Ok(await response.Content.ReadAsAsync<IEnumerable<JokeDto>>());
+            return Ok(await response.Content.ReadFromJsonAsync<IEnumerable<JokeDto>>());
         }
     }
 }
