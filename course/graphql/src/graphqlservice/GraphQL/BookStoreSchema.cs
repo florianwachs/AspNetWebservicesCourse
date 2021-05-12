@@ -1,14 +1,16 @@
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace graphqlservice.GraphQL
 {
     public class BookStoreSchema : Schema
     {
-        public BookStoreSchema(IDependencyResolver resolver) : base(resolver)
+        public BookStoreSchema(IServiceProvider resolver) : base(resolver)
         {
-            Query = resolver.Resolve<BookStoreQuery>();
-            Mutation = resolver.Resolve<BookStoreMutation>();
+            Query = resolver.GetRequiredService<BookStoreQuery>();
+            Mutation = resolver.GetRequiredService<BookStoreMutation>();
         }
     }
 }

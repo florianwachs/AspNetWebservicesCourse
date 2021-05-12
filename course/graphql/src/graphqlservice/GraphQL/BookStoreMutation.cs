@@ -1,25 +1,27 @@
+using GraphQL;
+using GraphQL.MicrosoftDI;
 using GraphQL.Types;
 using graphqlservice.BookReviews;
-using graphqlservice.Books;
 using graphqlservice.GraphQL.Types;
 
 namespace graphqlservice.GraphQL
 {
     public class BookStoreMutation : ObjectGraphType
     {
-        public BookStoreMutation(IBookReviewRepository bookReviewRepository, IBookRepository bookRepository)
+        public BookStoreMutation()
         {
-            // 👇 FieldAsync damit wir await im Resolver verwenden können
-            FieldAsync<BookReviewType>("createReview", //                      👇 Unser InputType
-            arguments: new QueryArguments(new QueryArgument<NonNullGraphType<BookReviewInputType>>() { Name = "review" }),
-            resolve: async (context) =>
-            {
-            //                                    👇 Wir holen uns den InputType und lassen Ihn gleich von GraphQL.Net umwandeln
-            var review = context.GetArgument<BookReview>("review");
-
-            //                     👇 TryAsyncResolve fängt Exceptions ab und hängt diese als Error an die Response an
-            return await context.TryAsyncResolve(async c => await bookReviewRepository.Add(review));
-            });
+            Field<BookReviewType>()
+                .Name("createReview")
+                .Argument<NonNullGraphType<BookReviewInputType>>("review")
+                .Resolve()
+                .WithScope()
+                .WithService<IBookReviewRepository>()
+                .ResolveAsync(async (context, bookReviewRepository) =>
+                    {
+                    //                                    👇 Wir holen uns den InputType und lassen Ihn gleich von GraphQL.Net umwandeln
+                    var review = context.GetArgument<BookReview>("review");
+                    return await bookReviewRepository.Add(review);
+                    });
         }
     }
 }

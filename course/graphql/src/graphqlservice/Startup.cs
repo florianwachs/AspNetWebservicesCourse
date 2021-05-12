@@ -1,22 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Server;
-using GraphQL.Server.Ui.Playground;
+using GraphQL.SystemTextJson;
 using graphqlservice.BookReviews;
 using graphqlservice.Books;
 using graphqlservice.GraphQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace graphqlservice
 {
@@ -35,31 +27,18 @@ namespace graphqlservice
             // Repositories registrieren
             services.AddScoped<IBookRepository, InMemoryBookRepository>();
             services.AddScoped<IBookReviewRepository, InMemoryBookReviewRepository>();
-
-            // GraphQL.NET verwendet eine eigene Resolver Abstraktion
-            // Hier wird der AspNetCore-Resolver verwendet
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
-
             // Das Schema muss auch am DI registriert werden
             services.AddScoped<BookStoreSchema>();
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
 
             // Von GraphQL.NET benötigte Services hinzufügen, inkl. GraphTypes
             services.AddGraphQL(options =>
             {
-                options.ExposeExceptions = true;
-            }).AddGraphTypes(ServiceLifetime.Scoped);
+            })
+            .AddSystemTextJson()
+            .AddGraphTypes(ServiceLifetime.Scoped);
             services.AddControllers();
-
-            // FIXME: Workaround bis GraphQL.NET System.Text.Json verwendet
-            services.Configure<IISServerOptions>(options =>
-            {
-                options.AllowSynchronousIO = true;
-            });
-
-            services.Configure<KestrelServerOptions>(options =>
-            {
-                options.AllowSynchronousIO = true;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,7 +61,7 @@ namespace graphqlservice
 
             // Der Playground ist unter /ui/playground erreichbar und hilft beim
             // erforschen des Schemas und erstellen von abfragen
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+            app.UseGraphQLPlayground();
         }
     }
 }
