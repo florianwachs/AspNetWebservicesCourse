@@ -10,7 +10,7 @@ const allMessages: SensorReadingMessage.AsObject[] = [];
 function App() {
   let [sensorReadings, setSensorReadings] = useState<SensorReadingMessage.AsObject[]>([]);
   useEffect(() => {
-    let client = grpc.client(SensorReadingService.GetUpdates, { host: "https://localhost:5001" });
+    let client = grpc.client(SensorReadingService.GetUpdates, { host: `https://${window.location.host}`  });
     client.onHeaders((headers: grpc.Metadata) => {
       console.log("sensorReading.onHeaders", headers);
     });
