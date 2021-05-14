@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.Text.Json;
 
 namespace Webhooks.API.Model
 {
@@ -12,15 +9,13 @@ namespace Webhooks.API.Model
 
         public string Payload { get; }
 
-        public string Type { get;  }
+        public string Type { get; }
 
         public WebhookData(WebhookType hookType, object data)
         {
             When = DateTime.UtcNow;
             Type = hookType.ToString();
-            Payload = JsonConvert.SerializeObject(data);
+            Payload = JsonSerializer.Serialize(data);
         }
-
-
     }
 }

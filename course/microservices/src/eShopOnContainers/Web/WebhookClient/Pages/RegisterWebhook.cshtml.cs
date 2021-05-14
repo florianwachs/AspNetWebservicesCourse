@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using WebhookClient.Models;
+using System.Text.Json;
 
 namespace WebhookClient.Pages
 {
@@ -70,7 +66,7 @@ namespace WebhookClient.Pages
             }
             else
             {
-                RequestBodyJson = JsonConvert.SerializeObject(payload);
+                RequestBodyJson = JsonSerializer.Serialize(payload);
                 ResponseCode = (int)response.StatusCode;
                 ResponseMessage = response.ReasonPhrase;
                 GrantUrl = granturl;

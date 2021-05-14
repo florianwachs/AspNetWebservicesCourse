@@ -4,16 +4,16 @@ using System;
 
 namespace Ordering.API.Application.IntegrationEvents.Events
 {
-    public class UserCheckoutAcceptedIntegrationEvent : IntegrationEvent
-    {
+    public record UserCheckoutAcceptedIntegrationEvent : IntegrationEvent
+    {        
         public string UserId { get; }
-
+        
         public string UserName { get; }
-
+        
         public string City { get; set; }
-
+        
         public string Street { get; set; }
-
+        
         public string State { get; set; }
 
         public string Country { get; set; }

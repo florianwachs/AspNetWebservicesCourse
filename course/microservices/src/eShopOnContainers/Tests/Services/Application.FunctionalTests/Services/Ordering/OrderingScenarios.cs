@@ -2,8 +2,8 @@
 using FunctionalTests.Services.Basket;
 using Microsoft.eShopOnContainers.Services.Basket.API.Model;
 using Microsoft.eShopOnContainers.WebMVC.ViewModels;
-using Newtonsoft.Json;
 using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,7 +15,7 @@ using Xunit;
 namespace FunctionalTests.Services.Ordering
 {
     public class OrderingScenarios : OrderingScenariosBase
-    {        
+    {
         [Fact]
         public async Task Cancel_basket_and_check_order_status_cancelled()
         {
@@ -53,7 +53,10 @@ namespace FunctionalTests.Services.Ordering
         async Task<Order> TryGetOrder(string orderNumber, HttpClient orderClient)
         {
             var ordersGetResponse = await orderClient.GetStringAsync(OrderingScenariosBase.Get.Orders);
-            var orders = JsonConvert.DeserializeObject<List<Order>>(ordersGetResponse);
+            var orders = JsonSerializer.Deserialize<List<Order>>(ordersGetResponse, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
 
             return orders.Single(o => o.OrderNumber == orderNumber);
         }
@@ -67,9 +70,13 @@ namespace FunctionalTests.Services.Ordering
             {
                 //get the orders and verify that the new order has been created
                 var ordersGetResponse = await orderClient.GetStringAsync(OrderingScenariosBase.Get.Orders);
-                var orders = JsonConvert.DeserializeObject<List<Order>>(ordersGetResponse);
+                var orders = JsonSerializer.Deserialize<List<Order>>(ordersGetResponse, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
 
-                if (orders == null || orders.Count == 0) {
+                if (orders == null || orders.Count == 0)
+                {
                     counter++;
                     await Task.Delay(100);
                     continue;
@@ -78,15 +85,19 @@ namespace FunctionalTests.Services.Ordering
                 var lastOrder = orders.OrderByDescending(o => o.Date).First();
                 int.TryParse(lastOrder.OrderNumber, out int id);
                 var orderDetails = await orderClient.GetStringAsync(OrderingScenariosBase.Get.OrderBy(id));
-                order = JsonConvert.DeserializeObject<Order>(orderDetails);
+                order = JsonSerializer.Deserialize<Order>(orderDetails, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+                
                 order.City = city;
 
                 if (IsOrderCreated(order, city))
                 {
                     break;
-                }                
-            }                
-            
+                }
+            }
+
             return order;
         }
 
@@ -109,7 +120,7 @@ namespace FunctionalTests.Services.Ordering
                     Quantity = 1
                 }
             };
-            return JsonConvert.SerializeObject(order);
+            return JsonSerializer.Serialize(order);
         }
 
         string BuildCancelOrder(string orderId)
@@ -117,8 +128,8 @@ namespace FunctionalTests.Services.Ordering
             var order = new OrderDTO()
             {
                 OrderNumber = orderId
-            };           
-            return JsonConvert.SerializeObject(order);
+            };
+            return JsonSerializer.Serialize(order);
         }
 
         string BuildCheckout(string cityExpected)
@@ -135,12 +146,11 @@ namespace FunctionalTests.Services.Ordering
                 CardExpiration = DateTime.Now.AddYears(1),
                 CardSecurityNumber = "123",
                 CardTypeId = 1,
-                Buyer = "Buyer",                
+                Buyer = "Buyer",
                 RequestId = Guid.NewGuid()
             };
 
-            return JsonConvert.SerializeObject(checkoutBasket);
+            return JsonSerializer.Serialize(checkoutBasket);
         }
     }
 }
- 

@@ -4,8 +4,6 @@ using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
@@ -15,18 +13,19 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
 {
     public class EventBusRabbitMQ : IEventBus, IDisposable
     {
         const string BROKER_NAME = "eshop_event_bus";
+        const string AUTOFAC_SCOPE_NAME = "eshop_event_bus";
 
         private readonly IRabbitMQPersistentConnection _persistentConnection;
         private readonly ILogger<EventBusRabbitMQ> _logger;
         private readonly IEventBusSubscriptionsManager _subsManager;
         private readonly ILifetimeScope _autofac;
-        private readonly string AUTOFAC_SCOPE_NAME = "eshop_event_bus";
         private readonly int _retryCount;
 
         private IModel _consumerChannel;
@@ -86,13 +85,14 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
 
             using (var channel = _persistentConnection.CreateModel())
             {
-
                 _logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventId}", @event.Id);
 
                 channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
-
-                var message = JsonConvert.SerializeObject(@event);
-                var body = Encoding.UTF8.GetBytes(message);
+                                
+                var body = JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType(), new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
 
                 policy.Execute(() =>
                 {
@@ -204,7 +204,7 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
         private async Task Consumer_Received(object sender, BasicDeliverEventArgs eventArgs)
         {
             var eventName = eventArgs.RoutingKey;
-            var message = Encoding.UTF8.GetString(eventArgs.Body);
+            var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
 
             try
             {
@@ -273,8 +273,7 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
                         {
                             var handler = scope.ResolveOptional(subscription.HandlerType) as IDynamicIntegrationEventHandler;
                             if (handler == null) continue;
-                            dynamic eventData = JObject.Parse(message);
-
+                            using dynamic eventData = JsonDocument.Parse(message);                            
                             await Task.Yield();
                             await handler.Handle(eventData);
                         }
@@ -283,7 +282,7 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
                             var handler = scope.ResolveOptional(subscription.HandlerType);
                             if (handler == null) continue;
                             var eventType = _subsManager.GetEventTypeByName(eventName);
-                            var integrationEvent = JsonConvert.DeserializeObject(message, eventType);
+                            var integrationEvent = JsonSerializer.Deserialize(message, eventType, new JsonSerializerOptions() { PropertyNameCaseInsensitive= true});                            
                             var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
                             await Task.Yield();

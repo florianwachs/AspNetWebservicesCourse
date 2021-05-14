@@ -3,12 +3,12 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "jquery@3.5.1",
+      "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery/"
     },
     {
       "provider": "unpkg",
-      "library": "bootstrap@4.5.0",
+      "library": "bootstrap@4.3.1",
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
         "dist/css/bootstrap.css",
@@ -24,7 +24,7 @@
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     },
     {
-      "library": "jquery-validate@1.19.2",
+      "library": "jquery-validate@1.19.0",
       "destination": "wwwroot/lib/jquery-validate/",
       "files": [
         "jquery.validate.min.js",
@@ -37,7 +37,7 @@
     },
     {
       "provider": "unpkg",
-      "library": "@microsoft/signalr@3.0.1",
+      "library": "@microsoft/signalr@latest",
       "destination": "wwwroot/lib/@microsoft/signalr/",
       "files": [
         "dist/browser/signalr.js",

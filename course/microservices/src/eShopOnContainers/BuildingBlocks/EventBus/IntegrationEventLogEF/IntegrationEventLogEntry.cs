@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
-using System.Linq;
+﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
+using System;
+using System.Text.Json;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-using Microsoft.Extensions.Logging;
-using Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF.Services;
+using System.Linq;
 
 namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF
 {
@@ -16,10 +11,13 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF
         private IntegrationEventLogEntry() { }
         public IntegrationEventLogEntry(IntegrationEvent @event, Guid transactionId)
         {
-            EventId = @event.Id;            
+            EventId = @event.Id;
             CreationTime = @event.CreationDate;
-            EventTypeName = @event.GetType().FullName;
-            Content = JsonConvert.SerializeObject(@event);
+            EventTypeName = @event.GetType().FullName;                     
+            Content = JsonSerializer.Serialize(@event, @event.GetType(), new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
             State = EventStateEnum.NotPublished;
             TimesSent = 0;
             TransactionId = transactionId.ToString();
@@ -37,8 +35,8 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF
         public string TransactionId { get; private set; }
 
         public IntegrationEventLogEntry DeserializeJsonContent(Type type)
-        {
-            IntegrationEvent = JsonConvert.DeserializeObject(Content, type) as IntegrationEvent;
+        {            
+            IntegrationEvent = JsonSerializer.Deserialize(Content, type, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }) as IntegrationEvent;
             return this;
         }
     }

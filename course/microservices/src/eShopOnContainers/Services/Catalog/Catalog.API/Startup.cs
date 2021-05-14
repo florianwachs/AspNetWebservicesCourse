@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ;
@@ -82,7 +81,7 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
              {
                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Catalog.API V1");
              });
-            
+
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
@@ -141,7 +140,8 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddNewtonsoftJson();
+            })
+            .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
 
             services.AddCors(options =>
             {
@@ -281,11 +281,10 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
                 services.AddSingleton<IServiceBusPersisterConnection>(sp =>
                 {
                     var settings = sp.GetRequiredService<IOptions<CatalogSettings>>().Value;
-                    var logger = sp.GetRequiredService<ILogger<DefaultServiceBusPersisterConnection>>();
-
                     var serviceBusConnection = new ServiceBusConnectionStringBuilder(settings.EventBusConnection);
+                    var subscriptionClientName = configuration["SubscriptionClientName"];
 
-                    return new DefaultServiceBusPersisterConnection(serviceBusConnection, logger);
+                    return new DefaultServiceBusPersisterConnection(serviceBusConnection, subscriptionClientName);
                 });
             }
             else
@@ -326,8 +325,6 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
 
         public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
         {
-            var subscriptionClientName = configuration["SubscriptionClientName"];
-
             if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
             {
                 services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
@@ -338,7 +335,7 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
                     var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
                     return new EventBusServiceBus(serviceBusPersisterConnection, logger,
-                        eventBusSubcriptionsManager, subscriptionClientName, iLifetimeScope);
+                        eventBusSubcriptionsManager, iLifetimeScope);
                 });
 
             }
@@ -346,6 +343,7 @@ namespace Microsoft.eShopOnContainers.Services.Catalog.API
             {
                 services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
                 {
+                    var subscriptionClientName = configuration["SubscriptionClientName"];
                     var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                     var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
                     var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Ordering.API.Application.Models
 {
@@ -10,10 +7,10 @@ namespace Ordering.API.Application.Models
         public string BuyerId { get; set; }
         public List<BasketItem> Items { get; set; }
 
-        public CustomerBasket(string customerId)
+        public CustomerBasket(string buyerId, List<BasketItem> items)
         {
-            BuyerId = customerId;
-            Items = new List<BasketItem>();
+            BuyerId = buyerId;
+            Items = items;
         }
     }
 }
