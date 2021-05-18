@@ -58,7 +58,7 @@ namespace SerilogLesson
                     .Enrich.FromLogContext()
                     .WriteTo.Console()
                     .WriteTo.Seq("http://localhost:5341/")
-                    //                    .WriteTo.File(new CompactJsonFormatter(), "log-{Date}.json",
+                    //                    .WriteTo.File(new CompactJsonFormatter(), "log.json",
                     //                        shared: true, fileSizeLimitBytes: 10000000,
                     //                        retainedFileCountLimit: 1000)
                     .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
