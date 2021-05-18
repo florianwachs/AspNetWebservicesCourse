@@ -19,7 +19,7 @@ namespace SerilogLesson
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Seq("http://localhost:5341/")
+                //.WriteTo.Seq("http://localhost:5341/")
                 .CreateBootstrapLogger();
 
             try
