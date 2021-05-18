@@ -130,9 +130,9 @@ public class BookDbContext : DbContext
         //                                                        👇 EF versucht automatisch den passenden Datentypen für die Tabellenspalte zu erkennen, dies kann hier festgelegt werden.
         modelBuilder.Entity<Book>().Property(b => b.ReleaseDate).HasColumnType("datetime2");
 
-        // m:n Relationen können aktuell von EF nicht automatisch erkannt werden
-        // Daher muss die Beziehung manuell definiert werden und eine Zwischentabelle für das Mapping
-        // angelegt werden
+        // m:n Relationen können von EF Core 5.0  automatisch erkannt werden
+        // Die Beziehung kann manuell definiert werden und eine Zwischentabelle für das Mapping
+        // angelegt werden um zusätzliche Felder zu speichern.
         modelBuilder.Entity<BookAuthorRel>()
             .HasKey(t => new { t.BookId, t.AuthorId }); // 👈 Definition eines zusammengesetzten Schlüssels (Composite-Key)
 
