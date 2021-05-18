@@ -47,13 +47,13 @@ namespace SerilogLesson.Api.Books
             }
 
             var result = await _bookRepository.Add(book);
-            return CreatedAtAction(nameof(GetById), new {id = result.Id}, result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] Book book)
         {
-            var exists = _bookRepository.GetById(id) != null;
+            var exists = await _bookRepository.GetById(id) != null;
 
             if (!exists)
             {

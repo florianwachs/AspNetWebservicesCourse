@@ -35,7 +35,7 @@ namespace EfCoreRelationSample
                 app.UseHsts();
             }
 
-            DbSeeder.SeedDb(dbContext);
+           
 
             app.UseHttpsRedirection();
 

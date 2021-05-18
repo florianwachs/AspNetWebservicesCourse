@@ -13,13 +13,14 @@ namespace SerilogLesson
     internal static class Program
     {
         private static async Task Main(string[] args)
-        {            
+        {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .CreateLogger();
+                .WriteTo.Seq("http://localhost:5341/")
+                .CreateBootstrapLogger();
 
             try
             {
@@ -50,16 +51,17 @@ namespace SerilogLesson
         private static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             //return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().UseSerilog();
-
+            // docker run --name seq -e ACCEPT_EULA=Y -p 5341:80 datalust/seq:latest
             return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().UseSerilog(
                 (hostingContext, loggerConfiguration) => loggerConfiguration
                     .ReadFrom.Configuration(hostingContext.Configuration)
                     .Enrich.FromLogContext()
                     .WriteTo.Console()
-//                    .WriteTo.RollingFile(new CompactJsonFormatter(), "log-{Date}.json",
-//                        shared: true, fileSizeLimitBytes: 10000000,
-//                        retainedFileCountLimit: 1000)
-                    .WriteTo.RollingFile("log-{Date}.txt",
+                    .WriteTo.Seq("http://localhost:5341/")
+                    //                    .WriteTo.File(new CompactJsonFormatter(), "log-{Date}.json",
+                    //                        shared: true, fileSizeLimitBytes: 10000000,
+                    //                        retainedFileCountLimit: 1000)
+                    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
                         shared: true, fileSizeLimitBytes: 10000000,
                         retainedFileCountLimit: 1000)
             );

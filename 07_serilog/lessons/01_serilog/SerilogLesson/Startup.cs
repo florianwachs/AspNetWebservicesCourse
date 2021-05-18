@@ -25,7 +25,7 @@ namespace SerilogLesson
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddMvc();
             services.AddBooksServices(Configuration);
 
         }
@@ -42,7 +42,12 @@ namespace SerilogLesson
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

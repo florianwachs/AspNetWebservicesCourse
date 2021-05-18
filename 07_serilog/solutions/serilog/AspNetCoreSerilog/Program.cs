@@ -56,10 +56,11 @@ namespace AspNetCoreSerilog
                     .ReadFrom.Configuration(hostingContext.Configuration)
                     .Enrich.FromLogContext()
                     .WriteTo.Console()
-                    .WriteTo.RollingFile(new CompactJsonFormatter(), "log-{Date}.json",
+                    .WriteTo.File(new CompactJsonFormatter(), "log.json",
                         shared: true, fileSizeLimitBytes: 10000000,
+                        rollingInterval: RollingInterval.Day,
                         retainedFileCountLimit: 1000)
-            //                    .WriteTo.RollingFile("log-{Date}.txt",
+            //                    .WriteTo.RollingFile("log.txt",
             //                        shared: true, fileSizeLimitBytes: 10000000,
             //                        retainedFileCountLimit: 1000)
             ));
