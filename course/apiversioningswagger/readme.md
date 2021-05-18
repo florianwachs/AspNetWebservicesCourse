@@ -270,7 +270,7 @@ Dies kann über das `*.csproj` File angepasst werden. In einer beliebigen `<Prop
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -325,7 +325,7 @@ Damit werden die unterschiedlichen Versionen automatisch erfasst.
 ### Urls in Kleinschreibung
 
 Standardmäßig tauchen die `Controller` in Swagger mit Großbuchstaben auf, z.B. `api/v1/Users`.
-Dieses Verhalten kann wie folgt geändert werden-
+Dieses Verhalten kann wie folgt geändert werden.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)

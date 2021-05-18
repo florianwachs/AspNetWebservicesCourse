@@ -29,7 +29,7 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegang
 
 ## Aufgabe 4
 
-- [ ] Nutzen Sie statt der In-Memory-Datenbank den SQL-Provider mit der LocalDb (sollte ihr System keine LocalDb haben, versuchen Sie bitte SQLite)
+- [ ] Nutzen Sie statt der In-Memory-Datenbank den SQL-Provider mit der LocalDb (solltet ihr System keine LocalDb haben, nutzen Sie bitte SQLite)
 - [ ] Erstellen Sie eine initiale Migration mit dem dotnet ef Tool
 - [ ] Führen Sie die Migration gegen die Datenbank aus
 

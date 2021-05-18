@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerLesson.Models;
@@ -22,7 +23,9 @@ namespace SwaggerLesson.Api.Books
         /// Returns all books
         /// </summary>
         /// <returns>all books</returns>
+        /// <response code="200">Returns all books</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Book>>> GetAll()
         {
             return Ok(await _bookRepository.GetAll());
@@ -39,7 +42,11 @@ namespace SwaggerLesson.Api.Books
         /// </remarks>
         /// <param name="id">id of the book</param>
         /// <returns>a book</returns>
+        /// <response code="200">Returns the book</response>
+        /// <response code="404">No book found</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Book>> GetById(string id)
         {
             var book = await _bookRepository.GetById(id);
@@ -57,7 +64,11 @@ namespace SwaggerLesson.Api.Books
         /// </summary>
         /// <param name="book">data for the book to create</param>
         /// <returns>the newly created book</returns>
+        /// <response code="201">Returns the newly created book</response>
+        /// <response code="400">If the validation fails</response>   
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Book>> CreateNew([FromBody] Book book)
         {
             if (!ModelState.IsValid)
@@ -75,7 +86,11 @@ namespace SwaggerLesson.Api.Books
         /// <param name="id">id of the book to update</param>
         /// <param name="book">data of the book</param>
         /// <returns></returns>
+        /// <response code="200">Returns the updated book</response>
+        /// <response code="400">If the validation fails</response>   
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Book>> Update(string id, [FromBody] Book book)
         {
             var exists = _bookRepository.GetById(id) != null;
@@ -94,7 +109,9 @@ namespace SwaggerLesson.Api.Books
         /// </summary>
         /// <param name="id">id of the book to remove</param>
         /// <returns></returns>
+        /// <response code="200">Book deleted or not in db</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete(string id)
         {
             await _bookRepository.Delete(id);
@@ -107,7 +124,13 @@ namespace SwaggerLesson.Api.Books
         /// <param name="id">id of the book to update</param>
         /// <param name="doc">operations to perform</param>
         /// <returns></returns>
+        /// <response code="200">The updated book</response>
+        /// <response code="400">If the validation fails</response> 
+        /// <response code="404">no book found to update</response> 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Book>> PartialUpdate(string id, [FromBody] JsonPatchDocument<Book> doc)
         {
             var existing = await _bookRepository.GetById(id);
