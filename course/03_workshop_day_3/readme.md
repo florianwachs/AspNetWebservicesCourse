@@ -4,10 +4,15 @@
 
 💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
-- Feedbackrunde / Klärung von Fragen und Problemen
-- Besprechung Präsentationstermine
+- Feedbackrunde / Klärung von Fragen und Problemen- 
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- **TODO**
+- Vorstellung der Projekte    
+- Dependency Injection
+- Rest Best Practices
+- Swagger / Open API
+- Api Versioning
+- EF Core
+- Graph QL
 
 ## Erforderliche Ergebnisse
 
