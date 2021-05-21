@@ -29,7 +29,7 @@ namespace EFCoreSample1
         // das Projekt builden und über die Konsole "dotnet ef migrations add [Name]" aufrufen.
         // Anschließend könnt Ihr "dotnet ef database update" aufrufen um die Migrationen auszuführen.
         // Sonst passen die Migrationen nicht zu Eurer DB-Technologie
-        private DbModes DbMode = DbModes.SqlLiteInMemory;
+        private DbModes DbMode = DbModes.SqlServerLocalDb;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
