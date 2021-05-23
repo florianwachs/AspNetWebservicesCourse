@@ -1,7 +1,6 @@
 import React from "react";
-import { RouteComponentProps } from "@reach/router";
 
-const Home: React.FC<RouteComponentProps> = () => {
+const Home: React.FC = () => {
   return <div>Bitte wählen Sie ein Beispiel aus dem Menü aus</div>;
 };
 
