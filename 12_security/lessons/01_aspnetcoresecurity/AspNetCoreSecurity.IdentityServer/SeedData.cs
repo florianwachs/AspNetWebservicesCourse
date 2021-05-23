@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
+using System;
 using System.Linq;
 using System.Security.Claims;
-using AspNetCoreSecurity.Domain.Data;
-using AspNetCoreSecurity.Domain.Domain;
 using IdentityModel;
+using StsServerIdentity.Data;
+using StsServerIdentity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using StsServerIdentity.Data;
-using StsServerIdentity.Models;
+using Serilog;
+using System.Collections.Generic;
 using static AspNetCoreSecurity.Domain.Data.KnownUsers;
+using AspNetCoreSecurity.Domain.Domain;
+using AspNetCoreSecurity.Domain.Data;
 
 namespace StsServerIdentity
 {
@@ -47,23 +52,32 @@ namespace StsServerIdentity
 
         }
 
-        public static void EnsureSeedUsers(IServiceProvider serviceProvider)
+        public static void EnsureSeedData(string connectionString)
         {
-            // Scope erzeugen damit nach der Anlage alle Services aufgeräumt werden
-            using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            var services = new ServiceCollection();
+            services.AddLogging();
+            services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseSqlite(connectionString));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            using (var serviceProvider = services.BuildServiceProvider())
             {
-                var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                context.Database.Migrate();
-
-                var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-                foreach (var userData in KnownUsers.Get())
+                using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    CreateUser(userMgr, userData);
+                    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                    context.Database.Migrate();
+
+                    var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    foreach (var userData in KnownUsers.Get())
+                    {
+                        CreateUser(userMgr, userData);
+                    }
                 }
             }
         }
-
         private static void CreateUser(UserManager<ApplicationUser> userMgr, UserCreateData data)
         {
             var user = userMgr.FindByIdAsync(data.Id).Result;

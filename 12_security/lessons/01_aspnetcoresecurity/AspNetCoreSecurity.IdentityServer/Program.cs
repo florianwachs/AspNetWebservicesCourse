@@ -1,12 +1,16 @@
-﻿using System;
-using Microsoft.AspNetCore;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+using System;
+using System.Linq;
 
 namespace StsServerIdentity
 {
@@ -16,20 +20,48 @@ namespace StsServerIdentity
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
+                // uncomment to write to Azure diagnostics stream
+                //.WriteTo.File(
+                //    @"D:\home\LogFiles\Application\identityserver.txt",
+                //    fileSizeLimitBytes: 1_000_000,
+                //    rollOnFileSizeLimit: true,
+                //    shared: true,
+                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
                 .CreateLogger();
 
             try
             {
-                Log.Information("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                var seed = args.Contains("/seed");
+                if (seed)
+                {
+                    args = args.Except(new[] { "/seed" }).ToArray();
+                }
+
+                var host = CreateHostBuilder(args).Build();
+
+                if (seed)
+                {
+                    Log.Information("Seeding database...");
+                    var config = host.Services.GetRequiredService<IConfiguration>();
+                    var connectionString = config.GetConnectionString("DefaultConnection");
+                    SeedData.EnsureSeedData(connectionString);
+                    Log.Information("Done seeding database.");
+                    return 0;
+                }
+
+                Log.Information("Starting host...");
+                host.Run();
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                Log.Fatal(ex, "Host terminated unexpectedly.");
                 return 1;
             }
             finally
@@ -38,34 +70,12 @@ namespace StsServerIdentity
             }
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .ConfigureAppConfiguration((context, config) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var builder = config.Build();
-                    var keyVaultEndpoint = builder["AzureKeyVaultEndpoint"];
-                    if (!string.IsNullOrEmpty(keyVaultEndpoint))
-                    {
-                        var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                        var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-
-                        config.AddAzureKeyVault(keyVaultEndpoint);
-                    }
-                    else
-                    {
-                        var env = context.HostingEnvironment;
-
-                        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                            .AddEnvironmentVariables();
-                            //.AddUserSecrets("your user secret....");
-                    }
-                })
-                .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .ReadFrom.Configuration(hostingContext.Configuration)
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                );
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }

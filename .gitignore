@@ -9,7 +9,7 @@
 *.userosscache
 *.sln.docstates
 .ionide
-
+*.db
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

@@ -1,43 +1,66 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+
 using IdentityServer4;
 using IdentityServer4.Models;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace StsServerIdentity
 {
-    public class Config
+    public static class Config
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new List<IdentityResource>
-            {
+        public static IEnumerable<IdentityResource> IdentityResources =>
+                   new IdentityResource[]
+                   {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email()
-            };
-        }
+                new IdentityResources.Email(),
+                   };
 
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new List<ApiResource>
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
             {
-                new ApiResource("api")
+                new ApiScope("university-api", "University API"),
+            };
+
+        public static IEnumerable<Client> Clients =>
+            new Client[]
+            {
+                // m2m client credentials flow client
+                new Client
                 {
-                    Scopes =
-                    {
-                        new Scope("university-api", "University API")
-                    }
-                }
-            };
-        }
+                    ClientId = "m2m.client",
+                    ClientName = "Client Credentials Client",
 
-        public static IEnumerable<Client> GetClients(IConfigurationSection stsConfig)
-        {
-            return new List<Client>
-            {
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+
+                    AllowedScopes = { "university-api" }
+                },
+
+                // interactive client using code flow + pkce
+                new Client
+                {
+                    ClientId = "interactive",
+                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = { "https://localhost:44300/signin-oidc" },
+                    FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
+                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
+                    AllowOfflineAccess = true,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "university-api"
+                    },
+                    RequireClientSecret = false,
+                    AlwaysIncludeUserClaimsInIdToken = true
+                },
                 new Client
                 {
                     ClientId="postman-client",
@@ -45,7 +68,7 @@ namespace StsServerIdentity
                     AllowedGrantTypes= GrantTypes.Code,
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent=false,
-                    RedirectUris={ "https://www.getpostman.com/oauth2/callback"},
+                    RedirectUris={ "https://oauth.pstmn.io/v1/callback"},
                     PostLogoutRedirectUris={"https://www.getpostman.com"},
                     AllowedCorsOrigins={"https://www.getpostman.com"},
                     EnableLocalLogin = true,
@@ -61,6 +84,5 @@ namespace StsServerIdentity
                     AlwaysIncludeUserClaimsInIdToken = true
                 },
             };
-        }
     }
 }

@@ -24,8 +24,9 @@ namespace AspNetCoreSecurity.Api
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
             {
                 // Url des Identity Servers
-                options.Authority = "https://localhost:44318";
-                options.Audience = "api";
+                options.Authority = "https://localhost:5001";
+                options.TokenValidationParameters.RequireAudience = false;
+                options.TokenValidationParameters.ValidateAudience = false;
             });
 
             // 3
