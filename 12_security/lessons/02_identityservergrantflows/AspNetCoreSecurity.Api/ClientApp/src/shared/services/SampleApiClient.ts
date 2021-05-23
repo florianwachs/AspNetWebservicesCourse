@@ -3,7 +3,7 @@ import { ForecastResult, IForecast } from "./ForecastResult";
 
 const getForecasts = async (token?: string): Promise<ForecastResult> => {
   try {
-    const response = await Axios.get<IForecast[]>("https://localhost:44387/api/sampledata/weatherforecasts", { headers: { Authorization: "Bearer " + token } });
+    const response = await Axios.get<IForecast[]>("/api/sampledata/weatherforecasts", { headers: { Authorization: "Bearer " + token } });
     return ForecastResult.fromResult(response.data);
   } catch (e) {
     return ForecastResult.fromError(e);

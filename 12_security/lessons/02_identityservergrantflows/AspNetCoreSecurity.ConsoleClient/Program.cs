@@ -46,9 +46,9 @@ namespace AspNetCoreSecurity.ConsoleClient
         private static async Task MakeAuthorizedRequest(HttpClient client, TokenResponse tokenResponse)
         {
             client.SetBearerToken(tokenResponse.AccessToken);
-            var weatherResponse = await client.GetAsync("https://localhost:44387/api/sampledata/weatherforecasts");
+            var weatherResponse = await client.GetAsync("https://localhost:5002/api/sampledata/weatherforecasts");
 
-            var text = await client.GetStringAsync("https://localhost:44387/api/sampledata/weatherforecasts");
+            var text = await client.GetStringAsync("https://localhost:5002/api/sampledata/weatherforecasts");
 
             var forecasts = await weatherResponse.Content.ReadFromJsonAsync<Forecast[]>();
 
@@ -60,7 +60,7 @@ namespace AspNetCoreSecurity.ConsoleClient
 
         private static async Task MakeUnauthorizedRequest(HttpClient client)
         {
-            var weatherResponse = await client.GetAsync("https://localhost:44387/api/sampledata/weatherforecasts");
+            var weatherResponse = await client.GetAsync("https://localhost:5002/api/sampledata/weatherforecasts");
             Console.WriteLine(weatherResponse.StatusCode);
         }
     }

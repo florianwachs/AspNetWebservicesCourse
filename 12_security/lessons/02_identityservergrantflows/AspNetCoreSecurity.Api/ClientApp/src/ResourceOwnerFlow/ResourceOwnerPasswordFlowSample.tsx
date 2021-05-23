@@ -68,7 +68,7 @@ const Login: React.FC<{ onTokenSuccess: (token: string) => void }> = ({onTokenSu
             client_id: "legacy-js",
             scope: "api1"
         });
-        const tokenEndpoint = "https://localhost:44386/connect/token";
+        const tokenEndpoint = "https://localhost:5001/connect/token";
         const response = await Axios.post(tokenEndpoint, query, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"

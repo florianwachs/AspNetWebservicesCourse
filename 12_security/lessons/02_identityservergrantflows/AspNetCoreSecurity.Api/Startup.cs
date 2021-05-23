@@ -32,7 +32,7 @@ namespace AspNetCoreSecurity.Api
             services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
             {
                 // Url des Identity Servers
-                options.Authority = "https://localhost:44386";
+                options.Authority = "https://localhost:5001";
                 options.Audience = "api1";
             });
 

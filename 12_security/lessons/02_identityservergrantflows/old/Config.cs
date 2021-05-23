@@ -23,7 +23,13 @@ namespace StsServerIdentity
         {
             return new ApiResource[]
             {
-                new ApiResource("api1", "My API #1"){Scopes = {new Scope("api1")}}
+                new ApiResource("api1", "My API #1")
+                {
+                    Scopes =
+                    {
+                        new Scope("api1"),
+                    }
+                }
             };
         }
 
