@@ -24,6 +24,15 @@ namespace StsServerIdentity
                 new ApiScope("university-api", "University API"),
             };
 
+        public static IEnumerable<ApiResource> ApiResources =>
+            new ApiResource[]
+            {
+                new ApiResource("university-api")
+                {
+                    Scopes={"university-api"}
+                }
+            };
+
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
