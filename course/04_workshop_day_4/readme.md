@@ -5,9 +5,12 @@
 💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
 
 - Feedbackrunde / Klärung von Fragen und Problemen
-- Besprechung Präsentationstermine
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- **TODO**
+- Fortsetzung EF Core
+- Security
+- Graph QL
+- GRPC
+- Signal R
 
 ## Erforderliche Ergebnisse
 
