@@ -1,19 +1,24 @@
-﻿using DiscordAuth.Infrastructure;
+﻿using GithubAuth.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordAuth.Controllers
+namespace GithubAuth.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class DiscordInfoController : ControllerBase
+    public class GitHubInfoController : ControllerBase
     {
-        public DiscordApiClient DiscordApi { get; }
-        public DiscordInfoController(DiscordApiClient discordApi)
+        public GitHubInfoController(GithubApiClient githubApi)
         {
-            DiscordApi = discordApi;
-        }        
+            GithubApi = githubApi;
+        }
+
+        public GithubApiClient GithubApi { get; }
 
         [HttpGet("me")]
         public async Task<IActionResult> GetInfoAboutMe()
@@ -24,10 +29,9 @@ namespace DiscordAuth.Controllers
             }
 
             var token = await HttpContext.GetTokenAsync("access_token");
-            var info = await DiscordApi.GetUserInfo(token);
+            var info = await GithubApi.GetUserInfo(token);
 
             return Ok(info);
         }
-
     }
 }

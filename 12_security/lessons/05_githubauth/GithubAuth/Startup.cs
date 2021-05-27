@@ -1,15 +1,16 @@
-using AspNet.Security.OAuth.Discord;
-using DiscordAuth.Infrastructure;
+using AspNet.Security.OAuth.GitHub;
+using GithubAuth.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace DiscordAuth
+namespace GithubAuth
 {
     public class Startup
     {
@@ -23,6 +24,7 @@ namespace DiscordAuth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
@@ -31,20 +33,19 @@ namespace DiscordAuth
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = DiscordAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GitHubAuthenticationDefaults.AuthenticationScheme;
             })
-           .AddCookie(setup => setup.ExpireTimeSpan = TimeSpan.FromMinutes(60))
-           .AddDiscord(options =>
-           {
-               options.ClientId = Configuration["Auth:Discord:ClientId"];
-               options.ClientSecret = Configuration["Auth:Discord:ClientSecret"];
-               options.SaveTokens = true;
-               options.Scope.Add("guilds");
-           });
+              .AddCookie(setup => setup.ExpireTimeSpan = TimeSpan.FromMinutes(60))
+              .AddGitHub(options =>
+              {
+                  options.ClientId = Configuration["Auth:GitHub:ClientId"];
+                  options.ClientSecret = Configuration["Auth:GitHub:ClientSecret"];
+                  options.SaveTokens = true;
+                  options.Scope.Add("openid read:user");
+              });
 
-            services.AddHttpClient<DiscordApiClient>()
-                .AddPolicyHandler(DiscordApiClient.GetRetryPolicy());
-        }      
+            services.AddHttpClient<GithubApiClient>();
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -63,7 +64,6 @@ namespace DiscordAuth
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

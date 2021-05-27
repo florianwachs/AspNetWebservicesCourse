@@ -1,4 +1,4 @@
-﻿using AspNet.Security.OAuth.Discord;
+﻿using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordAuth.Controllers
+namespace GithubAuth.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         [HttpGet("token")]
@@ -23,8 +23,7 @@ namespace DiscordAuth.Controllers
             return Ok(accessToken);
         }
 
-
-        [HttpGet("discord/login")]
+        [HttpGet("github/login")]
         public IActionResult Login(string redirectUri = "/")
         {
             var authenticationProperties = new AuthenticationProperties
@@ -32,9 +31,7 @@ namespace DiscordAuth.Controllers
                 RedirectUri = redirectUri,
             };
 
-            return Challenge(authenticationProperties, DiscordAuthenticationDefaults.AuthenticationScheme);
+            return Challenge(authenticationProperties, GitHubAuthenticationDefaults.AuthenticationScheme);
         }
-
-
     }
 }
