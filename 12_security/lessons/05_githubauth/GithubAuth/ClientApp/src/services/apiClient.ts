@@ -30,5 +30,8 @@ export async function getUserInfo(): Promise<IUserInfo> {
 
 export interface IUserInfo {
     login: string;
+    name: string;
+    id: number;
+    avatar_url: string;
+    company: string;
 }
-

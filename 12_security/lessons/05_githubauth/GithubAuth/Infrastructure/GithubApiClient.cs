@@ -38,6 +38,6 @@ namespace GithubAuth.Infrastructure
             return request;
         }
 
-        public record UserInfo(string Login, long Id);
+        public record UserInfo(string Login, long Id, string Avatar_url, string Name, string Company);
     }
 }
