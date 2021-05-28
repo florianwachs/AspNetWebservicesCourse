@@ -72,11 +72,18 @@ namespace ChuckNorrisService.Repositories
 
         public async Task<IReadOnlyCollection<JokeOnly>> GetJokes()
         {
+            var jokes = await _dbContext.Jokes.FromSqlInterpolated($"SELECT * FROM jokes").Select(j => new JokeOnly { Id = j.Id, JokeText = j.JokeText }).ToListAsync();
+            return jokes;
+        }
+
+        public async Task<IReadOnlyCollection<JokeOnly>> GetJokesWithDapper()
+        {
             using (SqlConnection connection = new SqlConnection(_dbConnectionString.ConnectionString))
             {
                 List<JokeOnly> jokes = (await connection.QueryAsync<JokeOnly>("Select * FROM jokes")).ToList();
                 return jokes;
             }
+
         }
     }
 }
