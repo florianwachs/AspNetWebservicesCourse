@@ -7,7 +7,11 @@
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- **TODO**
+- Fortsetzung Security
+- Graph QL
+- GRPC
+- Signal R
+- Advanced Webservice Architectures (Microservices, Serverless)
 
 ## Erforderliche Ergebnisse
 

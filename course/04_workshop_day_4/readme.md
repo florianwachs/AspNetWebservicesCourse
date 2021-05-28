@@ -6,11 +6,11 @@
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
+- Komprimierung von Responses
+- Minimal Apis in .NET 6 Preview 4
 - Fortsetzung EF Core
 - Security
-- Graph QL
-- GRPC
-- Signal R
+
 
 ## Erforderliche Ergebnisse
 
