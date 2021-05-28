@@ -35,7 +35,11 @@ namespace GithubAuth
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = GitHubAuthenticationDefaults.AuthenticationScheme;
             })
-              .AddCookie(setup => setup.ExpireTimeSpan = TimeSpan.FromMinutes(60))
+              .AddCookie(setup =>
+              {
+                  setup.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                  setup.Events.OnSignedIn
+              })
               .AddGitHub(options =>
               {
                   options.ClientId = Configuration["Auth:GitHub:ClientId"];
