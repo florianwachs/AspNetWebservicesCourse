@@ -38,7 +38,6 @@ namespace GithubAuth
               .AddCookie(setup =>
               {
                   setup.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                  setup.Events.OnSignedIn
               })
               .AddGitHub(options =>
               {
