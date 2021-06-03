@@ -1,0 +1,29 @@
+version: '3.4'
+
+volumes:
+  pgdata: # leer fuer defaults
+
+services:
+  frontend:
+    image: ${DOCKER_REGISTRY-}frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+
+  backendapi:
+    image: ${DOCKER_REGISTRY-}backendapi
+    environment:
+        ConnectionStrings__PostgreSqlDocker: Host=postgresdb;Database=dockersample1db;Username=postgres;Password=mysecretpassword
+    build:
+      context: .
+      dockerfile: BackendApi/Dockerfile
+
+  postgresdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+     - 5432:5432
+    volumes:
+     - pgdata:/var/lib/postgresql/data
