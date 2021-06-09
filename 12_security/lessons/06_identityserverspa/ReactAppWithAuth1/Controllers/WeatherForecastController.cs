@@ -22,21 +22,32 @@ namespace ReactAppWithAuth1.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IAuthorizationService authorizationService)
         {
             _logger = logger;
+            AuthorizationService = authorizationService;
         }
+
+        public IAuthorizationService AuthorizationService { get; }
 
         [HttpGet]
         [Authorize(Policy = AppPolicies.CanReadWeather)]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
+            var canReadTemp = await AuthorizationService.AuthorizeAsync(User, AppPolicies.CanReadTemp);
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index =>
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Count)]
+                var tempC = rng.Next(-20, 55);
+                var tempF = 32 + (int)(tempC / 0.5556);
+
+                return new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = canReadTemp.Succeeded? tempC.ToString() : "[YOU HAVE TO PAY]",
+                    TemperatureF = canReadTemp.Succeeded ? tempF.ToString() : "[YOU HAVE TO PAY]",
+                    Summary = Summaries[rng.Next(Summaries.Count)]
+                };
             })
             .ToArray();
         }

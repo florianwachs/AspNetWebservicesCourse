@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using IdentityServer4.AspNetIdentity;
 using IdentityServer4.Services;
 using ReactAppWithAuth1.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ReactAppWithAuth1
 {
@@ -58,10 +59,13 @@ namespace ReactAppWithAuth1
                 //options.Password.RequiredUniqueChars = 1;
             });
 
+            services.AddSingleton<IAuthorizationHandler, CanReadTempRequirementHandler>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(AppPolicies.CanReadWeather, p => p.RequireClaim(CanReadWeatherClaim.Type));
                 options.AddPolicy(AppPolicies.CanAddWeather, p => p.RequireClaim(CanAddWeatherClaim.Type));
+                options.AddPolicy(AppPolicies.CanReadTemp, p => p.AddRequirements(new CanReadTempRequirement()));
             });
 
             services.AddAuthentication()

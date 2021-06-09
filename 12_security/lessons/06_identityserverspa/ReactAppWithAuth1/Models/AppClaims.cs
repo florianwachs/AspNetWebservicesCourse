@@ -41,10 +41,17 @@ namespace ReactAppWithAuth1.Models
         public static Claim Create() => new Claim(Type, true.ToString());
     }
 
+    public class IsPremiumUserClaim : AppClaims
+    {
+        public const string Type = ClaimTypePrefix + "IsPremiumUser";
+        public static Claim Create() => new Claim(Type, true.ToString());
+    }
+
     public static class AppPolicies
     {
         public const string CanReadWeather = "CanReadWeather";
         public const string CanAddWeather = "CanAddWeather";
+        public const string CanReadTemp = "CanReadTemp";
     }
 
 }

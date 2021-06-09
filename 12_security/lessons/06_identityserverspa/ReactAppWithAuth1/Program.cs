@@ -43,6 +43,7 @@ namespace ReactAppWithAuth1
             ApplicationUser[] defaultUsers =
             {
                 new ApplicationUser() { Id = "user1@test.de", UserName = "user1@test.de", Email = "user1@test.de" },
+                new ApplicationUser() { Id = "pay@test.de", UserName = "pay@test.de", Email = "pay@test.de" },
                 new ApplicationUser() { Id = "admin1@test.de", UserName = "admin1@test.de", Email = "admin1@test.de", IsAdmin = true }
             };
 
@@ -60,13 +61,13 @@ namespace ReactAppWithAuth1
                     throw new InvalidOperationException("Failed to create user " + result.ToString());
                 }
 
+                // Claims können direkt am User hinterlegt werden oder dynamisch im ProfileService
                 result = await userManager.AddClaimsAsync(user, AppClaims.GetUserClaims());
 
                 if (user.IsAdmin)
                 {
                     result = await userManager.AddClaimsAsync(user, AppClaims.GetAdminClaims());
                 }
-
             }
         }
     }

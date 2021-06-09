@@ -30,10 +30,11 @@ namespace ReactAppWithAuth1.Infrastructure
 
             var claims = principal.Claims.ToList();
 
-            
-            //claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-
-           
+            // Wir können dynamisch Claims ergänzen
+            if (user.IsPayingCustomer)
+            {
+                claims.Add(IsPremiumUserClaim.Create());
+            }
 
             context.IssuedClaims = claims;
         }

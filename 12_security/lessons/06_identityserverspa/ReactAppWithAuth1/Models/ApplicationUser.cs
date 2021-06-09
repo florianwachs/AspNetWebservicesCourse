@@ -8,7 +8,8 @@ namespace ReactAppWithAuth1.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        // Custom Eigenschaft an dem User-Objekt
+        // Custom Eigenschaften an dem User-Objekt
         public bool IsAdmin { get; set; }
+        public bool IsPayingCustomer { get; set; }
     }
 }
