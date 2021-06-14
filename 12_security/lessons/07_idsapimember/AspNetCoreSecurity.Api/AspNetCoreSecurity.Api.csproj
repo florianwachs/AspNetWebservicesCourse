@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\ResourceOwnerFlow\ResourceOwnerPasswordFlowSample.tsx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="ClientApp\src\shared\Services" />
   </ItemGroup>
 

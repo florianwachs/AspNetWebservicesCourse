@@ -10,6 +10,16 @@ const getForecasts = async (token?: string): Promise<ForecastResult> => {
   }
 };
 
+const callMembershipApi = async (token?: string): Promise<any> => {
+    try {
+        const response = await Axios.get<IForecast[]>("https://localhost:5001/api/v1/memberships", { headers: { Authorization: "Bearer " + token } });
+        return response.data;
+    } catch (e) {
+        return e;
+    }
+};
+
 export default {
-  getForecasts: getForecasts
+    getForecasts,
+    callMembershipApi
 };

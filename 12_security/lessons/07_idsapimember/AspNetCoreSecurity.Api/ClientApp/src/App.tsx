@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "./App.css";
-import ResourceOwnerPasswordFlowSample from "./ResourceOwnerFlow/ResourceOwnerPasswordFlowSample";
 import AuthorizationCodeFlowSample from "./AuthorizationCodeFlow/AuthorizationCodeFlowSample";
 import { Menu } from "antd";
 import { BrowserRouter as Router, Route, Switch, Redirect, Link } from "react-router-dom";
@@ -16,9 +15,6 @@ const App: React.FC = () => {
         <Menu mode="horizontal">
           <SubMenu title={<span className="submenu-title-wrapper">Beispiele</span>}>
             <Menu.ItemGroup title="Autorisierung">
-              <Menu.Item key="auth-with-password">
-                <Link to="auth-with-password">Resource Owner Password Flow</Link>
-              </Menu.Item>
               <Menu.Item key="auth-with-code">
                 <Link to="auth-with-code">Authorization Code Flow</Link>
               </Menu.Item>
@@ -26,7 +22,6 @@ const App: React.FC = () => {
           </SubMenu>
         </Menu>
         <Route path="/" component={Home} />
-        <Route path="/auth-with-password" component={ResourceOwnerPasswordFlowSample} />
         <Route path="/auth-with-code" component={AuthorizationCodeFlowSample} />
       </div>
     </Router>

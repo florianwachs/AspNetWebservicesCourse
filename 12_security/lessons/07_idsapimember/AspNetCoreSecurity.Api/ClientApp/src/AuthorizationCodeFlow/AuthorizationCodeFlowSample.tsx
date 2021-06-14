@@ -7,113 +7,119 @@ const cardStyle = { width: 600, marginTop: "1rem" };
 const headStyle = { backgroundColor: "#90b1ff" };
 
 const AuthorizationCodeFlowSample: React.FC<IAuthorizationCodeFlowSampleProps> = () => {
-  const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const userManager = createUserManager();
-      try {
-        const user = await userManager.getUser();
+    useEffect(() => {
+        const checkUser = async () => {
+            const userManager = createUserManager();
+            try {
+                const user = await userManager.getUser();
 
-        if (user && !user.expired) {
-          setUser(user);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+                if (user && !user.expired) {
+                    setUser(user);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    checkUser();
-  }, []);
+        checkUser();
+    }, []);
 
-  return (
-    <div className="App">
-      <Login />
-      <UserInfo user={user} />
-      <CallApi token={user && user.access_token} />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Login />
+            <UserInfo user={user} />
+            <CallApi token={user && user.access_token} />
+        </div>
+    );
 };
 
 export default AuthorizationCodeFlowSample;
 
-interface IAuthorizationCodeFlowSampleProps {}
+interface IAuthorizationCodeFlowSampleProps { }
 
 const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
-  return (
-    <Card title="User-Info" style={cardStyle} headStyle={headStyle}>
-      {user ? <pre>{JSON.stringify(user, null, 4)}</pre> : <Alert message="Keine Authorisierung vorhanden" />}
-    </Card>
-  );
+    return (
+        <Card title="User-Info" style={cardStyle} headStyle={headStyle}>
+            {user ? <pre>{JSON.stringify(user, null, 4)}</pre> : <Alert message="Keine Authorisierung vorhanden" />}
+        </Card>
+    );
 };
 
 const CallApi: React.FC<{ token: string | undefined }> = ({ token }) => {
-  const [data, setData] = useState<string>();
+    const [data, setData] = useState<string>();
 
-  const callApi = async () => {
-    const result = await SampleApiClient.getForecasts(token);
-    setData(JSON.stringify(result, null, 4));
-  };
+    const callApi = async () => {
+        const result = await SampleApiClient.getForecasts(token);
+        setData(JSON.stringify(result, null, 4));
+    };
 
-  return (
-    <Card title="API aufrufen" style={cardStyle} headStyle={headStyle}>
-      <div>
-        <Button onClick={callApi}>Call Api</Button>
-      </div>
-      <div>
-        <pre>{data}</pre>
-      </div>
-    </Card>
-  );
+    const callMembershipApi = async () => {
+        const result = await SampleApiClient.callMembershipApi(token);
+        setData(JSON.stringify(result, null, 4));
+    }
+
+    return (
+        <Card title="API aufrufen" style={cardStyle} headStyle={headStyle}>
+            <div>
+                <Button onClick={callApi}>Call Api</Button>
+                <Button onClick={callMembershipApi}>Call Membership Api</Button>
+            </div>
+            <div>
+                <pre>{data}</pre>
+            </div>
+        </Card>
+    );
 };
 
 const Login: React.FC = () => {
-  return (
-    <Card title={"Login"} style={cardStyle} headStyle={headStyle}>
-      <Button type="primary" onClick={loginIfNeeded}>
-        Login
+    return (
+        <Card title={"Login"} style={cardStyle} headStyle={headStyle}>
+            <Button type="primary" onClick={loginIfNeeded}>
+                Login
       </Button>
-    </Card>
-  );
+        </Card>
+    );
 };
 
 const loginIfNeeded = async () => {
-  const userManager = createUserManager();
-  try {
-    const user = await userManager.getUser();
-    if (!user || user.expired) {
-      login();
-      return null;
+    const userManager = createUserManager();
+    try {
+        const user = await userManager.getUser();
+        if (!user || user.expired) {
+            login();
+            return null;
+        }
+        console.log(user);
+        return user;
+    } catch (error) {
+        console.log(error);
+        login();
+        return null;
     }
-    console.log(user);
-    return user;
-  } catch (error) {
-    console.log(error);
-    login();
-    return null;
-  }
 };
 
 const login = () => {
-  const userManager = createUserManager();
-  userManager.signinRedirect({ state: window.location.href });
+    const userManager = createUserManager();
+    userManager.signinRedirect({ state: window.location.href });
 };
 
 const createUserManager = () => {
-  const config = {
-    authority: "https://localhost:5001",
-    client_id: "spa",
-    redirect_uri: `https://localhost:5002/callback.html`,
-    response_type: "code",
-    scope: "openid profile api1",
-    post_logout_redirect_uri: `https://localhost:5002/index.html`,
-    automaticSilentRenew: true,
-    silent_redirect_uri: `https://localhost:5002/silentrenew.html`,
-  };
-  const um = new UserManager(config);
-  um.events.addSilentRenewError(handleSilentRenewError);
-  return um;
+    const config = {
+        authority: "https://localhost:5001",
+        client_id: "spa",
+        redirect_uri: `https://localhost:5002/callback.html`,
+        response_type: "code",
+        scope: "openid profile api1 IdentityServerApi",
+        post_logout_redirect_uri: `https://localhost:5002/index.html`,
+        automaticSilentRenew: true,
+        silent_redirect_uri: `https://localhost:5002/silentrenew.html`,
+    };
+    const um = new UserManager(config);
+    um.events.addSilentRenewError(handleSilentRenewError);
+    return um;
 };
 const handleSilentRenewError = (ev: any) => {
-  console.log(ev);
+    console.log(ev);
 };

@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace StsServerIdentity
 {
-    public record UserCreateData(string Id, string UserName, string FamilyName, string GivenName, string Email);
+    public record UserCreateData(string Id, string UserName, string FamilyName, string GivenName, string Email, bool CanCreateUsers);
     public class SeedData
     {
         private static IEnumerable<Claim> GetClaimsFor(UserCreateData data, ApplicationUser user)
@@ -39,7 +39,7 @@ namespace StsServerIdentity
         public static IEnumerable<UserCreateData> KnownUsers =>
             new UserCreateData[]
             {
-                new UserCreateData( "1","katie","Katie", "Katie", "katie@th.de")
+                new UserCreateData( "1","katie","Katie", "Katie", "katie@th.de", true)
             };
 
         public static void EnsureSeedData(string connectionString)
@@ -82,7 +82,8 @@ namespace StsServerIdentity
                 Id = data.Id,
                 UserName = data.UserName,
                 Email = data.Email,
-                EmailConfirmed = true
+                CanCreateUsers = data.CanCreateUsers,
+                EmailConfirmed = true,
             };
             var result = userMgr.CreateAsync(user, "Pass123$").Result;
             if (!result.Succeeded)

@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSecurity.Api", "AspNetCoreSecurity.Api\AspNetCoreSecurity.Api.csproj", "{8C4EA5AD-00EA-47C3-A9E9-9F33229FEE7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSecurity.ConsoleClient", "AspNetCoreSecurity.ConsoleClient\AspNetCoreSecurity.ConsoleClient.csproj", "{DD333DA5-600D-495E-80FA-C7BEA5CC9865}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StsServerIdentity", "AspNetCoreSecurity.IdentityServer\StsServerIdentity.csproj", "{93A11400-73B1-43B4-9FAB-6E3F16B315CA}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{8C4EA5AD-00EA-47C3-A9E9-9F33229FEE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C4EA5AD-00EA-47C3-A9E9-9F33229FEE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C4EA5AD-00EA-47C3-A9E9-9F33229FEE7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD333DA5-600D-495E-80FA-C7BEA5CC9865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD333DA5-600D-495E-80FA-C7BEA5CC9865}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD333DA5-600D-495E-80FA-C7BEA5CC9865}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD333DA5-600D-495E-80FA-C7BEA5CC9865}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93A11400-73B1-43B4-9FAB-6E3F16B315CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93A11400-73B1-43B4-9FAB-6E3F16B315CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93A11400-73B1-43B4-9FAB-6E3F16B315CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
