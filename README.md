@@ -70,7 +70,7 @@ Handdesinfektion bei Betreten des Raumes und vor Betreten der Präsentationsflä
 
 Desinfektion von Pult und Beamer-Steuerung vor jeder Präsentation
 
-Bei Bedarf können freiwillige Selbsttest-Sets um 8 Uhr zur Verfügung gestellt werden. Bitte bis 23.6 Bescheid geben wer dies nutzen möchte.
+Bei Bedarf können freiwillige Selbsttest-Sets um 8 Uhr zur Verfügung gestellt werden. **Bitte bis 23.6 Bescheid geben wer dies nutzen möchte.**
 
 Falls Ihr noch Fragen habt beantworte ich sie gerne!
 
