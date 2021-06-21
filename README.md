@@ -10,7 +10,7 @@ Willkommen zum FWPF **Web Services mit .NET** der [TH Rosenheim](https://www.th-
 | ✔ Workshop Tag 2 | 2021-05-07, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
 | ✔ Workshop Tag 3 | 2021-05-21, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
 | ✔ Workshop Tag 4   | 2021-05-28, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| Workshop Tag 5   | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
+| ✔ Workshop Tag 5   | 2021-06-11, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
 | Prüfung          | 2021-06-25             | Prüfung                                              |
 
 ## Hi There
@@ -40,11 +40,37 @@ Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer
 
 ### Aktuelle Informationen zur Abschlusspräsentation
 
-Die Prüfung wird voraussichtlich Vor-Ort in der TH stattfinden. Bitte habt Verständnis das Raum und genauer Ablauf erst noch bekannt gegeben werden, da dies zumindest 2020 stark von Covid-19 Vorgaben abhängig war welche sich erst kurzfristig ergeben haben.
+Hallo zusammen,
 
-- Zeitslots für die einzelnen Teams werden noch bekannt gegeben
-- Seid bitte rechtzeitig zu Eurem Zeitslot da
-- Bitte achtet jederzeit auf ausreichend Abstand
+hier die Details zur Prüfung in Web-Services.
+
+Prof. Dr. Hüttl und ich freuen uns sehr auf Eure Projekte!
+
+Bitte seid pünktlich zum Beginn Eueres Zeitslots da.
+
+Raum A3.10
+
+Für die Prüfung sind 45min. pro Team (inkl. Fragen) veranschlagt
+
+| Team      | Start  |
+|---|---|
+|Team 1|17.06.2021 08:30:00|
+|Team 2|17.06.2021 09:30:00|
+|Team 3|17.06.2021 10:30:00|
+
+Hygieneauflagen:
+
+Alle Teilnehmer*innen und Dozenten tragen FFP2 Masken.
+
+Alle (Vorführende und Zuhörer*innen) halten den Abstand von 1,5 m.
+
+15 Minuten Lüften zwischen den Präsentationen (falls kein Lärm draußen ist wird permanent gelüftet)
+
+Handdesinfektion bei Betreten des Raumes und vor Betreten der Präsentationsfläche
+
+Desinfektion von Pult und Beamer-Steuerung vor jeder Präsentation
+
+Bei Bedarf können freiwillige Selbsttest-Sets um 8 Uhr zur Verfügung gestellt werden. Bitte bis 23.6 Bescheid geben wer dies nutzen möchte.
 
 Falls Ihr noch Fragen habt beantworte ich sie gerne!
 
