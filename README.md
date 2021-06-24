@@ -54,9 +54,9 @@ Für die Prüfung sind 45min. pro Team (inkl. Fragen) veranschlagt
 
 | Team      | Start  |
 |---|---|
-|Team 1|17.06.2021 08:30:00|
-|Team 2|17.06.2021 09:30:00|
-|Team 3|17.06.2021 10:30:00|
+|Team 1|25.06.2021 08:30:00|
+|Team 2|25.06.2021 09:30:00|
+|Team 3|25.06.2021 10:30:00|
 
 Hygieneauflagen:
 
