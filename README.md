@@ -11,7 +11,7 @@ Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenh
 | ⏳Workshop Tag 3  | 2022-05-13, 8:30 - TBD | Workshop Tag 3                                       |
 | ⏳Workshop Tag 4  | 2022-05-20, 8:30 - TBD | Workshop Tag 4                                       |
 | ⏳Workshop Tag 5  | 2022-06-10, 8:30 - TBD | Workshop Tag 5                                       |
-| ⏳Prüfung         | 2021-07-01             | Prüfung                                              |
+| ⏳Prüfung         | 2022-07-01             | Prüfung                                              |
 
 ## Hi There
 
