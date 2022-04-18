@@ -1,25 +1,19 @@
 ﻿using ChuckNorrisService.Client;
 using ChuckNorrisService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChuckNorrisService.Providers
+namespace ChuckNorrisService.Providers;
+
+public class ApiJokeProvider : IJokeProvider
 {
-    public class ApiJokeProvider : IJokeProvider
+    private readonly ChuckNorrisApi _api;
+
+    public ApiJokeProvider()
     {
-        private readonly ChuckNorrisApi _api;
+        _api = new ChuckNorrisApi();
+    }
 
-        public ApiJokeProvider()
-        {
-            _api = new ChuckNorrisApi();
-        }
-
-        public async Task<Joke> GetRandomJokeAsync()
-        {
-            return (await _api.GetRandomJokeFromCategory(JokeCategories.Dev)).AsJoke();
-        }
+    public async Task<Joke> GetRandomJokeAsync()
+    {
+        return (await _api.GetRandomJokeFromCategory(JokeCategories.Dev)).AsJoke();
     }
 }

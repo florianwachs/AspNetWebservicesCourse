@@ -60,4 +60,8 @@ In dieser Aufgabe rufen wir eine API mittels `HttpClient` auf.
 > [Cheat-Sheet Visual Studio](../../../00_cheatsheets/visual_studio/readme.md)  
 > [Cheat-Sheet C#](../../../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)
 
+# Aufgabe 5
+
+Ersetzen Sie die Klasse `Joke` durch einen Record, was gefällt Ihnen besser?
+
 # Viel Erfolg

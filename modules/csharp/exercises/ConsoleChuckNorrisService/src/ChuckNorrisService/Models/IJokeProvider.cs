@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace ChuckNorrisService.Models;
 
-namespace ChuckNorrisService.Models
+public interface IJokeProvider
 {
-    public interface IJokeProvider
-    {
-        Task<Joke> GetRandomJokeAsync();
-    }
+    Task<Joke> GetRandomJokeAsync();
 }
