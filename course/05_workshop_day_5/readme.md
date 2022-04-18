@@ -1,17 +1,17 @@
 # Workshop Tag 5
 
-## Ablauf Tag 5 (2021-06-11)
-
-💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
+## Ablauf Tag 5 (2022-06-10)
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- Fortsetzung Security
-- Graph QL
-- GRPC
-- Signal R
-- Advanced Webservice Architectures (Microservices, Serverless)
+- **TODO**
+
+## Übungen
+
+Folgende Übungen sind für den Tag vorgesehen:
+
+**TODO**
 
 ## Erforderliche Ergebnisse
 

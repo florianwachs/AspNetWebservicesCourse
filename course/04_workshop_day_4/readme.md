@@ -1,16 +1,15 @@
 # Workshop Tag 4
 
-## Ablauf Tag 4 (2021-05-28)
-
-💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
+## Ablauf Tag 4 (2022-05-20)
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- Komprimierung von Responses
-- Minimal Apis in .NET 6 Preview 4
-- Fortsetzung EF Core
-- Security
 
+## Übungen
+
+Folgende Übungen sind für den Tag vorgesehen:
+
+**TODO**
 
 ## Erforderliche Ergebnisse
 

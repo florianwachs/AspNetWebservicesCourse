@@ -1,8 +1,6 @@
 # Workshop Tag 1
 
-## Ablauf Tag 1 (2021-04-30)
-
-💁‍♀️Den Link zum Live Stream findet Ihr in der Learn Community
+## Ablauf Tag 1 (2022-04-22)
 
 Endlich geht es los! Hier ein Überblick was wir vor haben.
 
@@ -12,19 +10,19 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 - Einführung Web-Services ([Slides](../slides/Introduction.pdf))
 - Vorstellung .NET ([Slides](../slides/NET%20Overview.pdf))
 - Einführung C# ([Slides](../slides/CSharp%20Language.pdf))
-- Unser erster Webservice mit [Asp.Net 5](https://docs.microsoft.com/en-us/aspnet)
+- Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung                                                     | Lösung                                                        |
-| --------------------------------------------------------- | ------------------------------------------------------------- |
-| [C#](../../01_csharp/exercises/ConsoleChuckNorrisService) | [Lösung](../../01_csharp/solutions/ConsoleChuckNorrisService) |
+| Übung                                                          | Lösung                                                             |
+| -------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [C#](../../modules/csharp/exercises/ConsoleChuckNorrisService) | [Lösung](../../modules/csharp/solutions/ConsoleChuckNorrisService) |
 
 ## Erforderliche Ergebnisse
 
-### Teambildung (am 2021-04-30)
+### Teambildung (am 2022-04-22)
 
 Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
 

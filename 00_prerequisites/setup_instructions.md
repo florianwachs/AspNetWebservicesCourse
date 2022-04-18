@@ -5,7 +5,7 @@
 Die Übungen basieren auf .net core, Microsofts plattformunabhängige .NET Technologie (Windows, Linux, MacOS). Somit sollten alle aktuellen Tools / Betriebssysteme für die Vorlesung passen. Im folgenden werden die Tools beschrieben mit denen der Kurs erstellt wurde.
 
 - Windows 10 (aktuelle Version)
-- [Visual Studio 2019](https://visualstudio.microsoft.com/) mit dem .NET Core Payload ![](./assets/vs_netcore_payload.png)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) mit dem .NET Core Payload ![](./assets/vs_netcore_payload.png)
 - [.NET 5 SDK](https://dotnet.microsoft.com/download)
 - Docker for Windows (für unsere Container-Übungen)
 
@@ -73,10 +73,10 @@ Falls Ihr Extensions habt die hier fehlen unbedingt Info an mich, Danke!
 
 ### Visual Studio
 
-- Roslynator 2019
+- Roslynator
 - Add New File
 
 ### Rider
 
 - Markdown
-- 
+
