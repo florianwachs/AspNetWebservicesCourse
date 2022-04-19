@@ -10,9 +10,7 @@ Viel Spaß dabei!
 
 ## Aufgabe 1
 
-In der Vorlesung haben Sie gelernt, das zum Ausführen einer Asp.Net Core Applikation ein (Web-) Host benötigt wird. Erweitern Sie bitte `Program.cs` um einen entsprechende Builder-Konfiguration und starten diesen in der `Main`-Methode.
-
-> **Hinweise**: Stellen Sie sicher das sie alle benötigten NuGet-Pakete über den NuGet-Package-Manager installiert haben.
+In der Vorlesung haben Sie gelernt, das zum Ausführen einer Asp.Net Core Applikation ein (Web-) Host benötigt wird. Erweitern Sie bitte `Program.cs` um einen entsprechende Builder-Konfiguration und starten diesen.
 
 ## Aufgabe 2
 
@@ -28,10 +26,10 @@ Implementieren Sie bitte eine Middleware, welche die Antwort an den Client um 2s
 
 Diese Middleware soll nur im `DEV`-Environment in die Pipeline eingehängt werden.
 
-> **Hinweise**: `app.Use`, `app.Run`, `Environment`, `Stopwatch`, `Console`
+> **Hinweise**: `app.Use`, `app.Run`, `Environment`, `Task.Delay`
 
 ## Aufgabe 4
 
-Bisher reagiert unser Service auf jeden Request mit der gleichen Antwort. Wir wollen eine API implementieren, welche nur beim Aufruf von `api/jokes/random` mittels eines [GET]-Requests eine zufälligen Witz liefert. Nutzen Sie dazu die Routing-Komponente des MVC-Frameworks. In allen anderen Fällen soll dem Aufrufer eine Antwort mit dem Statuscode `404 Bad Request` zurückgegeben werden.
+Bisher reagiert unser Service auf jeden Request mit der gleichen Antwort. Wir wollen eine API implementieren, welche nur beim Aufruf von `api/jokes/random` mittels eines [GET]-Requests eine zufälligen Witz liefert. In allen anderen Fällen soll dem Aufrufer eine Antwort mit dem Statuscode `404 Bad Request` zurückgegeben werden.
 
-> **Hinweise**: `Routing`, `services.AddRouting()`, `app.UseRouting()`, `app.UseEndpoints()`
+> **Hinweise**: `Results`, `app.MapGet`

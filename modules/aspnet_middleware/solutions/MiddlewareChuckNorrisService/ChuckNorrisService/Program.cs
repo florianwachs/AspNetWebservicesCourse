@@ -25,12 +25,13 @@ void Exercise_3(WebApplication app)
 {
     FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
 
+
     app.Use(async (context, next) =>
     {
-        // Wir führen den Request aus
+        // Wir fÃ¼hren den Request aus
         await next();
 
-        // und verzögern die Antwort
+        // und verzÃ¶gern die Antwort
         await Task.Delay(TimeSpan.FromSeconds(2));
     });
 
@@ -44,17 +45,13 @@ void Exercise_4(WebApplication app)
 {
     FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
 
-    // Immer direkt mit dem Context zu arbeiten ist aufwändig,
-    // die Minimal APIs machen dies auch unötig
-    //app.MapGet("api/jokes/random", async context =>
-    //{
-    //    await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
-    //});
-
-    app.MapGet("api/jokes/random", async () =>
+    if (app.Environment.IsDevelopment())
     {
-        return await jokeProvider.GetRandomJokeAsync();
-    });
+        app.MapGet("api/jokes/random", async context =>
+        {
+            await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
+        });
+    }
 
     app.MapGet("{*path}", context =>
     {
