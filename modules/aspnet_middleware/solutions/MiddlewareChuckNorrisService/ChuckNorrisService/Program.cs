@@ -1,25 +1,65 @@
-ï»¿using ChuckNorrisService.Startups;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
+using ChuckNorrisService.Providers;
 
-namespace ChuckNorrisService
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// Bitte nur jeweils eine der Konfigurationen einkommentieren
+Exercise_1_and_2(app);
+//Exercise_3(app);
+//Exercise_4(app);
+
+app.Run();
+
+
+void Exercise_1_and_2(WebApplication app)
 {
-    internal class Program
+    FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
+    app.Run(async context =>
     {
-        private static async Task Main(string[] args)
-        {
-            // var builder = CreateWebHostBuilder<StartupExercise1_and_2>(args);
-            // var builder = CreateWebHostBuilder<StartupExcercise3>(args);
-            var builder = CreateWebHostBuilder<StartupExercise4>(args);
-            builder.Build().Run();
-        }
-
-        private static IHostBuilder CreateWebHostBuilder<TStartup>(string[] args) where TStartup : class
-        {
-            return Host
-                .CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<TStartup>());
-        }
-    }
+        await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
+    });
 }
+
+void Exercise_3(WebApplication app)
+{
+    FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
+
+    app.Use(async (context, next) =>
+    {
+        // Wir führen den Request aus
+        await next();
+
+        // und verzögern die Antwort
+        await Task.Delay(TimeSpan.FromSeconds(2));
+    });
+
+    app.Run(async context =>
+    {
+        await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
+    });
+}
+
+void Exercise_4(WebApplication app)
+{
+    FileSystemJokeProvider jokeProvider = new FileSystemJokeProvider();
+
+    // Immer direkt mit dem Context zu arbeiten ist aufwändig,
+    // die Minimal APIs machen dies auch unötig
+    //app.MapGet("api/jokes/random", async context =>
+    //{
+    //    await context.Response.WriteAsJsonAsync(await jokeProvider.GetRandomJokeAsync());
+    //});
+
+    app.MapGet("api/jokes/random", async () =>
+    {
+        return await jokeProvider.GetRandomJokeAsync();
+    });
+
+    app.MapGet("{*path}", context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        return context.Response.WriteAsync("Well, IT'S YOUR FAULT!");
+    });
+}
+

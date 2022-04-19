@@ -1,13 +1,11 @@
 ﻿using ChuckNorrisService.Models;
-using System.Threading.Tasks;
 
-namespace ChuckNorrisService.Providers
+namespace ChuckNorrisService.Providers;
+
+public class DummyJokeProvider : IJokeProvider
 {
-    public class DummyJokeProvider : IJokeProvider
+    public Task<Joke> GetRandomJokeAsync()
     {
-        public Task<Joke> GetRandomJokeAsync()
-        {
-            return Task.FromResult(new Joke { Id = "test", Value = "Hahaha" });
-        }
+        return Task.FromResult(new Joke { Id = "test", Value = "Hahaha" });
     }
 }
