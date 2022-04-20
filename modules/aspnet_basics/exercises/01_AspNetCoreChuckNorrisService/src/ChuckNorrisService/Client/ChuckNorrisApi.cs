@@ -13,17 +13,16 @@ namespace ChuckNorrisService.Client
         private const int MaxJokesPerRequest = 50;
         private static readonly HttpClient _client = new HttpClient { BaseAddress = new Uri("https://api.chucknorris.io/jokes/random") };
 
-        public async Task<ChuckNorrisJoke> GetRandomJokeFromCategory(ApiJokeCategories category)
+        public async Task<ChuckNorrisJoke> GetRandomJokeFromCategory(JokeCategories category)
         {
             HttpResponseMessage result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
             result.EnsureSuccessStatusCode();
 
-            ChuckNorrisJoke joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
-
+            var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
             return joke;
         }
 
-        public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(ApiJokeCategories category, int maxJokes)
+        public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(JokeCategories category, int maxJokes)
         {
             maxJokes = Math.Clamp(maxJokes, 1, MaxJokesPerRequest);
             ChuckNorrisJoke[] result = await Task.WhenAll(Enumerable.Range(0, maxJokes).Select(_ => GetRandomJokeFromCategory(category)));
@@ -45,7 +44,7 @@ namespace ChuckNorrisService.Client
 
             public Joke AsJoke()
             {
-                return new Joke { Id = Id, JokeText = Value };
+                return new Joke { Id = Id, Value = Value };
             }
         }
     }

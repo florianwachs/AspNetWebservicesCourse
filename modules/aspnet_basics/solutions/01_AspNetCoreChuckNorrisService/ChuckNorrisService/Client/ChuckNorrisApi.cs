@@ -1,51 +1,58 @@
 ﻿using ChuckNorrisService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
+using System.Net;
 
-namespace ChuckNorrisService.Client
+namespace ChuckNorrisService.Client;
+
+public class ChuckNorrisApi
 {
-    public class ChuckNorrisApi
+    private const int MaxJokesPerRequest = 50;
+    private static readonly HttpClient _client = new HttpClient { BaseAddress = new Uri("https://api.chucknorris.io/jokes/") };
+
+    public async Task<ChuckNorrisJoke> GetRandomJokeFromCategory(JokeCategories category)
     {
-        private const int MaxJokesPerRequest = 50;
-        private static readonly HttpClient _client = new HttpClient { BaseAddress = new Uri("https://api.chucknorris.io/jokes/random") };
+        var result = await _client.GetAsync($"random?category={category.ToApiCategoryParameter()}");
+        result.EnsureSuccessStatusCode();
 
-        public async Task<ChuckNorrisJoke> GetRandomJokeFromCategory(JokeCategories category)
+        var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
+        return joke;
+    }
+
+    public async Task<ChuckNorrisJoke?> GetJokeById(string id)
+    {
+        var result = await _client.GetAsync($"{id}");
+
+        if (result.StatusCode == HttpStatusCode.NotFound)
         {
-            HttpResponseMessage result = await _client.GetAsync($"?category={category.ToApiCategoryParameter()}");
-            result.EnsureSuccessStatusCode();
-
-            var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
-            return joke;
+            return null;
         }
 
-        public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(JokeCategories category, int maxJokes)
+        var joke = await result.Content.ReadFromJsonAsync<ChuckNorrisJoke>();
+        return joke;
+    }
+
+    public async Task<ChuckNorrisJoke[]> GetRandomJokesFromCategory(JokeCategories category, int maxJokes)
+    {
+        maxJokes = Math.Clamp(maxJokes, 1, MaxJokesPerRequest);
+        ChuckNorrisJoke[] result = await Task.WhenAll(Enumerable.Range(0, maxJokes).Select(_ => GetRandomJokeFromCategory(category)));
+        HashSet<string> uniqueIds = new HashSet<string>();
+        return result.Where(joke => uniqueIds.Add(joke.Id)).ToArray();
+    }
+
+    public class ChuckNorrisJoke
+    {
+        public string?[] Category { get; set; }
+
+        public Uri? IconUrl { get; set; }
+
+        public string? Id { get; set; }
+
+        public Uri? Url { get; set; }
+
+        public string? Value { get; set; }
+
+        public Joke AsJoke()
         {
-            maxJokes = Math.Clamp(maxJokes, 1, MaxJokesPerRequest);
-            ChuckNorrisJoke[] result = await Task.WhenAll(Enumerable.Range(0, maxJokes).Select(_ => GetRandomJokeFromCategory(category)));
-            HashSet<string> uniqueIds = new HashSet<string>();
-            return result.Where(joke => uniqueIds.Add(joke.Id)).ToArray();
-        }
-
-        public class ChuckNorrisJoke
-        {
-            public string[] Category { get; set; }
-
-            public Uri IconUrl { get; set; }
-
-            public string Id { get; set; }
-
-            public Uri Url { get; set; }
-
-            public string Value { get; set; }
-
-            public Joke AsJoke()
-            {
-                return new Joke { Id = Id, Value = Value };
-            }
+            return new Joke { Id = Id, Value = Value };
         }
     }
 }
