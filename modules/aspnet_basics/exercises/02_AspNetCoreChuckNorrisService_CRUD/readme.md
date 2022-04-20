@@ -25,8 +25,8 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 "Never trust the client" ist eine Regel die es stets zu befolgen gilt. Ein Ansatz gegen korrupte Daten ist Validierung. Nutzen Sie die aus der Vorlesung bekannten `FluentValidation`-Libary.
 Sorgen Sie bitte dafür das:
 
-- [ ] ein Witz einen JokeText enthält
-- [ ] der JokeText nicht länger als 500 Zeichen beträgt
+- [ ] ein Witz einen Value enthält
+- [ ] der Value nicht länger als 500 Zeichen beträgt
 - [ ] Versuchen Sie gültige / ungültige Witze an Ihre API zu schicken, nutzen Sie den Debugger um sich die Validierung anzusehen
 - [ ] Implementieren Sie einen Validator welcher falls Kategorien angegeben sind, sicherstellt das die Werte nur jeweils einmal vorkommen.
 
@@ -35,4 +35,5 @@ Sorgen Sie bitte dafür das:
 ## Aufgabe 4
 
 Die Rest-Guidelines definieren spezielle HTTP-Status-Codes. Nutzen Sie die `Results` um dem Aufrufer korrekte Statuscodes zurück zu geben.
+Überlegen Sie sich für jeden Endpunkt welchen Status Sie zurückgeben würden.
 Testen Sie Ihre API mit Postman, Fiddler, VS Code ...
