@@ -1,21 +1,14 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
+using ChuckNorrisService;
+using ChuckNorrisService.Models;
+using ChuckNorrisService.Providers;
 
-namespace ChuckNorrisService
-{
-    internal class Program
-    {
-        private static async Task Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
 
-        private static IHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return Host
-                .CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
-        }
-    }
-}
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
+
+var app = builder.Build();
+
+JokesEndpoints.Register(app);
+
+app.Run();

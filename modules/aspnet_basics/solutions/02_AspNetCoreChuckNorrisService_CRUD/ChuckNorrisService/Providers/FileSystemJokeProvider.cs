@@ -14,6 +14,35 @@ public class FileSystemJokeProvider : IJokeProvider
         Init();
     }
 
+    public async Task<Joke> Add(Joke joke)
+    {
+        if (string.IsNullOrWhiteSpace(joke.Id))
+        {
+            joke.Id = Guid.NewGuid().ToString();
+        }
+
+        _jokes.Add(joke);
+        return joke;
+    }
+
+    public async Task<Joke> Update(Joke joke)
+    {
+        var existing = _jokes.FirstOrDefault(x => x.Id == joke.Id);
+        if (existing == null)
+        {
+            throw new InvalidOperationException($"No Joke found with id {joke.Id}");
+        }
+
+        _jokes.Remove(existing);
+        _jokes.Add(joke);
+        return joke;
+    }
+
+    public async Task Delete(string id)
+    {
+        _jokes.RemoveAll(x => x.Id == id);
+    }
+
     public async Task<Joke?> GetJokeById(string id)
     {
         return _jokes.FirstOrDefault(j => j.Id == id);
@@ -22,6 +51,11 @@ public class FileSystemJokeProvider : IJokeProvider
     public async Task<Joke> GetRandomJokeAsync()
     {
         return _jokes[random.Next(0, _jokes.Count + 1)];
+    }
+
+    public async Task<Joke[]> GetAll()
+    {
+        return _jokes.ToArray();
     }
 
     private void Init()

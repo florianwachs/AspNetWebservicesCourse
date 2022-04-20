@@ -12,11 +12,6 @@ public class ApiJokeProvider : IJokeProvider
         _api = new ChuckNorrisApi();
     }
 
-    public async Task<Joke?> GetJokeById(string id)
-    {
-        return (await _api.GetJokeById(id))?.AsJoke();
-    }
-
     public async Task<Joke> GetRandomJokeAsync()
     {
         return (await _api.GetRandomJokeFromCategory(JokeCategories.Dev)).AsJoke();
