@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace ChuckNorrisService.Client
+namespace ChuckNorrisService.Models
 {
-    public enum ApiJokeCategories
+    public enum JokeCategories
     {
         Dev,
         Food,
         Movie,
     }
 
-    public static class ApiJokeCategoriesExtensions
+    public static class JokeCategoriesExtensions
     {
-        public static string ToApiCategoryParameter(this ApiJokeCategories category)
+        public static string ToApiCategoryParameter(this JokeCategories category)
         {
             // Man könnte auch mit .ToString() arbeiten, aber dann könnte beim
             // refaktoring des Enums möglicherweise eine Umbenennung stattfinden,
@@ -19,16 +19,15 @@ namespace ChuckNorrisService.Client
             // Deshalb sicherheitshalber explizit die Umwandlung angeben.
             switch (category)
             {
-                case ApiJokeCategories.Dev:
+                case JokeCategories.Dev:
                     return "dev";
-                case ApiJokeCategories.Food:
+                case JokeCategories.Food:
                     return "food";
-                case ApiJokeCategories.Movie:
+                case JokeCategories.Movie:
                     return "movie";
                 default:
                     throw new InvalidOperationException("unknown joke category");
             }
         }
     }
-
 }

@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
+using ChuckNorrisService.Models;
+using ChuckNorrisService.Providers;
 
-namespace ChuckNorrisService
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
+
+var app = builder.Build();
+
+app.MapGet("api/jokes/random", async (IJokeProvider jokeProvider) =>
 {
-    internal class Program
-    {
-        private static async Task Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+    return await jokeProvider.GetRandomJokeAsync();
+});
 
-        private static IHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return Host
-                .CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
-        }
-    }
-}
+app.Run();
