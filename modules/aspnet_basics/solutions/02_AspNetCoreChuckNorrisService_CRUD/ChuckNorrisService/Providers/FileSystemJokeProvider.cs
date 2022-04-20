@@ -9,9 +9,13 @@ public class FileSystemJokeProvider : IJokeProvider
     private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
     private List<Joke> _jokes = new();
 
+    public FileSystemJokeProvider()
+    {
+        Init();
+    }
+
     public async Task<Joke> Add(Joke joke)
     {
-        await InitIfNecessary();
         if (string.IsNullOrWhiteSpace(joke.Id))
         {
             joke.Id = Guid.NewGuid().ToString();
@@ -23,8 +27,6 @@ public class FileSystemJokeProvider : IJokeProvider
 
     public async Task<Joke> Update(Joke joke)
     {
-        await InitIfNecessary();
-
         var existing = _jokes.FirstOrDefault(x => x.Id == joke.Id);
         if (existing == null)
         {
@@ -38,39 +40,32 @@ public class FileSystemJokeProvider : IJokeProvider
 
     public async Task Delete(string id)
     {
-        await InitIfNecessary();
         _jokes.RemoveAll(x => x.Id == id);
     }
 
     public async Task<Joke?> GetJokeById(string id)
     {
-        await InitIfNecessary();
         return _jokes.FirstOrDefault(j => j.Id == id);
     }
 
     public async Task<Joke> GetRandomJokeAsync()
     {
-        await InitIfNecessary();
         return _jokes[random.Next(0, _jokes.Count + 1)];
     }
 
-    private async Task InitIfNecessary()
+    public async Task<Joke[]> GetAll()
     {
-        if (_jokes?.Any() == true)
-            return;
+        return _jokes.ToArray();
+    }
 
+    private void Init()
+    {
         if (!File.Exists(JokeFilePath))
         {
             throw new InvalidOperationException($"no jokes file located in {JokeFilePath}");
         }
 
-        var rawJson = await File.ReadAllTextAsync(JokeFilePath);
-        _jokes = JsonSerializer.Deserialize<List<Joke>>(rawJson);
-    }
-
-    public async Task<Joke[]> GetAll()
-    {
-        await InitIfNecessary();
-        return _jokes.ToArray();
+        var rawJson = File.ReadAllText(JokeFilePath);
+        _jokes = JsonSerializer.Deserialize<List<Joke>>(rawJson) ?? new();
     }
 }
