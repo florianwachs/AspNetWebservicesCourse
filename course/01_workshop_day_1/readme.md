@@ -19,6 +19,8 @@ Folgende Übungen sind für den Tag vorgesehen:
 | Übung                                                          | Lösung                                                             |
 | -------------------------------------------------------------- | ------------------------------------------------------------------ |
 | [C#](../../modules/csharp/exercises/ConsoleChuckNorrisService) | [Lösung](../../modules/csharp/solutions/ConsoleChuckNorrisService) |
+| [Middleware](../../modules/aspnet_middleware/exercises/01_MiddlewareChuckNorrisService) | [Lösung](../../modules/aspnet_middleware/solutions/MiddlewareChuckNorrisService)|
+| [Asp.NET Basics](../../modules/aspnet_basics/exercises/01_AspNetCoreChuckNorrisService) | [Lösung](../../modules/aspnet_basics/solutions/01_AspNetCoreChuckNorrisService)|
 
 ## Erforderliche Ergebnisse
 
