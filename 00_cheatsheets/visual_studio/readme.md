@@ -21,7 +21,7 @@ Um verfügbare Pakete zu finden, wählen Sie bitte `Browse` aus. Nun können Sie
 
 | Name                        | `prerelease` |
 | --------------------------- | ------------ |
-| System.Net.Http.Json        | Ja           |
+| System.Net.Http.Json        | Nein          |
 | FluentValidation.AspNetCore | Nein         |
 
 ## Solution / Projekt builden
