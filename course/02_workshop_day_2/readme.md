@@ -18,11 +18,11 @@ Heute steigen wir in [Asp.Net](https://docs.microsoft.com/en-us/aspnet) ein.
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung | Lösung |
-| ----- | ------ |
-
+| Übung                                                                                   | Lösung                                                                           |
+| --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| [C# Knowledge Check](../../modules/csharp/exercises/KnowledgeCheck)                     | [Lösung](../../modules/csharp/solutions/KnowledgeCheck)                          |
 | [Middleware](../../modules/aspnet_middleware/exercises/01_MiddlewareChuckNorrisService) | [Lösung](../../modules/aspnet_middleware/solutions/MiddlewareChuckNorrisService) |
-| [Asp.NET Basics](../../modules/aspnet_basics/exercises/01_AspNetCoreChuckNorrisService) | [Lösung](../../modules/aspnet_basics/solutions/01_AspNetCoreChuckNorrisService) |
+| [Asp.NET Basics](../../modules/aspnet_basics/exercises/01_AspNetCoreChuckNorrisService) | [Lösung](../../modules/aspnet_basics/solutions/01_AspNetCoreChuckNorrisService)  |
 
 ## Erforderliche Ergebnisse
 
