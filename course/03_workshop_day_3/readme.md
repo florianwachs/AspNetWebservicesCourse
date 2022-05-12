@@ -17,11 +17,13 @@
 ## Slides
 
 - Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
--
+- TODO: Slides Uploaden
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
+
+TODO: Übung in kleinere Teile zerlegen
 
 | Übung                                                                                   | Lösung                                                                          |
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
