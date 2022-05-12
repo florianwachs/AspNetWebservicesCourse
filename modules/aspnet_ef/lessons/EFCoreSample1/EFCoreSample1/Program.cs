@@ -7,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
 // ACHTUNG: Wenn der DbMode geändert wird müsst Ihr die Migrations im Order "Migrations" löschen,
 // das Projekt builden und über die Konsole "dotnet ef migrations add [Name]" aufrufen.
 // Anschließend könnt Ihr "dotnet ef database update" aufrufen um die Migrationen auszuführen.
 // Sonst passen die Migrationen nicht zu Eurer DB-Technologie
 var dbMode = DbModes.SqlServerLocalDb;
-
 ConfigureEntityFramework(builder.Services);
 
 var app = builder.Build();
@@ -23,6 +24,8 @@ var app = builder.Build();
 // Migrationsstrategien notwendig, etwa das Migration-Bundle Feature oder direkte SQL Erzeugung mit dem EF-Tool
 var seeder = new DbSeeder();
 await seeder.Seed(app.Services);
+
+app.MapControllers();
 
 RegisterMinimalApiRoutes(app);
 
