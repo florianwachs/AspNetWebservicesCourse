@@ -10,6 +10,9 @@
 - Weiter mit ASP.NET Minimal APIs
 - ASP.NET MVC
 - Entity Framework Core 6
+- REST Guidelines
+- Open API (Swagger)
+- Logging
 
 ## Slides
 
