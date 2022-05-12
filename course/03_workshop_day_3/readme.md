@@ -10,15 +10,20 @@
 - Weiter mit ASP.NET Minimal APIs
 - ASP.NET MVC
 - Entity Framework Core 6
+- REST Guidelines
+- Open API (Swagger)
+- Logging
 
 ## Slides
 
 - Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
--
+- TODO: Slides Uploaden
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
+
+TODO: Übung in kleinere Teile zerlegen
 
 | Übung                                                                                   | Lösung                                                                          |
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -28,5 +33,4 @@ Folgende Übungen sind für den Tag vorgesehen:
 ## Erforderliche Ergebnisse
 
 Präsentation der Projekt Idee
-
-siehe [](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases)
+[siehe](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases)
