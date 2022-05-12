@@ -18,6 +18,7 @@
 
 - Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
 - ADO.NET und EF Core [Slides](../slides/AdoNet%20and%20EF%20Core.pdf)
+- REST Guidelines [Slides](../slides/REST%20API%20Guidelines.pdf)
 - Logging und Open API [Slides](../slides/AspNetCoreLogging.pdf)
 
 ## Code
