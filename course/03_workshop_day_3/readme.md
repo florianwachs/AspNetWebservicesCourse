@@ -28,5 +28,4 @@ Folgende Übungen sind für den Tag vorgesehen:
 ## Erforderliche Ergebnisse
 
 Präsentation der Projekt Idee
-
-siehe [](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases)
+[siehe](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases)
