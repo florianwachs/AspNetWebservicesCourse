@@ -7,12 +7,12 @@ public class JokesEndpoints
 {
     public static void Register(WebApplication app)
     {
-        app.MapGet("api/jokes/random", GetRandomJoke);
-        app.MapPost("api/jokes", AddJoke); // CREATE
-        app.MapGet("api/jokes", GetAllJokes); // READ
-        app.MapGet("api/jokes/{id}", GetJokeById);
-        app.MapPut("api/jokes/{id}", UpdateJoke); // UPDATE
-        app.MapPut("api/jokes/{id}", DeleteJoke); // DELETE
+        app.MapGet("/api/jokes/random", GetRandomJoke);
+        app.MapPost("/api/jokes", AddJoke); // CREATE
+        app.MapGet("/api/jokes", GetAllJokes); // READ
+        app.MapGet("/api/jokes/{id}", GetJokeById).WithName("GetJokeById");
+        app.MapPut("/api/jokes/{id}", UpdateJoke); // UPDATE
+        app.MapDelete("/api/jokes/{id}", DeleteJoke); // DELETE
     }
 
     public static async Task<Joke> GetRandomJoke(IJokeProvider jokeProvider)
@@ -32,7 +32,7 @@ public class JokesEndpoints
         return jokes;
     }
 
-    public static async Task<IResult> AddJoke(Joke joke, IJokeProvider jokeProvider)
+    public static async Task<IResult> AddJoke(Joke joke, IJokeProvider jokeProvider, LinkGenerator linkGenerator)
     {
         var validator = new JokeValidator(false);
         var validationResult = await validator.ValidateAsync(joke);
@@ -42,7 +42,13 @@ public class JokesEndpoints
             return Results.BadRequest(validationResult.Errors);
         }
 
-        return Results.Ok(await jokeProvider.Add(joke));
+        if (joke.Id == null)
+        {
+            joke.Id = Guid.NewGuid().ToString();
+        }
+
+        var uri = linkGenerator.GetPathByName("GetJokeById", new { id = joke.Id });
+        return Results.Created(uri, await jokeProvider.Add(joke));
     }
 
     public static async Task<IResult> UpdateJoke(string id, Joke joke, IJokeProvider jokeProvider)

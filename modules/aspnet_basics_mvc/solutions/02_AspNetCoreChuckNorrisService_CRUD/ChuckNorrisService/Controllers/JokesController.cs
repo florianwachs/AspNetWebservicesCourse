@@ -30,7 +30,7 @@ namespace ChuckNorrisService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNew([FromBody]Joke joke)
+        public async Task<IActionResult> CreateNew([FromBody] Joke joke)
         {
             if (!ModelState.IsValid)
             {
@@ -42,7 +42,7 @@ namespace ChuckNorrisService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody]Joke joke)
+        public async Task<IActionResult> Update(string id, [FromBody] Joke joke)
         {
             bool exists = _jokeProvider.GetById(id) != null;
 
@@ -52,7 +52,7 @@ namespace ChuckNorrisService.Controllers
             }
 
             Joke result = await _jokeProvider.Update(joke);
-            return Ok(result);
+            return CreatedAtAction(nameof(GetById), new { id = joke.Id }, joke);
         }
 
         [HttpDelete("{id}")]
