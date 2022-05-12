@@ -24,12 +24,24 @@ var app = builder.Build();
 var seeder = new DbSeeder();
 await seeder.Seed(app.Services);
 
+RegisterMinimalApiRoutes(app);
+
 app.Run();
 
 
 
-
 // *************************** Hilfsmethoden ***************************
+
+void RegisterMinimalApiRoutes(WebApplication app)
+{
+    app.MapGet("/api/v1/books", GetBooks);
+}
+
+async Task<IResult> GetBooks(BookDbContext dbContext)
+{
+    var books = await dbContext.Books.ToListAsync();
+    return Results.Ok(books);
+}
 
 void ConfigureEntityFramework(IServiceCollection services)
 {
