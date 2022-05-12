@@ -2,15 +2,15 @@
 using ChuckNorrisService.Models;
 using System.Text.Json;
 
-namespace ChuckNorrisService.Providers;
+namespace ChuckNorrisService.Repositories;
 
-public class FileSystemJokeProvider : IJokeProvider
+public class FileSystemJokeRespository : IJokeRepository
 {
     private static readonly Random random = new Random();
     private static readonly string JokeFilePath = Path.Combine("Data", "jokes.json");
     private List<Joke> _jokes = new();
 
-    public FileSystemJokeProvider()
+    public FileSystemJokeRespository()
     {
         Init();
     }
@@ -67,7 +67,7 @@ public class FileSystemJokeProvider : IJokeProvider
         }
 
         var rawJson = File.ReadAllText(JokeFilePath);
-        var jokeDtos = JsonSerializer.Deserialize<List<JokeDto>>(rawJson) ?? new();
+        var jokeDtos = JsonSerializer.Deserialize<List<JokeFileDto>>(rawJson) ?? new();
 
         var allCategories = jokeDtos
             .SelectMany(j => j.Category)

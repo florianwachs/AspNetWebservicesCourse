@@ -1,6 +1,6 @@
 ﻿namespace ChuckNorrisService.Models;
 
-public interface IJokeProvider
+public interface IJokeRepository
 {
     Task<Joke[]> GetAll();
     Task<Joke> GetRandomJokeAsync();

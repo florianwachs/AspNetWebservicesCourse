@@ -1,14 +1,15 @@
 using ChuckNorrisService;
-using ChuckNorrisService.Models;
-using ChuckNorrisService.Providers;
-
+using ChuckNorrisService.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IJokeProvider, FileSystemJokeProvider>();
+bool useInMemory = true;
+builder.Services.AddJokesServices(builder.Configuration, useInMemory);
 
 var app = builder.Build();
 
+await new JokeDbSeeder().SeedDb(app.Services, useInMemory);
+
 JokesEndpoints.Register(app);
 
-app.Run();
+await app.RunAsync();

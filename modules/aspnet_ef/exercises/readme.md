@@ -14,16 +14,21 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegang
 
 ## Aufgabe 2
 
-- [ ] Ergänzen Sie `Joke` und `JokeCategory` um notwendige Attribute, wir möchten nicht das die Ids von der Datenbank generiert werden
 - [ ] Implementieren Sie einen `DbJokeContext` für die Modelklassen `Joke` und `JokeCategories`
+- [ ] Wenn ein Joke geladen wird, sollen auch immer dessen Kategorien mitgeladen werden
+- [ ] Wir möchten nicht das die Ids von der Datenbank generiert werden. Ergänzen Sie `Joke` und `JokeCategory` um notwendige Attribute oder DbContext Konfiguration
+- [ ] Die Beziehung zwischen Joke und Category ist eine m:n Beziehung. Konfigurieren Sie diesen Umstand in der DbContext-Klasse.
 - [ ] Registrieren Sie den Context im DI-System und verwenden Sie die In-Memory-Database des EF Core Frameworks
-- [ ] Sorgen Sie dafür, dass Ihre Datenbank beim Starten mit Witzen und Kategorien gefüllt werdem
+- [ ] Sorgen Sie dafür, dass Ihre Datenbank beim Starten mit Witzen und Kategorien gefüllt werden
+- [ ]
 
 ## Aufgabe 3
 
 - [ ] Implementieren Sie eine Klasse `EFJokeRepository` welche das Interface `IJokeRepository` implementiert und Ihren `JokeDbContext` verwendet.
 - [ ] Registrieren Sie dieses `EFJokeRepository` in Ihrem DI-System
 - [ ] Testen Sie die API mit einem HTTP-Client Ihrer Wahl
+- [ ] Es wird ein Fehler auftreten das das JSON nicht erzeugt werden kann. Überlegen Sie warum dies auftritt
+- [ ] Implementieren Sie eine eigene DTO-Klasse für die Api welche dieses Problem nicht aufweist und nutzen Sie diese zur Rückgabe in Ihrer API
 
 ## Aufgabe 4
 
