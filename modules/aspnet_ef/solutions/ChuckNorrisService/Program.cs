@@ -3,7 +3,7 @@ using ChuckNorrisService.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-bool useInMemory = true;
+bool useInMemory = false;
 builder.Services.AddJokesServices(builder.Configuration, useInMemory);
 
 var app = builder.Build();
