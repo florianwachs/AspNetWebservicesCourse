@@ -17,18 +17,16 @@
 ## Slides
 
 - Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
-- TODO: Slides Uploaden
+- ADO.NET und EF Core [Slides](../slides/AdoNet%20and%20EF%20Core.pdf)
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-TODO: Übung in kleinere Teile zerlegen
-
 | Übung                                                                                   | Lösung                                                                          |
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | [Asp.NET Basics](../../modules/aspnet_basics/exercises/01_AspNetCoreChuckNorrisService) | [Lösung](../../modules/aspnet_basics/solutions/01_AspNetCoreChuckNorrisService) |
-
+| [Asp.NET EF Core](../../modules/aspnet_ef/exercises/readme.md)                          | [Lösung](../../modules/aspnet_ef/solutions)                                     |
 
 ## Erforderliche Ergebnisse
 
