@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>85e81b8e-501b-4ce9-809d-076cdf42b0a0</UserSecretsId>
+	  <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Domain\Jokes\Commands\**" />
+    <Compile Remove="Domain\Jokes\DomainEvents\**" />
+    <Content Remove="Domain\Jokes\Commands\**" />
+    <Content Remove="Domain\Jokes\DomainEvents\**" />
+    <EmbeddedResource Remove="Domain\Jokes\Commands\**" />
+    <EmbeddedResource Remove="Domain\Jokes\DomainEvents\**" />
+    <None Remove="Domain\Jokes\Commands\**" />
+    <None Remove="Domain\Jokes\DomainEvents\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+
+</Project>
