@@ -70,6 +70,7 @@ void ConfigureSerilog(WebApplicationBuilder builder)
     // hat jedoch ein anderes Format als die Default Logger
     Log.Logger = new LoggerConfiguration()
         .WriteTo.Console()
+        .WriteTo.Seq("http://localhost:5341")
         .WriteTo.File(new CompactJsonFormatter(), "log-.json", rollingInterval: RollingInterval.Day)
         .Enrich.WithProperty("Release", "0.0.1-beta-nightmare") // Ready for Production :-)
         .CreateLogger();
