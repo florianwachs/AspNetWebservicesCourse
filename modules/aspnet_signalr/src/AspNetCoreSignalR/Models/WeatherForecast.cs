@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace AspNetCoreSignalR.Models;
 
-namespace AspNetCoreSignalR.ApiWithSpa.Models
+public class WeatherForecast
 {
-    public class WeatherForecast
-    {
-        public string DateFormatted { get; set; }
-        public int TemperatureC { get; set; }
-        public string Summary { get; set; }
+    public string DateFormatted { get; set; }
+    public int TemperatureC { get; set; }
+    public string Summary { get; set; }
 
-        public int TemperatureF
+    public int TemperatureF
+    {
+        get
         {
-            get
-            {
-                return 32 + (int)(TemperatureC / 0.5556);
-            }
+            return 32 + (int)(TemperatureC / 0.5556);
         }
     }
 }

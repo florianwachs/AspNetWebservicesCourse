@@ -1,19 +1,13 @@
-﻿using AspNetCoreSignalR.ApiWithSpa.Models;
+﻿using AspNetCoreSignalR.Models;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AspNetCoreSignalR.ApiWithSpa.Hubs
+namespace AspNetCoreSignalR.Hubs;
+
+public class WeatherHub : Hub<IWeatherHub>
 {
-    public class WeatherHub : Hub<IWeatherHub>
-    {
-    }
+}
 
-    public interface IWeatherHub
-    {
-        Task WeatherUpdated(WeatherForecast weather);
-    }
+public interface IWeatherHub
+{
+    Task WeatherUpdated(WeatherForecast weather);
 }

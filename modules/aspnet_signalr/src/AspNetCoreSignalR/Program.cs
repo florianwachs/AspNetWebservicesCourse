@@ -1,6 +1,6 @@
-﻿using AspNetCoreSignalR.ApiWithSpa.Hubs;
-using AspNetCoreSignalR.ApiWithSpa.Jobs;
-using AspNetCoreSignalR.ApiWithSpa.Services;
+﻿using AspNetCoreSignalR.Hubs;
+using AspNetCoreSignalR.Jobs;
+using AspNetCoreSignalR.Services;
 using Coravel;
 
 var builder = WebApplication.CreateBuilder(args);
