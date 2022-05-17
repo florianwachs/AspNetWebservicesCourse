@@ -204,6 +204,18 @@ app.UseEndpoints(endpoints =>
 
 Damit ist gRPC inkl. gRPC-Web für unseren Endpunkt verfügbar.
 
+## gRPC Pro
+
+- Kompakt und performant dankt binärer Messages
+- Full-Duplex Streaming dank HTTP/2
+- Interoperable zwischen verschiedenen Sprachen
+- Perfekt für Service-to-Service Kommunikation
+
+## gRPC Con
+
+- Aufwändiger zu Implementieren wegen (noch) fehlender Tools
+- Nur begrenze Anzahl an Sprachen werden aktuell unterstützt
+- Browser können noch nicht die vollen Vorteile nutzen
 
 ## Ressourcen
 
