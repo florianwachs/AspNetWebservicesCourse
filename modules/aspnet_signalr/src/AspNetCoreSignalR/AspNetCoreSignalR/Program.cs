@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<WeatherServices>();
 builder.Services.AddScheduler();
+builder.Services.AddTransient<CheckForWeatherUpdates>();
 
 builder.Services.AddCors(options =>
 {
