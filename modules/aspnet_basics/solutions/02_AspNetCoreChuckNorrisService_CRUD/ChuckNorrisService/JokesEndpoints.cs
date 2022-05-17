@@ -47,6 +47,8 @@ public class JokesEndpoints
             joke.Id = Guid.NewGuid().ToString();
         }
 
+        // return Results.Created($"/api/jokes/{joke.Id}", joke);
+
         var uri = linkGenerator.GetPathByName("GetJokeById", new { id = joke.Id });
         return Results.Created(uri, await jokeProvider.Add(joke));
     }
