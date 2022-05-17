@@ -49,6 +49,8 @@ Wie immer benötigen wir Nuget-Packages.
 - `Grpc.AspNetCore`
 - `Grpc.AspNetCore.Web`
 
+## Protofiles
+
 In `proto`-Files definieren wir das gewünschte Interface.
 
 ```proto
@@ -86,14 +88,31 @@ message SensorResponseMessage{
 }
 ```
 
+## .NET Protogenerierung
+
 Nun müssen wir der .net Build Pipeline mitteilen, was sie mit `.proto` machen soll.
 
 ![](assets/vs_protoprops1.png)
 
 ![](assets/vs_protoprops2.png)
 
+Alternativ kann dies auch direkt in der \*.csproj durchgeführt werden.
+
+```xml
+<ItemGroup>
+    <Protobuf Include="Protos\enums.proto" GrpcServices="None" ProtoRoot="Protos\" />
+    <Protobuf Include="Protos\WeatherSensor.proto" GrpcServices="Server" ProtoRoot="Protos\" />
+</ItemGroup>
+```
+
+Das setzen von `ProtoRoot` ist erforderlich so das abhängige `.proto` Dateien referenziert werden können.
+
 Nun werden automatisch Typen durch den gRPC Compiler erstellt.
 Wir können nun den Service implementieren.
+
+## Implementieren des generierten GRPC-Services
+
+Aus den `.proto` Dateien wird automatisch ein Services-Stub generiert. Dieser muss nun mit Leben gefüllt werden.
 
 ```csharp
 public class SensorService: SensorReadingService.SensorReadingServiceBase
@@ -111,6 +130,8 @@ public class SensorService: SensorReadingService.SensorReadingServiceBase
 }
 
 ```
+
+## .NET Client Generierung
 
 Clients lassen sich für .NET mit Hilfe der `Service References` erstellen.
 
@@ -137,5 +158,53 @@ static async Task Main(string[] args)
 }
 ```
 
+## JS Client
+
+gRPC kann nicht direkt im Browser verwendet werden, da die Requests nicht fein genug gesteuert werden können, z.B. das zwingend eine HTTP/2 Verbindung aufgebaut werden muss.
+web-grpc versucht diesen Umstand bis zur Findung einer geeigneten Lösung durch eine JS-Lib zu umgehen.
+
+Dieser Ansatz wird als **_gRPC-Web_** bezeichnet. Mehr Informationen können hier gefunden werden [Link](https://grpc.io/blog/state-of-grpc-web/).
+
+## Konfiguration in ASP.NET
+
+gRPC ist als Middleware-Komponente verfügbar und kann wie folgt eingehängt werden.
+
+```csharp
+//👇 Fügt die benötigten Services hinzu
+builder.Services.AddGrpc(options => options.EnableDetailedErrors = true);
+
+//👇 CORS Policy, falls der Aufrufer nicht von der gleichen Domain stammt
+builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+}));
+
+```
+
+Nun noch die Pipeline konfigurieren
+
+```csharp
+//👇 Konfiguration der gRPC-Pipeline
+app.UseRouting();
+app.UseCors();
+
+//👇 Explizites hinzufügen der gRPC-Web-Unterstützung
+app.UseGrpcWeb();
+
+//👇 Einhängen von einem oder mehrerer gRPC Endpunkten, inkl. gRPC-Web-Support
+app.UseEndpoints(endpoints =>
+{
+    app.MapGrpcService<SensorService>().EnableGrpcWeb().RequireCors("AllowAll");
+});
+
+```
+
+Damit ist gRPC inkl. gRPC-Web für unseren Endpunkt verfügbar.
+
+
 ## Ressourcen
+
 Unter `src` findet Ihr eine komplette Beispiel Implementierung.
