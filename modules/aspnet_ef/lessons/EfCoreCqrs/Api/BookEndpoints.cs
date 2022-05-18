@@ -1,0 +1,26 @@
+﻿using EfCoreCqrs.Features.Books;
+using MediatR;
+
+namespace EfCoreCqrs.Api;
+
+public static class BookEndpoints
+{
+    public static IEndpointRouteBuilder MapBooks(this IEndpointRouteBuilder app)
+    {
+        app.MapGet("/api/v1/books", HandleAllBooks);
+        app.MapGet("/api/v1/books/toprated", HandleTopRated);
+        return app;
+    }
+
+    public static async Task<IResult> HandleTopRated(IMediator mediator)
+    {
+        var result = await mediator.Send(new Top3BooksQuery());
+        return result.ToIResult();
+    }
+
+    public static async Task<IResult> HandleAllBooks(IMediator mediator)
+    {
+        var result = await mediator.Send(new AllBooksQuery());
+        return result.ToIResult();
+    }
+}
