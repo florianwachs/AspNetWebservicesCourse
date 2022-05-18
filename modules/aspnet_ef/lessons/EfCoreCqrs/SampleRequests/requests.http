@@ -1,0 +1,23 @@
+﻿@baseUrl = https://localhost:7243
+
+### Alle Bücher holen
+GET {{baseUrl}}/api/v1/books
+
+### Top-Rated Bücher
+
+GET {{baseUrl}}/api/v1/books/toprated
+
+### Buchsuche die Fehler wirft
+
+GET {{baseUrl}}/api/v1/books/searches/simple
+
+### Buchsuche die Fehler wirft
+
+GET {{baseUrl}}/api/v1/books/searches/simple?q=t
+
+### Buchsuche
+
+GET {{baseUrl}}/api/v1/books/searches/simple?q=the
+
+### Buchdetails
+GET {{baseUrl}}/api/v1/books/301

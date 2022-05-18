@@ -9,7 +9,8 @@ public static class BookEndpoints
     public static IEndpointRouteBuilder MapBooks(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/v1/books", HandleAllBooks);
-        app.MapGet("/api/v1/books/searches", SearchBooks);
+        app.MapGet("/api/v1/books/{isbn}", GetBookByIsbn);
+        app.MapGet("/api/v1/books/searches/simple", SearchBooks);
         app.MapGet("/api/v1/books/toprated", HandleTopRated);
 
         return app;
@@ -30,6 +31,12 @@ public static class BookEndpoints
     public static async Task<IResult> SearchBooks([FromQuery] string? q, IMediator mediator)
     {
         var result = await mediator.Send(new SearchBooksQuery(q));
+        return result.ToIResult();
+    }
+
+    public static async Task<IResult> GetBookByIsbn(string isbn, IMediator mediator)
+    {
+        var result = await mediator.Send(new DetailBookQuery(isbn));
         return result.ToIResult();
     }
 }
