@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using AspNetMediatR.Api.Domain.Jokes;
 
-namespace AspNetMediatR.Api.Domain.Jokes.Models
+namespace AspNetMediatR.Api.ApplicationServices
 {
     public interface IJokeRepository
     {

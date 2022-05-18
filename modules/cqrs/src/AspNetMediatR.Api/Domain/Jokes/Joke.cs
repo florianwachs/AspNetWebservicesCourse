@@ -1,10 +1,7 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
-namespace AspNetMediatR.Api.Domain.Jokes.Models
+namespace AspNetMediatR.Api.Domain.Jokes
 {
     public class Joke
     {

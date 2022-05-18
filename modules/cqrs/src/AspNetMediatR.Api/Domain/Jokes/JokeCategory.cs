@@ -1,4 +1,4 @@
-﻿namespace AspNetMediatR.Api.Domain.Jokes.Models;
+﻿namespace AspNetMediatR.Api.Domain.Jokes;
 
 public class JokeCategory : IEquatable<JokeCategory>
 {

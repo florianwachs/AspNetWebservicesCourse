@@ -1,5 +1,6 @@
-﻿using AspNetMediatR.Api.Domain.Jokes.Models;
-using AspNetMediatR.Api.Repositories;
+﻿using AspNetMediatR.Api.ApplicationServices;
+using AspNetMediatR.Api.DataAccess;
+using AspNetMediatR.Api.Domain.Jokes;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

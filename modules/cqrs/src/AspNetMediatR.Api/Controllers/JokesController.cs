@@ -1,14 +1,13 @@
-﻿using AspNetMediatR.Api.Domain.Jokes.Models;
-using AspNetMediatR.Api.Domain.Jokes.Queries;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System.Threading;
 using System.Threading.Tasks;
+using AspNetMediatR.Api.Queries;
 
 namespace AspNetMediatR.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class JokesController : ControllerBase
     {

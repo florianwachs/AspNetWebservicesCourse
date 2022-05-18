@@ -1,13 +1,9 @@
-﻿using AspNetMediatR.Api.Domain.Jokes.Models;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Concurrent;
 using System.Text.Json;
-using System.Threading.Tasks;
+using AspNetMediatR.Api.ApplicationServices;
+using AspNetMediatR.Api.Domain.Jokes;
 
-namespace AspNetMediatR.Api.Repositories
+namespace AspNetMediatR.Api.DataAccess
 {
     public class InMemoryJokeRepository : IJokeRepository
     {

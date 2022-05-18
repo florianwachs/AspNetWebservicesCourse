@@ -1,7 +1,8 @@
-﻿using AspNetMediatR.Api.Domain.Jokes.Models;
+﻿using AspNetMediatR.Api.ApplicationServices;
+using AspNetMediatR.Api.Domain.Jokes;
 using MediatR;
 
-namespace AspNetMediatR.Api.Domain.Jokes.Queries;
+namespace AspNetMediatR.Api.Queries;
 
 public class JokesQuery : IRequest<JokesQueryResult>
 {
