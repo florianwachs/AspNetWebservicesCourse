@@ -21,3 +21,9 @@ GET {{baseUrl}}/api/v1/books/searches/simple?q=the
 
 ### Buchdetails
 GET {{baseUrl}}/api/v1/books/301
+
+### Alle Autoren
+GET {{baseUrl}}/api/v1/authors
+
+### Autor by Id
+GET {{baseUrl}}/api/v1/authors/3

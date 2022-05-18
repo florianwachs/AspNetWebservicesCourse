@@ -63,27 +63,30 @@ public class DbSeeder
         {
             new Book
             {
-                Isbn = "101", ReleaseDate = DateTime.Today.AddYears(-10), Title = "The Color Purple",
+                Isbn = "101", 
+                ReleaseDate = DateTime.Today.AddYears(-10), Title = "The Color Purple",
                 Authors = new[] { alice },
                 Price = 23.43m,
                 Rating = 2,
-
             },
             new Book
             {
-                Isbn = "102", ReleaseDate = DateTime.Today.AddYears(-8), Title = "Possessing the Secret of Joy",
+                Isbn = "102", 
+                ReleaseDate = DateTime.Today.AddYears(-8), Title = "Possessing the Secret of Joy",
                 Authors = new[] { alice },
                 Price = 23.43m,
                 Rating = 4,
             },
             new Book
             {
-                Isbn = "103", ReleaseDate = DateTime.Today.AddYears(-5), Title = "The Temple of My Familiar",
+                Isbn = "103", 
+                ReleaseDate = DateTime.Today.AddYears(-5), Title = "The Temple of My Familiar",
                 Authors = new[] { alice }
             },
             new Book
             {
-                Isbn = "201", ReleaseDate = DateTime.Today.AddYears(-2),
+                Isbn = "201", 
+                ReleaseDate = DateTime.Today.AddYears(-2),
                 Title = "A Mind for Numbers: How to Excel at Math and Science (Even If You Flunked Algebra)",
                 Authors = new[] { barbara },
                 Price = 13.33m,
@@ -91,7 +94,8 @@ public class DbSeeder
             },
             new Book
             {
-                Isbn = "301", ReleaseDate = DateTime.Today.AddYears(-2), Title = "The Perfect Roundhouse Kick",
+                Isbn = "301", 
+                ReleaseDate = DateTime.Today.AddYears(-2), Title = "The Perfect Roundhouse Kick",
                 Authors = new[] { chuck },
                 Price = 3.43m,
                 Rating = 2000,

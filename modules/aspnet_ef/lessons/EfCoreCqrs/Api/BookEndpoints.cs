@@ -36,7 +36,7 @@ public static class BookEndpoints
 
     public static async Task<IResult> GetBookByIsbn(string isbn, IMediator mediator)
     {
-        var result = await mediator.Send(new DetailBookQuery(isbn));
+        var result = await mediator.Send(new BookDetailsQuery(isbn));
         return result.ToIResult();
     }
 }

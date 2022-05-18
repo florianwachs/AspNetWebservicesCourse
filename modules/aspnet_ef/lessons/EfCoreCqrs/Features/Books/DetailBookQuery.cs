@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreCqrs.Features.Books;
 
-public record DetailBookQuery(string Isbn) : IRequest<ApiResult<DetailBookVm>>;
-public record DetailBookVm
+public record BookDetailsQuery(string Isbn) : IRequest<ApiResult<BookDetailsVm>>;
+public record BookDetailsVm
 {
     public string Isbn { get; init; } = "";
     public string Title { get; init; } = "";
@@ -15,9 +15,9 @@ public record DetailBookVm
     public string Rating { get; init; } = "";
     public IReadOnlyCollection<string> Authors { get; init; } = Array.Empty<string>();
 
-    public static DetailBookVm From(Book s)
+    public static BookDetailsVm From(Book s)
     {
-        return new DetailBookVm()
+        return new BookDetailsVm()
         {
             Isbn = s.Isbn,
             Title = s.Title,
@@ -34,7 +34,7 @@ public record DetailBookVm
     }
 }
 
-public class DetailBookQueryHandler : IRequestHandler<DetailBookQuery, ApiResult<DetailBookVm>>
+public class DetailBookQueryHandler : IRequestHandler<BookDetailsQuery, ApiResult<BookDetailsVm>>
 {
     private readonly BookDbContext _dbContext;
 
@@ -42,11 +42,11 @@ public class DetailBookQueryHandler : IRequestHandler<DetailBookQuery, ApiResult
     {
         _dbContext = dbContext;
     }
-    public async Task<ApiResult<DetailBookVm>> Handle(DetailBookQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResult<BookDetailsVm>> Handle(BookDetailsQuery request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Isbn))
         {
-            return ApiResult<DetailBookVm>.Failure("no isin provided");
+            return ApiResult<BookDetailsVm>.Failure("no isin provided");
         }
 
         var book = await _dbContext.Books
@@ -55,11 +55,11 @@ public class DetailBookQueryHandler : IRequestHandler<DetailBookQuery, ApiResult
 
         if (book == null)
         {
-            return ApiResult<DetailBookVm>.Failure($"no book found with isbn {request.Isbn}");
+            return ApiResult<BookDetailsVm>.Failure($"no book found with isbn {request.Isbn}");
         }
 
-        var vm = DetailBookVm.From(book);
+        var vm = BookDetailsVm.From(book);
 
-        return ApiResult<DetailBookVm>.Successful(vm);
+        return ApiResult<BookDetailsVm>.Successful(vm);
     }
 }
