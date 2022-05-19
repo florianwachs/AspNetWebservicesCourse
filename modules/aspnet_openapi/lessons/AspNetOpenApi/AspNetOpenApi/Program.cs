@@ -31,7 +31,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.MapControllers();
 
 MapMinimalApi(app);

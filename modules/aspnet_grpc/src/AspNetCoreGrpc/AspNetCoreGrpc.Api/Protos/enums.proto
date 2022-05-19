@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option csharp_namespace = "AspNetCoreGrpc.Api.Services";
+
+enum SensorStatus{
+	OK = 0;
+	BATTERYLOW = 1;
+	FAILURE = 2;
+	UNKNOWN = 3;
+}

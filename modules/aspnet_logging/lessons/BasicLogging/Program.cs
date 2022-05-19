@@ -5,13 +5,14 @@ using System.Diagnostics;
 var builder = WebApplication.CreateBuilder(args);
 
 
-// ConfigureRegularLogging(builder);
+ConfigureRegularLogging(builder);
 // ConfigureOnlyConsole(builder);
-ConfigureSerilog(builder);
+// ConfigureSerilog(builder);
 
 var app = builder.Build();
 
 app.MapGet("/", IndexRouteHandler);
+app.MapGet("/concrete", ConcreteDiHandler);
 app.MapGet("/structural", StructuralLoggingRouteHandler);
 
 app.Run();
@@ -25,6 +26,13 @@ string IndexRouteHandler(ILoggerFactory loggerFactory)
     logger.LogWarning("Berechnung dauert länger als erwartet.....");
     logger.LogError("Der Microservice für die Berechnung ist schon wieder down....");
     logger.LogCritical("Hat da grad jemand Cola in den Server verschüttet?");
+
+    return "Hello World";
+}
+
+string ConcreteDiHandler(ILogger<Program> logger)
+{
+    logger.LogInformation("Berechne komplexe Nachricht");
 
     return "Hello World";
 }
@@ -62,6 +70,7 @@ void ConfigureSerilog(WebApplicationBuilder builder)
     // hat jedoch ein anderes Format als die Default Logger
     Log.Logger = new LoggerConfiguration()
         .WriteTo.Console()
+        .WriteTo.Seq("http://localhost:5341")
         .WriteTo.File(new CompactJsonFormatter(), "log-.json", rollingInterval: RollingInterval.Day)
         .Enrich.WithProperty("Release", "0.0.1-beta-nightmare") // Ready for Production :-)
         .CreateLogger();

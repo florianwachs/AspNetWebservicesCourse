@@ -3,8 +3,6 @@ using EFCoreSample1.DataAccess;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
