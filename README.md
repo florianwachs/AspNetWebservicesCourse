@@ -65,6 +65,7 @@ Vielen Dank für Euren Input!
 ### Pattern
 
 - [Repository Pattern](extras/patterns/repository/repository-pattern.md)
+- [CQRS](modules/cqrs/)
 
 ### Guidelines
 
