@@ -140,6 +140,8 @@ Der `Mutation` muss noch das Input-Objekt als Parameter übergeben werden
 
 ## GraphQL.NET
 
+Versionen beachten, Sample aktuell mit der 4.x Version
+
 ```powershell
 dotnet add package GraphQL
 dotnet add package GraphQL.Server.Transports.AspNetCore
@@ -347,5 +349,6 @@ dotnet add package GraphQL.Client
 - Mehr Aufwand gegen Denial of Service Attacken
 
 ## Ressourcen
+
 - https://github.com/graphql-dotnet/graphql-dotnet
 - https://graphql-dotnet.github.io/docs/getting-started/introduction/
