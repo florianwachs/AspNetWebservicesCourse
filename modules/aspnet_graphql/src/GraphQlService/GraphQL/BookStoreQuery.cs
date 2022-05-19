@@ -17,7 +17,7 @@ namespace graphqlservice.GraphQL
                 .Resolve()
                 .WithScope()
                 .WithService<IBookRepository>()
-                .ResolveAsync(async (context, bookRepository) => await bookRepository.GetById(context.GetArgument<string>("id)")));
+                .ResolveAsync(async (context, bookRepository) => await bookRepository.GetById(context.GetArgument<string>("id")));
 
             Field<ListGraphType<BookType>>()
                 .Name("books")
