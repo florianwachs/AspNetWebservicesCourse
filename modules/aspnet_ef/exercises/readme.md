@@ -14,7 +14,7 @@ Vorgegeben ist eine Solution welche bereits das Grundgerüst aus der vorangegang
 
 ## Aufgabe 2
 
-- [ ] Passen Sie den Code so an das `Top5BooksQuery` flexibel wird und über einen URL-Queryparameter gesteuert werden kann#
+- [ ] Passen Sie den Code so an das `Top5BooksQuery` flexibel wird und über einen URL-Queryparameter gesteuert werden kann
 - [ ] Geben Sie zusätzlich die Namen der Autoren im DTO zurück
 
 > Denken Sie bitte immer daran "Never trust the client"
