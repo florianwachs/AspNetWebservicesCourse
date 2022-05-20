@@ -7,6 +7,10 @@ GET {{baseUrl}}/api/v1/books
 
 GET {{baseUrl}}/api/v1/books/toprated
 
+### 2 Top-Rated Bücher
+
+GET {{baseUrl}}/api/v1/books/toprated?limit=2
+
 ### Buchsuche die Fehler wirft
 
 GET {{baseUrl}}/api/v1/books/searches/simple

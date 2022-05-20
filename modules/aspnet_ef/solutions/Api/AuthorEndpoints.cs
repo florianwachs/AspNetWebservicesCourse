@@ -9,6 +9,7 @@ public static class AuthorEndpoints
     {
         app.MapGet("/api/v1/authors", HandleAllAuthors);
         app.MapGet("/api/v1/authors/{id}", HandleAuthorById);
+        app.MapPost("/api/v1/authors", HandleNewAuthor);
 
         return app;
     }
@@ -23,5 +24,19 @@ public static class AuthorEndpoints
     {
         var result = await mediator.Send(new AuthorDetailsQuery(id));
         return result.ToIResult();
+    }
+
+    public static async Task<IResult> HandleNewAuthor(AddAuthorCommand request, IMediator mediator)
+    {
+        var result = await mediator.Send(request);
+
+        if (result.Success)
+        {
+            return Results.Created($"/api/v1/authors/{result.Data.Id}", result.Data);
+        }
+        
+        return Results.BadRequest(result.Error);
+
+
     }
 }

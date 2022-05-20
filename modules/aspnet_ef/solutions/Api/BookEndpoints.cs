@@ -19,9 +19,9 @@ public static class BookEndpoints
         return app;
     }
 
-    public static async Task<IResult> HandleTopRated(IMediator mediator)
+    public static async Task<IResult> HandleTopRated([FromQuery] int? limit, IMediator mediator)
     {
-        var result = await mediator.Send(new Top3BooksQuery());
+        var result = await mediator.Send(new TopBooksQuery() { Limit = limit});
         return result.ToIResult();
     }
 
