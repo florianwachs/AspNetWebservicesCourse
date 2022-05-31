@@ -1,0 +1,31 @@
+﻿@baseUrl = https://localhost:7275
+
+### Versuch auf die API zuzugreifen, wird mit 401 fehlschlagen
+GET {{baseUrl}}/api/weatherforecast
+
+### User anlegen
+POST {{baseUrl}}/api/auth/register
+content-type:application/json
+
+{
+    "userName":"test",
+    "email":"test@test.de",
+    "password":"Test@123"
+}
+
+
+### Einen Token abrufen
+# @name getToken
+POST {{baseUrl}}/api/auth/token
+content-type:application/json
+
+{
+    "userName":"test",  
+    "password":"Test@123"
+}
+
+### Aufruf mit Token
+@authToken = {{getToken.response.body.$.token}}
+
+GET {{baseUrl}}/api/weatherforecast
+Authorization: Bearer {{authToken}}
