@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactAppWithAuth1
+namespace ReactAppWithAuth1.Data
 {
     public class WeatherForecast
     {

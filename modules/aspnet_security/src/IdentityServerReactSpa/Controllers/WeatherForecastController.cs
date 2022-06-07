@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ReactAppWithAuth1.Data;
 using ReactAppWithAuth1.Models;
 
 namespace ReactAppWithAuth1.Controllers
