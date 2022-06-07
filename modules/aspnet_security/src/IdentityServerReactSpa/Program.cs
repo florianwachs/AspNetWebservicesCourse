@@ -35,7 +35,7 @@ namespace ReactAppWithAuth1
             using var scope = host.Services.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            await dbContext.Database.EnsureCreatedAsync();
+            //await dbContext.Database.EnsureCreatedAsync();
             await dbContext.Database.MigrateAsync();
 
 
