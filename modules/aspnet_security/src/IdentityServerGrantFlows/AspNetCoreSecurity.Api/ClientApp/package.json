@@ -9,7 +9,7 @@
     "@types/react-dom": "17.0.5",
     "@types/react-router-dom": "5.1.5",
     "antd": "4.15.6",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "oidc-client": "1.11.5",
     "querystring": "0.2.1",
     "react": "17.0.2",
