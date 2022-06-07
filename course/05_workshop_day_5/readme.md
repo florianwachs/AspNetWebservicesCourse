@@ -5,13 +5,24 @@
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- **TODO**
+- Security
+- GraphQL
+- Akka.NET
+- Kleines AI Beispiel
 
-## Übungen
+## Slides
 
-Folgende Übungen sind für den Tag vorgesehen:
+- [GraphQL](../../modules/aspnet_graphql)
+- [Security](../slides/Security.pdf)
+- [Akka.NET](../slides/Akka.NET.pdf)
 
-**TODO**
+## Code
+
+|                                            |
+| ------------------------------------------ |
+| [GraphQL](../../modules/aspnet_graphql)    |
+| [Security](../../modules/aspnet_security/) |
+| [Akka.NET](../../modules/aspnet_akka/)     |
 
 ## Erforderliche Ergebnisse
 
