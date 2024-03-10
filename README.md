@@ -22,9 +22,9 @@ I'm looking forward to show you what .NET and Web Services are capable of.
 
 > Content is currently in German, but I hope to translate the course in the future
 
-## Informationen zum Ablauf (2022)
+## Informationen zum Ablauf (2024)
 
-Das Jahr 2022 steht wie 2020 / 2021 ganz im Zeichen von Covid-19. Im letzten Semester wurden trotz der Umstände hervorragende Projekte umgesetzt. Das wird dieses Jahr nicht anders sein. An dieser Stelle und in der Community werden aktuelle Informationen zum Ablauf der Veranstaltung veröffentlicht, sollte es Anpassungen geben.
+Es handelt sich um eine Blockveranstaltung in Präsenz.
 
 ## Allgemeines zur Veranstaltung
 
