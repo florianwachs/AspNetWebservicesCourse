@@ -1,35 +1,13 @@
 # Workshop Tag 2
 
-## Ablauf Tag 2 (2022-04-29)
-
-Heute steigen wir in [Asp.Net](https://docs.microsoft.com/en-us/aspnet) ein.
-
-- Kurze Feedbackrunde / Klärung von Fragen
-- Weiter mit Einführung C# ([Slides](../slides/CSharp%20Language.pdf))
-- Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
-- Live Coding
+## Ablauf Tag 2 (2024-04-05)
 
 ## Slides
 
-- Einführung C# ([Slides](../slides/CSharp%20Language.pdf))
-- Einführung in Asp.Net (Core) ([Slides](../slides/AspNetCore.pdf))
+## Code
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung                                                                                   | Lösung                                                                           |
-| --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [C# Knowledge Check](../../modules/csharp/exercises/KnowledgeCheck)                     | [Lösung](../../modules/csharp/solutions/KnowledgeCheck)                          |
-| [Middleware](../../modules/aspnet_middleware/exercises/01_MiddlewareChuckNorrisService) | [Lösung](../../modules/aspnet_middleware/solutions/MiddlewareChuckNorrisService) |
-| [Asp.NET Basics](../../modules/aspnet_basics/exercises/01_AspNetCoreChuckNorrisService) | [Lösung](../../modules/aspnet_basics/solutions/01_AspNetCoreChuckNorrisService)  |
-
 ## Erforderliche Ergebnisse
-
-Keine
-
-## Hilfreiche Ressourcen
-
-- https://docs.microsoft.com/en-us/aspnet
-- https://github.com/dodyg/practical-aspnetcore
-- https://docs.microsoft.com/en-us/samples/browse/

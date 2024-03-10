@@ -19,10 +19,10 @@ Um verfügbare Pakete zu finden, wählen Sie bitte `Browse` aus. Nun können Sie
 
 ### Für die Vorlesung häufig benötigte NuGet-Pakete
 
-| Name                        | `prerelease` |
-| --------------------------- | ------------ |
-| System.Net.Http.Json        | Nein          |
-| FluentValidation | Nein         |
+| Name                 | `prerelease` |
+| -------------------- | ------------ |
+| System.Net.Http.Json | Nein         |
+| FluentValidation     | Nein         |
 
 ## Solution / Projekt builden
 

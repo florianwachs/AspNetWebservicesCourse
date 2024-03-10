@@ -19,19 +19,11 @@ Mögliche Alternativen:
 ## Code-Repository
 
 Der Code und die Artefakte müssen in einem VCS (Version Control System) abgelegt werden.
-Ihr habt dazu freie Wahl, solange ich einen Zugang zum Repository bekomme 😉.
+Bitte nutzt das GitLab der TH-Rosenheim
 
 ### GitLab
 
 Die TH-Rosenheim bietet GitLab an, wer sein Projekt dort hosted kann mich mit dem User `florian.wachs` berechtigen.
-
-### GitHub
-
-Github bietet schon länger kostenlose private Repositories an, seit 2020-04-14 nun auch für Teams (https://github.blog/2020-04-14-github-is-now-free-for-teams/). Bei Github ist mein User `florianwachs`. Dort sind auch einige "Freiminuten" für eine `CI/CD` Pipeline verfügbar.
-
-### Azure Dev Ops
-
-Auch Azure Dev Ops erlaubt die kostenlose Nutzung für Teams unter https://azure.microsoft.com/de-de/services/devops/.
 
 ## HTTP Debugging Tool
 
@@ -49,34 +41,13 @@ Falls Ihr Extensions habt die hier fehlen unbedingt Info an mich, Danke!
 
 ### VS Code
 
-- https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
-- https://marketplace.visualstudio.com/items?itemName=josefpihrt-vscode.roslynator
-- https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour
-- https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks
-- https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2
-- https://marketplace.visualstudio.com/items?itemName=ban.spellright
-- https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight
-- https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode
-- https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker
-- https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens
-- https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
-- https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
-- https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one
-- https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
-- https://marketplace.visualstudio.com/items?itemName=vsls-contrib.gistfs
-- https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
-- https://marketplace.visualstudio.com/items?itemName=ms-edgedevtools.vscode-edge-devtools
-- https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github
-- https://marketplace.visualstudio.com/items?itemName=alexanderte.dainty-vscode
-- https://marketplace.visualstudio.com/items?itemName=alexanderte.dainty-nord-vscode
-- https://marketplace.visualstudio.com/items?itemName=sdras.night-owl
+- c# Dev Kit
 
 ### Visual Studio
 
-- Roslynator
-- Add New File
+- Aspire (über workload)
 
 ### Rider
 
-- Markdown
+- Aspire
 
