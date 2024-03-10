@@ -1,28 +1,14 @@
 # Workshop Tag 5
 
-## Ablauf Tag 5 (2022-06-10)
+## Ablauf Tag 5 (2024-05-24)
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
-- Security
-- GraphQL
-- Akka.NET
-- Kleines AI Beispiel
 
 ## Slides
 
-- [GraphQL](../../modules/aspnet_graphql)
-- [Security](../slides/Security.pdf)
-- [Akka.NET](../slides/Akka.NET.pdf)
-
 ## Code
-
-|                                            |
-| ------------------------------------------ |
-| [GraphQL](../../modules/aspnet_graphql)    |
-| [Security](../../modules/aspnet_security/) |
-| [Akka.NET](../../modules/aspnet_akka/)     |
 
 ## Erforderliche Ergebnisse
 

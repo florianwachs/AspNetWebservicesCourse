@@ -6,12 +6,12 @@ Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenh
 
 |                  |                        |                                                      |
 | ---------------- | ---------------------- | ---------------------------------------------------- |
-| ✅Workshop Tag 1 | 2022-04-22, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| ✅Workshop Tag 2 | 2022-04-29, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| ✅Workshop Tag 3 | 2022-05-13, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| ✅Workshop Tag 4 | 2022-05-20, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| ✅Workshop Tag 5 | 2022-06-10, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
-| ⏳Prüfung        | 2022-07-01             | Prüfung                                              |
+| ⏳Workshop Tag 1 | 2024-03-22, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
+| ⏳Workshop Tag 2 | 2024-04-05, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| ⏳Workshop Tag 3 | 2024-04-12, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| ⏳Workshop Tag 4 | 2024-04-19, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
+| ⏳Workshop Tag 5 | 2024-05-24, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
+| ⏳Prüfung        | 2024-06-21             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
 
 ## Hi There
 
@@ -22,9 +22,9 @@ I'm looking forward to show you what .NET and Web Services are capable of.
 
 > Content is currently in German, but I hope to translate the course in the future
 
-## Informationen zum Ablauf (2022)
+## Informationen zum Ablauf (2024)
 
-Das Jahr 2022 steht wie 2020 / 2021 ganz im Zeichen von Covid-19. Im letzten Semester wurden trotz der Umstände hervorragende Projekte umgesetzt. Das wird dieses Jahr nicht anders sein. An dieser Stelle und in der Community werden aktuelle Informationen zum Ablauf der Veranstaltung veröffentlicht, sollte es Anpassungen geben.
+Es handelt sich um eine Blockveranstaltung in Präsenz.
 
 ## Allgemeines zur Veranstaltung
 
