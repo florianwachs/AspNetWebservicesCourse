@@ -55,7 +55,7 @@ In dieser Aufgabe rufen wir eine API mittels `HttpClient` auf.
 - Implementieren Sie eine Klasse `ApiJokeProvider`, welche die API `https://api.chucknorris.io/jokes/random` aufruft und den zurück gelieferten Witz auf der Console ausgibt.
 
 > Hinweise:
-> Rufen sie [https://api.chucknorris.io/jokes/random](https://api.chucknorris.io/jokes/random) im Browser / Postman auf. Implementieren Sie eine Klasse, welche die zurück gelieferten JSON-Daten abbildet. Nutzen sie [Microsoft Docs](https://docs.microsoft.com) Beispiele für die Verwendung von `HttpClient` zu finden.
+> Rufen sie [https://api.chucknorris.io/jokes/random](https://api.chucknorris.io/jokes/random) im Browser / IDE / Postman auf. Implementieren Sie eine Klasse, welche die zurück gelieferten JSON-Daten abbildet. Nutzen sie [Microsoft Docs](https://docs.microsoft.com) Beispiele für die Verwendung von `HttpClient` zu finden.
 > `HttpClient`, `GetAsync`, `Content.ReadAsAsync`  
 > [Cheat-Sheet Visual Studio](../../../../00_cheatsheets/visual_studio/readme.md)  
 > [Cheat-Sheet C#](../../../../00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)
