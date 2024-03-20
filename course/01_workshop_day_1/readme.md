@@ -12,16 +12,19 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 
 ## Slides
 
-TODO
+- [Introduction](../../slides/Introduction.pdf)
+- [NET Overview](../../slides/NET%20Overview.pdf)
+- [CSharp Language](../../slides/CSharp%20Language.pdf)
+- [ASP.NET](../../slides/Web%20Services%20mit%20ASP.NET.pdf)
 
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung | Lösung |
-| ----- | ------ |
-|       |        |
-
+| Übung                                                                             | Lösung                                                                            |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [Chuck Norris C#](../../modules/01%20csharp/exercises/ConsoleChuckNorrisService/) | [Chuck Norris C#](../../modules/01%20csharp/solutions/ConsoleChuckNorrisService/) |
+| [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/exercises/01_AspNetCoreChuckNorrisService/) | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/01_AspNetCoreChuckNorrisService/) |
 
 ## Erforderliche Ergebnisse
 
