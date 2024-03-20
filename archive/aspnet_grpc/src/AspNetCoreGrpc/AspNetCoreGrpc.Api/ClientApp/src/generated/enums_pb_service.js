@@ -1,3 +1,0 @@
-// package: 
-// file: enums.proto
-
