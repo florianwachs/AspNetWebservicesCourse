@@ -3,7 +3,6 @@ using ChuckNorrisService.Models;
 using ChuckNorrisService.Providers;
 using System.Text.Json;
 
-
 await PrintJoke(new DummyJokeProvider());
 await PrintJoke(new FileSystemJokeProvider());
 await PrintJoke(new ApiJokeProvider());
