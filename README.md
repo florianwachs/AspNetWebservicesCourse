@@ -55,7 +55,7 @@ Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Resso
 | C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/            |
 | Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                    |
 | C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                 |
-| Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha |
+| Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha, https://www.youtube.com/results?search_query=nick+chapsas |
 | Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |
 
 ## Zusätzliches Material
