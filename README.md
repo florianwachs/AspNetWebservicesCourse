@@ -1,4 +1,4 @@
-# Web Services mit .NET (2022)
+# Web Services mit .NET (2024)
 
 Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenheim.de/).
 
