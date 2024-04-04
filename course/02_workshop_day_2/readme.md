@@ -23,7 +23,7 @@ Folgende Übungen sind für den Tag vorgesehen:
 | Übung                                                                             | Lösung                                                                            |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/exercises/01_AspNetCoreChuckNorrisService/) | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/01_AspNetCoreChuckNorrisService/) |
-| [Chuck Norris ASP.NET CRUD](../../modules/02%20aspnet_basics/exercises/02_AspNetCoreChuckNorrisService_CRUD/) | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/02_AspNetCoreChuckNorrisService_CRUD/) |
+| [Chuck Norris ASP.NET CRUD](../../modules/02%20aspnet_basics/exercises/02_AspNetCoreChuckNorrisService_CRUD/) | [Chuck Norris ASP.NET CRUD](../../modules/02%20aspnet_basics/solutions/02_AspNetCoreChuckNorrisService_CRUD/) |
 
 
 ## Erforderliche Ergebnisse
