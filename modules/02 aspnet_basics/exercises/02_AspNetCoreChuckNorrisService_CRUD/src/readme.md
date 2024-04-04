@@ -4,7 +4,8 @@ Bisher haben wir lediglich `GET`-Requests behandelt. Es wird Zeit, Create-Read-U
 
 Viel Spaß dabei! 🎉
 
-> Nutzen Sie auch [Microsoft Docs](https://docs.microsoft.com).
+>[!NOTE]Hinweis
+Nutzen Sie auch [Microsoft Docs](https://docs.microsoft.com).
 
 ## Aufgabe 1
 
@@ -18,7 +19,8 @@ Stellen Sie bitte sicher das der aktuelle Stand einen `GET`-Request gegen `api/j
 - [ ] Ergänzen Sie die fehlende Implementierung in `JokesProvider`
 - [ ] Testen Sie Ihre API mit Postman, Fiddler, VS Code ...
 
-> Hinweise: **Sie müssen die Änderungen nicht wieder in die JSON-Datei zurück speichern! Führen Sie die Änderungen bitte nur In-Memory aus.**
+>[!NOTE]Hinweis
+> Sie müssen die Änderungen nicht wieder in die JSON-Datei zurück speichern! Führen Sie die Änderungen bitte nur In-Memory aus.
 
 ## Aufgabe 3
 
@@ -30,7 +32,8 @@ Sorgen Sie bitte dafür das:
 - [ ] Versuchen Sie gültige / ungültige Witze an Ihre API zu schicken, nutzen Sie den Debugger um sich die Validierung anzusehen
 - [ ] Implementieren Sie einen Validator welcher falls Kategorien angegeben sind, sicherstellt das die Werte nur jeweils einmal vorkommen.
 
-> **Hinweise**: Stellen Sie sicher das Sie die Nuget-Pakete hinzugefügt haben
+>[!NOTE]Hinweis
+> Stellen Sie sicher das Sie die Nuget-Pakete hinzugefügt haben
 
 ## Aufgabe 4
 
