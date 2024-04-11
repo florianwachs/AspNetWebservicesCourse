@@ -1,6 +1,6 @@
 # Workshop Tag 5
 
-## Ablauf Tag 5 (2024-05-24)
+## Ablauf Tag 5 (2024-06-07)
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
