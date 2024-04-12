@@ -4,6 +4,7 @@
 
 - Klärung offener Fragen
 - Wie kann ich Euch beim Lernen am Besten unterstützen
+- Wir schauen uns Eure Projekte an
 - Weiter Webservices mit ASP.NET
 - REST Best Practices
 - Logging
