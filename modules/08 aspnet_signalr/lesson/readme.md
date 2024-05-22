@@ -34,7 +34,7 @@ Web Sockets werden von allen modernen Browsern unterstützt.
 Die Probleme beginnen jedoch, wenn Client oder Server keine Web-Sockets unterstützen, oder diese durch Firewalls geblockt werden.
 
 - Websockets müssen vom Betriebssystem / Webserver / Firewall zugelassen und unterstützt werden
-- Windows: Mind. Server 2008 R2 oder Windows 8 und .NET Framework 4.5
+- Windows: Mind. Server 2008 R2 oder Windows 8
 
 ![Web Socket Fallbacks](assets/websocket_fallbacks.png)
 

@@ -23,7 +23,7 @@
 ## Wie passt gRPC in bestehende Ansätze?
 
 - SignalR: Multicasting, bi-direktionale Kommunikation
-- GraphQL: „Web-Query-Language“
+- GraphQL / ODATA: „Web-Query-Language“
 - REST: CRUD Web Applikationen
 - gRPC: effizientes Streaming / Kommunikation zwischen Service-Komponenten
 
