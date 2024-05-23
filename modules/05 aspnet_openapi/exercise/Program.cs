@@ -22,12 +22,12 @@ app.Run();
 
 static void ConfigureDiServices(IServiceCollection services)
 {
-    // Manuelles erzeugen der SqliteConection damit sie hier geˆffnet werden kann
-    // Sonst schlieﬂt der erste DBContext der Disposed wird die Connection und die
+    // Manuelles erzeugen der SqliteConection damit sie hier ge√∂ffnet werden kann
+    // Sonst schlie√üt der erste DBContext der Disposed wird die Connection und die
     // Db geht offline
     SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
     connection.Open();
 
     services.AddDbContext<BookDbContext>(options => { options.UseSqlite(connection); });
-    services.AddMediatR(typeof(BookDbContext).Assembly);
+    services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(typeof(BookDbContext).Assembly));
 }
