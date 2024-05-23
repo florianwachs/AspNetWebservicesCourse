@@ -7,7 +7,7 @@ namespace AspNetGrpc.Services;
 public class SensorService : SensorReadingService.SensorReadingServiceBase
 {
     private static ConcurrentQueue<SensorReadingMessage> _sensorReadings = new ConcurrentQueue<SensorReadingMessage>();
-
+    private static SensorReadingMessage? _latestSensorReading = null;
     public SensorService(ILogger<SensorService> logger)
     {
         Logger = logger;
@@ -24,6 +24,7 @@ public class SensorService : SensorReadingService.SensorReadingServiceBase
         {
             Logger.LogInformation("{SensorId} {Humidity}", sensorData.SensorId, sensorData.Humidity);
             _sensorReadings.Enqueue(sensorData);
+            _latestSensorReading = sensorData;
         }
 
         return Task.FromResult(result);
@@ -45,5 +46,16 @@ public class SensorService : SensorReadingService.SensorReadingServiceBase
             }
 
         }
+    }
+
+    public override Task<LatestSensoreReadingResponseMessage> GetLatestReading(Empty request, ServerCallContext context)
+    {
+        LatestSensoreReadingResponseMessage result = new()
+        {
+            HasValue = _latestSensorReading != null,
+            Reading = _latestSensorReading
+        };
+        
+        return Task.FromResult(result);
     }
 }

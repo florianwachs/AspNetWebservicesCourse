@@ -11,7 +11,7 @@ import "enums.proto";
 service SensorReadingService{
   rpc AddReading(SensorReadingPackage) returns (SensorResponseMessage);
   rpc GetUpdates(google.protobuf.Empty) returns (stream SensorReadingMessage);
-  rpc GetLatestReading(google.protobuf.Empty) returns (SensorResponseMessage);
+  rpc GetLatestReading(google.protobuf.Empty) returns (LatestSensoreReadingResponseMessage);
 }
 
 message SensorReadingPackage{
@@ -30,4 +30,9 @@ message SensorReadingMessage{
 message SensorResponseMessage{
   bool success = 1;
   string message = 2;
+}
+
+message LatestSensoreReadingResponseMessage{
+  bool hasValue = 1;
+  optional SensorReadingMessage reading = 2;
 }

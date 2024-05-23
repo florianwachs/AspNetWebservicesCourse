@@ -6,7 +6,9 @@ using Grpc.Core;
 var channel = GrpcChannel.ForAddress("https://localhost:7070");
 var client = new SensorReadingService.SensorReadingServiceClient(channel);
 
-var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+var latest = await client.GetLatestReadingAsync(new Empty());
+
+var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 using var streamingCall = client.GetUpdates(new Empty(), cancellationToken: cts.Token);
 
 try
@@ -20,3 +22,7 @@ catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
 {               
     Console.WriteLine("Stream cancelled.");
 }
+
+latest = await client.GetLatestReadingAsync(new Empty());
+
+Console.ReadKey();
