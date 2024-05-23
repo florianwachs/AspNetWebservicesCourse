@@ -9,9 +9,9 @@ Hierzu musst du
 - die Solution kompilieren
 - deine neue Methode in `SensorService.cs` durch `override` implementieren
 
-
 Hinweise:
 
+- gRPC benötigt HTTP/2 was auch zwingend https voraussetzt
 - ein gRPC kann nicht einfach `null` zurückgeben
 - du kannst beliebig viele `messages` definieren
 - eine `message` kann auch andere `message`-Typen als Felder enthalten
