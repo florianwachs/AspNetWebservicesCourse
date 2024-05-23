@@ -7,8 +7,6 @@
 - [gRPC](../../modules/07%20aspnet_grpc/)
 - [SignalR](../../modules/08%20aspnet_signalr/)
 
-## Code
-
 ## Übungen
 
 Folgende Übungen sind für den Tag vorgesehen:
