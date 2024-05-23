@@ -140,11 +140,11 @@ app.MapPost("/api/v1/authors",
 
 await EnsureMigratedDb(app);
 
-    app.Run();
+app.Run();
 
-    async Task EnsureMigratedDb(WebApplication wapp)
-    {
-        using var scope = wapp.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await dbContext.Database.MigrateAsync();
-    }
+async Task EnsureMigratedDb(WebApplication wapp)
+{
+    using var scope = wapp.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
