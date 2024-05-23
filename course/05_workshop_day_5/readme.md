@@ -1,12 +1,16 @@
 # Workshop Tag 5
 
+## Voraussetzungen
+Wer an den Übungen teilnehmen möchte braucht bitte Docker auf dem System
+
+
 ## Ablauf Tag 5 (2024-06-07)
 
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
 - Aktor-Modelle
-- Microservices Architekturen (Docker / Kubernetes)
+- Microservices Architekturen (Docker / Kubernetes) mit dotnet Aspire
 
 ## Slides
 
