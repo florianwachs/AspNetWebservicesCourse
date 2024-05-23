@@ -5,6 +5,8 @@
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
+- Aktor-Modelle
+- Microservices Architekturen (Docker / Kubernetes)
 
 ## Slides
 
