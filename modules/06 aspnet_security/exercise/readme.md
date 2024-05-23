@@ -19,4 +19,5 @@ Bitte
 - [ ] erstelle eine Migration welche die neue Property beinhaltet (Hinweis `dotnet ef migrations`)
 - [ ] definiere eine geeignete Policy
 - [ ] schütze den Endpunkt
+- [ ] lösche die `app.db` und definiere in `EnsureUsers` einen neuen User der ein Content-Manager ist
 - [ ] teste den Endpunkt mit Open API / Swagger oder einen HTTP Tool deiner Wahl

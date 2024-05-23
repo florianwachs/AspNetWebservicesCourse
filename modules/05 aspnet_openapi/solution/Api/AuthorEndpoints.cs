@@ -23,8 +23,7 @@ public static class AuthorEndpoints
             .WithSummary("Returns a specific author by id")
             .WithOpenApi(op =>
             {
-                var idParam = op.Parameters[0];
-                idParam.Name = "Id";
+                var idParam = op.Parameters[0];                
                 idParam.Required = true;
                 idParam.Description = "The Id of the author";
                 return op;

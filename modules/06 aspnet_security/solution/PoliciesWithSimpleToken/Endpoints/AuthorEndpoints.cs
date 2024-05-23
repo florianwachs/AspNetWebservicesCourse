@@ -45,7 +45,7 @@ public static class AuthorEndpoints
                 op.Summary = "Returns an author by id";
                 op.Description = "Additional Description / Examples";
                 
-                var idParam = op.Parameters[0];                
+                var idParam = op.Parameters[0];
                 idParam.Required = true;
                 idParam.Description = "The Id of the author";
 
@@ -81,14 +81,27 @@ public static class AuthorEndpoints
                 return op;
             }).RequireAuthorization(AuthConstants.Policies.Admin);
 
-        group.MapGet("/chuck/books", () =>
-            {
-                return Results.Ok(new Book[] { new Book() { Title = "Chucks Wisdom" } });
-            })
+        group.MapGet("/chuck/books",
+                () => { return Results.Ok(new Book[] { new Book() { Title = "Chucks Wisdom" } }); })
             .Produces<List<Book>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
             .WithOpenApi()
             .RequireAuthorization(AuthConstants.Policies.AllowedToReadChuckNorrisBooks);
+
+        group.MapDelete("{id:int}", (int id) => { return Results.NoContent(); })
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status403Forbidden)
+            .WithOpenApi(op =>
+            {
+                op.Summary = "Deletes an author by id";
+                op.Description = "Additional Description / Examples";
+                var idParam = op.Parameters[0];
+                idParam.Required = true;
+                idParam.Description = "The Id of the author";
+
+                return op;
+            })
+            .RequireAuthorization(AuthConstants.Policies.CanDeleteAuthor);
     }
 }

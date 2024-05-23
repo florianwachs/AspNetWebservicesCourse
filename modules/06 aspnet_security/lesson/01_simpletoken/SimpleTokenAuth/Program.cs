@@ -102,8 +102,8 @@ app.MapGet("/api/v1/authors/{id:int}",
     {
         op.Summary = "Returns an author by id";
         op.Description = "Additional Description / Examples";
-        var idParam = op.Parameters[0];
-        idParam.Name = "Id";
+        
+        var idParam = op.Parameters[0];        
         idParam.Required = true;
         idParam.Description = "The Id of the author";
 
