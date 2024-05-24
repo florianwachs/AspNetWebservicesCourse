@@ -16,7 +16,7 @@
 ![](assets/grpclogo.png)
 
 - Binäre Kommunikation
-- Plattformübergreifend (Java, JavaScript (Node), Python, Go)
+- Plattformübergreifend (Java, JavaScript (Node), Python, Go, C#)
 - Unterstützung für bidirektionales Streaming
 - Nur über HTTPS/2 => TLS/SSL Zwang
 
