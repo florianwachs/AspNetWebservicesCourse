@@ -148,28 +148,9 @@ app.MapPost("/logout", async (SignInManager<AppUser> signInManager, [FromBody] o
 
 app.UseHttpsRedirection();
 
-app.MapGet("/roles", (ClaimsPrincipal user) =>
-{
-    if (user.Identity is not null && user.Identity.IsAuthenticated)
-    {
-        var identity = (ClaimsIdentity)user.Identity;
-        var roles = identity.FindAll(identity.RoleClaimType)
-            .Select(c => 
-                new
-                {
-                    c.Issuer, 
-                    c.OriginalIssuer, 
-                    c.Type, 
-                    c.Value, 
-                    c.ValueType
-                });
 
-        return TypedResults.Json(roles);
-    }
 
-    return Results.Unauthorized();
-}).RequireAuthorization();
-
+app.MapCustomIdentityEndpoints();
 app.MapAuthors();
 
 

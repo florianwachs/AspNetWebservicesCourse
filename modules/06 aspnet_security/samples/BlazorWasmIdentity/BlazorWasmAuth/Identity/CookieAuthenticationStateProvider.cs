@@ -182,28 +182,17 @@ namespace BlazorWasmAuth.Identity
                         new(ClaimTypes.Name, userInfo.Email),
                         new(ClaimTypes.Email, userInfo.Email)
                     };
-
-                    // add any additional claims
+                    
                     claims.AddRange(
                         userInfo.Claims.Where(c => c.Key != ClaimTypes.Name && c.Key != ClaimTypes.Email)
                             .Select(c => new Claim(c.Key, c.Value)));
 
-                    // tap the roles endpoint for the user's roles
-                    var rolesResponse = await _httpClient.GetAsync("roles");
-
-                    // throw if request fails
-                    rolesResponse.EnsureSuccessStatusCode();
-
-                    // read the response into a string
-                    var rolesJson = await rolesResponse.Content.ReadAsStringAsync();
-
-                    // deserialize the roles string into an array
-                    var roles = JsonSerializer.Deserialize<RoleClaim[]>(rolesJson, jsonSerializerOptions);
-
-                    // if there are roles, add them to the claims collection
-                    if (roles?.Length > 0)
+                    
+                    var customClaims = await _httpClient.GetFromJsonAsync<List<ClaimDto>>("claims", jsonSerializerOptions);
+                    
+                    if (customClaims?.Count > 0)
                     {
-                        foreach (var role in roles)
+                        foreach (var role in customClaims.Where(c=>c.Type != ClaimTypes.Email && c.Type != ClaimTypes.Name))
                         {
                             if (!string.IsNullOrEmpty(role.Type) && !string.IsNullOrEmpty(role.Value))
                             {
@@ -238,7 +227,7 @@ namespace BlazorWasmAuth.Identity
             return _authenticated;
         }
 
-        public class RoleClaim
+        public class ClaimDto
         {
             public string? Issuer { get; set; }
             public string? OriginalIssuer { get; set; }
