@@ -1,5 +1,6 @@
 # Beispiel für Blazor Frontend mit Identity Backend
 
+https://github.com/florianwachs/AspNetWebservicesCourse/assets/2216547/8f4c6ee6-7339-4016-82bb-bcd567abe3e2
 
 ## Erläuterungen
 
