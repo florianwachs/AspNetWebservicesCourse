@@ -1,5 +1,7 @@
 # Beispiel für Blazor Frontend mit Identity Backend
 
+![Demo](./assets/demo.mp4)
+
 ## Erläuterungen
 
 Das Beispiel basiert auf dem Microsoft Blazor Sample "Standalone Blazor WebAssembly with ASP.NET Core Identity". Bei Interesse an Blazor findet Ihr hier noch mehr Samples https://github.com/dotnet/blazor-samples.
