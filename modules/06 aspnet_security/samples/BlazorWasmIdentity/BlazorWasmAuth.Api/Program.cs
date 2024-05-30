@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using BlazorWasamAuth.Api;
 using BlazorWasamAuth.Api.Auth;
 using BlazorWasamAuth.Api.DataAccess;
+using BlazorWasamAuth.Api.Endpoints;
 using BlazorWasamAuth.Api.Identity;
 using BlazorWasamAuth.Api.Providers;
 using Microsoft.AspNetCore.Authorization;
@@ -90,6 +91,7 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddIdentityCore<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
+    .AddClaimsPrincipalFactory<AppClaimsFactory>()
     .AddApiEndpoints();
 
 // Add a CORS policy for the client
@@ -145,6 +147,31 @@ app.MapPost("/logout", async (SignInManager<AppUser> signInManager, [FromBody] o
 }).RequireAuthorization();
 
 app.UseHttpsRedirection();
+
+app.MapGet("/roles", (ClaimsPrincipal user) =>
+{
+    if (user.Identity is not null && user.Identity.IsAuthenticated)
+    {
+        var identity = (ClaimsIdentity)user.Identity;
+        var roles = identity.FindAll(identity.RoleClaimType)
+            .Select(c => 
+                new
+                {
+                    c.Issuer, 
+                    c.OriginalIssuer, 
+                    c.Type, 
+                    c.Value, 
+                    c.ValueType
+                });
+
+        return TypedResults.Json(roles);
+    }
+
+    return Results.Unauthorized();
+}).RequireAuthorization();
+
+app.MapAuthors();
+
 
 app.Run();
 

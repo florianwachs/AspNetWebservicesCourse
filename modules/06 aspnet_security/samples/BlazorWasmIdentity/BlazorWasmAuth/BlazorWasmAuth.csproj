@@ -11,6 +11,18 @@
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0 " />
 	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.7.2" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.6.0" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorWasmAuth.Shared\BlazorWasmAuth.Shared.csproj" />
   </ItemGroup>
 
 </Project>

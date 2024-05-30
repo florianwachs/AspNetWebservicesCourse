@@ -1,23 +1,42 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-    <main>
-        <div class="top-row px-4">
-            <AuthorizeView>
-                <Authorized>
-                    Logged in as @context.User.Identity?.Name. <a href="logout"><span class="bi bi-door-closed-fill" aria-hidden="true" style="vertical-align:middle"></span> Logout</a>
-                </Authorized>
-                <NotAuthorized>
-                    <a href="login"><span class="bi bi-door-open" aria-hidden="true" style="vertical-align:middle"></span> Login</a>
-                    <a href="register"><span class="bi bi-pencil-square" aria-hidden="true" style="vertical-align:middle"></span> Register</a>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-
-        <article class="content px-4">
+@inject NavigationManager NavManager
+<div>
+    <FluentMainLayout NavMenuTitle="Navigation menu">
+        <Header>
+            <div style="display: flex; flex: 1">
+                <h3 style="flex:1">Blazor Client for Identity</h3>
+            </div>
+            <div>
+                <AuthorizeView>
+                    <Authorized>
+                        <FluentButton Appearance="Appearance.Neutral" @onclick="Logout">Logout</FluentButton>
+                    </Authorized>
+                    <NotAuthorized>
+                        <FluentButton Appearance="Appearance.Neutral" @onclick="NavigateToLogin">Login</FluentButton>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </Header>
+        <Body>
+        <div style="padding: 1rem">
             @Body
-        </article>
-    </main>
+        </div>
+        </Body>
+        <NavMenuContent>
+            <FluentNavLink Href="/" Text="Home">Home</FluentNavLink>
+            <FluentNavLink Href="/authors" Text="Authors">Authors</FluentNavLink>
+        </NavMenuContent>
+    </FluentMainLayout>
 </div>
+
+<FluentToastProvider/>
+<FluentDialogProvider/>
+<FluentTooltipProvider/>
+<FluentMessageBarProvider/>
+
+@code{
+
+    private void NavigateToLogin() => NavManager.NavigateTo("/login");
+    private void Logout() => NavManager.NavigateTo("/logout");
+
+}

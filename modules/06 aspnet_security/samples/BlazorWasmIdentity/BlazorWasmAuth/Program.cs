@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorWasmAuth.Components;
 using BlazorWasmAuth.Identity;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddFluentUIComponents();
 
 // register the cookie handler
 builder.Services.AddTransient<CookieHandler>();
