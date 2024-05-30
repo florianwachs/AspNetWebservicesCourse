@@ -1,6 +1,7 @@
 @page "/private-page"
 @attribute [Authorize]
 @using System.Security.Claims
+@inject IDialogService DialogService
 
 <PageTitle>Private Page</PageTitle>
 
@@ -37,5 +38,11 @@
 
         var authState = await AuthState;
         claims = authState.User.Claims;
+    }
+    
+    private async Task ShowErrorAsync(string message)
+    {
+        var dialog = await DialogService.ShowErrorAsync("This is an error");
+        var result = await dialog.Result;
     }
 }

@@ -57,23 +57,8 @@ builder.Services.AddSingleton<IAuthorizationHandler, AllowedToReadAboutChuckNorr
 builder.Services.AddAuthorization(o =>
 {
     o.AddPolicy(AuthConstants.Policies.Admin, p => p.RequireClaim(AuthConstants.ClaimTypes.IsAdmin));
-    
     o.AddPolicy(AuthConstants.Policies.AllowedToReadChuckNorrisBooks, p=> p.AddRequirements(new AllowedToReadAboutChuckNorrisRequirement()));
 });
-
-// Configure app cookie
-//
-// The default values, which are appropriate for hosting the BlazorWasmAuth.Api and
-// BlazorWasmAuth apps on the same domain, are Lax and SameAsRequest. 
-// For more information on these settings, see:
-// https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-identity#cross-domain-hosting-same-site-configuration
-/*
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.SameSite = SameSiteMode.Lax;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-});
-*/
 
 // Configure authorization
 builder.Services.AddAuthorizationBuilder();
@@ -148,11 +133,8 @@ app.MapPost("/logout", async (SignInManager<AppUser> signInManager, [FromBody] o
 
 app.UseHttpsRedirection();
 
-
-
 app.MapCustomIdentityEndpoints();
 app.MapAuthors();
-
 
 app.Run();
 

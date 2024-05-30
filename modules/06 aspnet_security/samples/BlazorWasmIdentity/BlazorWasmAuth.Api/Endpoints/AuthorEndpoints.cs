@@ -53,6 +53,23 @@ public static class AuthorEndpoints
             })
             .WithName("GetAuthorById");
 
+        group.MapDelete("{id:int}", (int id, DataProvider dataProvider) =>
+            {
+                dataProvider.Delete(id);
+            }).WithTags("Delete-Operations")
+            .WithOpenApi(op =>
+            {
+                op.Summary = "Deletes an author by id";
+                op.Description = "Additional Description / Examples";
+
+                var idParam = op.Parameters[0];
+                idParam.Required = true;
+                idParam.Description = "The Id of the author";
+
+                return op;
+            })
+            .RequireAuthorization(AuthConstants.Policies.Admin);
+
         group.MapPost("",
                 async Task<Results<Created<Author>, BadRequest>> (Author author, DataProvider provider,
                     HttpContext httpContext,

@@ -6,12 +6,13 @@ namespace BlazorWasamAuth.Api.Providers;
 public class DataProvider
 {
     private readonly List<Author> _authors;
+
     public DataProvider()
     {
         // 👇Ein "Seed" setzen um immer die gleichen Daten zu generieren.
         Randomizer.Seed = new Random(8675309);
         int authorId = 1;
-        
+
         // 👇 das NuGet-Paket "Bogus" ist nützlich zum Generieren von realistischen Testdaten
         var authorGenerator = new Faker<Author>()
             .RuleFor(a => a.Id, f => authorId++)
@@ -21,11 +22,16 @@ public class DataProvider
 
         _authors = authorGenerator.Generate(40);
     }
-    
+
     public async Task<List<Author>> GetAuthors()
     {
         return _authors.ToList();
     }
 
     public async Task<Author?> GetAuthorById(int id) => _authors.FirstOrDefault(i => i.Id == id);
+
+    public void Delete(int authorId)
+    {
+        _authors.RemoveAll(a => a.Id == authorId);
+    }
 }

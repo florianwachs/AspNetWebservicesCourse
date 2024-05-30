@@ -1,6 +1,8 @@
 @page "/authors"
 @using BlazorWasmAuth.Shared.Domain
 @inject IHttpClientFactory ClientFactory
+@inject IDialogService DialogService
+@inject NavigationManager NavManager
 
 <h3>AuthorsPage</h3>
 
@@ -19,14 +21,22 @@
         <PropertyColumn Property="@(p => p.FirstName)"  />
         <PropertyColumn Property="@(p => p.LastName)"  />
         <PropertyColumn Property="@(p => p.EMail)"  />
+        <TemplateColumn Title="Actions" Align="@Align.End">
+            <FluentButton aria-label="Bearbeiten" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="()=>EditAuthor(context)" />
+            <FluentButton aria-label="Löschen" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="() => DeleteAuthor(context)" />
+        </TemplateColumn>
     </FluentDataGrid>
 </FluentCard>
 @code {
 
     private IQueryable<Author> _authors = Enumerable.Empty<Author>().AsQueryable();
-    private string? _error = null;
 
     protected override async Task OnInitializedAsync()
+    {
+        await LoadAuthors();
+    }
+
+    private async Task LoadAuthors()
     {
         try
         {
@@ -37,11 +47,37 @@
         }
         catch (Exception e)
         {
-            _error = e.ToString();
-
+            await ShowErrorAsync(e.ToString());
         }
-        
     }
 
+    private async Task EditAuthor(Author author)
+    {
+        NavManager.NavigateTo($"/authors/{author.Id}");
+    }
+    
+    private async Task DeleteAuthor(Author author)
+    {
+        try
+        {
+            var client = GetAuthorizedHttpClient();
+            var response = await client.DeleteAsync($"/api/v1/authors/{author.Id}");
+            response.EnsureSuccessStatusCode();
+
+            await LoadAuthors();
+        }
+        catch (Exception e)
+        {
+            await ShowErrorAsync(e.ToString());
+        }
+    }
+    
+
     private HttpClient GetAuthorizedHttpClient() => ClientFactory.CreateClient("Auth");
+    
+    private async Task ShowErrorAsync(string message)
+    {
+        var dialog = await DialogService.ShowErrorAsync(message);
+        var result = await dialog.Result;
+    }
 }
