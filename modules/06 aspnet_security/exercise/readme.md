@@ -11,6 +11,15 @@ Gegeben ist der Code aus der Vorlesung.
 - [ ] Definiere in `AuthorEndpoints.cs` einen neuen `Delete`-Endpunkt mit dem ein Author entfernt werden kann.
 Es muss nur ein geeigneter Status-Code zurückgeliefert werden, es muss nichts wirklich gelöscht werden da wir nur die Security betrachten.
 
+z.B.:
+
+```csharp
+app.MapDelete("/api/v1/authors/{id:int}", () =>
+{
+  return Results.???;
+});
+```
+
 ## Aufgabe 3
 
 Ein Autor darf nur von einem Content-Manager entfernt werden.
