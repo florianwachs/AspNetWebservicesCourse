@@ -1,6 +1,5 @@
 # Beispiel für Blazor Frontend mit Identity Backend
 
-https://github.com/florianwachs/AspNetWebservicesCourse/raw/main/modules/06%20aspnet_security/samples/BlazorWasmIdentity/assets/demo.mp4
 
 ## Erläuterungen
 
