@@ -9,8 +9,8 @@ Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenh
 | ✅Workshop Tag 1 | 2024-03-22, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
 | ✅Workshop Tag 2 | 2024-04-05, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
 | ✅Workshop Tag 3 | 2024-04-12, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| ➡️Workshop Tag 4 | 2024-05-24, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| ⏳Workshop Tag 5 | 2024-06-07 , 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
+| ✅Workshop Tag 4 | 2024-05-24, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
+| ➡️Workshop Tag 5 | 2024-06-07 , 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
 | ⏳Prüfung        | 2024-06-21             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
 
 ## Hi There
