@@ -9,12 +9,21 @@ Wer an den Übungen teilnehmen möchte braucht bitte Docker auf dem System
 - Feedbackrunde / Klärung von Fragen und Problemen
 - Präsentation der Architektur und Schnittstellendefinition
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
+- [SignalR](../../modules/08%20aspnet_signalr/)
+- [CQRS](../../modules/cqrs)
 - Aktor-Modelle
 - Microservices Architekturen (Docker / Kubernetes) mit dotnet Aspire
+- Projekt Support: Falls Ihr Fragen habt gehen wir die gerne durch!
 
 ## Slides
+- [Microservices](../slides/Microservices.pdf)
 
-## Code
+## Übungen
+
+| Übung                                                   | Lösung |
+| ------------------------------------------------------- | ------ |
+| [SignalR](../../modules/08%20aspnet_signalr/)           |        |
+
 
 ## Erforderliche Ergebnisse
 
