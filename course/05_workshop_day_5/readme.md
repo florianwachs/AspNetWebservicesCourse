@@ -11,7 +11,7 @@ Wer an den Übungen teilnehmen möchte braucht bitte Docker auf dem System
 - Wie kann ich Euch am besten in Euren Projekten unterstützen?
 - [SignalR](../../modules/08%20aspnet_signalr/)
 - [CQRS](../../modules/cqrs)
-- Aktor-Modelle
+- Aktor-Modelle [Akka.NET](../slides/Akka.pdf)
 - Microservices Architekturen (Docker / Kubernetes) mit dotnet Aspire
 - Projekt Support: Falls Ihr Fragen habt gehen wir die gerne durch!
 
