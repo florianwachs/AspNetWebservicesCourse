@@ -10,8 +10,8 @@ Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenh
 | ✅Workshop Tag 2 | 2024-04-05, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
 | ✅Workshop Tag 3 | 2024-04-12, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
 | ✅Workshop Tag 4 | 2024-05-24, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| ➡️Workshop Tag 5 | 2024-06-07 , 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
-| ⏳Prüfung        | 2024-06-21             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
+| ✅Workshop Tag 5 | 2024-06-07 , 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
+| ➡️Prüfung        | 2024-06-21             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
 
 ## Hi There
 
@@ -51,7 +51,7 @@ Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer
 > [!IMPORTANT]  
 >
 > Die Prüfung dauert 45min inkl. 10-15min. Fragen.
-> Anwesenheitspflicht besteht für alle Teams während der Prüfung ab 8:30 bis zum Ende.
+> Anwesenheitspflicht besteht für alle Teams während der Prüfung ab 8:30 bis zum Ende. Seid bitte unbedingt pünktlich da, da es sonst zu Punktabzug kommen kann.
 
 ## Vorbereitung Entwicklungsumgebung / Repository
 
