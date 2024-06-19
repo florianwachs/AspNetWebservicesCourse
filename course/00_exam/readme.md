@@ -63,3 +63,29 @@ Am Prüfungstag (Termin 6)
 - [Auzug von Projekten aus vergangenen Jahren](project_ideas.md)
 - Beispiel [Abschlusspräsentation](Example%20Presentation1.pdf)
 - Beispiel [Abschlusspräsentation](Example%20Presentation2.pdf)
+
+## Teams Feedback
+
+Hier ist ein kleines Feedback zu Euren Präsentationen. 
+
+### Aufgabenmanagement
+- Kategorie evtl. hervorheben
+- Funktionalitätsseite: Bild etwas klein, vielleicht eigene Folie die nur weiß ist?
+- Endpunkte: tasks, kleiner Schreibfehler
+- Task Endpunkte: get Priority get category
+
+### ArcadeCritics
+- Umbrüche auf Folien bei Datenflow / Architektur
+
+
+### Spieleabend
+- Userstories haben viel Text auf der Seite
+- Manche APIs nicht "resty" (snacks, movies, "Convert-To-Ical")
+
+### Stundenplan
+- Deviations vielleicht früher erklären
+
+### Rezepte App
+
+- Schnittstellen /api/v1/recipes/{id}/ratings (auf Position der Id achten)
+- Schnittstellen Recipes: searchByIngriedients searchByNutrients, hier haben wir über Queryendpunkte gesprochen statt diesen RPC-Style zu verwenden. Z.B. ein /api/v1/recipes/queries Endpunkt gegen den ein Search-Objekt gepostet werden kann.
