@@ -39,8 +39,19 @@ Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in
 Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](course/00_exam/readme.md)
 
 ### Aktuelle Informationen zur Abschlusspräsentation
-
-Noch nichts 😁
+| Zeitslot  | Gruppe |
+|---|---|
+|08:30 - 09:15| Gruppe 1|
+|09:15 - 10:00| Gruppe 2|
+|10:00 - 10:15| Pause|
+|10:15 - 11:00| Gruppe 3|
+|11:00 - 11:45| Gruppe 4|
+|11:45 - 12:00| Pause|
+|12:00 - 12:45| Gruppe 5|
+> [!IMPORTANT]  
+>
+> Die Prüfung dauert 45min inkl. 10-15min. Fragen.
+> Anwesenheitspflicht besteht für alle Teams während der Prüfung ab 8:30 bis zum Ende.
 
 ## Vorbereitung Entwicklungsumgebung / Repository
 
