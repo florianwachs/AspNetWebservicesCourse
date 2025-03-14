@@ -1,17 +1,17 @@
-# Web Services mit .NET (2024)
+# Web Services mit .NET (2025)
 
 Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenheim.de/).
 
 ## Schedule
 
-|                  |                        |                                                      |
-| ---------------- | ---------------------- | ---------------------------------------------------- |
-| ✅Workshop Tag 1 | 2024-03-22, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| ✅Workshop Tag 2 | 2024-04-05, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| ✅Workshop Tag 3 | 2024-04-12, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| ✅Workshop Tag 4 | 2024-05-24, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| ✅Workshop Tag 5 | 2024-06-07 , 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
-| ➡️Prüfung        | 2024-06-21             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
+|                   |                        |                                                      |
+| ----------------- | ---------------------- | ---------------------------------------------------- |
+| 👉Workshop Tag 1  | 2025-03-21, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
+| ⌛️Workshop Tag 2 | 2025-04-11, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| ⌛️Workshop Tag 3 | 2025-04-25, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| ⌛️Workshop Tag 4 | 2025-05-09, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
+| ⌛️Workshop Tag 5 | 2025-05-23, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
+| ➡️Prüfung         | 2025-06-27             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
 
 ## Hi There
 
@@ -22,7 +22,7 @@ I'm looking forward to show you what .NET and Web Services are capable of.
 
 > Content is currently in German, but I hope to translate the course in the future
 
-## Informationen zum Ablauf (2024)
+## Informationen zum Ablauf (2025)
 
 Es handelt sich um eine Blockveranstaltung in Präsenz.
 
@@ -39,16 +39,8 @@ Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in
 Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](course/00_exam/readme.md)
 
 ### Aktuelle Informationen zur Abschlusspräsentation
-| Zeitslot  | Gruppe |
-|---|---|
-|08:30 - 09:15| Gruppe 1|
-|09:15 - 10:00| Gruppe 2|
-|10:00 - 10:15| Pause|
-|10:15 - 11:00| Gruppe 3|
-|11:00 - 11:45| Gruppe 4|
-|11:45 - 12:00| Pause|
-|12:00 - 12:45| Gruppe 5|
-> [!IMPORTANT]  
+
+> [!IMPORTANT]
 >
 > Die Prüfung dauert 45min inkl. 10-15min. Fragen.
 > Anwesenheitspflicht besteht für alle Teams während der Prüfung ab 8:30 bis zum Ende. Seid bitte unbedingt pünktlich da, da es sonst zu Punktabzug kommen kann.
@@ -61,13 +53,13 @@ Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](00_prerequisit
 
 Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Ressourcen zum Einstieg in `C#`. Das Durcharbeiten des Vorbereitungsmaterials ist **nicht zwingend erforderlich** zur Teilnahme. Wir werden uns gemeinsam das benötigte C#-Wissen aneignen.
 
-| Beschreibung                                            | Link                                                                               |
-| ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/            |
-| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                    |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                 |
+| Beschreibung                                            | Link                                                                                                                                          |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                       |
+| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                               |
+| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                            |
 | Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha, https://www.youtube.com/results?search_query=nick+chapsas |
-| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                   |
+| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                              |
 
 ## Zusätzliches Material
 
