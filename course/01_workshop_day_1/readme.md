@@ -1,6 +1,6 @@
 # Workshop Tag 1
 
-## Ablauf Tag 1 (2024-03-22)
+## Ablauf Tag 1 (2025-03-21)
 
 Endlich geht es los! Hier ein Überblick was wir vor haben.
 
@@ -21,14 +21,14 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung                                                                             | Lösung                                                                            |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [Chuck Norris C#](../../modules/01%20csharp/exercises/ConsoleChuckNorrisService/) | [Chuck Norris C#](../../modules/01%20csharp/solutions/ConsoleChuckNorrisService/) |
+| Übung                                                                                               | Lösung                                                                                              |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| [Chuck Norris C#](../../modules/01%20csharp/exercises/ConsoleChuckNorrisService/)                   | [Chuck Norris C#](../../modules/01%20csharp/solutions/ConsoleChuckNorrisService/)                   |
 | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/exercises/01_AspNetCoreChuckNorrisService/) | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/01_AspNetCoreChuckNorrisService/) |
 
 ## Erforderliche Ergebnisse
 
-### Teambildung (am 2024-03-22)
+### Teambildung (am 2025-03-21)
 
 Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
 
