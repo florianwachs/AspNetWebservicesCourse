@@ -1,26 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using DISample.Api.Services;
 
-namespace DISample.Api
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to DI container
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<ITimeService, DefaultTimeService>();
+builder.Services.AddSingleton<IBookRepository, DummyBookRepository>();
+
+var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+// Define endpoints
+app.MapGet("/api/books", (IBookRepository bookRepository, ITimeService timeService) =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    var currentTime = timeService.Now;
+    return bookRepository.All();
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+app.MapGet("/api/books/{id}", (string id, IBookRepository bookRepository, ITimeService timeService) =>
+{
+    var currentTime = timeService.Now;
+    return bookRepository.GetBookById(id);
+});
+
+app.MapPost("/api/books", (Book book, IBookRepository bookRepository, ITimeService timeService) =>
+{
+    var currentTime = timeService.Now;
+    return bookRepository.Add(book);
+});
+
+app.Run();

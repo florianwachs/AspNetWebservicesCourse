@@ -33,5 +33,4 @@ Folgende Übungen sind für den Tag vorgesehen:
 Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
 
 ### GitLab Code-Repository mit Zugang (bis Termin 2)
-
-Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim habt Ihr zugriff auf Gitlab. [Mehr Infos](../../00_prerequisites/setup_instructions.md)
+Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim habt Ihr Zugriff auf Gitlab. [Mehr Infos](../../00_prerequisites/setup_instructions.md)

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DISample.Api.Services;
 
-namespace DISample.Api.Services
+public class DefaultTimeService : ITimeService
 {
-    public class DefaultTimeService : ITimeService
-    {
-        public DateTime Now => DateTime.UtcNow;
-    }
+    public DateTime Now => DateTime.UtcNow;
 }
