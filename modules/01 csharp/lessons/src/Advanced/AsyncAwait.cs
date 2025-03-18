@@ -55,10 +55,10 @@ public class AsyncAwait
 
     public static async Task<string> GetChucksWisdomAsync(string authToken)
     {
-        var api = "http://api.icndb.com/jokes/random";
+        var api = "https://api.chucknorris.io/jokes/random";
         var client = new HttpClient();
-        var response = await client.GetFromJsonAsync<JokeResponse>(api);
-        return response.Value.Joke;
+        var response = await client.GetFromJsonAsync<ChuckNorrisResponse>(api);
+        return response.Value;
     }
 
     // Dynamische Möglichkeit auf JSON zuzugreifen (nicht empfohlen)
@@ -77,5 +77,10 @@ public class AsyncAwait
     public class JokeValue
     {
         public string Joke { get; set; }
+    }
+
+    public class ChuckNorrisResponse
+    {
+        public string Value { get; set; }
     }
 }
