@@ -91,6 +91,8 @@ Dies ist eine Zusammenfassung der Grundlagen der C# Sprache. Während der Vorles
   - [Required Members (C# 11.0)](#required-members-c-110-1)
   - [Pattern Matching Improvements (C# 9.0+)](#pattern-matching-improvements-c-90-1)
   - [Raw String Literals (C# 11.0)](#raw-string-literals-c-110)
+  - [HTTP Client](#http-client)
+  - [JSON-Verarbeitung](#json-verarbeitung)
 ## Statements
 
 ```csharp
@@ -2819,4 +2821,285 @@ var info = $"""
     Name: {name}
     Registriert: {DateTime.Now}
     """;
+```
+
+## HTTP Client
+
+- HttpClient ist die moderne API für HTTP-Anfragen in .NET
+- In .NET Core/.NET 5+ wird HttpClientFactory empfohlen für besseres Ressourcenmanagement
+- Mit System.Net.Http.Json (.NET 5+) können JSON-Daten einfacher serialisiert/deserialisiert werden
+
+```csharp
+// Einfacher GET-Request mit Deserialisierung zu einem Typ
+public async Task<User> GetUserAsync(int id)
+{
+    using var client = new HttpClient();
+    // BaseAddress setzen (optional)
+    client.BaseAddress = new Uri("https://api.example.com/");
+    
+    // GET-Request senden und als User-Objekt deserialisieren
+    var user = await client.GetFromJsonAsync<User>($"users/{id}");
+    return user;
+}
+
+// POST-Request mit JSON-Daten
+public async Task<ApiResponse> CreateUserAsync(User user)
+{
+    using var client = new HttpClient();
+    client.BaseAddress = new Uri("https://api.example.com/");
+    
+    // Content-Type Header wird automatisch gesetzt
+    var response = await client.PostAsJsonAsync("users", user);
+    
+    // Prüfen ob Request erfolgreich war
+    response.EnsureSuccessStatusCode();
+    
+    // Antwort deserialisieren
+    return await response.Content.ReadFromJsonAsync<ApiResponse>();
+}
+
+// PUT-Request mit JSON-Daten
+public async Task UpdateUserAsync(int id, User user)
+{
+    using var client = new HttpClient();
+    var response = await client.PutAsJsonAsync($"https://api.example.com/users/{id}", user);
+    response.EnsureSuccessStatusCode();
+}
+
+// Mit HttpClientFactory (empfohlene Methode in ASP.NET Core)
+// In Startup.cs/Program.cs:
+// services.AddHttpClient("apiClient", client => 
+// {
+//     client.BaseAddress = new Uri("https://api.example.com/");
+//     client.DefaultRequestHeaders.Add("Accept", "application/json");
+// });
+
+public class ApiService
+{
+    private readonly IHttpClientFactory _clientFactory;
+
+    public ApiService(IHttpClientFactory clientFactory)
+    {
+        _clientFactory = clientFactory;
+    }
+
+    public async Task<User> GetUserAsync(int id)
+    {
+        var client = _clientFactory.CreateClient("apiClient");
+        return await client.GetFromJsonAsync<User>($"users/{id}");
+    }
+}
+
+// Mit benutzerdefinierten Headern und Authentifizierung
+public async Task<User> GetAuthenticatedUserAsync(int id, string token)
+{
+    using var client = new HttpClient();
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    
+    return await client.GetFromJsonAsync<User>($"https://api.example.com/users/{id}");
+}
+
+// Fehlerbehandlung
+public async Task<User> GetUserWithErrorHandlingAsync(int id)
+{
+    try
+    {
+        using var client = new HttpClient();
+        var response = await client.GetAsync($"https://api.example.com/users/{id}");
+        
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<User>();
+        }
+        else if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return null; // Oder eigene Logik für 404
+        }
+        else
+        {
+            // Fehlertext auslesen
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"API-Fehler: {(int)response.StatusCode} - {errorContent}");
+        }
+    }
+    catch (HttpRequestException ex)
+    {
+        // Netzwerkfehler behandeln
+        Console.WriteLine($"Netzwerkfehler: {ex.Message}");
+        throw;
+    }
+}
+```
+
+## JSON-Verarbeitung
+
+- System.Text.Json ist die moderne JSON-API in .NET (seit .NET Core 3.0)
+- Newtonsoft.Json (Json.NET) ist eine beliebte Alternative mit mehr Funktionen
+- JsonDocument/JsonElement für High-Performance-Zugriff auf JSON-Daten
+- JsonNode/JsonObject für dynamischeren Zugriff (seit .NET 6)
+
+```csharp
+// Objekt zu JSON-String serialisieren
+public string SerializeToJson<T>(T obj)
+{
+    return JsonSerializer.Serialize(obj, new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+}
+
+// JSON-String zu Objekt deserialisieren
+public T DeserializeFromJson<T>(string json)
+{
+    return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    });
+}
+
+// Direkt mit JsonObject arbeiten (ab .NET 6)
+public void WorkWithJsonObject()
+{
+    // JSON erstellen
+    var jsonObject = new JsonObject
+    {
+        ["name"] = "Max Mustermann",
+        ["age"] = 30,
+        ["isActive"] = true,
+        ["address"] = new JsonObject
+        {
+            ["street"] = "Hauptstraße 1",
+            ["city"] = "Berlin"
+        },
+        ["hobbies"] = new JsonArray { "Lesen", "Programmieren", "Sport" }
+    };
+    
+    // JSON als String ausgeben
+    string jsonString = jsonObject.ToJsonString();
+    Console.WriteLine(jsonString);
+    
+    // Zugriff auf Properties
+    string name = jsonObject["name"].GetValue<string>();
+    int age = jsonObject["age"].GetValue<int>();
+    
+    // Verschachtelte Properties
+    string street = jsonObject["address"]["street"].GetValue<string>();
+    
+    // Arrays
+    string firstHobby = jsonObject["hobbies"][0].GetValue<string>();
+    
+    // Werte ändern
+    jsonObject["age"] = 31;
+    
+    // Neue Properties hinzufügen
+    jsonObject["email"] = "max@example.com";
+}
+
+// Bestehenden JSON-String parsen und mit JsonNode arbeiten
+public void ParseJsonString()
+{
+    public void ParseJsonString()
+    {
+        string json = """
+        {
+            "person": {
+                "name": "Anna",
+                "age": 28,
+                "contacts": [
+                    { "type": "email", "value": "anna@example.com" },
+                    { "type": "phone", "value": "+49123456789" }
+                ]
+            }
+        }
+        """;
+        
+        JsonNode jsonNode = JsonNode.Parse(json);
+        
+        // Werte auslesen
+        string name = jsonNode["person"]["name"].GetValue<string>();
+        
+        // Mit Arrays arbeiten
+        int contactCount = jsonNode["person"]["contacts"].AsArray().Count;
+        string email = jsonNode["person"]["contacts"][0]["value"].GetValue<string>();
+        
+        // Werte modifizieren
+        jsonNode["person"]["age"] = 29;
+        
+        // JsonArray durchlaufen
+        foreach (JsonNode contact in jsonNode["person"]["contacts"].AsArray())
+        {
+            string type = contact["type"].GetValue<string>();
+            string value = contact["value"].GetValue<string>();
+            Console.WriteLine($"{type}: {value}");
+        }
+    }
+}
+
+// High-Performance JSON-Verarbeitung mit JsonDocument
+public void UseJsonDocument()
+{
+    // High-Performance JSON-Verarbeitung mit JsonDocument
+    public void UseJsonDocument()
+    {
+        string json = """
+        {
+            "data": [
+                {"id": 1, "name": "Product 1"},
+                {"id": 2, "name": "Product 2"}
+            ]
+        }
+        """;
+        
+        using JsonDocument doc = JsonDocument.Parse(json);
+        JsonElement root = doc.RootElement;
+        
+        // Prüfen ob Property existiert
+        if (root.TryGetProperty("data", out JsonElement dataArray))
+        {
+            // Array durchlaufen
+            foreach (JsonElement item in dataArray.EnumerateArray())
+            {
+                if (item.TryGetProperty("id", out JsonElement id) && 
+                    item.TryGetProperty("name", out JsonElement name))
+                {
+                    Console.WriteLine($"ID: {id.GetInt32()}, Name: {name.GetString()}");
+                }
+            }
+        }
+    }
+}
+
+// JSON-Wert dynamisch auslesen basierend auf JSON-Pfad
+public object GetValueByPath(string json, string path)
+{
+    JsonNode node = JsonNode.Parse(json);
+    string[] segments = path.Split('.');
+    
+    foreach (string segment in segments)
+    {
+        // Array-Index-Notation [0] extrahieren
+        if (segment.Contains("[") && segment.Contains("]"))
+        {
+            string propertyName = segment.Substring(0, segment.IndexOf("["));
+            string indexStr = segment.Substring(segment.IndexOf("[") + 1, segment.IndexOf("]") - segment.IndexOf("[") - 1);
+            
+            if (int.TryParse(indexStr, out int index))
+            {
+                node = node[propertyName]?[index];
+            }
+        }
+        else
+        {
+            node = node[segment];
+        }
+        
+        if (node == null)
+            return null;
+    }
+    
+    // Typkonvertierung basierend auf dem JsonValueKind
+    return node.GetValue<object>();
+}
 ```
