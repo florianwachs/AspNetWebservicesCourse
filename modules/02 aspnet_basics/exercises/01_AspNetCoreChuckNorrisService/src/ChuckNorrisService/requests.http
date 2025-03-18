@@ -1,0 +1,4 @@
+@HostAddress = https://localhost:7172
+
+### Get a random joke
+GET {{HostAddress}}/api/jokes/random

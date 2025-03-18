@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChuckNorrisService.Models
+﻿namespace ChuckNorrisService.Models
 {
     public enum JokeCategories
     {

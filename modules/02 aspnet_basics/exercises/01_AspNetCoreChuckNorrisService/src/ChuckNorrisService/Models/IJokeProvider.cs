@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace ChuckNorrisService.Models
+﻿namespace ChuckNorrisService.Models
 {
     public interface IJokeProvider
     {
