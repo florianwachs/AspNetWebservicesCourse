@@ -76,6 +76,21 @@ Dies ist eine Zusammenfassung der Grundlagen der C# Sprache. Während der Vorles
     - [switch](#switch)
   - [out-Variablen](#out-variablen)
   - [Local Functions](#local-functions)
+  - [Records (C# 9.0)](#records-c-90)
+  - [Init-only Properties (C# 9.0)](#init-only-properties-c-90)
+  - [Top-level Statements (C# 9.0)](#top-level-statements-c-90)
+  - [File-scoped Namespaces (C# 10.0)](#file-scoped-namespaces-c-100)
+  - [Required Members (C# 11.0)](#required-members-c-110)
+  - [Pattern Matching Improvements (C# 9.0+)](#pattern-matching-improvements-c-90)
+  - [out-Variablen](#out-variablen-1)
+  - [Local Functions](#local-functions-1)
+  - [Records (C# 9.0)](#records-c-90-1)
+  - [Init-only Properties (C# 9.0)](#init-only-properties-c-90-1)
+  - [Top-level Statements (C# 9.0)](#top-level-statements-c-90-1)
+  - [File-scoped Namespaces (C# 10.0)](#file-scoped-namespaces-c-100-1)
+  - [Required Members (C# 11.0)](#required-members-c-110-1)
+  - [Pattern Matching Improvements (C# 9.0+)](#pattern-matching-improvements-c-90-1)
+  - [Raw String Literals (C# 11.0)](#raw-string-literals-c-110)
 ## Statements
 
 ```csharp
@@ -2154,6 +2169,92 @@ public void SwitchWithPatterns(Shape shape)
     }
 }
 
+// List Patterns (C# 11.0)
+public static string AnalyzeSequence(int[] numbers) => numbers switch
+{
+    [] => "Leere Sequenz",
+    [var single] => $"Ein Element: {single}",
+    [var first, var second] => $"Zwei Elemente: {first}, {second}",
+    [var first, _, .. var rest] => $"Mehrere Elemente, erstes: {first}, letzte: {rest.Length}",
+    [> 0, > 0, .. var allPositive] when allPositive.All(x => x > 0) => "Alle positiv!",
+    _ => "Andere Sequenz"
+};
+
+// Kombinierte Muster mit Dekonstructing und Property-Patterns
+public static string DescribePoint(Point p) => p switch
+{
+    { X: 0, Y: 0 } => "Ursprung",
+    { X: var x, Y: var y } when x == y => "Auf der Diagonale",
+    { X: var x, Y: var y } when x == -y => "Auf der Gegendiagonale",
+    { X: > 0, Y: > 0 } => "Quadrant I",
+    { X: < 0, Y: > 0 } => "Quadrant II",
+    { X: < 0, Y: < 0 } => "Quadrant III",
+    { X: > 0, Y: < 0 } => "Quadrant IV",
+    _ => "Auf einer Achse"
+};
+
+// Verschachtelte Muster mit Objektgraphen
+public static string ValidateOrder(Order order) => order switch
+{
+    { Customer: null } => "Kunde fehlt",
+    { Items: null or { Count: 0 } } => "Keine Artikel im Warenkorb",
+    { Items: { Count: > 10 }, Customer: { IsVIP: true } } => "Großbestellung von VIP-Kunde",
+    { Customer: { Address: { Country: "Deutschland" } } } => "Inländische Bestellung",
+    { TotalAmount: >= 1000, Customer: { IsVIP: false } } => "Große Bestellung von Standard-Kunde",
+    _ => "Standard Bestellung"
+};
+
+// Rekursive Muster mit Dekomposition
+public static bool IsPalindrome(string s)
+{
+    return s switch
+    {
+        "" or { Length: 1 } => true,
+        [var first, .. var middle, var last] when first == last => IsPalindrome(middle),
+        _ => false
+    };
+}
+
+// Pattern in if-statements mit komplexer Logik
+public static void ProcessInput(object input)
+{
+    if (input is string { Length: > 0 } text && 
+        (text[0] is >= 'A' and <= 'Z' || text[0] == '_'))
+    {
+        Console.WriteLine($"Gültige Eingabe: {text}");
+    }
+    else if (input is int value and (> 0 and < 100 or == 1000))
+    {
+        Console.WriteLine($"Zahl im gültigen Bereich: {value}");
+    }
+    else if (input is List<int> { Count: > 0 } list && 
+             list.Sum() is var sum && sum > 100)
+    {
+        Console.WriteLine($"Liste mit Summe {sum}");
+    }
+}
+
+// In Kombination mit Tupeln
+public static string ClassifyTemperature((double Celsius, double Humidity) conditions) => conditions switch
+{
+    (> 30, > 0.8) => "Heiß und schwül",
+    (> 30, _) => "Heiß",
+    (> 20, < 0.2) => "Warm und trocken",
+    (> 20, _) => "Warm",
+    (< 0, _) => "Gefroren",
+    _ => "Gemäßigt"
+};
+
+// Kaskadierte Type-Patterns
+public static decimal CalculateDiscount(Customer customer) => customer switch
+{
+    PremiumCustomer { YearsOfLoyalty: > 5 } => 0.25m,
+    PremiumCustomer => 0.15m,
+    CorporateCustomer { AnnualRevenue: > 1000000 } => 0.20m,
+    CorporateCustomer => 0.10m,
+    { PurchaseCount: > 100 } => 0.05m,
+    _ => 0m
+};
 ```
 
 ## out-Variablen
@@ -2194,5 +2295,528 @@ public class LocalFunctions
         }
     }
 }
+```
 
+## Records (C# 9.0)
+
+- Referenztypen die für unveränderliche (immutable) Datenmodelle konzipiert sind
+- Bieten automatisch implementierte Equals, GetHashCode und ToString Methoden
+- Mit-Ausdrücke für nicht-destruktive Mutationen
+- Unterstützen Vererbung und Interfaces
+
+```csharp
+// Einfaches Positional Record
+public record Person(string FirstName, string LastName);
+
+// Verwendung
+var person = new Person("Max", "Mustermann");
+Console.WriteLine(person); // Person { FirstName = Max, LastName = Mustermann }
+
+// Records bieten Wert-Gleichheit statt Referenz-Gleichheit
+var person1 = new Person("Max", "Mustermann");
+var person2 = new Person("Max", "Mustermann");
+Console.WriteLine(person1 == person2); // true
+
+// Nicht-destruktive Mutation mit with-Ausdruck
+var person3 = person1 with { LastName = "Schmidt" };
+Console.WriteLine(person3); // Person { FirstName = Max, LastName = Schmidt }
+```
+
+```csharp
+// Record mit zusätzlichen Eigenschaften und Methoden
+public record Student(string FirstName, string LastName, int StudentId)
+{
+    private List<string> _courses = new();
+
+    public IReadOnlyList<string> Courses => _courses.AsReadOnly();
+
+    public void EnrollInCourse(string course)
+    {
+        _courses.Add(course);
+    }
+}
+```
+
+## Init-only Properties (C# 9.0)
+
+- Eigenschaften mit init statt set können nur während der Objekt-Initialisierung zugewiesen werden
+- Unterstützt Objektunveränderlichkeit nach der Initialisierung
+
+```csharp
+public class Person
+{
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+}
+
+var person = new Person { FirstName = "Max", LastName = "Mustermann" };
+// person.LastName = "Schmidt"; // Fehler: Init-only property kann nach der Initialisierung nicht geändert werden
+```
+
+## Top-level Statements (C# 9.0)
+
+- Ermöglicht das Schreiben von Code ohne explizite Main-Methode und Klasse
+- Vereinfacht insbesondere kleine Programme und Konsolenanwendungen
+
+```csharp
+// Program.cs - kein Namespace, keine Klasse, keine Main-Methode nötig
+Console.WriteLine("Hello, World!");
+
+// Asynchroner Code ist auch möglich
+await File.WriteAllTextAsync("example.txt", "Hello, World!");
+
+// Rückgabecode für den Prozess
+return 0;
+```
+
+## File-scoped Namespaces (C# 10.0)
+
+- Ermöglicht die Deklaration von Namespaces ohne geschweifte Klammern
+- Reduziert Einrückung und macht den Code übersichtlicher
+
+```csharp
+// Alte Schreibweise
+namespace MyNamespace
+{
+    public class MyClass
+    {
+        // ...
+    }
+}
+
+// Neue Schreibweise mit File-scoped Namespace
+namespace MyNamespace;
+
+public class MyClass
+{
+    // ...
+}
+```
+
+## Required Members (C# 11.0)
+
+- Mit dem `required` Modifier müssen Eigenschaften bei der Objekt-Initialisierung gesetzt werden
+- Verbessert die Typsicherheit, indem undefinierte Zustände verhindert werden
+
+```csharp
+public class Person
+{
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public int? Age { get; set; } // Optional
+}
+
+// Muss beide required Properties setzen
+var person = new Person
+{
+    FirstName = "Max",
+    LastName = "Mustermann"
+};
+
+// var incomplete = new Person { FirstName = "Max" }; // Fehler: LastName fehlt
+```
+
+## Pattern Matching Improvements (C# 9.0+)
+
+- Erweiterte Muster für Type-Tests und Vergleiche
+- Logische Muster mit and, or, not
+
+```csharp
+// Pattern Matching auf Typen und Eigenschaften
+public static string GetShapeInfo(object shape) => shape switch
+{
+    Circle { Radius: > 0 } c => $"Kreis mit Radius {c.Radius}",
+    Rectangle { Length: var l, Height: var h } when l == h => $"Quadrat mit Seitenlänge {l}",
+    Rectangle r => $"Rechteck {r.Length} x {r.Height}",
+    null => "Kein Shape",
+    _ => "Unbekanntes Shape"
+};
+
+// Logische Muster mit and, or, not
+public static bool IsValidIdentifier(string id) => id is
+    [var first, .. var rest] and
+    { Length: > 0 } when
+    (first is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or '_') &&
+    rest.All(c => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or '_' or >= '0' and <= '9');
+
+// List Patterns (C# 11.0)
+public static string AnalyzeSequence(int[] numbers) => numbers switch
+{
+    [] => "Leere Sequenz",
+    [var single] => $"Ein Element: {single}",
+    [var first, var second] => $"Zwei Elemente: {first}, {second}",
+    [var first, _, .. var rest] => $"Mehrere Elemente, erstes: {first}, letzte: {rest.Length}",
+    [> 0, > 0, .. var allPositive] when allPositive.All(x => x > 0) => "Alle positiv!",
+    _ => "Andere Sequenz"
+};
+
+// Kombinierte Muster mit Dekonstructing und Property-Patterns
+public static string DescribePoint(Point p) => p switch
+{
+    { X: 0, Y: 0 } => "Ursprung",
+    { X: var x, Y: var y } when x == y => "Auf der Diagonale",
+    { X: var x, Y: var y } when x == -y => "Auf der Gegendiagonale",
+    { X: > 0, Y: > 0 } => "Quadrant I",
+    { X: < 0, Y: > 0 } => "Quadrant II",
+    { X: < 0, Y: < 0 } => "Quadrant III",
+    { X: > 0, Y: < 0 } => "Quadrant IV",
+    _ => "Auf einer Achse"
+};
+
+// Verschachtelte Muster mit Objektgraphen
+public static string ValidateOrder(Order order) => order switch
+{
+    { Customer: null } => "Kunde fehlt",
+    { Items: null or { Count: 0 } } => "Keine Artikel im Warenkorb",
+    { Items: { Count: > 10 }, Customer: { IsVIP: true } } => "Großbestellung von VIP-Kunde",
+    { Customer: { Address: { Country: "Deutschland" } } } => "Inländische Bestellung",
+    { TotalAmount: >= 1000, Customer: { IsVIP: false } } => "Große Bestellung von Standard-Kunde",
+    _ => "Standard Bestellung"
+};
+
+// Rekursive Muster mit Dekomposition
+public static bool IsPalindrome(string s)
+{
+    return s switch
+    {
+        "" or { Length: 1 } => true,
+        [var first, .. var middle, var last] when first == last => IsPalindrome(middle),
+        _ => false
+    };
+}
+
+// Pattern in if-statements mit komplexer Logik
+public static void ProcessInput(object input)
+{
+    if (input is string { Length: > 0 } text && 
+        (text[0] is >= 'A' and <= 'Z' || text[0] == '_'))
+    {
+        Console.WriteLine($"Gültige Eingabe: {text}");
+    }
+    else if (input is int value and (> 0 and < 100 or == 1000))
+    {
+        Console.WriteLine($"Zahl im gültigen Bereich: {value}");
+    }
+    else if (input is List<int> { Count: > 0 } list && 
+             list.Sum() is var sum && sum > 100)
+    {
+        Console.WriteLine($"Liste mit Summe {sum}");
+    }
+}
+
+// In Kombination mit Tupeln
+public static string ClassifyTemperature((double Celsius, double Humidity) conditions) => conditions switch
+{
+    (> 30, > 0.8) => "Heiß und schwül",
+    (> 30, _) => "Heiß",
+    (> 20, < 0.2) => "Warm und trocken",
+    (> 20, _) => "Warm",
+    (< 0, _) => "Gefroren",
+    _ => "Gemäßigt"
+};
+
+// Kaskadierte Type-Patterns
+public static decimal CalculateDiscount(Customer customer) => customer switch
+{
+    PremiumCustomer { YearsOfLoyalty: > 5 } => 0.25m,
+    PremiumCustomer => 0.15m,
+    CorporateCustomer { AnnualRevenue: > 1000000 } => 0.20m,
+    CorporateCustomer => 0.10m,
+    { PurchaseCount: > 100 } => 0.05m,
+    _ => 0m
+};
+```
+
+## out-Variablen
+
+```csharp
+decimal q;
+if (!map.TryGetValue("AUD", out q))
+{
+    q = 10;
+}
+
+// C# 7: out-Variables
+// amount ist nur innerhalb des if-Blocks zugewiesen
+if (map.TryGetValue("USD", out decimal amount))
+{
+    q = amount;
+}
+
+```
+
+## Local Functions
+
+```csharp
+public class LocalFunctions
+{
+    public int Fibonacci(int x)
+    {
+        if (x < 0) throw new ArgumentException("Less negativity please!", nameof(x));
+        return Fib(x).current; // Hier endet die eigentliche Funktion
+
+        // Lokale Funktion mit ValueTuple als return Type
+        // Kann auch auf lokale Variablen der umgebenden Funktion zugreifen
+        (int current, int previous) Fib(int i)
+        {
+            if (i == 0) return (1, 0);
+            var (p, pp) = Fib(i - 1);
+            return (p + pp, p);
+        }
+    }
+}
+```
+
+## Records (C# 9.0)
+
+- Referenztypen die für unveränderliche (immutable) Datenmodelle konzipiert sind
+- Bieten automatisch implementierte Equals, GetHashCode und ToString Methoden
+- Mit-Ausdrücke für nicht-destruktive Mutationen
+- Unterstützen Vererbung und Interfaces
+
+```csharp
+// Einfaches Positional Record
+public record Person(string FirstName, string LastName);
+
+// Verwendung
+var person = new Person("Max", "Mustermann");
+Console.WriteLine(person); // Person { FirstName = Max, LastName = Mustermann }
+
+// Records bieten Wert-Gleichheit statt Referenz-Gleichheit
+var person1 = new Person("Max", "Mustermann");
+var person2 = new Person("Max", "Mustermann");
+Console.WriteLine(person1 == person2); // true
+
+// Nicht-destruktive Mutation mit with-Ausdruck
+var person3 = person1 with { LastName = "Schmidt" };
+Console.WriteLine(person3); // Person { FirstName = Max, LastName = Schmidt }
+```
+
+```csharp
+// Record mit zusätzlichen Eigenschaften und Methoden
+public record Student(string FirstName, string LastName, int StudentId)
+{
+    private List<string> _courses = new();
+
+    public IReadOnlyList<string> Courses => _courses.AsReadOnly();
+
+    public void EnrollInCourse(string course)
+    {
+        _courses.Add(course);
+    }
+}
+```
+
+## Init-only Properties (C# 9.0)
+
+- Eigenschaften mit init statt set können nur während der Objekt-Initialisierung zugewiesen werden
+- Unterstützt Objektunveränderlichkeit nach der Initialisierung
+
+```csharp
+public class Person
+{
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+}
+
+var person = new Person { FirstName = "Max", LastName = "Mustermann" };
+// person.LastName = "Schmidt"; // Fehler: Init-only property kann nach der Initialisierung nicht geändert werden
+```
+
+## Top-level Statements (C# 9.0)
+
+- Ermöglicht das Schreiben von Code ohne explizite Main-Methode und Klasse
+- Vereinfacht insbesondere kleine Programme und Konsolenanwendungen
+
+```csharp
+// Program.cs - kein Namespace, keine Klasse, keine Main-Methode nötig
+Console.WriteLine("Hello, World!");
+
+// Asynchroner Code ist auch möglich
+await File.WriteAllTextAsync("example.txt", "Hello, World!");
+
+// Rückgabecode für den Prozess
+return 0;
+```
+
+## File-scoped Namespaces (C# 10.0)
+
+- Ermöglicht die Deklaration von Namespaces ohne geschweifte Klammern
+- Reduziert Einrückung und macht den Code übersichtlicher
+
+```csharp
+// Alte Schreibweise
+namespace MyNamespace
+{
+    public class MyClass
+    {
+        // ...
+    }
+}
+
+// Neue Schreibweise mit File-scoped Namespace
+namespace MyNamespace;
+
+public class MyClass
+{
+    // ...
+}
+```
+
+## Required Members (C# 11.0)
+
+- Mit dem `required` Modifier müssen Eigenschaften bei der Objekt-Initialisierung gesetzt werden
+- Verbessert die Typsicherheit, indem undefinierte Zustände verhindert werden
+
+```csharp
+public class Person
+{
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public int? Age { get; set; } // Optional
+}
+
+// Muss beide required Properties setzen
+var person = new Person
+{
+    FirstName = "Max",
+    LastName = "Mustermann"
+};
+
+// var incomplete = new Person { FirstName = "Max" }; // Fehler: LastName fehlt
+```
+
+## Pattern Matching Improvements (C# 9.0+)
+
+- Erweiterte Muster für Type-Tests und Vergleiche
+- Logische Muster mit and, or, not
+
+```csharp
+// Pattern Matching auf Typen und Eigenschaften
+public static string GetShapeInfo(object shape) => shape switch
+{
+    Circle { Radius: > 0 } c => $"Kreis mit Radius {c.Radius}",
+    Rectangle { Length: var l, Height: var h } when l == h => $"Quadrat mit Seitenlänge {l}",
+    Rectangle r => $"Rechteck {r.Length} x {r.Height}",
+    null => "Kein Shape",
+    _ => "Unbekanntes Shape"
+};
+
+// Logische Muster mit and, or, not
+public static bool IsValidIdentifier(string id) => id is
+    [var first, .. var rest] and
+    { Length: > 0 } when
+    (first is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or '_') &&
+    rest.All(c => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or '_' or >= '0' and <= '9');
+
+// List Patterns (C# 11.0)
+public static string AnalyzeSequence(int[] numbers) => numbers switch
+{
+    [] => "Leere Sequenz",
+    [var single] => $"Ein Element: {single}",
+    [var first, var second] => $"Zwei Elemente: {first}, {second}",
+    [var first, _, .. var rest] => $"Mehrere Elemente, erstes: {first}, letzte: {rest.Length}",
+    [> 0, > 0, .. var allPositive] when allPositive.All(x => x > 0) => "Alle positiv!",
+    _ => "Andere Sequenz"
+};
+
+// Kombinierte Muster mit Dekonstructing und Property-Patterns
+public static string DescribePoint(Point p) => p switch
+{
+    { X: 0, Y: 0 } => "Ursprung",
+    { X: var x, Y: var y } when x == y => "Auf der Diagonale",
+    { X: var x, Y: var y } when x == -y => "Auf der Gegendiagonale",
+    { X: > 0, Y: > 0 } => "Quadrant I",
+    { X: < 0, Y: > 0 } => "Quadrant II",
+    { X: < 0, Y: < 0 } => "Quadrant III",
+    { X: > 0, Y: < 0 } => "Quadrant IV",
+    _ => "Auf einer Achse"
+};
+
+// Verschachtelte Muster mit Objektgraphen
+public static string ValidateOrder(Order order) => order switch
+{
+    { Customer: null } => "Kunde fehlt",
+    { Items: null or { Count: 0 } } => "Keine Artikel im Warenkorb",
+    { Items: { Count: > 10 }, Customer: { IsVIP: true } } => "Großbestellung von VIP-Kunde",
+    { Customer: { Address: { Country: "Deutschland" } } } => "Inländische Bestellung",
+    { TotalAmount: >= 1000, Customer: { IsVIP: false } } => "Große Bestellung von Standard-Kunde",
+    _ => "Standard Bestellung"
+};
+
+// Rekursive Muster mit Dekomposition
+public static bool IsPalindrome(string s)
+{
+    return s switch
+    {
+        "" or { Length: 1 } => true,
+        [var first, .. var middle, var last] when first == last => IsPalindrome(middle),
+        _ => false
+    };
+}
+
+// Pattern in if-statements mit komplexer Logik
+public static void ProcessInput(object input)
+{
+    if (input is string { Length: > 0 } text && 
+        (text[0] is >= 'A' and <= 'Z' || text[0] == '_'))
+    {
+        Console.WriteLine($"Gültige Eingabe: {text}");
+    }
+    else if (input is int value and (> 0 and < 100 or == 1000))
+    {
+        Console.WriteLine($"Zahl im gültigen Bereich: {value}");
+    }
+    else if (input is List<int> { Count: > 0 } list && 
+             list.Sum() is var sum && sum > 100)
+    {
+        Console.WriteLine($"Liste mit Summe {sum}");
+    }
+}
+
+// In Kombination mit Tupeln
+public static string ClassifyTemperature((double Celsius, double Humidity) conditions) => conditions switch
+{
+    (> 30, > 0.8) => "Heiß und schwül",
+    (> 30, _) => "Heiß",
+    (> 20, < 0.2) => "Warm und trocken",
+    (> 20, _) => "Warm",
+    (< 0, _) => "Gefroren",
+    _ => "Gemäßigt"
+};
+
+// Kaskadierte Type-Patterns
+public static decimal CalculateDiscount(Customer customer) => customer switch
+{
+    PremiumCustomer { YearsOfLoyalty: > 5 } => 0.25m,
+    PremiumCustomer => 0.15m,
+    CorporateCustomer { AnnualRevenue: > 1000000 } => 0.20m,
+    CorporateCustomer => 0.10m,
+    { PurchaseCount: > 100 } => 0.05m,
+    _ => 0m
+};
+```
+
+## Raw String Literals (C# 11.0)
+
+- Mehrere Anführungszeichen für String-Literale, die keine Escape-Sequenzen benötigen
+- Besonders nützlich für JSON, XML, SQL und reguläre Ausdrücke
+
+```csharp
+// String mit mehreren Zeilen und Anführungszeichen ohne Escape-Sequenzen
+var json = """
+{
+    "name": "Max",
+    "age": 30,
+    "hobbies": ["Coding", "Reading"]
+}
+""";
+
+// Mit String-Interpolation
+var name = "Max";
+var info = $"""
+    Benutzerinformation:
+    Name: {name}
+    Registriert: {DateTime.Now}
+    """;
 ```
