@@ -6,15 +6,14 @@ Die Übungen basieren auf .net core, Microsofts plattformunabhängige .NET Techn
 
 - Windows 10 (aktuelle Version)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) mit dem .NET Core Payload ![](./assets/vs_netcore_payload.png)
-- [.NET 5 SDK](https://dotnet.microsoft.com/download)
-- Docker for Windows (für unsere Container-Übungen)
+- [.NET 9 SDK](https://dot.net)
+- Docker Desktop (für unsere Container-Übungen)
 
 Mögliche Alternativen:
 
 - JetBrains Rider (IntelliJ basiert)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - Visual Studio for Mac
-- vim, emacs... :-)
 
 ## Code-Repository
 
@@ -45,7 +44,7 @@ Falls Ihr Extensions habt die hier fehlen unbedingt Info an mich, Danke!
 
 ### Visual Studio
 
-- Aspire (über workload)
+- Aspire
 
 ### Rider
 

@@ -53,13 +53,13 @@ Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](00_prerequisit
 
 Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Ressourcen zum Einstieg in `C#`. Das Durcharbeiten des Vorbereitungsmaterials ist **nicht zwingend erforderlich** zur Teilnahme. Wir werden uns gemeinsam das benötigte C#-Wissen aneignen.
 
-| Beschreibung                                            | Link                                                                                                                                          |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                       |
-| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                               |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                            |
-| Video-Sammlung                                          | https://channel9.msdn.com/Series/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha, https://www.youtube.com/results?search_query=nick+chapsas |
-| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                              |
+| Beschreibung                                            | Link                                                                                                                                                                                                       |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                                                                                    |
+| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                                                                                            |
+| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                                                                                         |
+| Video-Sammlung                                          | https://learn.microsoft.com/en-us/shows/csharp-for-beginners/?wt.mc_id=educationalcsharp-c9-scottha, https://www.youtube.com/@nickchapsas, https://www.youtube.com/@MilanJovanovicTech |
+| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                                           |
 
 ## Zusätzliches Material
 
