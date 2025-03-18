@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Net.Http.Json;
 using Xunit;
+using System.Text.Json.Nodes;
 
 namespace Advanced;
 
@@ -64,8 +65,8 @@ public class AsyncAwait
     // Dynamische Möglichkeit auf JSON zuzugreifen (nicht empfohlen)
     private static string GetJokeFromJSON(string json)
     {
-        var jsonObj = JsonSerializer.Deserialize<dynamic>(json);
-        var joke = jsonObj["value"]["joke"].ToString();
+        var jsonNode = JsonSerializer.Deserialize<JsonObject>(json);
+        var joke = jsonNode["value"]?["joke"]?.GetValue<string>() ?? string.Empty;
         return joke;
     }
 
