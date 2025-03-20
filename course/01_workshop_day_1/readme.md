@@ -30,7 +30,7 @@ Folgende Übungen sind für den Tag vorgesehen:
 
 ### Teambildung (am 2025-03-21)
 
-Ich habe die Vorgabe für die Prüfung 3-4er Teams zu bilden. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
+Ich habe die Vorgabe für die Prüfung Teams zu bilden, hier muss ich auf eine ähnliche Teamgröße achten. Falls Ihr schon einen Teamvorschlag habt, können wir das gerne berücksichtigen.
 
 ### GitLab Code-Repository mit Zugang (bis Termin 2)
 Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim habt Ihr Zugriff auf Gitlab. [Mehr Infos](../../00_prerequisites/setup_instructions.md)
