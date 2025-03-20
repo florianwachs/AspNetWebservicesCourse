@@ -4,7 +4,7 @@
 
 Die Übungen basieren auf .net core, Microsofts plattformunabhängige .NET Technologie (Windows, Linux, MacOS). Somit sollten alle aktuellen Tools / Betriebssysteme für die Vorlesung passen. Im folgenden werden die Tools beschrieben mit denen der Kurs erstellt wurde.
 
-- Windows 10 (aktuelle Version)
+- Windows 11 / Linux / Mac (aktuelle Version)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) mit dem .NET Core Payload ![](./assets/vs_netcore_payload.png)
 - [.NET 9 SDK](https://dot.net)
 - Docker Desktop (für unsere Container-Übungen)
