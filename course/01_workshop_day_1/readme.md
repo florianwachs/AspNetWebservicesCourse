@@ -15,7 +15,7 @@ Endlich geht es los! Hier ein Überblick was wir vor haben.
 - [Introduction](../../slides/Introduction.pdf)
 - [NET Overview](../../slides/NET%20Overview.pdf)
 - [CSharp Language](../../slides/CSharp%20Language.pdf)
-- [ASP.NET](../../slides/Web%20Services%20mit%20ASP.NET.pdf)
+- [ASP.NET](../../slides/AspNetCore.pdf)
 
 ## Übungen
 
