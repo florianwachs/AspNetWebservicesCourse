@@ -35,5 +35,5 @@ Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim habt Ihr Zugriff 
 ### Vorstellung Projekt Idee
 
 - 5min. pro Team
-- Kurze Vorstellung Eurer Idee
+- Kurze Vorstellung Eurer Idee (Hinweise: [Prüfungsinformationen](https://github.com/florianwachs/AspNetWebservicesCourse/blob/main/course/00_exam/readme.md#vorstellung-der-projektidee-und-use-cases) )
 - Erste Abstimmung der Use-Cases um den Umfang zu bestimmen
