@@ -11,6 +11,7 @@
 - REST Best Practices
 
 ## Slides
+
 - [CSharp Language](../../slides/CSharp%20Language.pdf)
 - [ASP.NET](../../slides/Web%20Services%20mit%20ASP.NET.pdf)
 - [Dependency Injection](../../extras/patterns/dependencyinjection/)
@@ -20,11 +21,10 @@
 
 Folgende Übungen sind für den Tag vorgesehen:
 
-| Übung                                                                             | Lösung                                                                            |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/exercises/01_AspNetCoreChuckNorrisService/) | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/01_AspNetCoreChuckNorrisService/) |
+| Übung                                                                                                         | Lösung                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/exercises/01_AspNetCoreChuckNorrisService/)           | [Chuck Norris ASP.NET](../../modules/02%20aspnet_basics/solutions/01_AspNetCoreChuckNorrisService/)           |
 | [Chuck Norris ASP.NET CRUD](../../modules/02%20aspnet_basics/exercises/02_AspNetCoreChuckNorrisService_CRUD/) | [Chuck Norris ASP.NET CRUD](../../modules/02%20aspnet_basics/solutions/02_AspNetCoreChuckNorrisService_CRUD/) |
-
 
 ## Erforderliche Ergebnisse
 
@@ -34,3 +34,6 @@ Die Prüfung erfolgt als Projektarbeit. Über die TH-Rosenheim habt Ihr Zugriff 
 
 ### Vorstellung Projekt Idee
 
+- 5min. pro Team
+- Kurze Vorstellung Eurer Idee
+- Erste Abstimmung der Use-Cases um den Umfang zu bestimmen
