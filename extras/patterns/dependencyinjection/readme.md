@@ -15,7 +15,7 @@ services.AddScoped<IBookRepository, DummyBookRepository>();
 
 //       👇 Jedesmal wenn eine Komponente ein IBookRepository anfrägt, erhält es eine neue Instanz
 services.AddTransient<IBookRepository, DummyBookRepository>();
-    ```
+```
 
 Zur Registrierung stehen uns verschiedene `Lifetimes` zur Auswahl.
 
