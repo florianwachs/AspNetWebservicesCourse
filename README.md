@@ -7,8 +7,8 @@ Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenh
 |                   |                        |                                                      |
 | ----------------- | ---------------------- | ---------------------------------------------------- |
 | ✅Workshop Tag 1  | 2025-03-21, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| 👉Workshop Tag 2 | 2025-04-11, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| ⌛️Workshop Tag 3 | 2025-04-25, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
+| ✅Workshop Tag 2  | 2025-04-11, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
+| 👉Workshop Tag 3  | 2025-04-25, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
 | ⌛️Workshop Tag 4 | 2025-05-09, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
 | ⌛️Workshop Tag 5 | 2025-05-23, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
 | ➡️Prüfung         | 2025-06-27             | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
@@ -53,13 +53,13 @@ Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](00_prerequisit
 
 Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Ressourcen zum Einstieg in `C#`. Das Durcharbeiten des Vorbereitungsmaterials ist **nicht zwingend erforderlich** zur Teilnahme. Wir werden uns gemeinsam das benötigte C#-Wissen aneignen.
 
-| Beschreibung                                            | Link                                                                                                                                                                                                       |
-| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                                                                                    |
-| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                                                                                            |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                                                                                         |
+| Beschreibung                                            | Link                                                                                                                                                                                   |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                                                                |
+| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                                                                        |
+| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                                                                     |
 | Video-Sammlung                                          | https://learn.microsoft.com/en-us/shows/csharp-for-beginners/?wt.mc_id=educationalcsharp-c9-scottha, https://www.youtube.com/@nickchapsas, https://www.youtube.com/@MilanJovanovicTech |
-| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                                           |
+| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                       |
 
 ## Zusätzliches Material
 
