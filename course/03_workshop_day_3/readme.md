@@ -22,9 +22,8 @@ Folgende Übungen sind für den Tag vorgesehen:
 
 | Übung | Lösung |
 | ----- | ------ |
-
 | [Chuck Norris ASP.NET EF](../../modules/04%20aspnet_ef/exercises/src/) | [Chuck Norris ASP.NET EF](../../modules/04%20aspnet_ef/solutions/) |
-| [Open API](../../modules/05%20aspnet_openapi/exercise/) | |
+| [Open API](../../modules/05%20aspnet_openapi/exercise/) | [Open API](../../modules/05%20aspnet_openapi/solution/) |
 
 ## Erforderliche Ergebnisse
 
