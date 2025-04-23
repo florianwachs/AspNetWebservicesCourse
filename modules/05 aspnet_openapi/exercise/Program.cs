@@ -1,6 +1,5 @@
 using EfCoreCqrs.Api;
 using EfCoreCqrs.DataAccess;
-using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 

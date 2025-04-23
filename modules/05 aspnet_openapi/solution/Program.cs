@@ -1,9 +1,7 @@
 using EfCoreCqrs.Api;
 using EfCoreCqrs.DataAccess;
-using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +13,11 @@ await new DbSeeder().Seed(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Sample API V1");
+    });
 }
 
 app.MapGet("/", (BookDbContext context) => "Hi bitte einen Api Endpunkt unter /api/v1 aufrufen")
@@ -38,26 +39,6 @@ static void ConfigureDiServices(IServiceCollection services)
 
     services.AddDbContext<BookDbContext>(options => { options.UseSqlite(connection); });
     services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(BookDbContext).Assembly));
-    
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(options =>
-    {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Version = "v1",
-            Title = "Sample API",
-            Description = "Sample",
-            TermsOfService = new Uri("https://example.com/terms"),
-            Contact = new OpenApiContact
-            {
-                Name = "Example Contact",
-                Url = new Uri("https://example.com/contact")
-            },
-            License = new OpenApiLicense
-            {
-                Name = "Example License",
-                Url = new Uri("https://example.com/license")
-            }
-        });
-    });
+
+    services.AddOpenApi();
 }

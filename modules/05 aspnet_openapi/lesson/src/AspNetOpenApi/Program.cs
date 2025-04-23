@@ -1,32 +1,11 @@
 using AspNetOpenApi.Domain;
 using AspNetOpenApi.Providers;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 👇Dependencies für Swagger am Dependency Injection Container registrieren
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "Sample API",
-        Description = "Sample",
-        TermsOfService = new Uri("https://example.com/terms"),
-        Contact = new OpenApiContact
-        {
-            Name = "Example Contact",
-            Url = new Uri("https://example.com/contact")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "Example License",
-            Url = new Uri("https://example.com/license")
-        }
-    });
-});
+builder.Services.AddOpenApi();
 builder.Services.AddSingleton<DataProvider>();
 
 var app = builder.Build();
@@ -34,8 +13,18 @@ var app = builder.Build();
 // 👇Dieser Codeblock registriert Swagger nur, wenn es sich um die Entwicklungsumgebung handelt
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Sample API V1");
+    });
+
+    app.UseReDoc(options =>
+    {
+        options.SpecUrl("/openapi/v1.json");
+    });
+
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
