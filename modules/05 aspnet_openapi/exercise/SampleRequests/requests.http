@@ -1,0 +1,73 @@
+﻿@baseUrl = https://localhost:7243
+
+### Alle Bücher holen
+GET {{baseUrl}}/api/v1/books
+
+### Top-Rated Bücher
+
+GET {{baseUrl}}/api/v1/books/toprated
+
+### Buchsuche die Fehler wirft
+
+GET {{baseUrl}}/api/v1/books/searches/simple
+
+### Buchsuche die Fehler wirft
+
+GET {{baseUrl}}/api/v1/books/searches/simple?q=t
+
+### Buchsuche
+
+GET {{baseUrl}}/api/v1/books/searches/simple?q=the
+
+### Buchdetails
+GET {{baseUrl}}/api/v1/books/101
+
+### Alle Autoren
+GET {{baseUrl}}/api/v1/authors
+
+### Autor by Id
+GET {{baseUrl}}/api/v1/authors/3
+
+### Add a book
+POST {{baseUrl}}/api/v1/books
+content-type:application/json
+
+{
+    "title":"Boaaaa a new Book",
+    "isbn": "22983u42933223498234"
+}
+
+### Book with authors
+POST {{baseUrl}}/api/v1/books
+content-type:application/json
+
+{
+    "title":"Boaaaa a new Book",
+    "isbn": "123321w133",
+    "authors":[
+        1,
+        2
+    ]
+}
+
+### Fails because book exists
+POST {{baseUrl}}/api/v1/books
+content-type:application/json
+
+{
+    "title":"Boaaaa a new Book",
+    "isbn": "101"
+}
+
+
+### Add Author to book
+PUT {{baseUrl}}/api/v1/books/101/authors
+content-type:application/json
+
+{    
+    "bookIsbn":"101",
+    "authorId":2
+}
+
+### Remove Author to book
+DELETE {{baseUrl}}/api/v1/books/101/authors/2

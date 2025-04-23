@@ -3,15 +3,18 @@
 ## Ablauf Tag 3 (2025-04-25)
 
 - Klärung offener Fragen
-- Wie kann ich Euch beim Lernen am Besten unterstützen
+- Wie kann ich Euch beim Lernen am Besten unterstützen?
 - Logging
-- Pattern CQRS
 - Entity Framework Core
+- Pattern CQRS
+- Open API
 
 ## Slides
 
 - [ASP.NET Logging](../../slides/AspNetCoreLogging.pdf)
 - [ASP.NET EF](../../slides/AdoNet%20and%20EF%20Core.pdf)
+- [CQRS](../../modules/cqrs/readme.md)
+- [Open API](../../modules/05%20aspnet_openapi/)
 
 ## Übungen
 
@@ -21,6 +24,7 @@ Folgende Übungen sind für den Tag vorgesehen:
 | ----- | ------ |
 
 | [Chuck Norris ASP.NET EF](../../modules/04%20aspnet_ef/exercises/src/) | [Chuck Norris ASP.NET EF](../../modules/04%20aspnet_ef/solutions/) |
+| [Open API](../../modules/05%20aspnet_openapi/exercise/) | |
 
 ## Erforderliche Ergebnisse
 
