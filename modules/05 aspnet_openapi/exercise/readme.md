@@ -8,4 +8,4 @@ Viel Spass damit!
 
 Hinweise:
 - nuget `Microsoft.AspNetCore.OpenApi`
-- nuget `Swashbuckle.AspNetCore`
+- nuget `Swashbuckle.AspNetCore.SwaggerUI`
