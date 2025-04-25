@@ -15,13 +15,20 @@ public static class BookEndpoints
         app.MapPost("/api/v1/books", AddNewBook);
         app.MapPut("/api/v1/books/{isbn}/authors", AddAuthorToBook);
         app.MapDelete("/api/v1/books/{isbn}/authors/{authorId}", RemoveAuthorFromBook);
-
+        app.MapDelete("/api/v1/books/{isbn}", RemoveBook);
         return app;
     }
 
-    public static async Task<IResult> HandleTopRated(IMediator mediator)
+    private static async Task RemoveBook(string isbn, IMediator mediator)
     {
-        var result = await mediator.Send(new Top3BooksQuery());
+        var result = await mediator.Send(new DeleteBookCommand(isbn));
+        
+        
+    }
+
+    public static async Task<IResult> HandleTopRated(IMediator mediator, [FromQuery] int? top = 5)
+    {
+        var result = await mediator.Send(new TopBooksQuery() { Top = top.Value });
         return result.ToIResult();
     }
 
@@ -57,7 +64,7 @@ public static class BookEndpoints
 
     public static async Task<IResult> RemoveAuthorFromBook(string isbn, int authorId, IMediator mediator)
     {
-        var result = await mediator.Send(new RemoveAuthorFromBookCommand { AuthorId = authorId, BookIsbn = isbn});
+        var result = await mediator.Send(new RemoveAuthorFromBookCommand { AuthorId = authorId, BookIsbn = isbn });
         return result.ToIResult();
     }
 }

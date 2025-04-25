@@ -1,4 +1,5 @@
-﻿using EfCoreCqrs.Features.Authors;
+﻿using EfCoreCqrs.Domain;
+using EfCoreCqrs.Features.Authors;
 using MediatR;
 
 namespace EfCoreCqrs.Api;
@@ -9,8 +10,15 @@ public static class AuthorEndpoints
     {
         app.MapGet("/api/v1/authors", HandleAllAuthors);
         app.MapGet("/api/v1/authors/{id}", HandleAuthorById);
+        app.MapPost("/api/v1/authors", AddNewAuthor);
 
         return app;
+    }
+
+    private static async Task<Author> AddNewAuthor(IMediator mediator, AddAuthorCommand request)
+    {
+        var newAuthor = await mediator.Send(request);
+        return newAuthor;
     }
 
     public static async Task<IResult> HandleAllAuthors(IMediator mediator)

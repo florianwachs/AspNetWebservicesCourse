@@ -7,6 +7,10 @@ GET {{baseUrl}}/api/v1/books
 
 GET {{baseUrl}}/api/v1/books/toprated
 
+### Top-Rated Bücher
+
+GET {{baseUrl}}/api/v1/books/toprated?top=2
+
 ### Buchsuche die Fehler wirft
 
 GET {{baseUrl}}/api/v1/books/searches/simple
@@ -69,5 +73,18 @@ content-type:application/json
     "authorId":2
 }
 
-### Remove Author to book
+### Remove Author from book
 DELETE {{baseUrl}}/api/v1/books/101/authors/2
+
+###
+POST {{baseUrl}}/api/v1/authors
+Content-Type: application/json
+
+{
+  "firstName": "John",
+    "lastName": "Doe",
+  "age": 30
+}
+
+###
+DELETE {{baseUrl}}/api/v1/books/301
