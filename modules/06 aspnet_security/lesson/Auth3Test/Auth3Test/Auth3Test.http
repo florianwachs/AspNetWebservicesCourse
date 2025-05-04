@@ -1,0 +1,9 @@
+@Auth3Test_HostAddress = https://localhost:7165
+
+GET {{Auth3Test_HostAddress}}/challenge
+
+###
+GET {{Auth3Test_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

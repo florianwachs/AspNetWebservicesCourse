@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth3Test", "Auth3Test\Auth3Test.csproj", "{7F36307E-7EB0-4EA2-9A06-872F044EED41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F36307E-7EB0-4EA2-9A06-872F044EED41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F36307E-7EB0-4EA2-9A06-872F044EED41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F36307E-7EB0-4EA2-9A06-872F044EED41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F36307E-7EB0-4EA2-9A06-872F044EED41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
