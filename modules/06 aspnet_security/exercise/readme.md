@@ -4,7 +4,7 @@ Gegeben ist der Code aus der Vorlesung.
 
 ## Aufgabe 1
 
-- [ ] Stelle sicher das der Code bei Dir kompiliert und ausgeführt werden kann.
+- [ ] Stelle sicher, dass der Code bei Dir kompiliert und ausgeführt werden kann.
 
 ## Aufgabe 2
 
