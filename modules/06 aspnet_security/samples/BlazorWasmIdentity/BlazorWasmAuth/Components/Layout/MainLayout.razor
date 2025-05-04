@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavManager
+<div>
+    <FluentMainLayout NavMenuTitle="Navigation menu">
+        <Header>
+            <div style="display: flex; flex: 1">
+                <h3 style="flex:1">Blazor Client for Identity</h3>
+            </div>
+            <div>
+                <AuthorizeView>
+                    <Authorized>
+                        <FluentButton Appearance="Appearance.Neutral" @onclick="Logout">Logout</FluentButton>
+                    </Authorized>
+                    <NotAuthorized>
+                        <FluentButton Appearance="Appearance.Neutral" @onclick="NavigateToLogin">Login</FluentButton>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </Header>
+        <Body>
+        <div style="padding: 1rem">
+            @Body
+        </div>
+        </Body>
+        <NavMenuContent>
+            <FluentNavLink Href="/" Text="Home">Home</FluentNavLink>
+            <FluentNavLink Href="/authors" Text="Authors">Authors</FluentNavLink>
+        </NavMenuContent>
+    </FluentMainLayout>
+</div>
+
+<FluentToastProvider/>
+<FluentDialogProvider/>
+<FluentTooltipProvider/>
+<FluentMessageBarProvider/>
+
+@code{
+
+    private void NavigateToLogin() => NavManager.NavigateTo("/login");
+    private void Logout() => NavManager.NavigateTo("/logout");
+
+}

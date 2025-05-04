@@ -1,0 +1,47 @@
+﻿@page "/"
+@using System.Security.Claims
+
+<PageTitle>Home</PageTitle>
+
+<FluentCard>
+    <h1>Hi!</h1>
+
+    <p>Das ist die Blazor Demo App mit .NET Identity</p>
+    
+    @if (claims.Any())
+    {
+        <FluentDataGrid Items="@claims">
+            <PropertyColumn Property="@(p => p.Type)" Sortable="true" />
+            <PropertyColumn Property="@(p => p.Value)" Sortable="true" />
+        </FluentDataGrid>
+    }
+    else
+    {
+        <FluentMessageBar Title="Nicht eingeloggt" Intent="@MessageIntent.Warning">
+           Du bist nicht eingeloggt
+        </FluentMessageBar>
+    }
+    
+</FluentCard>
+
+
+
+@code{
+
+    private IQueryable<Claim> claims = Enumerable.Empty<Claim>().AsQueryable();
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthState == null)
+        {
+            return;
+        }
+
+        var authState = await AuthState;
+        claims = authState.User.Claims.AsQueryable();
+    }
+
+}
