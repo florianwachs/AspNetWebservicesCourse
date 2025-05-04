@@ -53,7 +53,7 @@ public static class AuthorEndpoints
                         return TypedResults.BadRequest();
                     }
 
-                    var uriToCreatedAuthor = linkGenerator.GetUriByName(httpContext, "AuthorById");
+                    var uriToCreatedAuthor = linkGenerator.GetUriByName(httpContext, "GetAuthorById");
 
                     return TypedResults.Created(uriToCreatedAuthor, author);
                 })
