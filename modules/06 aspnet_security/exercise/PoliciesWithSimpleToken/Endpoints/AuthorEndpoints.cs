@@ -40,17 +40,6 @@ public static class AuthorEndpoints
                 })
             .Produces(StatusCodes.Status500InternalServerError)
             .WithTags("Get-Operations")
-            .WithOpenApi(op =>
-            {
-                op.Summary = "Returns an author by id";
-                op.Description = "Additional Description / Examples";
-                
-                var idParam = op.Parameters[0];                
-                idParam.Required = true;
-                idParam.Description = "The Id of the author";
-
-                return op;
-            })
             .WithName("GetAuthorById");
 
         group.MapPost("",
@@ -70,16 +59,7 @@ public static class AuthorEndpoints
                 })
             .Produces(StatusCodes.Status500InternalServerError)
             .WithTags("Post-Operations")
-            .WithOpenApi(op =>
-            {
-                op.Summary = "Creates a new author";
-                op.Description = "Additional Description / Examples";
-                var bodyDescription = op.RequestBody;
-                bodyDescription.Description = "The data for the new author";
-                bodyDescription.Required = true;
-
-                return op;
-            }).RequireAuthorization(AuthConstants.Policies.Admin);
+            .RequireAuthorization(AuthConstants.Policies.Admin);
 
         group.MapGet("/chuck/books", () =>
             {
@@ -88,7 +68,6 @@ public static class AuthorEndpoints
             .Produces<List<Book>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
-            .WithOpenApi()
             .RequireAuthorization(AuthConstants.Policies.AllowedToReadChuckNorrisBooks);
     }
 }

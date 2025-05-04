@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using SimpleTokenAuth;
 using SimpleTokenAuth.DataAccess;
 using SimpleTokenAuth.Domain;
 using SimpleTokenAuth.Providers;
@@ -37,7 +35,7 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            new string[] { }
         }
     };
 
@@ -74,16 +72,9 @@ app.MapGet("/api/v1/authors", async Task<Ok<List<Author>>> (DataProvider provide
     })
     .RequireAuthorization()
     .Produces(StatusCodes.Status500InternalServerError)
-    //.WithSummary("Returns all authors")
-    //.WithDescription("Additional Description / Examples")
-    .WithTags("Get-Operations")
-    .WithOpenApi(op =>
-    {
-        op.Summary = "Returns all authors";
-        op.Description = "Additional Description / Examples";
-
-        return op;
-    });
+    .WithSummary("Returns all authors")
+    .WithDescription("Additional Description / Examples")
+    .WithTags("Get-Operations");
 
 app.MapGet("/api/v1/authors/{id:int}",
         async Task<Results<Ok<Author>, NotFound>> (int id, DataProvider provider) =>
@@ -98,17 +89,6 @@ app.MapGet("/api/v1/authors/{id:int}",
         })
     .Produces(StatusCodes.Status500InternalServerError)
     .WithTags("Get-Operations")
-    .WithOpenApi(op =>
-    {
-        op.Summary = "Returns an author by id";
-        op.Description = "Additional Description / Examples";
-        
-        var idParam = op.Parameters[0];        
-        idParam.Required = true;
-        idParam.Description = "The Id of the author";
-
-        return op;
-    })
     .WithName("GetAuthorById");
 
 app.MapPost("/api/v1/authors",
@@ -126,17 +106,7 @@ app.MapPost("/api/v1/authors",
             return TypedResults.Created(uriToCreatedAuthor, author);
         })
     .Produces(StatusCodes.Status500InternalServerError)
-    .WithTags("Post-Operations")
-    .WithOpenApi(op =>
-    {
-        op.Summary = "Creates a new author";
-        op.Description = "Additional Description / Examples";
-        var bodyDescription = op.RequestBody;
-        bodyDescription.Description = "The data for the new author";
-        bodyDescription.Required = true;
-
-        return op;
-    });
+    .WithTags("Post-Operations");
 
 await EnsureMigratedDb(app);
 
