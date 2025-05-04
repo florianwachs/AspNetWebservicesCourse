@@ -1,0 +1,23 @@
+@PoliciesWithSimpleToken_HostAddress = http://localhost:5075
+@authToken = CfDJ8JfflOXHJbRHlnpOpVGN5-H4VHCqfXv9JwwAP1sY5QCtCXHPqzpIq3aiinVgw36fmGA_q1Hmzjjxx5MXYGvGZ2K_4fo1nNjb8brJp-RBFI9ZisszCLxep07k4mnltIkWD-nC-Ms1gqxqSq0U7MJFgKpcyEHVQrPJIwe1ddlXPTcOdXrw_TJP4uIN_bs1frzQkRBclv-TiBXyZLFmoa5ozvEvHQtcRs1klG192Z7t3tMHM1wsbrKgx6Gc7yG8cDc5B0H4DOvCtYd33s4u_MbEl3b5N-0ilZyid0GglkhP310ppPKHGxIywnie-O-SXoFAjjlOnIEY5N0EJ6kOe9lniEyI8yv6FgDgbhs0qULWhvJSPcdYOXLpYtWTrz1M2egGl-TnsSI6gyFtifPoDHlnoQm2Y6KLktu8_lZcscl6oQm3pHAdqP_Xl6sQf4Mx7A3wboAVSw7JC25SkJpu8deZ1IKFH6AFF8Bhi54GpX5LcW50GpCvpvq75ZBawwaK4hv6ELgwxHJ0cDCrYYoNf_t9WLo85ZTNxNysLhnhos75NJQfiA9kxcACnmHaamSgmdKXj78JhAdHaXKUxpnJmhYT44WT5HAs0TfLVB-A39QZiOft_roFwB_RlBQaq1oKNRyE1xXO2mdggrdc_4H543Kgfc4n8VuOWHxzoiK3kPG3eyqsWJtSADUlGrnEiHj0Wo2VV0TncQIBIXN1Bu7J2PNqSHtf_lpbay0cEd_T8igAD3kM
+
+###
+# @name login
+POST {{PoliciesWithSimpleToken_HostAddress}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email":"admin@test.de",
+  "password":"Test123Test123!"
+}
+
+###
+GET {{PoliciesWithSimpleToken_HostAddress}}/api/v1/authors
+Accept: application/json
+Authorization: Bearer {{authToken}}
+
+###
+GET {{PoliciesWithSimpleToken_HostAddress}}/api/v1/authors/chuck/books
+Accept: application/json
+Authorization: Bearer {{authToken}}
