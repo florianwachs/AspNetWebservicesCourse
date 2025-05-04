@@ -1,6 +1,6 @@
 # Workshop Tag 4
 
-## Ablauf Tag 4 (2024-05-24)
+## Ablauf Tag 4 (2025-05-09)
 
 - Klärung offener Fragen
 - [Open API](../../modules/05%20aspnet_openapi/)
@@ -18,3 +18,5 @@
 | [SignalR](../../modules/08%20aspnet_signalr/)           |        |
 
 ## Erforderliche Ergebnisse
+
+Vorstellung Eurer Architekturen

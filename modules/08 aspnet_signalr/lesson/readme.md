@@ -170,4 +170,4 @@ connection
 ## Ressourcen
 
 - [Beispiel Code der Vorlesung](src)
-- [SignalR auf docs.microsoft.com](https://docs.microsoft.com/de-de/aspnet/core/signalr/introduction?view=aspnetcore-3.1)
+- [SignalR auf docs.microsoft.com](https://docs.microsoft.com/de-de/aspnet/core/signalr/introduction)

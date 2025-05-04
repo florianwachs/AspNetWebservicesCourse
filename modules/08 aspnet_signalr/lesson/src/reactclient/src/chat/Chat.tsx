@@ -1,9 +1,9 @@
-import React, { PureComponent, useState } from "react";
+import React, { PureComponent, } from "react";
 import * as signalR from "@aspnet/signalr";
 import { Layout, Input, Button, List } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
-class Chat extends PureComponent<{}, IChatState> {
-  private connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5272/chatHub").build();
+const { Header, Footer, Content } = Layout;
+class Chat extends PureComponent<object, IChatState> {
+  private connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7095/chatHub").build();
 
   state: IChatState = {
     isConnected: false,
