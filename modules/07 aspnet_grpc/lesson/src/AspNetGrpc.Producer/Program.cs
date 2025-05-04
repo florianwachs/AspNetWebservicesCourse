@@ -30,6 +30,7 @@ static SensorReadingPackage GetSensorReadingPackage()
         };
 
         package.Readings.Add(sample);
+        Console.WriteLine("Package sent");
     }
 
     return package;
