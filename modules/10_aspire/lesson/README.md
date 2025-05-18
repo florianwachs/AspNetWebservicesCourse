@@ -10,6 +10,22 @@
 - Eine lokale Entwicklungsumgebung mit Dashboard
 - Integration mit Container-Orchestrierungssystemen
 
+## Für wen ist .NET Aspire geeignet?
+
+.NET Aspire richtet sich an Entwickler und Teams, die cloud-native, verteilte Anwendungen mit .NET schnell und zuverlässig entwickeln, testen und betreiben möchten. Besonders profitieren Projekte mit mehreren Services, Microservices-Architekturen oder hoher Integrationsdichte.
+
+## Typische Anwendungsfälle
+
+- Entwicklung und Test von Microservices auf dem lokalen Rechner
+- Aufbau von Prototypen für verteilte Systeme
+- Integration von Datenbanken, Message Brokern und externen APIs in einer Entwicklungsumgebung
+
+## Weitere Ressourcen
+
+- [Offizielle Dokumentation](https://learn.microsoft.com/dotnet/aspire/)
+- [Aspire Samples auf GitHub](https://github.com/dotnet/aspire-samples)
+- [Einführungsvideo zu .NET Aspire](https://www.youtube.com/watch?v=xyz)
+
 ## Ziele und Vorteile
 
 ### Ziele von .NET Aspire
