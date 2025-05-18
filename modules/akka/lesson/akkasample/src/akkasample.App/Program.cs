@@ -1,6 +1,7 @@
 using Akka.HealthCheck.Hosting;
 using Akka.HealthCheck.Hosting.Web;
 using akkasample.App.Configuration;
+using akkasample.App.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,7 @@ app.MapAkkaHealthCheckRoutes(optionConfigure: (_, opt) =>
 }); // needed for Akka.HealthCheck
 app.UseAuthorization();
 
+app.MapCounter();
 app.MapControllers();
 
 app.Run();

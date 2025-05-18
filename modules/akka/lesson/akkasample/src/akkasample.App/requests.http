@@ -1,0 +1,11 @@
+@BaseUrl = http://localhost:5000
+@CounterId = counter3
+### Add a counter
+POST {{BaseUrl}}/counter/{{CounterId}}
+Content-Type: application/json
+
+10
+
+
+### Get a counter
+GET {{BaseUrl}}/counter/{{CounterId}}
