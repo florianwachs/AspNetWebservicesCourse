@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSingleton<TimeProvider>(_ => TimeProvider.System);
 
 var app = builder.Build();
 
@@ -18,6 +19,12 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+app.MapGet("/time", (TimeProvider timeProvider) =>
+{
+    var currentTime = timeProvider.GetUtcNow();
+    return Results.Ok(currentTime);
+});
 
 app.MapGet("/weatherforecast", () =>
     {
