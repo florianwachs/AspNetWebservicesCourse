@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <!-- Akka.NET Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="Akka" Version="1.5.41" />
+    <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.40" />
+    <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.37" />
+    <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.37" />
+    <PackageVersion Include="Akka.Management" Version="1.5.37" />
+    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.40" />
+    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
+    <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="1.4.4" />
+    <PackageVersion Include="Petabridge.Cmd.Cluster" Version="1.4.4" />
+    <PackageVersion Include="Petabridge.Cmd.Remote" Version="1.4.4" />
+  </ItemGroup>
+  <!-- ASP.NET Core Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="8.1.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+  <!-- Test Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="FluentAssertions" Version="8.2.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Akka.Hosting.TestKit" Version="1.5.40" />
+  </ItemGroup>
+</Project>

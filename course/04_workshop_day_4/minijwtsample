@@ -1,0 +1,95 @@
+// Program.cs – .NET 8/9 **ultra‑minimal** JWT auth, *no* ASP.NET Identity
+// -----------------------------------------------------------------------------
+// NuGet (CLI):
+//   dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+//   dotnet add package Microsoft.IdentityModel.Tokens
+// -----------------------------------------------------------------------------
+
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// -----------------------------------------------------------------------------
+// 1. Super‑simple, in‑memory user store (❗for DEMO only – hash & persist in prod)
+// -----------------------------------------------------------------------------
+
+var users = new Dictionary<string, string> // user => plain‑text pw (demo!)
+{
+    ["alice"] = "password123",
+    ["bob"]   = "hunter2"
+};
+
+// -----------------------------------------------------------------------------
+// 2. JWT settings – keep the key safe in real apps (user‑secrets / vault / env)
+// -----------------------------------------------------------------------------
+
+const string jwtIssuer = "MyMinimalApi";
+const string jwtKey    = "CHANGE_THIS_DEVELOPMENT_SECRET_KEY"; // 16+ bytes
+var   signingKey       = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme    = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer           = true,
+        ValidateAudience         = false,   // set & validate in multi‑client scenarios
+        ValidateLifetime         = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer              = jwtIssuer,
+        IssuerSigningKey         = signingKey
+    };
+});
+
+builder.Services.AddAuthorization();
+
+var app = builder.Build();
+
+// -----------------------------------------------------------------------------
+// 3. Endpoints
+// -----------------------------------------------------------------------------
+
+app.MapPost("/login", (LoginRequest req) =>
+{
+    //  simple user check – replace with DB / proper hashing in real world
+    if (!users.TryGetValue(req.UserName, out var pw) || pw != req.Password)
+        return Results.Unauthorized();
+
+    // build JWT
+    var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+    var descriptor   = new SecurityTokenDescriptor
+    {
+        Subject = new System.Security.Claims.ClaimsIdentity(new[]
+        {
+            new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, req.UserName)
+        }),
+        Expires            = DateTime.UtcNow.AddHours(1),
+        Issuer             = jwtIssuer,
+        SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
+    };
+
+    var securityToken = tokenHandler.CreateToken(descriptor);
+    var jwt           = tokenHandler.WriteToken(securityToken);
+
+    return Results.Ok(new { token = jwt });
+});
+
+app.MapGet("/secret", (string? name) => $"Hello, {name ?? "authenticated user"}! This is a protected endpoint.")
+   .RequireAuthorization();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.Run();
+
+// -----------------------------------------------------------------------------
+// 4. Helper types
+// -----------------------------------------------------------------------------
+
+record LoginRequest(string UserName, string Password);

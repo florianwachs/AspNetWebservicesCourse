@@ -1,0 +1,11 @@
+@Api_HostAddress = http://localhost:5208
+
+GET {{Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Api_HostAddress}}/time
+Accept: application/json
+
+###
