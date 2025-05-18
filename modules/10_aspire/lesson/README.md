@@ -27,18 +27,18 @@
 
 ## Einstieg mit .NET Aspire Starter Templates
 
-Um mit .NET Aspire zu beginnen, benötigen Sie zunächst das neueste .NET SDK (mindestens .NET 8) und die Aspire-Vorlagen.
+Um mit .NET Aspire zu beginnen, benötigen Ihr zunächst das neueste .NET SDK (mindestens .NET 8) und die Aspire-Vorlagen.
 
 ### Installation von .NET Aspire
 
-Um .NET Aspire zu nutzen, benötigen Sie:
+Um .NET Aspire zu nutzen, benötigen Ihr:
 
 1. Das neueste .NET SDK (mindestens .NET 8)
 2. Die neuesten Visual Studio / VS Code Updates
 
 Mit dem aktuellen .NET SDK sind die Aspire-Projektvorlagen bereits enthalten und müssen nicht mehr separat als Workload installiert werden.
 
-Überprüfen Sie Ihre Installation:
+Überprüfen Ihr Ihre Installation:
 
 ```bash
 dotnet --list-sdks
@@ -56,7 +56,7 @@ Beispiele für Aspire können hier gefunden werden: https://github.com/dotnet/as
 
 ### Projektstruktur
 
-Nach dem Erstellen eines Projekts mit dem `aspire-starter` Template erhalten Sie folgende Struktur:
+Nach dem Erstellen eines Projekts mit dem `aspire-starter` Template erhalten Ihr folgende Struktur:
 
 ```
 MeineAspireApp/
@@ -76,11 +76,11 @@ cd MeineAspireApp
 dotnet run --project MeineAspireApp.AppHost
 ```
 
-Nach dem Start öffnet sich automatisch das Aspire Dashboard im Browser (standardmäßig unter http://localhost:18888), über das Sie alle Services, Logs und Telemetriedaten einsehen können.
+Nach dem Start öffnet sich automatisch das Aspire Dashboard im Browser (standardmäßig unter http://localhost:18888), über das Ihr alle Services, Logs und Telemetriedaten einsehen können.
 
 ### Hinzufügen weiterer Services
 
-Sie können Ihrem Aspire-Projekt weitere Services hinzufügen:
+Ihr können Ihrem Aspire-Projekt weitere Services hinzufügen:
 
 ```bash
 # Hinzufügen eines Web API-Projekts
@@ -92,14 +92,14 @@ dotnet new blazor -o MeineAspireApp.WebApp
 dotnet sln add MeineAspireApp.WebApp
 ```
 
-Anschließend müssen Sie die neuen Services im AppHost (Program.cs) registrieren.
+Anschließend müssen Ihr die neuen Services im AppHost (Program.cs) registrieren.
 
 ## Nächste Schritte
 
-- Erkunden Sie die verschiedenen Aspire-Komponenten in NuGet
-- Experimentieren Sie mit der Konfiguration von Resilienz-Mustern
-- Integrieren Sie Datenbank-Services wie SQL Server oder Redis
-- Testen Sie die Telemetrie-Funktionen mit dem Dashboard
+- Erkunden Ihr die verschiedenen Aspire-Komponenten in NuGet
+- Experimentieren Ihr mit der Konfiguration von Resilienz-Mustern
+- Integrieren Ihr Datenbank-Services wie SQL Server oder Redis
+- Testen Ihr die Telemetrie-Funktionen mit dem Dashboard
 
 ## Kernkonzepte in .NET Aspire
 
