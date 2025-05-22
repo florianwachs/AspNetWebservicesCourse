@@ -73,10 +73,10 @@ namespace MeinProjekt.Tests
         public async Task Get_GibtWettervorhersagenZurück()
         {
             // Arrange
-            
+
             // Act
             var response = await _client.GetAsync("/weatherforecast");
-            
+
             // Assert
             response.EnsureSuccessStatusCode();
             var forecasts = await response.Content.ReadFromJsonAsync<WeatherForecast[]>();
@@ -105,10 +105,10 @@ namespace MeinProjekt.Tests
         {
             // Arrange
             var wetterService = new WetterService();
-            
+
             // Act
             var ergebnis = wetterService.HoleWettervorhersage();
-            
+
             // Assert
             Assert.NotNull(ergebnis);
             Assert.Equal(5, ergebnis.Length);
@@ -159,13 +159,13 @@ namespace MeinProjekt.Tests
 
             // Act
             var response = await client.GetAsync("/weatherforecast");
-            
+
             // Assert
             response.EnsureSuccessStatusCode();
             var forecasts = await response.Content.ReadFromJsonAsync<WeatherForecast[]>();
             Assert.Single(forecasts);
             Assert.Equal("Mild", forecasts[0].Summary);
-            
+
             mockWetterService.Verify(s => s.HoleWettervorhersage(), Times.Once);
         }
     }
@@ -192,10 +192,10 @@ namespace MeinProjekt.Tests
         {
             // Arrange
             var rechner = new TemperaturRechner();
-            
+
             // Act
             var ergebnis = rechner.CelsiusNachFahrenheit(celsius);
-            
+
             // Assert
             Assert.Equal(erwarteterFahrenheit, ergebnis);
         }
@@ -250,10 +250,10 @@ namespace MeinProjekt.Tests
         public async Task GetWeatherForecast_ReturnsSuccessAndCorrectContentType()
         {
             // Arrange
-            
+
             // Act
             var response = await _client.GetAsync("/weatherforecast");
-            
+
             // Assert
             response.EnsureSuccessStatusCode();
             Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
@@ -269,10 +269,10 @@ namespace MeinProjekt.Tests
                 TemperatureC = 25,
                 Summary = "Warm"
             };
-            
+
             // Act
             var response = await _client.PostAsJsonAsync("/weatherforecast", newForecast);
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             var returnedForecast = await response.Content.ReadFromJsonAsync<WeatherForecast>();
@@ -281,5 +281,95 @@ namespace MeinProjekt.Tests
     }
 }
 ```
+
+## Umgang mit Authentifizierung / Autorisierung
+
+Wir können uns hier für verschiedene Richtungen entscheiden. Die häufigsten sind:
+
+- Ignorieren der Berechtigungen durch entfernen der Authentication
+- Austausch der Autorisierung durch eine Dummy Auth
+
+### Ignorieren der Berechtigungen
+
+```csharp
+public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
+{
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.ConfigureServices(services =>
+        {
+            // Remove all existing authorization handlers
+            services.AddSingleton<IAuthorizationHandler, AllowAnonymousAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, AllowAnonymousPolicyProvider>();
+        });
+        builder.UseEnvironment("Development");
+    }
+}
+
+// Always allow authorization
+public class AllowAnonymousAuthorizationHandler : IAuthorizationHandler
+{
+    public Task HandleAsync(AuthorizationHandlerContext context)
+    {
+        foreach (var req in context.PendingRequirements.ToList())
+            context.Succeed(req);
+        return Task.CompletedTask;
+    }
+}
+
+public class AllowAnonymousPolicyProvider : IAuthorizationPolicyProvider
+{
+    public Task<AuthorizationPolicy> GetDefaultPolicyAsync() =>
+        Task.FromResult(new AuthorizationPolicyBuilder().RequireAssertion(_ => true).Build());
+
+    public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName) =>
+        Task.FromResult<AuthorizationPolicy?>(new AuthorizationPolicyBuilder().RequireAssertion(_ => true).Build());
+
+    public Task<AuthorizationPolicy> GetFallbackPolicyAsync() =>
+        Task.FromResult(new AuthorizationPolicyBuilder().RequireAssertion(_ => true).Build());
+}
+```
+
+### Dummy Auth Handler
+
+```csharp
+public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
+{
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.ConfigureServices(services =>
+        {
+            services.AddAuthentication("Test")
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", options => { });
+        });
+    }
+}
+
+// Dummy Auth Handler
+public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+{
+    public TestAuthHandler(
+        IOptionsMonitor<AuthenticationSchemeOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
+        ISystemClock clock)
+        : base(options, logger, encoder, clock) { }
+
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        var claims = new[] {
+            new Claim(ClaimTypes.Name, "TestUser"),
+            new Claim(ClaimTypes.Role, "Admin"), // Add roles/claims as needed
+        };
+        var identity = new ClaimsIdentity(claims, "Test");
+        var principal = new ClaimsPrincipal(identity);
+        var ticket = new AuthenticationTicket(principal, "Test");
+
+        return Task.FromResult(AuthenticateResult.Success(ticket));
+    }
+}
+```
+
+## Abschluss
 
 Mit diesem Leitfaden solltet Ihr in der Lage sein, effektive Unit Tests für Eure ASP.NET Core Minimal API mit XUnit zu schreiben.
