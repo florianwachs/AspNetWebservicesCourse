@@ -1,76 +1,111 @@
-# Web Services mit .NET (2025)
+# Web Services with .NET (2026)
 
-Willkommen zu **Web Services mit .NET** der [TH Rosenheim](https://www.th-rosenheim.de/).
+Welcome to **Web Services with .NET** at [TH Rosenheim](https://www.th-rosenheim.de/).
 
-## Schedule
+## 🚀 What's New in 2026
+
+This course has been completely modernized with:
+- **.NET 10** - The latest long-term support release
+- **.NET Aspire** - Deep integration for cloud-native development
+- **Modern Topics** - AI/ML integration, Native AOT, YARP reverse proxy, HybridCache
+- **Comprehensive Documentation** - All modules include detailed English markdown documentation
+- **Hands-on Exercises** - Practical examples with real-world scenarios
+
+## 📅 Schedule
 
 |                  |                        |                                                      |
 | ---------------- | ---------------------- | ---------------------------------------------------- |
-| ✅Workshop Tag 1 | 2025-03-21, 8:30 - TBD | [Workshop Tag 1](course/01_workshop_day_1/readme.md) |
-| ✅Workshop Tag 2 | 2025-04-11, 8:30 - TBD | [Workshop Tag 2](course/02_workshop_day_2/readme.md) |
-| ✅Workshop Tag 3 | 2025-04-25, 8:30 - TBD | [Workshop Tag 3](course/03_workshop_day_3/readme.md) |
-| ✅Workshop Tag 4 | 2025-05-09, 8:30 - TBD | [Workshop Tag 4](course/04_workshop_day_4/readme.md) |
-| ✅Workshop Tag 5 | 2025-05-23, 8:30 - TBD | [Workshop Tag 5](course/05_workshop_day_5/readme.md) |
-| 👉Prüfung        | 2025-07-04, 8:30       | Prüfung 👉[Informationen](course/00_exam/readme.md)  |
+| ✅Workshop Day 1 | 2026-03-20, 8:30 - TBD | [Workshop Day 1](course/01_workshop_day_1/readme.md) |
+| ✅Workshop Day 2 | 2026-04-10, 8:30 - TBD | [Workshop Day 2](course/02_workshop_day_2/readme.md) |
+| ✅Workshop Day 3 | 2026-04-24, 8:30 - TBD | [Workshop Day 3](course/03_workshop_day_3/readme.md) |
+| ✅Workshop Day 4 | 2026-05-08, 8:30 - TBD | [Workshop Day 4](course/04_workshop_day_4/readme.md) |
+| ✅Workshop Day 5 | 2026-05-22, 8:30 - TBD | [Workshop Day 5](course/05_workshop_day_5/readme.md) |
+| 👉Exam           | 2026-07-03, 8:30       | Exam 👉[Information](course/00_exam/readme.md)       |
 
-## Hi There
+## 📚 Course Modules
 
-This repository contains source code for the **Web Services with .NET** course. It's used during the presentation so that the students can follow along more easily.
+### Getting Started
+- [00 - Getting Started](modules/00_getting-started/) - Environment setup and prerequisites
 
-I'm looking forward to show you what .NET and Web Services are capable of.
-**I can't wait to learn new stuff together!**
+### Core Fundamentals (Modules 01-06)
+- [01 - C# 13 & .NET 10 Fundamentals](modules/01_csharp/) - Modern C# language features
+- [02 - ASP.NET Core Fundamentals](modules/02_aspnet_basics/) - Web API basics with Aspire
+- [03 - Logging & Observability](modules/03_aspnet_logging/) - OpenTelemetry and structured logging
+- [04 - Entity Framework Core 10](modules/04_aspnet_ef/) - Database access with latest EF features
+- [05 - OpenAPI & Documentation](modules/05_aspnet_openapi/) - API documentation and Swagger
+- [06 - Security & Authentication](modules/06_aspnet_security/) - Modern authentication with Identity API
 
-> Content is currently in German, but I hope to translate the course in the future
+### Advanced Topics (Modules 07-10)
+- [07 - gRPC Services](modules/07_aspnet_grpc/) - High-performance RPC with Aspire
+- [08 - SignalR Real-time](modules/08_aspnet_signalr/) - Real-time communication
+- [09 - Testing Strategies](modules/09_testing/) - Unit, integration, and E2E testing
+- [10 - .NET Aspire Deep Dive](modules/10_aspire/) - Cloud-native orchestration
 
-## Informationen zum Ablauf (2025)
+### Modern Patterns (Modules 11-14)
+- [11 - Microservices & YARP](modules/11_microservices/) - YARP reverse proxy and service mesh
+- [12 - AI/ML Integration](modules/12_ai_integration/) - Semantic Kernel and AI services
+- [13 - Performance Optimization](modules/13_performance/) - HybridCache and performance tuning
+- [14 - Native AOT & Deployment](modules/14_deployment/) - Cloud deployment and Native AOT
 
-Es handelt sich um eine Blockveranstaltung in Präsenz.
+## 🎯 About This Course
 
-## Allgemeines zur Veranstaltung
+Welcome! I'm excited to guide you through modern web service development with .NET. This course covers current approaches for implementing web services using the .NET technology stack.
 
-Ich freue mich das Ihr Euch für das FWPF Web Services entschieden habt. Bei meinem Lehrauftrag geht es mir darum, Euch mit den aktuellen Ansätzen für die Umsetzung von Webservices mit .NET als Technologie-Stack vertraut zu machen. Wie auch die Jahre zuvor, ist mir Euer Feedback besonders wichtig. Einige von Euch arbeiten evtl. schon mit anderen Technologien wie Java und NodeJS um Webservices umzusetzen. Für andere ist das Thema völlig neu. Mir ist es wichtig, dass alle etwas aus der Veranstaltung mitnehmen können.
+Whether you're coming from other technologies like Java or Node.js, or this is completely new to you, my goal is that everyone can learn and grow from this course.
 
-Deshalb würde ich mich auch dieses Mal sehr über Eure aktive Beteiligung freuen. Stellt Fragen, gebt Feedback und wenn Ihr Verbesserungsvorschläge habt lasst es mich wissen. Mein Ziel ist es , zusammen mit Euch, die Veranstaltung voranzubringen (ok, ja, gute Noten sind Euch auch wichtig 😉). Eure Beiträge / Projekte sind immer eine Bereicherung für die Veranstaltung.
+I highly encourage your active participation - ask questions, provide feedback, and share your ideas. There are no "stupid questions". If you get stuck on a problem, need help with your project, or need any support, please let me know.
 
-Es gibt keine „blöden Fragen“. Wenn Ihr an einem Problem hängen bleibt, in der Projektarbeit nicht weiterkommt oder sonstige Unterstützung benötigt, lasst es mich bitte wissen.
+## 🔧 Environment Setup
 
-## Prüfung
+Before starting the course, please set up your development environment following the [Getting Started Guide](modules/00_getting-started/README.md).
 
-Die Prüfung für `Web Services` besteht aus mehreren Komponenten als Teil einer Projektarbeit. Hier findet Ihr mehr 👉[Informationen](course/00_exam/readme.md)
+Quick requirements:
+- **.NET 10 SDK** (latest version)
+- **Visual Studio 2025** or **Visual Studio Code** with C# extension
+- **Docker Desktop** (for Aspire and containerized services)
+- **Git** for version control
 
-### Aktuelle Informationen zur Abschlusspräsentation
+Detailed setup instructions are available in the [prerequisites guide](00_prerequisites/setup_instructions.md).
+
+## 📖 Preparation Material
+
+Want to prepare before the course? Here are some recommended C# resources. **Working through preparation material is not required** - we'll learn the necessary C# knowledge together.
+
+| Description | Link |
+| ----------- | ---- |
+| C# Course from Microsoft and FreeCodeCamp | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/ |
+| Excellent documentation and examples from Microsoft | https://docs.microsoft.com/en-us/dotnet/csharp/ |
+| C# Cheat-Sheet for the course | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md) |
+| Video Collection | https://learn.microsoft.com/en-us/shows/csharp-for-beginners/, https://www.youtube.com/@nickchapsas, https://www.youtube.com/@MilanJovanovicTech |
+| Microsoft Learn C# Course | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/ |
+
+## 📝 Exam
+
+The exam for `Web Services` consists of multiple components as part of a project. Find more information 👉[here](course/00_exam/readme.md)
+
+### Important Exam Information
 
 > [!IMPORTANT]
 >
-> Die Prüfung dauert 45min inkl. 10-15min. Fragen.
-> Anwesenheitspflicht besteht für alle Teams während der Prüfung ab 8:30 bis zum Ende. Seid bitte unbedingt pünktlich da, da es sonst zu Punktabzug kommen kann.
+> The exam lasts 45 minutes including 10-15 minutes for questions.
+> Attendance is mandatory for all teams during the exam from 8:30 until the end. Please be on time to avoid point deductions.
 
-## Vorbereitung Entwicklungsumgebung / Repository
+## 🔗 Additional Resources
 
-Für die Vorlesung benötigt Ihr einige Tools aus der [Anleitung](00_prerequisites/setup_instructions.md).
+Here is additional material for self-study and questions that come up during the course.
 
-## Vorbereitungsmaterial C\# (csharp)
-
-Wer sich schon auf den Kurs vorbereiten möchte, dem empfehle ich folgende Ressourcen zum Einstieg in `C#`. Das Durcharbeiten des Vorbereitungsmaterials ist **nicht zwingend erforderlich** zur Teilnahme. Wir werden uns gemeinsam das benötigte C#-Wissen aneignen.
-
-| Beschreibung                                            | Link                                                                                                                                                                                   |
-| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C# Kurs von Microsoft und FreeCodeCamp                  | https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/                                                                                                                |
-| Hervorragende Dokumentation und Beispiele von Microsoft | https://docs.microsoft.com/de-de/dotnet/csharp/                                                                                                                                        |
-| C# Cheat-Sheet für die Vorlesung                        | [Cheat-Sheet](00_cheatsheets/csharplanguage/csharp_cheat_sheet.md)                                                                                                                     |
-| Video-Sammlung                                          | https://learn.microsoft.com/en-us/shows/csharp-for-beginners/?wt.mc_id=educationalcsharp-c9-scottha, https://www.youtube.com/@nickchapsas, https://www.youtube.com/@MilanJovanovicTech |
-| Microsoft Learn C# Kurs                                 | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                       |
-
-## Zusätzliches Material
-
-Hier ist zusätzliches Material zum Selbststudium für aufgekommene Fragen während unserer Vorlesung.
-Vielen Dank für Euren Input!
-
-### Pattern
-
+### Patterns
 - [Repository Pattern](extras/patterns/repository/repository-pattern.md)
 - [CQRS](modules/cqrs/)
+- [Dependency Injection](extras/patterns/dependencyinjection/readme.md)
 
 ### Guidelines
+- [REST API Guidelines](extras/guidelines/rest-guidelines/rest-guidelines.md)
 
-- [REST-Schnittstellen Guidelines](extras/guidelines/rest-guidelines/rest-guidelines.md)
+## 🤝 Contributing
+
+Found an issue or have a suggestion? Feel free to open an issue or submit a pull request.
+
+## 📄 License
+
+This course material is provided for educational purposes at TH Rosenheim.
