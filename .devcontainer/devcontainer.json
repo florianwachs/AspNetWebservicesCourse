@@ -1,0 +1,28 @@
+{
+  "name": "ASP.NET Web Services Course (.NET 10)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "humao.rest-client",
+        "ms-azuretools.vscode-docker",
+        "editorconfig.editorconfig",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "disable"
+      }
+    }
+  },
+  "forwardPorts": [5000, 5001, 5432, 6379, 8080, 15672, 18888],
+  "postCreateCommand": "dotnet --version && docker --version",
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:5000
+
+### Get all events
+GET {{baseUrl}}/api/events
+
+### Get event by ID
+GET {{baseUrl}}/api/events/1
+
+### Get non-existent event (should return 404)
+GET {{baseUrl}}/api/events/999
+
+### Create a new event
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "DevOps Days Munich",
+  "date": "2026-10-05",
+  "city": "Munich",
+  "description": "DevOps community conference"
+}
+
+### Update an event
+PUT {{baseUrl}}/api/events/1
+Content-Type: application/json
+
+{
+  "name": "TechConf 2026 - Updated",
+  "date": "2026-09-16",
+  "city": "Munich",
+  "description": "Updated description"
+}
+
+### Delete an event
+DELETE {{baseUrl}}/api/events/3
