@@ -21,21 +21,20 @@ This hands-on course teaches modern web service development using the latest .NE
 
 |                   | Date             | Topic                                                          |
 | ----------------- | ---------------- | -------------------------------------------------------------- |
-| ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
-| ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
-| ✅ Workshop Day 3 | 2026-04-11, 8:30 | .NET Aspire, Authentication & Architecture                     |
-| ✅ Workshop Day 4 | 2026-04-25, 8:30 | Caching, Real-time, Resilience & Background Processing         |
-| ✅ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
-| 👉 Exam           | 2026-06-13, 8:30 | [Exam Information](course/exam/readme.md)                      |
+| 👉 Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
+| ⏳ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
+| ⏳ Workshop Day 3 | 2026-04-11, 8:30 | .NET Aspire, Authentication & Architecture                     |
+| ⏳ Workshop Day 4 | 2026-04-25, 8:30 | Caching, Real-time, Resilience & Background Processing         |
+| ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
+| 👀 Exam           | 2026-06-13, 8:30 | [Exam Information](course/exam/readme.md)                      |
 
 ## 🔬 Labs
 
 Each workshop day includes a hands-on lab with starter code and a reference solution:
 
-| Lab                                                                   | Day   | Topic                                         | Scaffold Level          |
-| --------------------------------------------------------------------- | ----- | --------------------------------------------- | ----------------------- |
-| [Lab: Build the Events API](labs/lab1-events-api/)                    | Day 1 | Minimal APIs, OpenAPI, Scalar                 | Level 1 (80% starter)   |
-| [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/) | Day 2 | EF Core 10, FluentValidation, Problem Details | Level 1-2 (60% starter) |
+| Lab                                                | Day   | Topic                         |
+| -------------------------------------------------- | ----- | ----------------------------- |
+| [Lab: Build the Events API](labs/lab1-events-api/) | Day 1 | Minimal APIs, OpenAPI, Scalar |
 
 ## 🔧 Environment Setup
 
@@ -50,7 +49,7 @@ Each workshop day includes a hands-on lab with starter code and a reference solu
 
 ```bash
 # Clone the repository
-git clone https://github.com/florianwachs/AspNetWebservicesCourse2026.git
+git clone https://github.com/florianwachs/AspNetWebservicesCourse.git
 cd AspNetWebservicesCourse
 
 # Verify .NET 10 SDK
