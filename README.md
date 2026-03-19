@@ -22,7 +22,7 @@ This hands-on course teaches modern web service development using the latest .NE
 |                   | Date             | Topic                                                          |
 | ----------------- | ---------------- | -------------------------------------------------------------- |
 | 👉 Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
-| ⏳ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
+| ⏳ Workshop Day 2 | 2026-03-21, 8:30 | Data Access, Validation & Error Handling                       |
 | ⏳ Workshop Day 3 | 2026-04-11, 8:30 | .NET Aspire, Authentication & Architecture                     |
 | ⏳ Workshop Day 4 | 2026-04-25, 8:30 | Caching, Real-time, Resilience & Background Processing         |
 | ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |

@@ -87,7 +87,6 @@ Exam day (Workshop Day 6 / exam slot)
 - **Total: 100 points**
 
 ## Tips and Examples
-- [Sample projects from previous years](project_ideas.md)
 - [Example final presentation 1](Example%20Presentation1.pdf)
 - [Example final presentation 2](Example%20Presentation2.pdf)
 
