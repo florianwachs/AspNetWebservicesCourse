@@ -28,8 +28,8 @@ Your project must demonstrate proficiency in the following areas:
 - [ ] **Background Services** (BackgroundService or worker project)
 - [ ] **Integration Tests** with WebApplicationFactory + Testcontainers
 - [ ] **API Versioning**
-- [ ] **Resilience** with Polly v8
-- [ ] **gRPC** service (see [extras/topics/grpc.md](../../extras/topics/grpc.md))
+- [ ] **Resilience**
+- [ ] **gRPC** service
 - [ ] **GraphQL** 
 - [ ] **OData** 
 - [ ] **MCP** 
