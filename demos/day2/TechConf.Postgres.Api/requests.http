@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:5200
+
+### Check that the API is running
+GET {{baseUrl}}/
+
+### OpenAPI document
+GET {{baseUrl}}/openapi/v1.json
+
+### Get all events
+GET {{baseUrl}}/api/events
+
+### Filter by city
+GET {{baseUrl}}/api/events?city=Munich
+
+### Get event details with sessions and speakers
+GET {{baseUrl}}/api/events/1
+
+### Get sessions for one event
+GET {{baseUrl}}/api/events/1/sessions
+
+### Create a valid event
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "Debugging Distributed Systems",
+  "date": "2026-08-12T09:00:00",
+  "city": "Salzburg",
+  "description": "A focused workshop on diagnosing production issues."
+}
+
+### Create an invalid event (built-in validation + FluentValidation)
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "",
+  "date": "2020-01-01T09:00:00",
+  "city": "X",
+  "description": "This should fail validation."
+}
+
+### Update an event
+PUT {{baseUrl}}/api/events/1
+Content-Type: application/json
+
+{
+  "name": "TechConf Architecture Day - Updated",
+  "date": "2026-06-19T09:00:00",
+  "city": "Munich",
+  "description": "Updated after finalizing the agenda."
+}
+
+### Trigger a 404 ProblemDetails response
+GET {{baseUrl}}/api/events/999
+
+### Trigger a 500 ProblemDetails response
+GET {{baseUrl}}/api/debug/fail
