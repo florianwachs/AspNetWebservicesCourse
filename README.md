@@ -32,9 +32,9 @@ This hands-on course teaches modern web service development using the latest .NE
 
 Each workshop day includes a hands-on lab with starter code and a reference solution:
 
-| Lab                                                | Day   | Topic                         |
-| -------------------------------------------------- | ----- | ----------------------------- |
-| [Lab: Build the Events API](labs/lab1-events-api/) | Day 1 | Minimal APIs, OpenAPI, Scalar |
+| Lab                                                                   | Day   | Topic                                         |
+| --------------------------------------------------------------------- | ----- | --------------------------------------------- |
+| [Lab: Build the Events API](labs/lab1-events-api/)                    | Day 1 | Minimal APIs, OpenAPI, Scalar                 |
 | [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/) | Day 2 | EF Core 10, FluentValidation, Problem Details |
 
 ## 🔧 Environment Setup
