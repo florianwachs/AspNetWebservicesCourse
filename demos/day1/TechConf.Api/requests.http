@@ -1,0 +1,41 @@
+@baseUrl = http://localhost:5000
+
+### Hello world
+GET {{baseUrl}}/
+
+### Get all events
+GET {{baseUrl}}/api/events
+
+### Filter by query string
+GET {{baseUrl}}/api/events?city=Munich&search=tech
+
+### Get one event by id
+GET {{baseUrl}}/api/events/1
+
+### Create a new event
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "API Design Bootcamp",
+  "date": "2026-07-03",
+  "city": "Salzburg",
+  "description": "A focused workshop on building HTTP APIs with .NET."
+}
+
+### Update an existing event
+PUT {{baseUrl}}/api/events/1
+Content-Type: application/json
+
+{
+  "name": "TechConf 2026 - Updated",
+  "date": "2026-09-16",
+  "city": "Munich",
+  "description": "Updated after the first round of speaker confirmations."
+}
+
+### Delete an event
+DELETE {{baseUrl}}/api/events/3
+
+### Get a missing event
+GET {{baseUrl}}/api/events/999

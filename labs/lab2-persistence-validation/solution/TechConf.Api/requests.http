@@ -1,0 +1,54 @@
+@baseUrl = http://localhost:5000
+
+### Get all events
+GET {{baseUrl}}/api/events
+
+### Get all events (filtered by city)
+GET {{baseUrl}}/api/events?city=Munich
+
+### Get all events (paginated)
+GET {{baseUrl}}/api/events?page=1&pageSize=5
+
+### Get event by ID
+GET {{baseUrl}}/api/events/1
+
+### Get event sessions
+GET {{baseUrl}}/api/events/1/sessions
+
+### Create event (valid)
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "TechConf 2026",
+  "date": "2026-09-15",
+  "city": "Munich",
+  "description": "Premier tech conference"
+}
+
+### Create event (invalid - should return 400)
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+
+{
+  "name": "",
+  "date": "2020-01-01",
+  "city": ""
+}
+
+### Update event
+PUT {{baseUrl}}/api/events/1
+Content-Type: application/json
+
+{
+  "name": "TechConf 2026 Updated",
+  "date": "2026-09-16",
+  "city": "Munich",
+  "description": "Updated"
+}
+
+### Delete event
+DELETE {{baseUrl}}/api/events/1
+
+### Get non-existent event (should return 404 ProblemDetails)
+GET {{baseUrl}}/api/events/999
