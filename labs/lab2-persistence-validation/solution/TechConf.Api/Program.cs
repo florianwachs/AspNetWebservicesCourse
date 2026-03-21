@@ -25,6 +25,8 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 
+await DbSeeder.MigrateAndSeedAsync(app.Services);
+
 app.MapEventEndpoints();
 
 app.Run();

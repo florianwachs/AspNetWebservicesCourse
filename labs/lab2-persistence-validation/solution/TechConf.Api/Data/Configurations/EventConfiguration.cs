@@ -12,6 +12,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(e => e.Name).IsRequired().HasMaxLength(200);
         builder.Property(e => e.City).IsRequired().HasMaxLength(100);
         builder.Property(e => e.Description).HasMaxLength(2000);
+        builder.Property(e => e.Date).HasColumnType("timestamp without time zone");
         builder.HasMany(e => e.Sessions)
             .WithOne(s => s.Event)
             .HasForeignKey(s => s.EventId)
