@@ -48,13 +48,6 @@ Implement `CreateEventValidator` using FluentValidation:
 - City is required, max 100 chars
 - Wire up the validation endpoint filter
 
-### Task 6: Add Global Error Handling
-Implement `GlobalExceptionHandler` using `IExceptionHandler`:
-- Map `NotFoundException` → 404
-- Map `ValidationException` → 400
-- Map all others → 500
-- All responses use ProblemDetails format
-
 ## Stretch Goals
 
 1. **Pagination**: Add `?page=1&pageSize=20` to GET /api/events with total count in response
