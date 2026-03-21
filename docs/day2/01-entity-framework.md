@@ -497,6 +497,14 @@ Migrations are **version-controlled schema changes**. Each migration is a C# cla
 
 ### Step-by-Step Workflow
 
+**Step 0: Install the dotnet ef tool**
+
+https://learn.microsoft.com/en-us/ef/core/cli/dotnet
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
 **Step 1: Create the initial migration**
 
 ```bash
