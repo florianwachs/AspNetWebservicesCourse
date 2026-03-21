@@ -12,7 +12,7 @@ using TechConf.Api.Data;
 namespace TechConf.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260321133610_Initial")]
+    [Migration("20260321134634_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -54,7 +54,7 @@ namespace TechConf.Api.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(2000)
