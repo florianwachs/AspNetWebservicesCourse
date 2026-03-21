@@ -19,7 +19,7 @@ Every API call follows this lifecycle:
 ```mermaid
 sequenceDiagram
     participant C as Client (Browser/App)
-    participant D as DNS ServerÍ
+    participant D as DNS Server
     participant S as API Server
 
     C->>D: 1. Resolve techconf-api.example.com
