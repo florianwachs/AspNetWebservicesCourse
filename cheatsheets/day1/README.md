@@ -66,13 +66,18 @@ See: [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs)
 
 Records are a great fit for request/response models because they are concise and immutable by default.
 
-Use a `record` when the type mainly represents **data**:
+Beginner-friendly mental model:
+
+- `record` = mostly **the data**
+- `class` = mostly **the behavior and changing state**
+
+Choose a `record` when the type mainly represents **data**:
 
 - request/response models
 - values you want to compare by content
 - immutable objects you want to copy with `with`
 
-Use a `class` when the type mainly represents **behavior or identity**:
+Choose a `class` when the type mainly represents **behavior or identity**:
 
 - services
 - repositories
@@ -81,7 +86,7 @@ Use a `class` when the type mainly represents **behavior or identity**:
 
 In practice, a `class` is usually the better choice when you care more about **methods, fields, and mutable state** than about simple data transport.
 
-Both `record` and `class` can have properties and methods, but their usual intent is different:
+Both `record` and `class` can have properties and methods, but their usual purpose is different:
 
 - `record`: mainly for carrying data
 - `class`: mainly for behavior, lifecycle, and state changes
@@ -112,11 +117,11 @@ public record CreateSessionRequest(string Title, string Speaker);
 
 public class SessionService
 {
-    private int _publishedCount;
+    private int _publishedCount; // field
 
-    public int PublishedCount => _publishedCount;
+    public int PublishedCount => _publishedCount; // property
 
-    public void Publish(int id)
+    public void Publish(int id) // method
     {
         _publishedCount++;
         // business logic goes here
@@ -124,7 +129,7 @@ public class SessionService
 }
 ```
 
-Here the `record` is just data for the API request, while the `class` contains a private field, a public property, and a method for behavior.
+Here the `record` is just data for the API request, while the `class` stores state and contains behavior.
 
 See: [`Models/Session.cs`](../../demos/day1/TechConf.Sessions.Api/Models/Session.cs)
 
