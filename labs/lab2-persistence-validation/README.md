@@ -50,6 +50,15 @@ dotnet ef database update
 
 This generates the migration files in `Migrations/` and applies the schema to your PostgreSQL database.
 
+If you want to reset the lab and start from a clean slate, run the following from `labs/lab2-persistence-validation/exercise/TechConf.Api`:
+
+```bash
+# Remove the old PostgreSQL container and all data inside it
+docker rm -f techconf-db
+
+# Start a fresh database container
+docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
+
 ### Task 3: Implement Repository Methods
 Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Use `Include`/`ThenInclude` for eager loading and avoid N+1 queries.
 
