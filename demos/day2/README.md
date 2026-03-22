@@ -21,16 +21,27 @@ Useful URLs and files:
 
 ### PostgreSQL version
 
+If you're using the dev container, run the following commands inside the dev container terminal. The dev container already installs `dotnet-ef` and the latest stable `Aspire.Cli`.
+
 Start PostgreSQL in Docker with the latest image:
 
 ```bash
 docker run --rm -d \
   --name techconf-day2-postgres \
+  -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=techconf \
   -e POSTGRES_DB=techconfdb \
   -p 5432:5432 \
   postgres:latest
 ```
+
+Connection details:
+
+- Host: `localhost`
+- Port: `5432`
+- Database: `techconfdb`
+- Username: `postgres`
+- Password: `techconf`
 
 Then run the sample:
 

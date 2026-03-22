@@ -62,6 +62,26 @@ docker --version
 
 > **💡 Tip**: This repository includes a [Dev Container](.devcontainer/devcontainer.json) configuration. Open in VS Code or GitHub Codespaces for a pre-configured environment.
 
+If you use the dev container, it will automatically install `dotnet-ef`. You can verify with:
+
+```bash
+dotnet ef --version
+```
+
+When a lab or demo needs PostgreSQL, start it manually from inside the dev container:
+
+```bash
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
+```
+
+Stop it again with `docker stop techconf-db`.
+
 ## 📖 Additional Material
 
 Working through preparation material is **not required** — we'll learn the necessary C# knowledge together. But if you'd like to learn at your own pace:

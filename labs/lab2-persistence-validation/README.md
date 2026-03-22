@@ -16,11 +16,28 @@ In this lab, you'll add data persistence with **Entity Framework Core 10** and *
 
 ## Getting Started
 
+If you're using the dev container, run the following commands inside the dev container terminal. The dev container already installs `dotnet-ef` and the latest stable `Aspire.Cli`.
+
 ```bash
 cd labs/lab2-persistence-validation/exercise/TechConf.Api
+
 # Start PostgreSQL container
-docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
 ```
+
+Connection details:
+
+- Host: `localhost`
+- Port: `5432`
+- Database: `techconfdb`
+- Username: `postgres`
+- Password: `techconf`
 
 ## Tasks
 
@@ -33,7 +50,7 @@ Open `Data/Configurations/` and implement the entity configurations:
 ### Task 2: Register DbContext and Run Migrations
 In `Program.cs`, register `AppDbContext` with the PostgreSQL connection string. Then create and apply the initial migration.
 
-If the EF Core CLI is not installed yet, install it once:
+If you're not using the dev container, install the EF Core CLI once:
 
 ```bash
 dotnet tool install --global dotnet-ef
@@ -51,11 +68,18 @@ This generates the migration files in `Migrations/` and applies the schema to yo
 If you want to reset the lab and start from a clean slate, run the following from `labs/lab2-persistence-validation/exercise/TechConf.Api`:
 
 ```bash
-# Remove the old PostgreSQL container and all data inside it
+# Stop and remove the old PostgreSQL container and all data inside it
 docker rm -f techconf-db
 
 # Start a fresh database container
-docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
+```
 
 ### Task 3: Implement Repository Methods
 Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Return domain entities from the repository, use `Include`/`ThenInclude` for eager loading, and avoid N+1 queries.

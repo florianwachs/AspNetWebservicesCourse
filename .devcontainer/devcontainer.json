@@ -1,6 +1,9 @@
 {
   "name": "ASP.NET Web Services Course (.NET 10)",
   "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/home/vscode/.dotnet/tools"
+  },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {
@@ -23,6 +26,6 @@
     }
   },
   "forwardPorts": [5000, 5001, 5432, 6379, 8080, 15672, 18888],
-  "postCreateCommand": "dotnet --version && docker --version",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteUser": "vscode"
 }
