@@ -31,6 +31,11 @@ Quick review questions from Day 1:
 
 Scaffold level: **60%** (DbContext skeleton provided, write configurations and validation)
 
+## 🔎 Reference Demo & Cheatsheet
+
+- **[Day 2 Persistence, Validation & Error Handling Cheat Sheet](../../cheatsheets/day2/README.md)** — condensed notes for the essential day 2 topics with direct links into the companion code
+- **[Day 2 demos](../../demos/day2/)** — runnable SQLite and PostgreSQL reference APIs showing EF Core setup, migrations, validation filters, Problem Details, and `.http` requests
+
 ## 📚 Key Packages Introduced Today
 
 | Package | Purpose |
