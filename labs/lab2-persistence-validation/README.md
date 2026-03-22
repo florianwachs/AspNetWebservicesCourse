@@ -20,8 +20,6 @@ In this lab, you'll add data persistence with **Entity Framework Core 10** and *
 cd labs/lab2-persistence-validation/exercise/TechConf.Api
 # Start PostgreSQL container
 docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
-# Run the application
-dotnet run
 ```
 
 ## Tasks
