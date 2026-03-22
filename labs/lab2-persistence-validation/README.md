@@ -35,6 +35,21 @@ Open `Data/Configurations/` and implement the entity configurations:
 ### Task 2: Register DbContext and Run Migrations
 In `Program.cs`, register `AppDbContext` with the PostgreSQL connection string. Then create and apply the initial migration.
 
+If the EF Core CLI is not installed yet, install it once:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+From `labs/lab2-persistence-validation/exercise/TechConf.Api`, create and apply the migration with:
+
+```bash
+dotnet ef migrations add Initial
+dotnet ef database update
+```
+
+This generates the migration files in `Migrations/` and applies the schema to your PostgreSQL database.
+
 ### Task 3: Implement Repository Methods
 Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Use `Include`/`ThenInclude` for eager loading and avoid N+1 queries.
 

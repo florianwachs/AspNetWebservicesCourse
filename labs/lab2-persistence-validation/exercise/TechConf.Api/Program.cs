@@ -35,6 +35,10 @@ if (app.Environment.IsDevelopment())
 // app.UseExceptionHandler();
 // app.UseStatusCodePages();
 
+// TODO: Stretch Goal 2 - After Task 2 is complete and your first migration exists,
+// uncomment this to apply migrations on startup and insert the sample data once.
+// await DbSeeder.MigrateAndSeedAsync(app.Services);
+
 app.MapEventEndpoints();
 
 app.Run();
