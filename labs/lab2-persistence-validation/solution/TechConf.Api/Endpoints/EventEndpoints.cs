@@ -27,8 +27,8 @@ public static class EventEndpoints
         int pageSize = 20,
         CancellationToken cancellationToken = default)
     {
-        var events = await repository.GetAllAsync(city, page, pageSize, cancellationToken);
-        return TypedResults.Ok(events);
+        var events = await repository.GetAll(city, page, pageSize, cancellationToken);
+        return TypedResults.Ok(events.Select(MapEvent).ToList());
     }
 
     private static async Task<Ok<EventDetailDto>> GetEventById(
@@ -36,8 +36,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        var evt = await repository.GetByIdAsync(id, cancellationToken);
-        return TypedResults.Ok(evt);
+        var evt = await repository.GetById(id, cancellationToken);
+        return TypedResults.Ok(MapEventDetail(evt));
     }
 
     private static async Task<Ok<List<SessionDto>>> GetEventSessions(
@@ -45,8 +45,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        var sessions = await repository.GetSessionsAsync(id, cancellationToken);
-        return TypedResults.Ok(sessions);
+        var sessions = await repository.GetSessions(id, cancellationToken);
+        return TypedResults.Ok(sessions.Select(MapSession).ToList());
     }
 
     private static async Task<Created<EventDto>> CreateEvent(
@@ -54,8 +54,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        var evt = await repository.CreateAsync(request, cancellationToken);
-        return TypedResults.Created($"/api/events/{evt.Id}", evt);
+        var evt = await repository.Create(request, cancellationToken);
+        return TypedResults.Created($"/api/events/{evt.Id}", MapEvent(evt));
     }
 
     private static async Task<NoContent> UpdateEvent(
@@ -64,7 +64,7 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        await repository.UpdateAsync(id, request, cancellationToken);
+        await repository.Update(id, request, cancellationToken);
         return TypedResults.NoContent();
     }
 
@@ -73,7 +73,38 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        await repository.DeleteAsync(id, cancellationToken);
+        await repository.Delete(id, cancellationToken);
         return TypedResults.NoContent();
     }
+
+    private static EventDto MapEvent(Event evt) =>
+        new(
+            evt.Id,
+            evt.Name,
+            evt.Date,
+            evt.City,
+            evt.Description,
+            evt.Sessions.Count);
+
+    private static EventDetailDto MapEventDetail(Event evt) =>
+        new(
+            evt.Id,
+            evt.Name,
+            evt.Date,
+            evt.City,
+            evt.Description,
+            evt.Sessions
+                .OrderBy(s => s.Title)
+                .Select(MapSession)
+                .ToList());
+
+    private static SessionDto MapSession(Session session) =>
+        new(
+            session.Id,
+            session.Title,
+            session.Duration,
+            session.Speakers
+                .OrderBy(sp => sp.Name)
+                .Select(sp => sp.Name)
+                .ToList());
 }

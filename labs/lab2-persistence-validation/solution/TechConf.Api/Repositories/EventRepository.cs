@@ -11,7 +11,7 @@ public class EventRepository : IEventRepository
 
     public EventRepository(AppDbContext db) => _db = db;
 
-    public async Task<List<EventDto>> GetAllAsync(
+    public async Task<List<Event>> GetAll(
         string? city,
         int page = 1,
         int pageSize = 20,
@@ -23,6 +23,7 @@ public class EventRepository : IEventRepository
 
         var query = _db.Events
             .AsNoTracking()
+            .Include(e => e.Sessions)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(normalizedCity))
@@ -34,17 +35,10 @@ public class EventRepository : IEventRepository
             .OrderBy(e => e.Date)
             .Skip((safePage - 1) * safePageSize)
             .Take(safePageSize)
-            .Select(e => new EventDto(
-                e.Id,
-                e.Name,
-                e.Date,
-                e.City,
-                e.Description,
-                e.Sessions.Count))
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<EventDetailDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Event> GetById(int id, CancellationToken cancellationToken = default)
     {
         var evt = await _db.Events
             .AsNoTracking()
@@ -57,19 +51,10 @@ public class EventRepository : IEventRepository
             throw new NotFoundException("Event", id);
         }
 
-        return new EventDetailDto(
-            evt.Id,
-            evt.Name,
-            evt.Date,
-            evt.City,
-            evt.Description,
-            evt.Sessions
-                .OrderBy(s => s.Title)
-                .Select(MapSession)
-                .ToList());
+        return evt;
     }
 
-    public async Task<List<SessionDto>> GetSessionsAsync(int eventId, CancellationToken cancellationToken = default)
+    public async Task<List<Session>> GetSessions(int eventId, CancellationToken cancellationToken = default)
     {
         var evt = await _db.Events
             .AsNoTracking()
@@ -84,11 +69,10 @@ public class EventRepository : IEventRepository
 
         return evt.Sessions
             .OrderBy(s => s.Title)
-            .Select(MapSession)
             .ToList();
     }
 
-    public async Task<EventDto> CreateAsync(CreateEventRequest request, CancellationToken cancellationToken = default)
+    public async Task<Event> Create(CreateEventRequest request, CancellationToken cancellationToken = default)
     {
         var evt = new Event
         {
@@ -101,10 +85,10 @@ public class EventRepository : IEventRepository
         _db.Events.Add(evt);
         await _db.SaveChangesAsync(cancellationToken);
 
-        return new EventDto(evt.Id, evt.Name, evt.Date, evt.City, evt.Description, 0);
+        return evt;
     }
 
-    public async Task UpdateAsync(int id, UpdateEventRequest request, CancellationToken cancellationToken = default)
+    public async Task Update(int id, UpdateEventRequest request, CancellationToken cancellationToken = default)
     {
         var evt = await _db.Events.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -121,7 +105,7 @@ public class EventRepository : IEventRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task Delete(int id, CancellationToken cancellationToken = default)
     {
         var evt = await _db.Events.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -133,14 +117,4 @@ public class EventRepository : IEventRepository
         _db.Events.Remove(evt);
         await _db.SaveChangesAsync(cancellationToken);
     }
-
-    private static SessionDto MapSession(Session session) =>
-        new(
-            session.Id,
-            session.Title,
-            session.Duration,
-            session.Speakers
-                .OrderBy(sp => sp.Name)
-                .Select(sp => sp.Name)
-                .ToList());
 }

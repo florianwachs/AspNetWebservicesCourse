@@ -19,7 +19,7 @@ public static class EventEndpoints
         group.MapDelete("/{id:int}", DeleteEvent);
     }
 
-    // TODO: Task 4 - Refactor all methods below to use IEventRepository instead of direct data access
+    // TODO: Task 4 - Refactor all methods below to use IEventRepository and map entities to DTOs here
 
     private static async Task<IResult> GetAllEvents(
         IEventRepository repository,
@@ -28,8 +28,8 @@ public static class EventEndpoints
         int pageSize = 20,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Call repository.GetAllAsync(city, page, pageSize, cancellationToken)
-        // and return the results with TypedResults.Ok(...)
+        // TODO: Call repository.GetAll(city, page, pageSize, cancellationToken),
+        // map each Event to EventDto, and return the results with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
@@ -38,8 +38,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        // TODO: Call repository.GetByIdAsync(id, cancellationToken)
-        // and return the result with TypedResults.Ok(...)
+        // TODO: Call repository.GetById(id, cancellationToken),
+        // map the returned Event to EventDetailDto, and return it with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
@@ -48,8 +48,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        // TODO: Call repository.GetSessionsAsync(id, cancellationToken)
-        // and return the result with TypedResults.Ok(...)
+        // TODO: Call repository.GetSessions(id, cancellationToken),
+        // map each Session to SessionDto, and return the result with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
@@ -58,8 +58,8 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        // TODO: Call repository.CreateAsync(request, cancellationToken)
-        // and return TypedResults.Created(...) with the created event DTO
+        // TODO: Call repository.Create(request, cancellationToken),
+        // map the created Event to EventDto, and return TypedResults.Created(...)
         throw new NotImplementedException();
     }
 
@@ -69,7 +69,7 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        // TODO: Call repository.UpdateAsync(id, request, cancellationToken)
+        // TODO: Call repository.Update(id, request, cancellationToken)
         // and return TypedResults.NoContent()
         throw new NotImplementedException();
     }
@@ -79,7 +79,7 @@ public static class EventEndpoints
         IEventRepository repository,
         CancellationToken cancellationToken)
     {
-        // TODO: Call repository.DeleteAsync(id, cancellationToken)
+        // TODO: Call repository.Delete(id, cancellationToken)
         // and return TypedResults.NoContent()
         throw new NotImplementedException();
     }

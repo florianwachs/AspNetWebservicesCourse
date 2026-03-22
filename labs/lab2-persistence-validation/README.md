@@ -60,10 +60,10 @@ docker rm -f techconf-db
 docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
 
 ### Task 3: Implement Repository Methods
-Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Use `Include`/`ThenInclude` for eager loading and avoid N+1 queries.
+Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Return domain entities from the repository, use `Include`/`ThenInclude` for eager loading, and avoid N+1 queries.
 
 ### Task 4: Refactor Endpoints to Use the Repository
-Update `Program.cs` and `Endpoints/EventEndpoints.cs` to register and inject `IEventRepository`, then use async repository calls instead of direct in-memory data access.
+Update `Program.cs` and `Endpoints/EventEndpoints.cs` to register and inject `IEventRepository`, then map the returned entities to `EventDto`, `EventDetailDto`, and `SessionDto` in the endpoint layer.
 
 ### Task 5: Add Validation
 Implement `CreateEventValidator` using FluentValidation:
