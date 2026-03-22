@@ -79,6 +79,19 @@ Use a `class` when the type mainly represents **behavior or identity**:
 - entities that change over time
 - objects with mutable state and methods
 
+In practice, a `class` is usually the better choice when you care more about **methods, fields, and mutable state** than about simple data transport.
+
+Both `record` and `class` can have properties and methods, but their usual intent is different:
+
+- `record`: mainly for carrying data
+- `class`: mainly for behavior, lifecycle, and state changes
+
+Quick beginner note:
+
+- **properties** are the normal public way to expose data
+- **fields** are usually private internal storage inside a class
+- **methods** define what an object can do
+
 **Rule of thumb:** if you are in doubt, just use a `class`. It is the safer default because it is the more general-purpose option.
 
 ```csharp
@@ -99,14 +112,19 @@ public record CreateSessionRequest(string Title, string Speaker);
 
 public class SessionService
 {
+    private int _publishedCount;
+
+    public int PublishedCount => _publishedCount;
+
     public void Publish(int id)
     {
+        _publishedCount++;
         // business logic goes here
     }
 }
 ```
 
-Here the `record` is just data for the API request, while the `class` contains behavior.
+Here the `record` is just data for the API request, while the `class` contains a private field, a public property, and a method for behavior.
 
 See: [`Models/Session.cs`](../../demos/day1/TechConf.Sessions.Api/Models/Session.cs)
 
