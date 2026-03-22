@@ -24,3 +24,8 @@ By the end of Day 1, you will be able to:
 ## 🧪 Lab
 
 **[Lab 1 — Events API](../../labs/lab1-events-api/)**: Build a complete CRUD API for TechConf events using Minimal APIs with in-memory storage, TypedResults, and Scalar documentation.
+
+## 🔎 Reference Demo & Cheatsheet
+
+- **[Day 1 API Essentials Cheat Sheet](../../cheatsheets/day1/README.md)** — condensed notes for the essential day 1 topics with direct links into the companion project
+- **[TechConf Sessions API](../../demos/day1/TechConf.Sessions.Api/)** — a small but complete Minimal API sample showing DI, RESTful endpoints, TypedResults, OpenAPI, Scalar, and `.http` requests

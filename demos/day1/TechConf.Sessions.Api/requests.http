@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:5042
+
+### API entry point
+GET {{baseUrl}}/
+
+### OpenAPI document
+GET {{baseUrl}}/openapi/v1.json
+
+### List all sessions
+GET {{baseUrl}}/api/sessions
+
+### Filter sessions with query parameters
+GET {{baseUrl}}/api/sessions?track=HTTP&published=true&search=status
+
+### Get one session by id
+GET {{baseUrl}}/api/sessions/1
+
+### Create a session
+POST {{baseUrl}}/api/sessions
+Content-Type: application/json
+
+{
+  "title": "Designing Great CRUD APIs",
+  "speaker": "Diana Weber",
+  "track": "Architecture",
+  "startsAt": "2026-04-10T15:00:00Z",
+  "durationMinutes": 60,
+  "isPublished": true
+}
+
+### Replace an existing session
+PUT {{baseUrl}}/api/sessions/2
+Content-Type: application/json
+
+{
+  "title": "Dependency Injection Essentials",
+  "speaker": "Bruno Keller",
+  "track": "Architecture",
+  "startsAt": "2026-04-10T11:00:00Z",
+  "durationMinutes": 60,
+  "isPublished": true
+}
+
+### Partially update an existing session
+PATCH {{baseUrl}}/api/sessions/2
+Content-Type: application/merge-patch+json
+
+{
+  "track": "Web",
+  "isPublished": true
+}
+
+### Delete a session
+DELETE {{baseUrl}}/api/sessions/3
+
+### Trigger a validation error
+POST {{baseUrl}}/api/sessions
+Content-Type: application/json
+
+{
+  "title": "",
+  "speaker": "",
+  "track": "HTTP",
+  "startsAt": "0001-01-01T00:00:00Z",
+  "durationMinutes": 5,
+  "isPublished": false
+}
