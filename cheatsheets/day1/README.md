@@ -66,6 +66,21 @@ See: [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs)
 
 Records are a great fit for request/response models because they are concise and immutable by default.
 
+Use a `record` when the type mainly represents **data**:
+
+- request/response models
+- values you want to compare by content
+- immutable objects you want to copy with `with`
+
+Use a `class` when the type mainly represents **behavior or identity**:
+
+- services
+- repositories
+- entities that change over time
+- objects with mutable state and methods
+
+**Rule of thumb:** if you are in doubt, just use a `class`. It is the safer default because it is the more general-purpose option.
+
 ```csharp
 public record Session(
     int Id,
@@ -76,6 +91,22 @@ public record Session(
     int DurationMinutes,
     bool IsPublished);
 ```
+
+Short example:
+
+```csharp
+public record CreateSessionRequest(string Title, string Speaker);
+
+public class SessionService
+{
+    public void Publish(int id)
+    {
+        // business logic goes here
+    }
+}
+```
+
+Here the `record` is just data for the API request, while the `class` contains behavior.
 
 See: [`Models/Session.cs`](../../demos/day1/TechConf.Sessions.Api/Models/Session.cs)
 
