@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this lab, you'll add data persistence with **Entity Framework Core 10** and **PostgreSQL**, implement input validation using **DataAnnotations** and **FluentValidation**, and add standardized error handling with **Problem Details (RFC 9457)**.
+In this lab, you'll add data persistence with **Entity Framework Core 10** and **PostgreSQL**, implement input validation using **FluentValidation**, and add standardized error handling with **Problem Details (RFC 9457)**.
 
 
 ## Learning Objectives
@@ -10,19 +10,34 @@ In this lab, you'll add data persistence with **Entity Framework Core 10** and *
 - Configure Entity Framework Core with PostgreSQL
 - Define entity relationships (one-to-many, many-to-many)
 - Run database migrations
-- Implement input validation
+- Implement input validation with FluentValidation and endpoint filters
 - Handle errors with Problem Details
 - Use dependency injection effectively
 
 ## Getting Started
 
+If you're using the dev container, run the following commands inside the dev container terminal. The dev container already installs `dotnet-ef` and the latest stable `Aspire.Cli`.
+
 ```bash
 cd labs/lab2-persistence-validation/exercise/TechConf.Api
+
 # Start PostgreSQL container
-docker run -d --name techconf-db -e POSTGRES_PASSWORD=techconf -e POSTGRES_DB=techconfdb -p 5432:5432 postgres:latest
-# Run the application
-dotnet run
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
 ```
+
+Connection details:
+
+- Host: `localhost`
+- Port: `5432`
+- Database: `techconfdb`
+- Username: `postgres`
+- Password: `techconf`
 
 ## Tasks
 
@@ -35,11 +50,42 @@ Open `Data/Configurations/` and implement the entity configurations:
 ### Task 2: Register DbContext and Run Migrations
 In `Program.cs`, register `AppDbContext` with the PostgreSQL connection string. Then create and apply the initial migration.
 
-### Task 3: Implement Repository Methods
-Complete the `EventRepository` methods using async EF Core queries. Use `Include` for eager loading, avoid N+1 queries.
+If you're not using the dev container, install the EF Core CLI once:
 
-### Task 4: Refactor Endpoints to Use Database
-Update `EventEndpoints.cs` to inject `AppDbContext` (or `IEventRepository`) and use async database operations instead of the in-memory list.
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+From `labs/lab2-persistence-validation/exercise/TechConf.Api`, create and apply the migration with:
+
+```bash
+dotnet ef migrations add Initial
+dotnet ef database update
+```
+
+This generates the migration files in `Migrations/` and applies the schema to your PostgreSQL database.
+
+If you want to reset the lab and start from a clean slate, run the following from `labs/lab2-persistence-validation/exercise/TechConf.Api`:
+
+```bash
+# Stop and remove the old PostgreSQL container and all data inside it
+docker rm -f techconf-db
+
+# Start a fresh database container
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
+```
+
+### Task 3: Implement Repository Methods
+Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Return domain entities from the repository, use `Include`/`ThenInclude` for eager loading, and avoid N+1 queries.
+
+### Task 4: Refactor Endpoints to Use the Repository
+Update `Program.cs` and `Endpoints/EventEndpoints.cs` to register and inject `IEventRepository`, then map the returned entities to `EventDto`, `EventDetailDto`, and `SessionDto` in the endpoint layer.
 
 ### Task 5: Add Validation
 Implement `CreateEventValidator` using FluentValidation:
@@ -48,10 +94,16 @@ Implement `CreateEventValidator` using FluentValidation:
 - City is required, max 100 chars
 - Wire up the validation endpoint filter
 
+### Task 6: Add Problem Details Error Handling
+Implement `GlobalExceptionHandler` and wire it up in `Program.cs`:
+- Register `GlobalExceptionHandler` and `ProblemDetails`
+- Add the exception handler and status code pages middleware
+- Map `NotFoundException` and other failures to appropriate Problem Details responses
+
 ## Stretch Goals
 
 1. **Pagination**: Add `?page=1&pageSize=20` to GET /api/events with total count in response
-2. **Data Seeding**: Add initial seed data in `AppDbContext.OnModelCreating`
+2. **Data Seeding**: Add initial seed data using a dedicated `DbSeeder` (or equivalent startup seeding)
 
 ## Solution
 

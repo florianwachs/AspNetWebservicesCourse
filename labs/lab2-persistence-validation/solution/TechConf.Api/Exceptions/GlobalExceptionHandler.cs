@@ -15,14 +15,21 @@ public class GlobalExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, "Unhandled exception occurred");
-
         var (statusCode, title) = exception switch
         {
             NotFoundException => (StatusCodes.Status404NotFound, "Not Found"),
             ValidationException => (StatusCodes.Status400BadRequest, "Validation Error"),
             _ => (StatusCodes.Status500InternalServerError, "Internal Server Error")
         };
+
+        if (exception is NotFoundException)
+        {
+            _logger.LogWarning(exception, "Request failed because the resource was not found.");
+        }
+        else
+        {
+            _logger.LogError(exception, "Unhandled exception occurred while processing a request.");
+        }
 
         httpContext.Response.StatusCode = statusCode;
         await httpContext.Response.WriteAsJsonAsync(new ProblemDetails

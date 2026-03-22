@@ -21,9 +21,9 @@ This hands-on course teaches modern web service development using the latest .NE
 
 |                   | Date             | Topic                                                          |
 | ----------------- | ---------------- | -------------------------------------------------------------- |
-| 👉 Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
-| ⏳ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
-| ⏳ Workshop Day 3 | 2026-04-11, 8:30 | .NET Aspire, Authentication & Architecture                     |
+| ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
+| ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
+| 👉 Workshop Day 3 | 2026-04-11, 8:30 | .NET Aspire, Authentication & Architecture                     |
 | ⏳ Workshop Day 4 | 2026-04-25, 8:30 | Caching, Real-time, Resilience & Background Processing         |
 | ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
 | 👀 Exam           | 2026-06-13, 8:30 | [Exam Information](course/exam/readme.md)                      |
@@ -61,6 +61,26 @@ docker --version
 ```
 
 > **💡 Tip**: This repository includes a [Dev Container](.devcontainer/devcontainer.json) configuration. Open in VS Code or GitHub Codespaces for a pre-configured environment.
+
+If you use the dev container, it will automatically install `dotnet-ef`. You can verify with:
+
+```bash
+dotnet ef --version
+```
+
+When a lab or demo needs PostgreSQL, start it manually from inside the dev container:
+
+```bash
+docker run --rm -d \
+  --name techconf-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=techconf \
+  -e POSTGRES_DB=techconfdb \
+  -p 5432:5432 \
+  postgres:latest
+```
+
+Stop it again with `docker stop techconf-db`.
 
 ## 📖 Additional Material
 
