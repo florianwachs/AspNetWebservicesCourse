@@ -25,6 +25,7 @@ Then open:
 | --- | --- | --- |
 | Project anatomy | [`01-dotnet10-overview.md`](../../docs/day1/01-dotnet10-overview.md) | [`TechConf.Sessions.Api.csproj`](../../demos/day1/TechConf.Sessions.Api/TechConf.Sessions.Api.csproj), [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs) |
 | Modern C# basics | [`00-csharp-crash-course.md`](../../docs/day1/00-csharp-crash-course.md) | [`Models/Session.cs`](../../demos/day1/TechConf.Sessions.Api/Models/Session.cs), [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) |
+| LINQ for filtering and lookup | [`02-minimal-apis.md`](../../docs/day1/02-minimal-apis.md) | [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs), [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) |
 | Minimal API wiring | [`02-minimal-apis.md`](../../docs/day1/02-minimal-apis.md) | [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs), [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) |
 | Dependency injection | [`02a-dependency-injection.md`](../../docs/day1/02a-dependency-injection.md) | [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs), [`Data/ISessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/ISessionRepository.cs), [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs) |
 | HTTP + REST rules | [`03-http-fundamentals.md`](../../docs/day1/03-http-fundamentals.md) | [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs), [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http) |
@@ -40,7 +41,7 @@ These are the files that matter most in a first web API:
 | [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs) | App startup: register services, enable OpenAPI, map endpoints, run the app. |
 | [`Models/Session.cs`](../../demos/day1/TechConf.Sessions.Api/Models/Session.cs) | Record types for your resource and request bodies. |
 | [`Data/ISessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/ISessionRepository.cs) | Abstraction used by the endpoints. |
-| [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs) | Simple in-memory implementation used on day 1. |
+| [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs) | Simple in-memory implementation used on day 1, including LINQ-based sorting, lookup, and duplicate checks. |
 | [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) | The HTTP surface of the API. |
 | [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http) | A human-readable way to exercise the API without writing a frontend. |
 
@@ -255,7 +256,63 @@ Useful rules from day 1:
 
 See: [`02-minimal-apis.md`](../../docs/day1/02-minimal-apis.md) and [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs)
 
-## 8. REST and HTTP rules to keep
+## 8. LINQ: query collections without manual loops
+
+LINQ lets you filter, sort, and search objects with small composable operators instead of writing manual loops. On day 1, LINQ runs over the in-memory `List<Session>` used by the repository.
+
+In the repository, LINQ keeps the list ordering logic concise:
+
+```csharp
+return _sessions
+    .OrderBy(session => session.StartsAt)
+    .ThenBy(session => session.Title)
+    .ToList();
+```
+
+The endpoints build another LINQ pipeline for query-string filtering:
+
+```csharp
+var query = repository.List().AsEnumerable();
+
+if (!string.IsNullOrWhiteSpace(track))
+{
+    query = query.Where(session => session.Track.Equals(track, StringComparison.OrdinalIgnoreCase));
+}
+
+if (!string.IsNullOrWhiteSpace(search))
+{
+    query = query.Where(session =>
+        session.Title.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+        session.Speaker.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+        session.Track.Contains(search, StringComparison.OrdinalIgnoreCase));
+}
+
+return TypedResults.Ok(query.ToList());
+```
+
+### Operators you should recognize on day 1
+
+| Operator | What it means here | Demo example |
+| --- | --- | --- |
+| `Where(...)` | Keep only matching items | filter by `track`, `speaker`, `published`, or `search` |
+| `OrderBy(...)` | Sort by the primary key | order sessions by `StartsAt` |
+| `ThenBy(...)` | Add a secondary sort key | break ties with `Title` |
+| `FirstOrDefault(...)` | Return the first match or `null` | find one session by `Id` |
+| `Any(...)` | Check whether anything matches | detect duplicate titles |
+| `ToList()` | Materialize the current query as a list | return the final response payload |
+| `AsEnumerable()` | Start composing an `IEnumerable<T>` query pipeline | build up optional filters in `GetAllSessions` |
+
+**Day 1 boundary:** this is still just C# over in-memory objects. On day 2 you reuse many of the same LINQ ideas with EF Core queries against a real database.
+
+For broader coverage of operators like `Select`, `GroupBy`, and `Join`, see the shared [`../csharp-cheat-sheet.md`](../csharp-cheat-sheet.md).
+
+See:
+
+- [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs)
+- [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs)
+- [`02-minimal-apis.md`](../../docs/day1/02-minimal-apis.md)
+
+## 9. REST and HTTP rules to keep
 
 This is where [`03-http-fundamentals.md`](../../docs/day1/03-http-fundamentals.md) should actively shape your endpoints.
 
@@ -296,7 +353,7 @@ The demo follows this:
 
 See: [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) and [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
 
-## 9. TypedResults: make success and failure explicit
+## 10. TypedResults: make success and failure explicit
 
 Typed results are one of the biggest day 1 wins:
 
@@ -326,7 +383,7 @@ Look at these return types in the demo:
 
 See: [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs)
 
-## 10. Dependency injection without overthinking it
+## 11. Dependency injection without overthinking it
 
 From [`02a-dependency-injection.md`](../../docs/day1/02a-dependency-injection.md):
 
@@ -354,7 +411,7 @@ See:
 - [`Data/ISessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/ISessionRepository.cs)
 - [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs)
 
-## 11. OpenAPI, Scalar, and `.http` files
+## 12. OpenAPI, Scalar, and `.http` files
 
 The shortest useful setup is:
 
@@ -380,26 +437,29 @@ Use [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http) alon
 - `.http` files help you repeat exact requests
 - both reinforce that HTTP is the public contract
 
-## 12. What to remember after day 1
+## 13. What to remember after day 1
 
 If you remember only a few things, remember these:
 
 1. A Minimal API starts with `CreateBuilder()`, `Build()`, `Map...()`, and `Run()`.
 2. Records are a clean default for request/response models.
-3. Route groups keep endpoint organization simple.
-4. DI lets handlers depend on abstractions instead of concrete classes.
-5. `201`, `204`, `404`, `409`, and `422` are not trivia — they are part of your API design.
-6. `TypedResults` make endpoint contracts easier to read and document.
-7. OpenAPI + Scalar + `.http` files are your fastest feedback loop.
+3. LINQ lets you filter, sort, and search in-memory collections without manual loops.
+4. Route groups keep endpoint organization simple.
+5. DI lets handlers depend on abstractions instead of concrete classes.
+6. `201`, `204`, `404`, `409`, and `422` are not trivia — they are part of your API design.
+7. `TypedResults` make endpoint contracts easier to read and document.
+8. OpenAPI + Scalar + `.http` files are your fastest feedback loop.
 
-## 13. Suggested reading order
+## 14. Suggested reading order
 
 If you want to move between the docs and the code efficiently:
 
 1. [`docs/day1/README.md`](../../docs/day1/README.md)
 2. [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs)
 3. [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs)
-4. [`03-http-fundamentals.md`](../../docs/day1/03-http-fundamentals.md)
-5. [`02a-dependency-injection.md`](../../docs/day1/02a-dependency-injection.md)
-6. [`04-openapi-scalar.md`](../../docs/day1/04-openapi-scalar.md)
-7. [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
+4. [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs)
+5. [`02-minimal-apis.md`](../../docs/day1/02-minimal-apis.md)
+6. [`03-http-fundamentals.md`](../../docs/day1/03-http-fundamentals.md)
+7. [`02a-dependency-injection.md`](../../docs/day1/02a-dependency-injection.md)
+8. [`04-openapi-scalar.md`](../../docs/day1/04-openapi-scalar.md)
+9. [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
