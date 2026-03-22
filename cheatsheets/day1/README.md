@@ -3,8 +3,16 @@
 > **Focus:** the smallest set of ideas from [`docs/day1/`](../../docs/day1/) that you need to read, run, and extend a first ASP.NET Core Minimal API.
 >
 > **Companion demo:** [`demos/day1/TechConf.Sessions.Api/`](../../demos/day1/TechConf.Sessions.Api/)
+>
+> **Use this exact demo while reading:** stay inside `demos/day1/TechConf.Sessions.Api/` for the walkthrough below, then switch to [`labs/lab1-events-api/`](../../labs/lab1-events-api/) when you want hands-on practice.
 
 ## 1. Start here
+
+Before you run anything, make sure the .NET 10 SDK is available:
+
+```bash
+dotnet --version
+```
 
 From the repository root:
 
@@ -18,6 +26,13 @@ Then open:
 - Scalar UI: `http://localhost:5042/scalar/v1`
 - OpenAPI JSON: `http://localhost:5042/openapi/v1.json`
 - Manual request file: [`../../demos/day1/TechConf.Sessions.Api/requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
+
+If you want the fastest path through day 1, keep these files open side by side:
+
+- [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs)
+- [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs)
+- [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs)
+- [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
 
 ## 2. Day 1 map: concept → doc → code
 
@@ -463,3 +478,16 @@ If you want to move between the docs and the code efficiently:
 7. [`02a-dependency-injection.md`](../../docs/day1/02a-dependency-injection.md)
 8. [`04-openapi-scalar.md`](../../docs/day1/04-openapi-scalar.md)
 9. [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http)
+
+## 15. Next step: practice it yourself
+
+Once the reference demo feels familiar, move to [`labs/lab1-events-api/`](../../labs/lab1-events-api/).
+
+That lab asks you to implement the same core ideas yourself instead of just reading the finished version:
+
+- Minimal API routing
+- Typed results and status codes
+- In-memory storage
+- OpenAPI, Scalar, and `.http` testing
+
+Use this cheatsheet and the `TechConf.Sessions.Api` demo as your reference while you work through the lab.

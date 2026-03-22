@@ -21,11 +21,29 @@ By the end of Day 1, you will be able to:
 5. **[HTTP Fundamentals](03-http-fundamentals.md)** — REST principles, HTTP methods, status codes, content negotiation, CORS
 6. **[OpenAPI & Scalar](04-openapi-scalar.md)** — Built-in OpenAPI support, Scalar documentation UI, .http files, document customization
 
+## 🧭 How to use today's materials
+
+1. Read the topic docs in this folder for the concepts and vocabulary.
+2. Run **[TechConf Sessions API](../../demos/day1/TechConf.Sessions.Api/)** as the main reference demo for day 1.
+3. Use the **[Day 1 API Essentials Cheat Sheet](../../cheatsheets/day1/README.md)** as a fast map from each concept to the exact demo files.
+4. Move to **[Lab 1 — Events API](../../labs/lab1-events-api/)** when you want to implement the same ideas yourself.
+
+**Important:** if you notice other day 1 sample apps elsewhere in the repository, use `demos/day1/TechConf.Sessions.Api/` as the primary reference project for the docs and cheatsheet linked from this page.
+
+## 🔎 Reference Demo & Cheatsheet
+
+- **[TechConf Sessions API](../../demos/day1/TechConf.Sessions.Api/)** — the reference demo for this day. Use it while reading the docs and cheatsheet.
+- **[Day 1 API Essentials Cheat Sheet](../../cheatsheets/day1/README.md)** — condensed notes for the essential day 1 topics with direct links into the reference demo.
+
+Reference demo quick entry points:
+
+- [`Program.cs`](../../demos/day1/TechConf.Sessions.Api/Program.cs) — startup, DI registration, OpenAPI, and Scalar
+- [`Endpoints/SessionEndpoints.cs`](../../demos/day1/TechConf.Sessions.Api/Endpoints/SessionEndpoints.cs) — route groups, parameter binding, TypedResults, and validation
+- [`Data/InMemorySessionRepository.cs`](../../demos/day1/TechConf.Sessions.Api/Data/InMemorySessionRepository.cs) — in-memory storage plus LINQ-based sorting and lookup
+- [`requests.http`](../../demos/day1/TechConf.Sessions.Api/requests.http) — repeatable HTTP requests for manual testing
+
 ## 🧪 Lab
 
 **[Lab 1 — Events API](../../labs/lab1-events-api/)**: Build a complete CRUD API for TechConf events using Minimal APIs with in-memory storage, TypedResults, and Scalar documentation.
 
-## 🔎 Reference Demo & Cheatsheet
-
-- **[Day 1 API Essentials Cheat Sheet](../../cheatsheets/day1/README.md)** — condensed notes for the essential day 1 topics with direct links into the companion project
-- **[TechConf Sessions API](../../demos/day1/TechConf.Sessions.Api/)** — a small but complete Minimal API sample showing DI, RESTful endpoints, TypedResults, OpenAPI, Scalar, and `.http` requests
+Use the lab after you have read through the reference demo and cheatsheet. It is the practice step, not the primary walkthrough.
