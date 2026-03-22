@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this lab, you'll add data persistence with **Entity Framework Core 10** and **PostgreSQL**, implement input validation using **DataAnnotations** and **FluentValidation**, and add standardized error handling with **Problem Details (RFC 9457)**.
+In this lab, you'll add data persistence with **Entity Framework Core 10** and **PostgreSQL**, implement input validation using **FluentValidation**, and add standardized error handling with **Problem Details (RFC 9457)**.
 
 
 ## Learning Objectives
@@ -10,7 +10,7 @@ In this lab, you'll add data persistence with **Entity Framework Core 10** and *
 - Configure Entity Framework Core with PostgreSQL
 - Define entity relationships (one-to-many, many-to-many)
 - Run database migrations
-- Implement input validation
+- Implement input validation with FluentValidation and endpoint filters
 - Handle errors with Problem Details
 - Use dependency injection effectively
 
@@ -36,10 +36,10 @@ Open `Data/Configurations/` and implement the entity configurations:
 In `Program.cs`, register `AppDbContext` with the PostgreSQL connection string. Then create and apply the initial migration.
 
 ### Task 3: Implement Repository Methods
-Complete the `EventRepository` methods using async EF Core queries. Use `Include` for eager loading, avoid N+1 queries.
+Open `Repositories/EventRepository.cs` and complete the repository methods using async EF Core queries. Use `Include`/`ThenInclude` for eager loading and avoid N+1 queries.
 
-### Task 4: Refactor Endpoints to Use Database
-Update `EventEndpoints.cs` to inject `AppDbContext` (or `IEventRepository`) and use async database operations instead of the in-memory list.
+### Task 4: Refactor Endpoints to Use the Repository
+Update `Program.cs` and `Endpoints/EventEndpoints.cs` to register and inject `IEventRepository`, then use async repository calls instead of direct in-memory data access.
 
 ### Task 5: Add Validation
 Implement `CreateEventValidator` using FluentValidation:
@@ -48,10 +48,16 @@ Implement `CreateEventValidator` using FluentValidation:
 - City is required, max 100 chars
 - Wire up the validation endpoint filter
 
+### Task 6: Add Problem Details Error Handling
+Implement `GlobalExceptionHandler` and wire it up in `Program.cs`:
+- Register `GlobalExceptionHandler` and `ProblemDetails`
+- Add the exception handler and status code pages middleware
+- Map `NotFoundException` and other failures to appropriate Problem Details responses
+
 ## Stretch Goals
 
 1. **Pagination**: Add `?page=1&pageSize=20` to GET /api/events with total count in response
-2. **Data Seeding**: Add initial seed data in `AppDbContext.OnModelCreating`
+2. **Data Seeding**: Add initial seed data using a dedicated `DbSeeder` (or equivalent startup seeding)
 
 ## Solution
 

@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using TechConf.Api.Data;
-using TechConf.Api.Exceptions;
 using TechConf.Api.Models;
+using TechConf.Api.Repositories;
 using TechConf.Api.Validation;
-using Microsoft.EntityFrameworkCore;
 
 namespace TechConf.Api.Endpoints;
 
@@ -23,97 +21,59 @@ public static class EventEndpoints
     }
 
     private static async Task<Ok<List<EventDto>>> GetAllEvents(
-        AppDbContext db, string? city, int page = 1, int pageSize = 20)
+        IEventRepository repository,
+        string? city,
+        int page = 1,
+        int pageSize = 20,
+        CancellationToken cancellationToken = default)
     {
-        var query = db.Events.AsQueryable();
-
-        if (city is not null)
-            query = query.Where(e => EF.Functions.ILike(e.City, city));
-
-        var events = await query
-            .OrderBy(e => e.Date)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .Select(e => new EventDto(e.Id, e.Name, e.Date, e.City, e.Description, e.Sessions.Count))
-            .ToListAsync();
-
+        var events = await repository.GetAllAsync(city, page, pageSize, cancellationToken);
         return TypedResults.Ok(events);
     }
 
-    private static async Task<Results<Ok<EventDetailDto>, NotFound>> GetEventById(int id, AppDbContext db)
+    private static async Task<Ok<EventDetailDto>> GetEventById(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        var evt = await db.Events
-            .Include(e => e.Sessions)
-                .ThenInclude(s => s.Speakers)
-            .FirstOrDefaultAsync(e => e.Id == id);
-
-        if (evt is null) return TypedResults.NotFound();
-
-        var dto = new EventDetailDto(
-            evt.Id, evt.Name, evt.Date, evt.City, evt.Description,
-            evt.Sessions.Select(s => new SessionDto(
-                s.Id, s.Title, s.Duration,
-                s.Speakers.Select(sp => sp.Name).ToList())).ToList());
-
-        return TypedResults.Ok(dto);
+        var evt = await repository.GetByIdAsync(id, cancellationToken);
+        return TypedResults.Ok(evt);
     }
 
-    private static async Task<Results<Ok<List<SessionDto>>, NotFound>> GetEventSessions(int id, AppDbContext db)
+    private static async Task<Ok<List<SessionDto>>> GetEventSessions(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        var evt = await db.Events
-            .Include(e => e.Sessions)
-                .ThenInclude(s => s.Speakers)
-            .FirstOrDefaultAsync(e => e.Id == id);
-
-        if (evt is null) return TypedResults.NotFound();
-
-        var sessions = evt.Sessions.Select(s => new SessionDto(
-            s.Id, s.Title, s.Duration,
-            s.Speakers.Select(sp => sp.Name).ToList())).ToList();
-
+        var sessions = await repository.GetSessionsAsync(id, cancellationToken);
         return TypedResults.Ok(sessions);
     }
 
-    private static async Task<Created<EventDto>> CreateEvent(CreateEventRequest request, AppDbContext db)
+    private static async Task<Created<EventDto>> CreateEvent(
+        CreateEventRequest request,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        var evt = new Event
-        {
-            Name = request.Name,
-            Date = request.Date,
-            City = request.City,
-            Description = request.Description
-        };
-
-        db.Events.Add(evt);
-        await db.SaveChangesAsync();
-
-        var dto = new EventDto(evt.Id, evt.Name, evt.Date, evt.City, evt.Description, 0);
-        return TypedResults.Created($"/api/events/{evt.Id}", dto);
+        var evt = await repository.CreateAsync(request, cancellationToken);
+        return TypedResults.Created($"/api/events/{evt.Id}", evt);
     }
 
-    private static async Task<Results<NoContent, NotFound>> UpdateEvent(
-        int id, UpdateEventRequest request, AppDbContext db)
+    private static async Task<NoContent> UpdateEvent(
+        int id,
+        UpdateEventRequest request,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        var evt = await db.Events.FindAsync(id);
-        if (evt is null) return TypedResults.NotFound();
-
-        evt.Name = request.Name;
-        evt.Date = request.Date;
-        evt.City = request.City;
-        evt.Description = request.Description;
-        await db.SaveChangesAsync();
-
+        await repository.UpdateAsync(id, request, cancellationToken);
         return TypedResults.NoContent();
     }
 
-    private static async Task<Results<NoContent, NotFound>> DeleteEvent(int id, AppDbContext db)
+    private static async Task<NoContent> DeleteEvent(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        var evt = await db.Events.FindAsync(id);
-        if (evt is null) return TypedResults.NotFound();
-
-        db.Events.Remove(evt);
-        await db.SaveChangesAsync();
-
+        await repository.DeleteAsync(id, cancellationToken);
         return TypedResults.NoContent();
     }
 }

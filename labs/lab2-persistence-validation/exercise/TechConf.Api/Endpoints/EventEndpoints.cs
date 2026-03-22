@@ -1,8 +1,6 @@
-using TechConf.Api.Data;
-using TechConf.Api.Exceptions;
 using TechConf.Api.Models;
+using TechConf.Api.Repositories;
 using TechConf.Api.Validation;
-using Microsoft.EntityFrameworkCore;
 
 namespace TechConf.Api.Endpoints;
 
@@ -21,41 +19,68 @@ public static class EventEndpoints
         group.MapDelete("/{id:int}", DeleteEvent);
     }
 
-    // TODO: Task 4 - Refactor all methods below to use AppDbContext instead of in-memory data
+    // TODO: Task 4 - Refactor all methods below to use IEventRepository instead of direct data access
 
-    private static async Task<IResult> GetAllEvents(AppDbContext db, string? city, int page = 1, int pageSize = 20)
+    private static async Task<IResult> GetAllEvents(
+        IEventRepository repository,
+        string? city,
+        int page = 1,
+        int pageSize = 20,
+        CancellationToken cancellationToken = default)
     {
-        // TODO: Query events from database with optional city filter and pagination
+        // TODO: Call repository.GetAllAsync(city, page, pageSize, cancellationToken)
+        // and return the results with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
-    private static async Task<IResult> GetEventById(int id, AppDbContext db)
+    private static async Task<IResult> GetEventById(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        // TODO: Find event by ID, throw NotFoundException if not found
+        // TODO: Call repository.GetByIdAsync(id, cancellationToken)
+        // and return the result with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
-    private static async Task<IResult> GetEventSessions(int id, AppDbContext db)
+    private static async Task<IResult> GetEventSessions(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        // TODO: Get all sessions for an event with speaker names (use Include + ThenInclude)
+        // TODO: Call repository.GetSessionsAsync(id, cancellationToken)
+        // and return the result with TypedResults.Ok(...)
         throw new NotImplementedException();
     }
 
-    private static async Task<IResult> CreateEvent(CreateEventRequest request, AppDbContext db)
+    private static async Task<IResult> CreateEvent(
+        CreateEventRequest request,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        // TODO: Create event from request, save to database, return Created
+        // TODO: Call repository.CreateAsync(request, cancellationToken)
+        // and return TypedResults.Created(...) with the created event DTO
         throw new NotImplementedException();
     }
 
-    private static async Task<IResult> UpdateEvent(int id, UpdateEventRequest request, AppDbContext db)
+    private static async Task<IResult> UpdateEvent(
+        int id,
+        UpdateEventRequest request,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        // TODO: Find and update event, throw NotFoundException if not found
+        // TODO: Call repository.UpdateAsync(id, request, cancellationToken)
+        // and return TypedResults.NoContent()
         throw new NotImplementedException();
     }
 
-    private static async Task<IResult> DeleteEvent(int id, AppDbContext db)
+    private static async Task<IResult> DeleteEvent(
+        int id,
+        IEventRepository repository,
+        CancellationToken cancellationToken)
     {
-        // TODO: Find and delete event, throw NotFoundException if not found
+        // TODO: Call repository.DeleteAsync(id, cancellationToken)
+        // and return TypedResults.NoContent()
         throw new NotImplementedException();
     }
 }

@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 using TechConf.Api.Data;
 using TechConf.Api.Endpoints;
 using TechConf.Api.Exceptions;
+using TechConf.Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddOpenApi();
 // TODO: Task 2 - Register AppDbContext with PostgreSQL
 // builder.Services.AddDbContext<AppDbContext>(options =>
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// TODO: Task 4 - Register EventRepository for dependency injection
+// builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
