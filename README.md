@@ -99,6 +99,8 @@ Working through preparation material is **not required** — we'll learn the nec
 ### Cheatsheets
 
 - [C# 13 Cheat Sheet](cheatsheets/csharp-cheat-sheet.md)
+- [Day 1 API Essentials Cheat Sheet](cheatsheets/day1/README.md)
+- [Day 2 Persistence, Validation & Error Handling Cheat Sheet](cheatsheets/day2/README.md)
 
 ### Patterns & Guidelines
 
