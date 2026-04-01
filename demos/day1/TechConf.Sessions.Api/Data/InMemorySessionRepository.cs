@@ -4,7 +4,7 @@ namespace TechConf.Sessions.Api.Data;
 
 public sealed class InMemorySessionRepository : ISessionRepository
 {
-    private readonly object _syncRoot = new();
+    //This implementation is not thread-safe and is only intended for demonstration purposes. In a production application, you would typically use a database or another persistent storage mechanism.    
     private readonly List<Session> _sessions =
     [
         new(1, "Minimal APIs in Practice", "Alice Hoffmann", "Web", new DateTime(2026, 4, 10, 9, 0, 0, DateTimeKind.Utc), 60, true),
@@ -15,78 +15,57 @@ public sealed class InMemorySessionRepository : ISessionRepository
 
     public IReadOnlyList<Session> List()
     {
-        lock (_syncRoot)
-        {
-            return _sessions
-                .OrderBy(session => session.StartsAt)
-                .ThenBy(session => session.Title)
-                .ToList();
-        }
+        return _sessions
+            .OrderBy(session => session.StartsAt)
+            .ThenBy(session => session.Title)
+            .ToList();
     }
 
     public Session? GetById(int id)
     {
-        lock (_syncRoot)
-        {
-            return _sessions.FirstOrDefault(session => session.Id == id);
-        }
+        return _sessions.FirstOrDefault(session => session.Id == id);
     }
 
     public int GetNextId()
     {
-        lock (_syncRoot)
-        {
-            return _nextId++;
-        }
+        return _nextId++;
     }
 
     public void Add(Session session)
     {
-        lock (_syncRoot)
-        {
-            _sessions.Add(session);
-        }
+        _sessions.Add(session);
     }
 
     public bool Update(Session session)
     {
-        lock (_syncRoot)
+        var index = _sessions.FindIndex(existing => existing.Id == session.Id);
+
+        if (index == -1)
         {
-            var index = _sessions.FindIndex(existing => existing.Id == session.Id);
-
-            if (index == -1)
-            {
-                return false;
-            }
-
-            _sessions[index] = session;
-            return true;
+            return false;
         }
+
+        _sessions[index] = session;
+        return true;
     }
 
     public bool Delete(int id)
     {
-        lock (_syncRoot)
+        var session = _sessions.FirstOrDefault(existing => existing.Id == id);
+
+        if (session is null)
         {
-            var session = _sessions.FirstOrDefault(existing => existing.Id == id);
-
-            if (session is null)
-            {
-                return false;
-            }
-
-            _sessions.Remove(session);
-            return true;
+            return false;
         }
+
+        _sessions.Remove(session);
+        return true;
     }
 
     public bool ExistsWithTitle(string title, int? excludingId = null)
     {
-        lock (_syncRoot)
-        {
-            return _sessions.Any(session =>
-                session.Id != excludingId &&
-                session.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
-        }
+        return _sessions.Any(session =>
+            session.Id != excludingId &&
+            session.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
     }
 }

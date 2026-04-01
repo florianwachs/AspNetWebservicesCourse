@@ -1,11 +1,5 @@
 # C# 13 / .NET 10 — Comprehensive Cheat Sheet
 
-> **Course:** ASP.NET Web Services 2026
-> **Runtime:** .NET 10 · **Language:** C# 13
-> **Last updated:** 2026-02
-
----
-
 ## Table of Contents
 
 1. [Basic Data Types](#1-basic-data-types)
