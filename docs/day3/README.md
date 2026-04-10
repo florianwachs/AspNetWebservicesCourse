@@ -7,8 +7,6 @@ By the end of Day 3, you will be able to:
 - Orchestrate multi-service applications with .NET Aspire
 - Choose between ASP.NET Identity for simpler apps and JWT Bearer authentication with Keycloak for advanced setups
 - Apply Vertical Slice Architecture to organize feature code
-- Use MediatR for CQRS pattern implementation
-- Build cross-cutting concerns with pipeline behaviors
 
 ## 🌅 Morning Warm-Up
 
