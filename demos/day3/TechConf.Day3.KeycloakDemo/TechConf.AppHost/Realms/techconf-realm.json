@@ -1,0 +1,129 @@
+{
+  "realm": "techconf",
+  "enabled": true,
+  "displayName": "TechConf",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "rememberMe": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "organizer",
+        "description": "Can create, update, and delete TechConf events."
+      },
+      {
+        "name": "speaker",
+        "description": "Can participate in TechConf as a speaker."
+      },
+      {
+        "name": "attendee",
+        "description": "Can participate in TechConf as an attendee."
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "techconf-api",
+      "name": "TechConf API",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "bearerOnly": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "techconf-api-secret",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "fullScopeAllowed": true,
+      "protocolMappers": [
+        {
+          "name": "audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "techconf-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin@techconf.dev",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@techconf.dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "organizer"
+      ]
+    },
+    {
+      "username": "speaker@techconf.dev",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Speaker",
+      "lastName": "User",
+      "email": "speaker@techconf.dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Speaker123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "speaker"
+      ]
+    },
+    {
+      "username": "attendee@techconf.dev",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Attendee",
+      "lastName": "User",
+      "email": "attendee@techconf.dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Attendee123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "attendee"
+      ]
+    }
+  ]
+}

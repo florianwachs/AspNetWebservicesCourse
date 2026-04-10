@@ -1,0 +1,12 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/TechConf.Day3.KeycloakDemo/">
+    <Project Path="TechConf.Day3.KeycloakDemo/TechConf.Api/TechConf.Api.csproj" />
+    <Project Path="TechConf.Day3.KeycloakDemo/TechConf.AppHost/TechConf.AppHost.csproj" />
+    <Project Path="TechConf.Day3.KeycloakDemo/TechConf.ServiceDefaults/TechConf.ServiceDefaults.csproj" />
+  </Folder>
+</Solution>
