@@ -1,0 +1,65 @@
+# Update the URLs after starting TechConf.AppHost and copying the API and Keycloak endpoints from the Aspire dashboard.
+@baseUrl = http://localhost:5450/
+@keycloakBaseUrl = http://localhost:50071
+@realm = techconf
+@clientId = techconf-api
+@clientSecret = techconf-api-secret
+@organizerUsername = admin@techconf.dev
+@organizerPassword = Admin123!
+@speakerUsername = speaker@techconf.dev
+@speakerPassword = Speaker123!
+
+### Get organizer token
+# @name organizerToken
+POST {{keycloakBaseUrl}}/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id={{clientId}}&client_secret={{clientSecret}}&username={{organizerUsername}}&password={{organizerPassword}}
+
+> {%
+client.global.set("organizerAccessToken", response.body.access_token);
+%}
+
+### Get speaker token
+# @name speakerToken
+POST {{keycloakBaseUrl}}/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id={{clientId}}&client_secret={{clientSecret}}&username={{speakerUsername}}&password={{speakerPassword}}
+
+> {%
+client.global.set("speakerAccessToken", response.body.access_token);
+%}
+
+### Health check
+GET {{baseUrl}}/health
+
+### OpenAPI document
+GET {{baseUrl}}/openapi/v1.json
+
+### Public events
+GET {{baseUrl}}/api/events
+
+### Organizer-only create event with an organizer token
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+Authorization: Bearer {{organizerAccessToken}}
+
+{
+  "name": "Keycloak Demo Event",
+  "date": "2026-05-07T10:30:00Z",
+  "city": "Rosenheim",
+  "description": "Created with a Keycloak-issued organizer token."
+}
+
+### Organizer-only create event with a speaker token (expect 403)
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+Authorization: Bearer {{speakerAccessToken}}
+
+{
+  "name": "Forbidden Speaker Event",
+  "date": "2026-05-07T10:30:00Z",
+  "city": "Rosenheim",
+  "description": "This request should fail because the speaker role is not an organizer."
+}

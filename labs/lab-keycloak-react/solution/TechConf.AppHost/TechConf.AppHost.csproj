@@ -1,0 +1,23 @@
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.2.2">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>d4ea4903-6f1a-414f-b7cd-5d3f31c782b9</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.2.2" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" Version="13.2.1-preview.1.26180.6" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TechConf.Api\TechConf.Api.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Realms\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

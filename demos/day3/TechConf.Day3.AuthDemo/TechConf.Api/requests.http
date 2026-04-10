@@ -1,0 +1,55 @@
+# Update the URL after starting TechConf.AppHost and copying the API endpoint from the Aspire dashboard.
+@baseUrl = https://localhost:7500
+@jwtToken = paste-jwt-here
+
+### Health check
+GET {{baseUrl}}/health
+
+### OpenAPI document
+GET {{baseUrl}}/openapi/v1.json
+
+### Get public events
+GET {{baseUrl}}/api/events
+
+### Register a new attendee
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "demo-user@techconf.dev",
+  "password": "Attendee123!"
+}
+
+### Cookie mode login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@techconf.dev",
+  "password": "Admin123!",
+  "rememberMe": false
+}
+
+### JWT mode login
+# Set Authentication:Mode to Jwt before calling this request.
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@techconf.dev",
+  "password": "Admin123!"
+}
+
+### Organizer-only create event
+# In cookie mode, run the login request first.
+# In JWT mode, paste the bearer token returned by the JWT login request.
+POST {{baseUrl}}/api/events
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
+
+{
+  "name": "Day 3 Live Demo",
+  "date": "2026-05-07T09:00:00Z",
+  "city": "Rosenheim",
+  "description": "Event created during the auth demo."
+}

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TechConf.Api/TechConf.Api.csproj" />
+  <Project Path="TechConf.AppHost/TechConf.AppHost.csproj" />
+  <Project Path="TechConf.ServiceDefaults/TechConf.ServiceDefaults.csproj" />
+</Solution>

@@ -1,24 +1,24 @@
 {
   "name": "ASP.NET Web Services Course (.NET 10)",
   "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
-  "remoteEnv": {
-    "PATH": "${containerEnv:PATH}:/home/vscode/.dotnet/tools"
-  },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {
       "version": "lts"
     }
   },
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/home/vscode/.aspire/bin"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-dotnettools.csdevkit",
         "ms-dotnettools.csharp",
+        "microsoft-aspire.aspire-vscode",
         "humao.rest-client",
         "ms-azuretools.vscode-docker",
-        "editorconfig.editorconfig",
-        "streetsidesoftware.code-spell-checker"
+        "editorconfig.editorconfig"
       ],
       "settings": {
         "dotnet.defaultSolution": "disable"
@@ -26,6 +26,36 @@
     }
   },
   "forwardPorts": [5000, 5001, 5432, 6379, 8080, 15672, 18888],
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "portsAttributes": {
+    "5000": {
+      "label": "ASP.NET HTTP",
+      "onAutoForward": "notify"
+    },
+    "5001": {
+      "label": "ASP.NET HTTPS",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    },
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "Keycloak",
+      "onAutoForward": "notify"
+    },
+    "15672": {
+      "label": "RabbitMQ Management",
+      "onAutoForward": "notify"
+    },
+    "18888": {
+      "label": "Aspire Dashboard",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "bash -lc 'set -euo pipefail && if [ ! -x \"$HOME/.aspire/bin/aspire\" ]; then curl -fsSL https://aspire.dev/install.sh | bash -s -- --quality \"release\" --skip-path; fi && export PATH=\"$HOME/.aspire/bin:$PATH\" && dotnet --version && docker --version && aspire --version'",
   "remoteUser": "vscode"
 }
