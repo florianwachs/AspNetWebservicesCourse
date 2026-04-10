@@ -10,20 +10,6 @@ By the end of Day 3, you will be able to:
 - Use MediatR for CQRS pattern implementation
 - Build cross-cutting concerns with pipeline behaviors
 
-## 📅 Schedule
-
-| Time | Topic | Type |
-|------|-------|------|
-| 09:00–09:15 | [Morning Warm-Up Quiz](#-morning-warm-up) | Discussion |
-| 09:15–10:30 | [.NET Aspire Deep-Dive](01-aspire.md) | Lecture + Demo |
-| 10:30–10:45 | ☕ Break | — |
-| 10:45–12:00 | [Authentication & Authorization](02-authentication.md) | Lecture + Live Coding |
-| 12:00–13:00 | 🍽️ Lunch Break | — |
-| 13:00–14:15 | [Architecture Patterns (VSA, MediatR, CQRS)](03-architecture.md) | Lecture + Live Coding |
-| 14:15–14:30 | ☕ Break | — |
-| 14:30–16:30 | [Lab 3 — Aspire, Auth & Architecture](../../labs/lab3-aspire-auth-architecture/) | Hands-on Lab |
-| 16:30–17:00 | Recap, Q&A & Day 3 Checkpoint | Discussion |
-
 ## 🌅 Morning Warm-Up
 
 Quick review questions from Day 2:
@@ -40,14 +26,9 @@ Quick review questions from Day 2:
 3. **[Architecture Patterns](03-architecture.md)** — Vertical Slice Architecture vs Clean Architecture, MediatR request/handler pattern, CQRS, pipeline behaviors, refactoring walkthrough
 
 ## 🧪 Labs
+**[Lab 3: ASP.NET Identity with Aspire and React](../../labs/lab-identity-react/)**: Practice the app-local authentication path with ASP.NET Identity, cookie authentication, Aspire orchestration, and a React frontend.
 
-**Advanced track — [Lab 3 — Aspire, Auth & Architecture](../../labs/lab3-aspire-auth-architecture/)**: Follow the advanced Keycloak/JWT track: add Aspire orchestration with PostgreSQL and Keycloak, implement JWT authentication, refactor to VSA with MediatR.
-
-Scaffold level: **50%** (Aspire AppHost configured, implement auth and architecture refactoring)
-
-**Simpler auth track — [Alternative Lab: ASP.NET Identity with Aspire and React](../../labs/lab-identity-react/)**: Practice the app-local authentication path with ASP.NET Identity, cookie authentication, Aspire orchestration, and a React frontend.
-
-Scaffold level: **50–60%** (starter code provided for both backend and frontend auth flow)
+**[Lab 3: Keycloak with Aspire and React](../../labs/lab-keycloak-react/)**: Keycloak, JWT and React
 
 ## 📚 Key Packages Introduced Today
 
