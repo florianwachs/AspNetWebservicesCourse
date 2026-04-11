@@ -813,5 +813,3 @@ builder.Build().Run();
 > 💡 Aspire is evolving rapidly. Always check the official docs for the latest API changes.
 
 ---
-
-**Next:** [02 — Building the TechConf API with Aspire](./02-techconf-api.md)
