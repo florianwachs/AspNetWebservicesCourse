@@ -97,7 +97,7 @@ Working through preparation material is **not required** — we'll learn the nec
 | Microsoft Learn C# Path              | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                                        |
 
 ## 📚 Reference Material
-
+https://github.com/dodyg/practical-aspnetcore
 ### Cheatsheets
 
 - [C# 13 Cheat Sheet](cheatsheets/csharp-cheat-sheet.md)
