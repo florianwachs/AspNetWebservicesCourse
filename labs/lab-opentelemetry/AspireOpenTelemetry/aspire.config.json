@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "AspireOpenTelemetry.AppHost/AspireOpenTelemetry.AppHost.csproj"
+  }
+}
