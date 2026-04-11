@@ -23,8 +23,8 @@ This hands-on course teaches modern web service development using the latest .NE
 | ----------------- | ---------------- | -------------------------------------------------------------- |
 | ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
 | ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
-| 👉 Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)       |
-| ⏳ Workshop Day 4 | 2026-04-25, 8:30 | Caching, Real-time, Resilience & Background Processing         |
+| ✅ Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)       |
+| 👉 Workshop Day 4 | 2026-04-25, 8:30 | SignalR (realtime), GRPC, GraphQL, OData                       |
 | ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
 | 👀 Exam           | 2026-06-13, 8:30 | [Exam Information](course/exam/readme.md)                      |
 
@@ -97,7 +97,9 @@ Working through preparation material is **not required** — we'll learn the nec
 | Microsoft Learn C# Path              | https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/                                                                                                                                        |
 
 ## 📚 Reference Material
+
 https://github.com/dodyg/practical-aspnetcore
+
 ### Cheatsheets
 
 - [C# 13 Cheat Sheet](cheatsheets/csharp-cheat-sheet.md)
