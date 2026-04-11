@@ -24,6 +24,8 @@ Quick review questions from Day 2:
 3. **[Architecture Patterns](03-architecture.md)** — Vertical Slice Architecture vs Clean Architecture, MediatR request/handler pattern, CQRS, pipeline behaviors, refactoring walkthrough
 
 ## 🧪 Labs
+**[Lab 3: Aspire OpenTelemetry](../../labs/lab-opentelemetry/)**: Use Aspire Dashboard to learn about OpenTelemetry
+
 **[Lab 3: ASP.NET Identity with Aspire and React](../../labs/lab-identity-react/)**: Practice the app-local authentication path with ASP.NET Identity, cookie authentication, Aspire orchestration, and a React frontend.
 
 **[Lab 3: Keycloak with Aspire and React](../../labs/lab-keycloak-react/)**: Keycloak, JWT and React
@@ -37,4 +39,3 @@ Quick review questions from Day 2:
 | `Microsoft.AspNetCore.Identity.EntityFrameworkCore` | Built-in ASP.NET Identity stores |
 | `Aspire.Hosting.Keycloak` | Keycloak identity provider |
 | `Microsoft.AspNetCore.Authentication.JwtBearer` | JWT token validation |
-| `MediatR` | Mediator/CQRS pattern |
