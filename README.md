@@ -26,7 +26,7 @@ This hands-on course teaches modern web service development using the latest .NE
 | ✅ Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)       |
 | 👉 Workshop Day 4 | 2026-04-25, 8:30 | SignalR (realtime), GRPC, GraphQL, OData                       |
 | ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
-| 👀 Exam           | 2026-06-13, 8:30 | [Exam Information](course/exam/readme.md)                      |
+| 👀 Exam           | TBD              | [Exam Information](course/exam/readme.md)                      |
 
 ## 🔬 Labs
 
