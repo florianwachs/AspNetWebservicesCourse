@@ -1,0 +1,77 @@
+@baseUrl = http://localhost:5401
+
+### List workshops
+GET {{baseUrl}}/api/workshops
+
+### Get workshop details
+GET {{baseUrl}}/api/workshops/1
+
+### Create a workshop
+POST {{baseUrl}}/api/workshops
+Content-Type: application/json
+
+{
+  "title": "Distributed Systems Pitfalls",
+  "city": "Berlin",
+  "maxAttendees": 30
+}
+
+### Update a workshop
+PUT {{baseUrl}}/api/workshops/2
+Content-Type: application/json
+
+{
+  "title": "Architecture Refactoring Studio",
+  "city": "Salzburg",
+  "maxAttendees": 28
+}
+
+### Add a session
+POST {{baseUrl}}/api/workshops/2/sessions
+Content-Type: application/json
+
+{
+  "title": "Refactoring a giant endpoint file",
+  "speakerName": "Lea Fischer",
+  "durationMinutes": 90
+}
+
+### List sessions for a workshop
+GET {{baseUrl}}/api/workshops/2/sessions
+
+### Update a session
+PUT {{baseUrl}}/api/workshops/2/sessions/3
+Content-Type: application/json
+
+{
+  "title": "Finding the pain in a growing monolith",
+  "speakerName": "Florian Koch",
+  "durationMinutes": 75
+}
+
+### Remove a session
+DELETE {{baseUrl}}/api/workshops/2/sessions/4
+
+### Publish a workshop
+POST {{baseUrl}}/api/workshops/2/publish
+
+### Cancel a workshop
+POST {{baseUrl}}/api/workshops/2/cancel
+
+### List registrations
+GET {{baseUrl}}/api/workshops/1/registrations
+
+### Create a registration
+POST {{baseUrl}}/api/workshops/1/registrations
+Content-Type: application/json
+
+{
+  "attendeeName": "Nora Brandt",
+  "attendeeEmail": "nora@demo.dev"
+}
+
+### Cancel a registration
+DELETE {{baseUrl}}/api/workshops/1/registrations/2
+
+### Check in a registration
+POST {{baseUrl}}/api/workshops/1/registrations/1/check-in
