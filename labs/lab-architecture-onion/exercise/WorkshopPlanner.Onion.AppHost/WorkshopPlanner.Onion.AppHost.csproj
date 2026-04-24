@@ -1,0 +1,15 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.2.2">
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorkshopPlanner.Api\WorkshopPlanner.Api.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>43664d79-e0ff-4e9f-aae3-f7b81f578b92</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

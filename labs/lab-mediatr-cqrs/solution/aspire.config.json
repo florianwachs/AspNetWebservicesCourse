@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "WorkshopPlanner.AppHost/WorkshopPlanner.AppHost.csproj"
+  }
+}

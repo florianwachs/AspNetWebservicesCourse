@@ -1,0 +1,263 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SignalGame.AvaloniaClient.MainWindow"
+        Width="1040"
+        Height="860"
+        MinWidth="920"
+        Background="#020617"
+        Title="Signal Showdown - Avalonia">
+  <Window.Styles>
+    <Style Selector="TextBlock">
+      <Setter Property="Foreground" Value="#E2E8F0" />
+    </Style>
+    <Style Selector="TextBlock.muted">
+      <Setter Property="Foreground" Value="#94A3B8" />
+    </Style>
+    <Style Selector="TextBlock.heroTitle">
+      <Setter Property="FontSize" Value="34" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="TextBlock.sectionTitle">
+      <Setter Property="FontSize" Value="20" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.statLabel">
+      <Setter Property="Foreground" Value="#94A3B8" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="TextBlock.statValue">
+      <Setter Property="FontSize" Value="21" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="TextBlock.pillText">
+      <Setter Property="Foreground" Value="#7DD3FC" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="TextBlock.categoryText">
+      <Setter Property="Foreground" Value="#FDE68A" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="Border.card">
+      <Setter Property="Background" Value="#E30F172A" />
+      <Setter Property="BorderBrush" Value="#25324A" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="20" />
+      <Setter Property="Padding" Value="20" />
+    </Style>
+    <Style Selector="Border.hero">
+      <Setter Property="Background">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+          <GradientStop Color="#F0142338" Offset="0" />
+          <GradientStop Color="#E20F172A" Offset="1" />
+        </LinearGradientBrush>
+      </Setter>
+    </Style>
+    <Style Selector="Border.statCard">
+      <Setter Property="Background" Value="#CC1E293B" />
+      <Setter Property="BorderBrush" Value="#25324A" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="16" />
+      <Setter Property="Padding" Value="14" />
+    </Style>
+    <Style Selector="Border.pill">
+      <Setter Property="Background" Value="#2A0EA5E9" />
+      <Setter Property="CornerRadius" Value="999" />
+      <Setter Property="Padding" Value="10,4" />
+    </Style>
+    <Style Selector="Border.categoryPill">
+      <Setter Property="Background" Value="#28F59E0B" />
+      <Setter Property="CornerRadius" Value="999" />
+      <Setter Property="Padding" Value="10,4" />
+    </Style>
+    <Style Selector="Border.infoCard">
+      <Setter Property="Background" Value="#A01E293B" />
+      <Setter Property="BorderBrush" Value="#2A3B57" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="14" />
+      <Setter Property="Padding" Value="14" />
+    </Style>
+    <Style Selector="TextBox.playerInput">
+      <Setter Property="Background" Value="#020617" />
+      <Setter Property="BorderBrush" Value="#334155" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Foreground" Value="#F8FAFC" />
+      <Setter Property="Padding" Value="12,10" />
+    </Style>
+    <Style Selector="Button">
+      <Setter Property="Padding" Value="16,12" />
+      <Setter Property="CornerRadius" Value="12" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="#F8FAFC" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#22C55E" />
+      <Setter Property="BorderBrush" Value="#22C55E" />
+      <Setter Property="Foreground" Value="#052E16" />
+    </Style>
+    <Style Selector="Button.secondary">
+      <Setter Property="Background" Value="#26364D" />
+      <Setter Property="BorderBrush" Value="#31516D" />
+    </Style>
+    <Style Selector="Button.ghost">
+      <Setter Property="Background" Value="#1C293C" />
+      <Setter Property="BorderBrush" Value="#334155" />
+    </Style>
+    <Style Selector="Button.answer">
+      <Setter Property="Background" Value="#182235" />
+      <Setter Property="BorderBrush" Value="#30415F" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="Padding" Value="16,14" />
+    </Style>
+    <Style Selector="Button.answer.correctAnswer">
+      <Setter Property="Background" Value="#173B2A" />
+      <Setter Property="BorderBrush" Value="#34D399" />
+      <Setter Property="Foreground" Value="#BBF7D0" />
+    </Style>
+    <Style Selector="ListBox.fancyList">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="ListBox.fancyList ListBoxItem">
+      <Setter Property="Margin" Value="0,0,0,10" />
+      <Setter Property="Padding" Value="14,12" />
+      <Setter Property="Background" Value="#B01E293B" />
+      <Setter Property="BorderBrush" Value="#26344F" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+  </Window.Styles>
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <Grid Margin="24" RowDefinitions="Auto,Auto,*" RowSpacing="16">
+      <Border Classes="card hero">
+        <Grid ColumnDefinitions="*,280" ColumnSpacing="20">
+          <StackPanel Spacing="12">
+            <Border Classes="pill" HorizontalAlignment="Left">
+              <TextBlock Classes="pillText" Text="SignalR multiplayer lab" />
+            </Border>
+            <TextBlock Classes="heroTitle" Text="🧠 Signal Showdown" />
+            <TextBlock Classes="muted"
+                       FontSize="16"
+                       MaxWidth="620"
+                       Text="A real-time tech quiz where every answer reshapes the leaderboard." />
+            <Border Classes="infoCard">
+              <TextBlock Name="StatusText"
+                         FontSize="15"
+                         FontWeight="SemiBold"
+                         Text="Connecting..."
+                         TextWrapping="Wrap" />
+            </Border>
+          </StackPanel>
+
+          <StackPanel Grid.Column="1" Spacing="12">
+            <Border Classes="statCard">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="statLabel" Text="Phase" />
+                <TextBlock Name="PhaseText" Classes="statValue" Text="Lobby" />
+              </StackPanel>
+            </Border>
+            <Border Classes="statCard">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="statLabel" Text="Players" />
+                <TextBlock Name="PlayersText" Classes="statValue" Text="0/0 online" />
+              </StackPanel>
+            </Border>
+            <Border Classes="statCard">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="statLabel" Text="Progress" />
+                <TextBlock Name="ProgressText" Classes="statValue" Text="0/0" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <Border Grid.Row="1" Classes="card">
+        <StackPanel Spacing="12">
+          <Grid ColumnDefinitions="240,Auto,Auto,Auto,Auto" ColumnSpacing="10">
+            <TextBox Name="PlayerNameTextBox"
+                     Classes="playerInput"
+                     Width="240"
+                     Watermark="Your nickname" />
+            <Button Name="JoinButton" Grid.Column="1" Classes="primary" Content="Join lobby" />
+            <Button Name="StartButton" Grid.Column="2" Classes="secondary" Content="Start quiz" />
+            <Button Name="NextButton" Grid.Column="3" Classes="secondary" Content="Next question" />
+            <Button Name="ResetButton" Grid.Column="4" Classes="ghost" Content="Reset" />
+          </Grid>
+          <TextBlock Name="PlayerStateText"
+                     Classes="muted"
+                     Text="Choose a nickname to enter the lobby." />
+        </StackPanel>
+      </Border>
+
+      <Grid Grid.Row="2" ColumnDefinitions="1.6*,1*" ColumnSpacing="16">
+        <Border Classes="card">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+              <Border Classes="pill" HorizontalAlignment="Left">
+                <TextBlock Name="PhasePillText" Classes="pillText" Text="Lobby" />
+              </Border>
+              <TextBlock Name="QuestionMetaText"
+                         Grid.Column="1"
+                         Classes="muted"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center" />
+            </Grid>
+
+            <Border Name="CategoryBadge" Classes="categoryPill" HorizontalAlignment="Left" IsVisible="False">
+              <TextBlock Name="CategoryText" Classes="categoryText" />
+            </Border>
+
+            <TextBlock Name="QuestionText"
+                       FontSize="26"
+                       FontWeight="SemiBold"
+                       Text="Join the lobby and start the quiz to reveal the first question."
+                       TextWrapping="Wrap" />
+
+            <StackPanel Spacing="10">
+              <Button Name="Option0Button" Classes="answer" />
+              <Button Name="Option1Button" Classes="answer" />
+              <Button Name="Option2Button" Classes="answer" />
+              <Button Name="Option3Button" Classes="answer" />
+            </StackPanel>
+
+            <Border Name="CorrectAnswerCard" Classes="infoCard" IsVisible="False">
+              <TextBlock Name="CorrectAnswerText" FontWeight="SemiBold" TextWrapping="Wrap" />
+            </Border>
+            <Border Name="ExplanationCard" Classes="infoCard" IsVisible="False">
+              <TextBlock Name="ExplanationText"
+                         Classes="muted"
+                         FontSize="14"
+                         TextWrapping="Wrap" />
+            </Border>
+            <Border Name="WinnerCard" Background="#25FACC15" CornerRadius="14" IsVisible="False" Padding="14">
+              <TextBlock Name="WinnerText"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Foreground="#FDE68A"
+                         TextWrapping="Wrap" />
+            </Border>
+          </StackPanel>
+        </Border>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*" RowSpacing="16">
+          <Border Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Classes="sectionTitle" Text="Round results" />
+              <ListBox Name="RoundResultsList" Classes="fancyList" MinHeight="220" />
+            </StackPanel>
+          </Border>
+          <Border Grid.Row="1" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Classes="sectionTitle" Text="Leaderboard" />
+              <ListBox Name="LeaderboardList" Classes="fancyList" MinHeight="280" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Grid>
+    </Grid>
+  </ScrollViewer>
+</Window>

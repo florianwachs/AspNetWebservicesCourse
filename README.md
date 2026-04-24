@@ -24,20 +24,25 @@ This hands-on course teaches modern web service development using the latest .NE
 | ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
 | ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
 | ✅ Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)       |
-| 👉 Workshop Day 4 | 2026-04-25, 8:30 | SignalR (realtime), GRPC, GraphQL, "OData", Architecture                      |
-| ⏳ Workshop Day 5 | 2026-05-09, 8:30 | Testing, Versioning, Observability                             |
-| 👀 Exam           | TBD              | [Exam Information](course/exam/readme.md)                      |
+| 👉 Workshop Day 4 | 2026-04-25, 8:30 | [Architecture, SignalR (realtime), Testing](docs/day4/)        |
+| ⏳ Workshop Day 5 | 2026-05-09, 8:30 | TBD                                                            |
+| 👀 Exam           | 2026-06-20, 8:30 | [Exam Information](course/exam/readme.md)                      |
 
 ## 🔬 Labs
 
 Each workshop day includes a hands-on lab with starter code and a reference solution:
 
-| Lab                                                                            | Day   | Topic                                         |
-| ------------------------------------------------------------------------------ | ----- | --------------------------------------------- |
-| [Lab: Build the Events API](labs/lab1-events-api/)                             | Day 1 | Minimal APIs, OpenAPI, Scalar                 |
-| [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/)          | Day 2 | EF Core 10, FluentValidation, Problem Details |
-| [Lab: ASP.NET Identity with Aspire and React](labs/lab-identity-react/)        | Day 3 | Aspire, ASP.NET Identity, Cookies, React      |
-| [Lab: Keycloak Authentication with Aspire and React](labs/lab-keycloak-react/) | Day 3 | Aspire, Keycloak, JWT, React                  |
+| Lab                                                                                                    | Day   | Topic                                                    |
+| ------------------------------------------------------------------------------------------------------ | ----- | -------------------------------------------------------- |
+| [Lab: Build the Events API](labs/lab1-events-api/)                                                     | Day 1 | Minimal APIs, OpenAPI, Scalar                            |
+| [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/)                                  | Day 2 | EF Core 10, FluentValidation, Problem Details            |
+| [Lab: ASP.NET Identity with Aspire and React](labs/lab-identity-react/)                                | Day 3 | Aspire, ASP.NET Identity, Cookies, React                 |
+| [Lab: Keycloak Authentication with Aspire and React](labs/lab-keycloak-react/)                         | Day 3 | Aspire, Keycloak, JWT, React                             |
+| [Lab: Refactor WorkshopPlanner to Vertical Slice Architecture](labs/lab-architecture-vertical-slices/) | Day 4 | Vertical Slice Architecture, MediatR, CQRS               |
+| [Lab: MediatR, CQRS, and Pipeline Behaviors with Aspire and React](labs/lab-mediatr-cqrs/)             | Day 4 | MediatR, CQRS, Pipeline Behaviors, React                 |
+| [Lab: Refactor WorkshopPlanner to Onion Architecture](labs/lab-architecture-onion/)                    | Day 4 | Onion Architecture, Application Boundaries, Repositories |
+| [Lab: Signal Showdown with SignalR, React, Avalonia and Aspire](labs/lab-signalr-multiplayer/)         | Day 4 | SignalR, Realtime, React, Avalonia, Aspire               |
+| [Lab – Testing](labs/lab-testing/)                                                                     | Day 4 | Integration Testing, Aspire Testing, Playwright          |
 
 ## 🔧 Environment Setup
 

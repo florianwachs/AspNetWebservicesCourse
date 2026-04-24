@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="TechConf.Api/TechConf.Api.csproj" />
+  <Project Path="TechConf.AppHost/TechConf.AppHost.csproj" />
+  <Project Path="TechConf.ServiceDefaults/TechConf.ServiceDefaults.csproj" />
+  <Project Path="TechConf.Api.Tests/TechConf.Api.Tests.csproj" />
+  <Project Path="TechConf.AppHost.Tests/TechConf.AppHost.Tests.csproj" />
+  <Project Path="TechConf.E2E.Tests/TechConf.E2E.Tests.csproj" />
+</Solution>

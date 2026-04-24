@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:5246
+@sessionId = 8f2c38b7-2b10-4dc7-9174-4b4f8d0ac001
+@attendeeId = 8caa4442-0d65-4dfe-9577-9580ab824001
+
+### List seeded sessions
+GET {{baseUrl}}/api/sessions
+
+### Get one session
+GET {{baseUrl}}/api/sessions/{{sessionId}}
+
+### Reserve a seat
+POST {{baseUrl}}/api/sessions/{{sessionId}}/reserve
+Content-Type: application/json
+
+{
+  "attendeeId": "{{attendeeId}}"
+}
+
+### Release a seat
+POST {{baseUrl}}/api/sessions/{{sessionId}}/release
+Content-Type: application/json
+
+{
+  "attendeeId": "{{attendeeId}}"
+}

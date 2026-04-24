@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="WorkshopPlanner.Api/WorkshopPlanner.Api.csproj" />
+  <Project Path="WorkshopPlanner.VerticalSlices.AppHost/WorkshopPlanner.VerticalSlices.AppHost.csproj" />
+  <Project Path="WorkshopPlanner.VerticalSlices.ServiceDefaults/WorkshopPlanner.VerticalSlices.ServiceDefaults.csproj" />
+</Solution>

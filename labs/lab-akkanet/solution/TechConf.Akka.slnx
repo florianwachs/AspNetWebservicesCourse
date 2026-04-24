@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TechConf.Akka.Api/TechConf.Akka.Api.csproj" />
+  <Project Path="TechConf.Akka.AppHost/TechConf.Akka.AppHost.csproj" />
+  <Project Path="TechConf.Akka.ServiceDefaults/TechConf.Akka.ServiceDefaults.csproj" />
+</Solution>
