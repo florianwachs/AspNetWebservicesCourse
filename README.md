@@ -32,12 +32,17 @@ This hands-on course teaches modern web service development using the latest .NE
 
 Each workshop day includes a hands-on lab with starter code and a reference solution:
 
-| Lab                                                                            | Day   | Topic                                         |
-| ------------------------------------------------------------------------------ | ----- | --------------------------------------------- |
-| [Lab: Build the Events API](labs/lab1-events-api/)                             | Day 1 | Minimal APIs, OpenAPI, Scalar                 |
-| [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/)          | Day 2 | EF Core 10, FluentValidation, Problem Details |
-| [Lab: ASP.NET Identity with Aspire and React](labs/lab-identity-react/)        | Day 3 | Aspire, ASP.NET Identity, Cookies, React      |
-| [Lab: Keycloak Authentication with Aspire and React](labs/lab-keycloak-react/) | Day 3 | Aspire, Keycloak, JWT, React                  |
+| Lab                                                                                                    | Day   | Topic                                                    |
+| ------------------------------------------------------------------------------------------------------ | ----- | -------------------------------------------------------- |
+| [Lab: Build the Events API](labs/lab1-events-api/)                                                     | Day 1 | Minimal APIs, OpenAPI, Scalar                            |
+| [Lab: Persist & Validate TechConf](labs/lab2-persistence-validation/)                                  | Day 2 | EF Core 10, FluentValidation, Problem Details            |
+| [Lab: ASP.NET Identity with Aspire and React](labs/lab-identity-react/)                                | Day 3 | Aspire, ASP.NET Identity, Cookies, React                 |
+| [Lab: Keycloak Authentication with Aspire and React](labs/lab-keycloak-react/)                         | Day 3 | Aspire, Keycloak, JWT, React                             |
+| [Lab: Refactor WorkshopPlanner to Vertical Slice Architecture](labs/lab-architecture-vertical-slices/) | Day 4 | Vertical Slice Architecture, MediatR, CQRS               |
+| [Lab: MediatR, CQRS, and Pipeline Behaviors with Aspire and React](labs/lab-mediatr-cqrs/)             | Day 4 | MediatR, CQRS, Pipeline Behaviors, React                 |
+| [Lab: Refactor WorkshopPlanner to Onion Architecture](labs/lab-architecture-onion/)                    | Day 4 | Onion Architecture, Application Boundaries, Repositories |
+| [Lab: Signal Showdown with SignalR, React, Avalonia and Aspire](labs/lab-signalr-multiplayer/)         | Day 4 | SignalR, Realtime, React, Avalonia, Aspire               |
+| [Lab – Testing](labs/lab-testing/)                                                                     | Day 4 | Integration Testing, Aspire Testing, Playwright          |
 
 ## 🔧 Environment Setup
 
