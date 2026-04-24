@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="WorkshopPlanner.Api/WorkshopPlanner.Api.csproj" />
+  <Project Path="WorkshopPlanner.Application/WorkshopPlanner.Application.csproj" />
+  <Project Path="WorkshopPlanner.Domain/WorkshopPlanner.Domain.csproj" />
+  <Project Path="WorkshopPlanner.Infrastructure/WorkshopPlanner.Infrastructure.csproj" />
+  <Project Path="WorkshopPlanner.Onion.AppHost/WorkshopPlanner.Onion.AppHost.csproj" />
+  <Project Path="WorkshopPlanner.Onion.ServiceDefaults/WorkshopPlanner.Onion.ServiceDefaults.csproj" />
+</Solution>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WorkshopPlanner.AppHost/WorkshopPlanner.AppHost.csproj" />
+  <Project Path="WorkshopPlanner.Api/WorkshopPlanner.Api.csproj" />
+</Solution>

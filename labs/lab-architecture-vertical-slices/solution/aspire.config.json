@@ -1,0 +1,6 @@
+{
+  "appHost": {
+    "language": "csharp",
+    "path": "WorkshopPlanner.VerticalSlices.AppHost/WorkshopPlanner.VerticalSlices.AppHost.csproj"
+  }
+}

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SignalGame.Api/SignalGame.Api.csproj" />
+  <Project Path="SignalGame.AppHost/SignalGame.AppHost.csproj" />
+  <Project Path="SignalGame.AvaloniaClient/SignalGame.AvaloniaClient.csproj" />
+  <Project Path="SignalGame.ReactClient/SignalGame.ReactClient.csproj" />
+</Solution>
