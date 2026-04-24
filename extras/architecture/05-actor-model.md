@@ -12,6 +12,8 @@ Typical examples:
 
 The actor model treats an actor as a unit of **state + behavior + mailbox** that processes one message at a time.
 
+![Actor model diagram](../../assets/architecture/diagram_actormodels.png)
+
 ```mermaid
 flowchart LR
     M1[msg] --> MB[Mailbox]

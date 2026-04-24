@@ -37,6 +37,8 @@ Typical characteristics:
 - each service should own its own data,
 - and communication happens across process boundaries.
 
+![Microservices diagram](../../assets/architecture/diagram_microservices.png)
+
 ```mermaid
 flowchart LR
     ApiGateway[Gateway / BFF]

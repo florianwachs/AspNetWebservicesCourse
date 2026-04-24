@@ -30,6 +30,8 @@ That is the whole idea. MediatR is not magic; it is a disciplined request pipeli
 
 MediatR routes a request to the matching handler. In a vertical-slice design, that makes the handler the center of a use case.
 
+![MediatR and CQRS diagram](../../assets/architecture/diagram_cqrs.png)
+
 ```mermaid
 sequenceDiagram
     participant E as Endpoint

@@ -24,6 +24,8 @@ The goal is **not** to make every project look "enterprise". The goal is to make
 
 Read this diagram from top to bottom. The normal course path starts simple, adds structure when change cost rises, and only reaches for the heavier patterns when the problem actually changes.
 
+![Overview architecture diagram](../../assets/architecture/diagram_overview_architecture.png)
+
 ```mermaid
 graph TD;
     Start["Small service<br>Layered CRUD baseline"];

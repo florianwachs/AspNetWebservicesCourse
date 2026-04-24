@@ -91,6 +91,8 @@ The feature works, but the code no longer explains itself well.
 
 Organize code by **feature** or **use case**, not by technical layer.
 
+![Vertical Slice Architecture diagram](../../assets/architecture/diagram_verticalslices.png)
+
 ```mermaid
 flowchart LR
     subgraph CreateEvent
@@ -255,6 +257,8 @@ What is deliberately missing: no `IEventService`, no generic repository, no extr
 ### The core idea
 
 Onion Architecture organizes code in concentric rings where dependencies point inward. The domain sits in the center and does not know about HTTP, databases, or brokers.
+
+![Onion Architecture diagram](../../assets/architecture/diagram_onion_architecture.png)
 
 ```mermaid
 flowchart TB

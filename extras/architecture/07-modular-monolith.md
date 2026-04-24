@@ -26,6 +26,8 @@ A modular monolith is:
 
 Those modules should feel closer to small systems than to folders.
 
+![Modular monolith diagram](../../assets/architecture/diagram_modularmonolith.png)
+
 ```mermaid
 flowchart LR
     subgraph App[TechConf Application]

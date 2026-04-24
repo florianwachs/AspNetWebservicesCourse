@@ -15,6 +15,8 @@ For most course projects, event sourcing is **not** the default. It is an advanc
 
 Instead of storing current state, store the **sequence of events** that produced it.
 
+![Event sourcing diagram](../../assets/architecture/diagram_Event%20Sourcing.png)
+
 ```text
 state = events.Aggregate(initialState, (current, @event) => current.Apply(@event))
 ```

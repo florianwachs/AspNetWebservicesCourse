@@ -28,6 +28,8 @@ That fits naturally with Onion Architecture:
 
 Read the left side as the default for straightforward handlers. Read the right side as the shape you introduce only when the abstraction adds real domain meaning or hides real persistence complexity.
 
+![Repository pattern diagram](../../assets/architecture/diagram_repositorypattern.png)
+
 ```mermaid
 flowchart LR
     subgraph Direct["Direct DbContext (default)"]
