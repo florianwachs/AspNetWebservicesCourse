@@ -77,7 +77,7 @@ Then wire references inward:
 
 - `WorkshopPlanner.Application` → `WorkshopPlanner.Domain`
 - `WorkshopPlanner.Infrastructure` → `WorkshopPlanner.Application`, `WorkshopPlanner.Domain`
-- `WorkshopPlanner.Api` → `WorkshopPlanner.Application`
+- `WorkshopPlanner.Api` → `WorkshopPlanner.Application`, `WorkshopPlanner.Domain`, `WorkshopPlanner.Infrastructure`
 
 ### Task 3: Move invariants into the domain
 
