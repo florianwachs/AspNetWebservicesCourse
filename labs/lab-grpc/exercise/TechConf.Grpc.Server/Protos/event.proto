@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option csharp_namespace = "TechConf.Grpc.Server";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package techconf;
+
+service EventService {
+  rpc GetEvents (GetEventsRequest) returns (GetEventsResponse);
+  rpc GetEventById (GetEventByIdRequest) returns (EventMessage);
+  rpc CreateEvent (CreateEventRequest) returns (EventMessage);
+  rpc DeleteEvent (DeleteEventRequest) returns (google.protobuf.Empty);
+  rpc StreamEvents (StreamEventsRequest) returns (stream EventMessage);
+}
+
+message EventMessage {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  string location = 6;
+  int32 max_attendees = 7;
+  EventStatusEnum status = 8;
+}
+
+enum EventStatusEnum {
+  EVENT_STATUS_UNSPECIFIED = 0;
+  EVENT_STATUS_DRAFT = 1;
+  EVENT_STATUS_PUBLISHED = 2;
+  EVENT_STATUS_CANCELLED = 3;
+}
+
+message GetEventsRequest {
+  string search = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+}
+
+message GetEventsResponse {
+  repeated EventMessage events = 1;
+  int32 total_count = 2;
+}
+
+message GetEventByIdRequest {
+  string id = 1;
+}
+
+message CreateEventRequest {
+  string title = 1;
+  string description = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  string location = 5;
+  int32 max_attendees = 6;
+}
+
+message DeleteEventRequest {
+  string id = 1;
+}
+
+message StreamEventsRequest {
+  string search = 1;
+}

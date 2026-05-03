@@ -1,0 +1,21 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.2.2">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechConf.Grpc.Client\TechConf.Grpc.Client.csproj" />
+    <ProjectReference Include="..\TechConf.Grpc.Server\TechConf.Grpc.Server.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>807814ad-593b-4890-b06c-dc534b41c39f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.2.2" />
+  </ItemGroup>
+
+</Project>

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechConf.AppHost\TechConf.AppHost.csproj" />
-    <ProjectReference Include="..\TechConf.Api\TechConf.Api.csproj" />
   </ItemGroup>
 
 </Project>

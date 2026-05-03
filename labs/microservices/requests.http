@@ -1,0 +1,27 @@
+@gateway = https://localhost:5001
+
+### Gateway dashboard
+GET {{gateway}}/api/dashboard
+
+### Event catalog through Gateway
+GET {{gateway}}/api/events
+
+### Sessions for Cloud Native Summit through Gateway
+GET {{gateway}}/api/events/11111111-1111-1111-1111-111111111111/sessions
+
+### Register an attendee through Gateway
+POST {{gateway}}/api/registrations
+Content-Type: application/json
+
+{
+  "eventId": "11111111-1111-1111-1111-111111111111",
+  "sessionId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1",
+  "attendeeName": "Alex Morgan",
+  "attendeeEmail": "alex.morgan@example.com"
+}
+
+### Recent notification records through Gateway
+GET {{gateway}}/api/notifications/recent
+
+### Node.js recommendations through Gateway
+GET {{gateway}}/api/recommendations?eventId=11111111-1111-1111-1111-111111111111

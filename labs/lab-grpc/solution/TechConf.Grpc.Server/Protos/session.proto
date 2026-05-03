@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option csharp_namespace = "TechConf.Grpc.Server";
+
+import "google/protobuf/timestamp.proto";
+
+package techconf;
+
+service SessionService {
+  rpc GetSessions (GetSessionsRequest) returns (GetSessionsResponse);
+  rpc GetSessionById (GetSessionByIdRequest) returns (SessionMessage);
+  rpc CreateSession (CreateSessionRequest) returns (SessionMessage);
+  rpc StreamSessionUpdates (StreamSessionsRequest) returns (stream SessionMessage);
+}
+
+message SessionMessage {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string room = 6;
+  string event_id = 7;
+  string speaker_id = 8;
+}
+
+message GetSessionsRequest {
+  string event_id = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+}
+
+message GetSessionsResponse {
+  repeated SessionMessage sessions = 1;
+  int32 total_count = 2;
+}
+
+message GetSessionByIdRequest {
+  string id = 1;
+}
+
+message CreateSessionRequest {
+  string title = 1;
+  string description = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  string room = 5;
+  string event_id = 6;
+  string speaker_id = 7;
+}
+
+message StreamSessionsRequest {
+  string event_id = 1;
+}

@@ -1,0 +1,85 @@
+# Test queries for Banana Cake Pop (navigate to /graphql in browser)
+
+# === Task 2: Get all events ===
+query GetAllEvents {
+  events {
+    id
+    title
+    startDate
+    location
+    status
+  }
+}
+
+# === Task 2: Filter published events ===
+query GetPublishedEvents {
+  events(where: { status: { eq: PUBLISHED } }) {
+    id
+    title
+    startDate
+    location
+  }
+}
+
+# === Task 2: Sort events by date ===
+query GetEventsSorted {
+  events(order: { startDate: DESC }) {
+    title
+    startDate
+  }
+}
+
+# === Task 3: Get event by ID ===
+query GetEventById {
+  eventById(id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") {
+    title
+    description
+    location
+    maxAttendees
+    sessions {
+      title
+      speaker {
+        name
+        company
+      }
+    }
+  }
+}
+
+# === Task 4: Create a new event ===
+mutation CreateEvent {
+  createEvent(input: {
+    title: "AI Summit 2026"
+    description: "Exploring the future of AI"
+    startDate: "2026-12-01T09:00:00Z"
+    endDate: "2026-12-03T17:00:00Z"
+    location: "Hamburg"
+    maxAttendees: 400
+  }) {
+    id
+    title
+    status
+  }
+}
+
+# === Task 6: Paginated sessions ===
+query GetSessionsPaginated {
+  sessions(first: 3) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        title
+        startTime
+        room
+        speaker {
+          name
+        }
+      }
+    }
+  }
+}

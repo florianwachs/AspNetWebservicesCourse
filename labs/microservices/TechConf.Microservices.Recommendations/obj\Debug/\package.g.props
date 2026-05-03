@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <PackageJsonName Condition="$(PackageJsonName) == ''">techconf-microservices-recommendations</PackageJsonName>
+    <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
+    <PackageJsonVersion Condition="$(PackageJsonVersion) == ''">1.0.0</PackageJsonVersion>
+    <PackageJsonType Condition="$(PackageJsonType) == ''">module</PackageJsonType>
+    <PackageJsonEnginesNode Condition="$(PackageJsonEnginesNode) == ''">&gt;=20.19.0</PackageJsonEnginesNode>
+    <PackageJsonScriptsStart Condition="$(PackageJsonScriptsStart) == ''">node server.js</PackageJsonScriptsStart>
+    <PackageJsonScriptsCheck Condition="$(PackageJsonScriptsCheck) == ''">node --check server.js</PackageJsonScriptsCheck>
+  </PropertyGroup>
+</Project>

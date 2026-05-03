@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="TechConf.Microservices.AppHost/TechConf.Microservices.AppHost.csproj" />
+  <Project Path="TechConf.Microservices.Contracts/TechConf.Microservices.Contracts.csproj" />
+  <Project Path="TechConf.Microservices.Events/TechConf.Microservices.Events.csproj" />
+  <Project Path="TechConf.Microservices.Gateway/TechConf.Microservices.Gateway.csproj" />
+  <Project Path="TechConf.Microservices.Notifications/TechConf.Microservices.Notifications.csproj" />
+  <Project Path="TechConf.Microservices.Recommendations/TechConf.Microservices.Recommendations.esproj" />
+  <Project Path="TechConf.Microservices.Registrations/TechConf.Microservices.Registrations.csproj" />
+  <Project Path="TechConf.Microservices.ServiceDefaults/TechConf.Microservices.ServiceDefaults.csproj" />
+  <Project Path="TechConf.Microservices.Sessions/TechConf.Microservices.Sessions.csproj" />
+  <Project Path="TechConf.Microservices.Web/TechConf.Microservices.Web.esproj" />
+</Solution>

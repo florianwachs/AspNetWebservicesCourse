@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:5000
+
+### V1 - list events
+GET {{baseUrl}}/api/v1/events
+
+### V1 - get event by ID
+GET {{baseUrl}}/api/v1/events/1
+
+### V2 - list events
+GET {{baseUrl}}/api/v2/events
+
+### V2 - get event by ID
+GET {{baseUrl}}/api/v2/events/1
+
+### Inspect V1 deprecation headers
+GET {{baseUrl}}/api/v1/events
+Accept: application/json
+
+### OpenAPI document for V1
+GET {{baseUrl}}/openapi/v1.json
+
+### OpenAPI document for V2
+GET {{baseUrl}}/openapi/v2.json
