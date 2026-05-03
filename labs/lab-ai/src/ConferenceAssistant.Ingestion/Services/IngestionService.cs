@@ -17,18 +17,21 @@ public class IngestionService : IIngestionService
     private readonly IIngestionTracker? _tracker;
     private readonly ILoggerFactory _loggerFactory;
     private readonly ILogger<IngestionService> _logger;
+    private readonly ResolvedAiProviderOptions _aiOptions;
 
     public IngestionService(
         ISemanticSearchService searchService,
         IChatClient chatClient,
         ILoggerFactory loggerFactory,
         ILogger<IngestionService> logger,
+        ResolvedAiProviderOptions aiOptions,
         IIngestionTracker? tracker = null)
     {
         _searchService = searchService;
         _chatClient = chatClient;
         _loggerFactory = loggerFactory;
         _logger = logger;
+        _aiOptions = aiOptions;
         _tracker = tracker;
     }
 
@@ -159,10 +162,10 @@ public class IngestionService : IIngestionService
 
         using var writer = new VectorStoreWriter<string>(
             _searchService.VectorStore,
-            dimensionCount: 1536,
+            dimensionCount: _aiOptions.EmbeddingDimensions,
             new VectorStoreWriterOptions
             {
-                CollectionName = "conference_knowledge",
+                CollectionName = _aiOptions.VectorCollectionName,
                 IncrementalIngestion = true
             });
 

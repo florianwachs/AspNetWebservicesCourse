@@ -13,10 +13,9 @@ Before you begin, make sure you have the following installed:
 | Prerequisite | Why You Need It |
 |---|---|
 | [**.NET 10 SDK**](https://dotnet.microsoft.com/download/dotnet/10.0) | The app targets .NET 10 |
-| **Docker Desktop** | Aspire manages PostgreSQL, Qdrant, and PgWeb containers for you |
+| **Docker Desktop** | Aspire manages PostgreSQL, Qdrant, PgWeb, and the default Ollama container for you |
 | [**Aspire CLI**](https://aspire.dev) | The orchestration layer that ties everything together |
-| [**Azure CLI**](https://learn.microsoft.com/cli/azure/install-azure-cli) | Authentication via `az login` — no API keys needed |
-| **Azure OpenAI resource** | Powers chat completions, agent reasoning, and semantic search |
+| **AI provider** | Use the default local Ollama setup, or configure GitHub Models with a GitHub token |
 
 ### Install the Aspire CLI
 
@@ -39,55 +38,20 @@ aspire --version
 
 > ℹ️ For more details, see the [Aspire CLI install guide](https://aspire.dev/get-started/install-cli/). You can also run `aspire doctor` after installation to verify your environment is ready.
 
-### Azure OpenAI deployments
+### AI provider options
 
-Your Azure OpenAI resource needs exactly **two model deployments**:
+Conference Pulse supports two provider modes:
 
-| Deployment Name | Model | Model Version |
+| Provider | Best for | Default models |
 |---|---|---|
-| `chat` | `gpt-4o` | `2024-08-06` |
-| `embedding` | `text-embedding-3-small` | `1` |
+| `Ollama` | Local demos without cloud accounts | `llama3.2:3b` for chat, `embeddinggemma` for embeddings |
+| `GitHubModels` | Cloud-hosted model access through GitHub | `openai/gpt-4.1-mini` for chat, `openai/text-embedding-3-small` for embeddings |
 
-> ⚠️ **The deployment names must be exactly `chat` and `embedding`.** The AppHost references them by these names — using different names will cause connection failures.
-
----
-
-## 2. Setting Up Azure OpenAI
-
-If you don't have an Azure OpenAI resource yet, here's how to create one.
-
-### Create the resource
-
-1. Go to the [Azure Portal](https://portal.azure.com)
-2. Search for **"Azure OpenAI"** and select **Create**
-3. Choose your subscription, resource group, and region
-4. Give it a name (you'll need this later)
-5. Select the **Standard S0** pricing tier
-6. Complete the wizard and wait for deployment
-
-> 📖 For detailed instructions, see [Create and deploy an Azure OpenAI Service resource](https://learn.microsoft.com/azure/ai-services/openai/how-to/create-resource) on Microsoft Learn.
-
-### Create the model deployments
-
-1. Open your Azure OpenAI resource in the Azure Portal
-2. Go to **Model deployments** → **Manage Deployments** (this opens Azure AI Foundry)
-3. Create two deployments:
-
-**First deployment:**
-- Name: **`chat`**
-- Model: **gpt-4o**
-- Model version: **2024-08-06**
-
-**Second deployment:**
-- Name: **`embedding`**
-- Model: **text-embedding-3-small**
-- Model version: **1**
-
-> 💡 **No API keys required!** Conference Pulse uses `DefaultAzureCredential`, which means it picks up your identity from `az login` automatically. No need to copy and paste keys.
+The repository defaults to `Ollama`. The first run downloads the models into a persistent Docker volume.
 
 ---
 
-## 3. Clone and Configure
+## 2. Clone and Configure
 
 ### Clone the repository
 
@@ -96,42 +60,31 @@ git clone https://github.com/your-org/dotnet-ai-conference-assistant.git
 cd dotnet-ai-conference-assistant
 ```
 
-### Set user secrets
+### Default: local Ollama
 
-The AppHost project needs four user secrets to connect to your Azure OpenAI resource. Run these commands from the repository root:
+No secrets are needed for the default local Ollama mode. Aspire starts the Ollama container and injects its endpoint into the web app.
+
+### Alternative: GitHub Models
+
+Create a fine-grained GitHub personal access token with `models: read`, then set these secrets from the repository root:
 
 ```bash
 cd src/ConferenceAssistant.AppHost
-dotnet user-secrets set "Azure:SubscriptionId" "<your-subscription-id>"
-dotnet user-secrets set "Azure:Location" "eastus"
-dotnet user-secrets set "AzureOpenAI:Name" "<your-openai-resource-name>"
-dotnet user-secrets set "AzureOpenAI:ResourceGroup" "<your-resource-group-name>"
+dotnet user-secrets set "AI:Provider" "GitHubModels"
+dotnet user-secrets set "AI:ApiKey" "<your-github-token>"
 cd ../..
 ```
 
-Replace the placeholder values with your actual Azure details.
-
-### What each secret does
-
-| Secret | Description | Example |
-|---|---|---|
-| `Azure:SubscriptionId` | Your Azure subscription ID — Aspire uses this for local Azure resource provisioning | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
-| `Azure:Location` | Azure region where your resources are deployed | `eastus`, `westus2`, `northeurope` |
-| `AzureOpenAI:Name` | The name of your Azure OpenAI resource (as shown in the Azure Portal) | `my-openai-resource` |
-| `AzureOpenAI:ResourceGroup` | The resource group containing your Azure OpenAI resource | `my-rg` |
-
-> 💡 **Where to find your subscription ID:** Run `az account show --query id -o tsv` in your terminal, or find it in the Azure Portal under **Subscriptions**.
-
 ---
 
-## 4. Build and Run
+## 3. Build and Run
 
 ### Pre-flight checks
 
 Before launching the app, make sure:
 
-- ✅ **Docker Desktop is running** (Aspire needs it for PostgreSQL, Qdrant, and PgWeb containers)
-- ✅ **You're logged in to Azure** (`az login`)
+- ✅ **Docker Desktop is running** (Aspire needs it for PostgreSQL, Qdrant, PgWeb, and local Ollama)
+- ✅ **GitHub Models only:** `AI:ApiKey` is set to a token with `models: read`
 
 ### Launch the app
 
@@ -152,22 +105,23 @@ When `aspire run` starts, several things happen automatically:
 1. **PostgreSQL container** spins up — stores sessions, polls, Q&A, and insights
 2. **Qdrant container** spins up — vector database for semantic search
 3. **PgWeb container** spins up — a web-based UI for inspecting the PostgreSQL database
-4. **The web project** builds, starts, and connects to all resources
-5. **A dev tunnel** is created — provides a public HTTPS URL so attendees can join from their phones
-6. **Default demo data** loads — a session called `DOTNETAI-CONF` is auto-created with five pre-configured topics
-7. **Slides and knowledge base** are ingested — content from `data/slides.md` is parsed and indexed
+4. **AI provider starts/connects** — Ollama downloads local models, or GitHub Models is configured from your token
+5. **The web project** builds, starts, and connects to all resources
+6. **A dev tunnel** is created — provides a public HTTPS URL so attendees can join from their phones
+7. **Default demo data** loads — a session called `DOTNETAI-CONF` is auto-created with five pre-configured topics
+8. **Slides and knowledge base** are ingested — content from `data/slides.md` is parsed and indexed
 
-> ⚠️ **First run takes longer.** Docker needs to pull the PostgreSQL and Qdrant images, and NuGet packages need to restore. Subsequent runs are much faster.
+> ⚠️ **First run takes longer.** Docker needs to pull the PostgreSQL and Qdrant images. In Ollama mode it also downloads `llama3.2:3b` and `embeddinggemma`; keep Aspire running until the model resources are healthy.
 
 ---
 
-## 5. The Aspire Dashboard
+## 4. The Aspire Dashboard
 
 Once the app is running, Aspire opens its dashboard in your browser automatically. This is your command center for the entire distributed app.
 
 ### What to look for
 
-- **All resources should show "Running" status** — you should see entries for `web`, `postgres`, `qdrant`, `pgweb`, and the Azure OpenAI connection
+- **All resources should show "Running" status** — you should see entries for `web`, `postgres`, `qdrant`, `pgweb`, plus either `ollama` model resources or GitHub Models resources
 - **The web app URL** — find the `web` resource and click its endpoint link. This is the URL you'll open in your browser.
 - **Logs and traces** — click any resource to see its logs, structured traces, and health status
 
@@ -181,7 +135,7 @@ If a dev tunnel is configured, you'll also see a public HTTPS URL — this is wh
 
 ---
 
-## 6. Your First Exploration
+## 5. Your First Exploration
 
 With the app running, open **three browser tabs** to see Conference Pulse from every angle. Use the URL from the Aspire dashboard as your base URL.
 
@@ -221,7 +175,7 @@ This is what audience members see on their phones. They can:
 
 ---
 
-## 7. What's Next?
+## 6. What's Next?
 
 Now that you have Conference Pulse running, here's where to go from here:
 
@@ -235,8 +189,8 @@ Now that you have Conference Pulse running, here's where to go from here:
 
 - **[Technology Guide](technology-guide.md)** — Deep dive into how each Microsoft AI technology (Extensions.AI, Data Ingestion, Vector Data, Agent Framework, MCP) is used in the app
 - **[Configuration Reference](configuration.md)** — All configuration options, environment variables, and settings
-- **[Troubleshooting](troubleshooting.md)** — Common issues and solutions for setup, containers, and Azure connectivity
+- **[Troubleshooting](troubleshooting.md)** — Common issues and solutions for setup, containers, and provider connectivity
 
 ---
 
-> 💡 **Tip:** If something isn't working, check the [Troubleshooting](troubleshooting.md) guide first. Most issues come down to Docker not running, Azure CLI not being logged in, or deployment names not matching exactly.
+> 💡 **Tip:** If something isn't working, check the [Troubleshooting](troubleshooting.md) guide first. Most local issues come down to Docker not running or Ollama model downloads still being in progress; GitHub Models issues usually come down to a missing or under-scoped token.

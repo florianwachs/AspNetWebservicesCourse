@@ -8,20 +8,20 @@ namespace ConferenceAssistant.Ingestion.Services;
 
 public class SemanticSearchService : ISemanticSearchService
 {
-    private const string CollectionName = "conference_knowledge";
-    private const int Dimensions = 1536;
-
     private readonly QdrantClient _qdrantClient;
     private readonly QdrantVectorStoreOptions _storeOptions;
     private readonly QdrantVectorStore _vectorStore;
+    private readonly ResolvedAiProviderOptions _aiOptions;
     private VectorStoreCollection<object, Dictionary<string, object?>>? _collection;
     private int _recordCount;
 
     public SemanticSearchService(
         IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator,
-        QdrantClient qdrantClient)
+        QdrantClient qdrantClient,
+        ResolvedAiProviderOptions aiOptions)
     {
         _qdrantClient = qdrantClient;
+        _aiOptions = aiOptions;
         _storeOptions = new QdrantVectorStoreOptions { EmbeddingGenerator = embeddingGenerator };
         // Pass embedding generator so dynamic collections can auto-embed string → vector
         _vectorStore = new QdrantVectorStore(qdrantClient, ownsClient: false, _storeOptions);
@@ -41,7 +41,7 @@ public class SemanticSearchService : ISemanticSearchService
         // Schema matches VectorStoreWriter<string>'s dynamic layout + extra "source" field
         var definition = new VectorStoreCollectionDefinition();
         definition.Properties.Add(new VectorStoreKeyProperty("key", typeof(Guid)));
-        definition.Properties.Add(new VectorStoreVectorProperty("embedding", typeof(string), Dimensions)
+        definition.Properties.Add(new VectorStoreVectorProperty("embedding", typeof(string), _aiOptions.EmbeddingDimensions)
         {
             DistanceFunction = DistanceFunction.CosineSimilarity
         });
@@ -50,7 +50,7 @@ public class SemanticSearchService : ISemanticSearchService
         definition.Properties.Add(new VectorStoreDataProperty("documentid", typeof(string)));
         definition.Properties.Add(new VectorStoreDataProperty("source", typeof(string)));
 
-        _collection = _vectorStore.GetDynamicCollection(CollectionName, definition);
+        _collection = _vectorStore.GetDynamicCollection(_aiOptions.VectorCollectionName, definition);
         await _collection.EnsureCollectionExistsAsync();
         return _collection;
     }
@@ -105,4 +105,3 @@ public class SemanticSearchService : ISemanticSearchService
         return _recordCount;
     }
 }
-

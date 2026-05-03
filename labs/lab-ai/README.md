@@ -29,11 +29,10 @@ An interactive .NET conference assistant that runs as a live web app during your
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Aspire CLI](https://aspire.dev) — install via `irm https://aspire.dev/install.ps1 | iex` (Windows) or `curl -fsSL https://aspire.dev/install.sh | bash` (Linux/macOS)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for PostgreSQL + Qdrant containers)
-- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) — run `az login` before starting
-- An Azure OpenAI resource with two deployments:
-  - `chat` — e.g. `gpt-4o` (model version `2024-08-06`)
-  - `embedding` — e.g. `text-embedding-3-small`
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for PostgreSQL, Qdrant, and optional Ollama containers)
+- One AI provider:
+  - **Ollama** (default) — Aspire runs `llama3.2:3b` and `embeddinggemma` in Docker.
+  - **GitHub Models** — requires a GitHub token with `models: read` permission.
 
 ## Quick Start
 
@@ -42,18 +41,17 @@ An interactive .NET conference assistant that runs as a live web app during your
 git clone https://github.com/your-org/dotnet-ai-conference-assistant.git
 cd dotnet-ai-conference-assistant
 
-# Set user secrets (one-time)
+# Run with Aspire (default: Ollama in Docker)
+aspire run
+```
+
+To use GitHub Models instead:
+
+```bash
 cd src/ConferenceAssistant.AppHost
-dotnet user-secrets set "Azure:SubscriptionId" "your-azure-subscription-id"
-dotnet user-secrets set "Azure:Location" "eastus"
-dotnet user-secrets set "AzureOpenAI:Name" "your-openai-resource-name"
-dotnet user-secrets set "AzureOpenAI:ResourceGroup" "your-resource-group"
+dotnet user-secrets set "AI:Provider" "GitHubModels"
+dotnet user-secrets set "AI:ApiKey" "github_pat_with_models_read"
 cd ../..
-
-# Ensure you're logged in to Azure
-az login
-
-# Run with Aspire
 aspire run
 ```
 
@@ -75,8 +73,8 @@ Once running, open these views:
 ┌──────────────────────────────────────────────────────────┐
 │                    .NET Aspire AppHost                    │
 │  ┌────────────┐  ┌────────────┐  ┌────────────────────┐  │
-│  │ PostgreSQL │  │   Qdrant   │  │    Azure OpenAI    │  │
-│  │  + PgWeb   │  │  (vector)  │  │ gpt-4o + embed-3s │  │
+│  │ PostgreSQL │  │   Qdrant   │  │   AI Provider      │  │
+│  │  + PgWeb   │  │  (vector)  │  │ GitHub or Ollama   │  │
 │  │  + volume  │  │  + volume  │  │                    │  │
 │  └─────┬──────┘  └─────┬──────┘  └────────┬───────────┘  │
 │        └───────────┐   │   ┌──────────────┘              │
@@ -180,16 +178,18 @@ Then: `"Summarize this session including all poll results and key themes"`
 
 ## Configuration
 
-All configuration flows through **Aspire + user secrets** — no API keys in code or config files.
+All configuration flows through **Aspire + user secrets** — no API keys in code.
 
-| User Secret | Description |
-|-------------|-------------|
-| `Azure:SubscriptionId` | Your Azure subscription ID (Aspire local provisioning) |
-| `Azure:Location` | Azure region for provisioned resources (e.g. `eastus`) |
-| `AzureOpenAI:Name` | Your Azure OpenAI resource name |
-| `AzureOpenAI:ResourceGroup` | Resource group containing the OpenAI resource |
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `AI:Provider` | `Ollama` | `Ollama` or `GitHubModels` |
+| `AI:ChatModel` | `llama3.2:3b` for Ollama, `openai/gpt-4.1-mini` for GitHub Models | Chat completions model |
+| `AI:EmbeddingModel` | `embeddinggemma` for Ollama, `openai/text-embedding-3-small` for GitHub Models | Embedding model |
+| `AI:EmbeddingDimensions` | `768` for Ollama, `1536` for GitHub Models | Qdrant vector size |
+| `AI:VectorCollectionName` | provider-specific | Qdrant collection name |
+| `AI:ApiKey` | `ollama` for Ollama | Required for GitHub Models |
 
-Authentication uses `DefaultAzureCredential` (Azure CLI, managed identity, etc.). Deployment names (`chat`, `embedding`) are configured in the AppHost.
+The default local path uses Ollama in Docker. The first run downloads `llama3.2:3b` and `embeddinggemma`, so keep Aspire running until the model downloads complete. Switching providers uses separate Qdrant collections because embedding dimensions differ; existing Azure-era vector data is not reused automatically.
 
 ## The Snowball Effect
 

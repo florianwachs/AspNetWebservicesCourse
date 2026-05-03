@@ -7,7 +7,6 @@
     <PackageVersion Include="Microsoft.Extensions.AI" Version="10.4.0" />
     <PackageVersion Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.0" />
     <PackageVersion Include="Microsoft.Extensions.AI.Evaluation" Version="10.4.0" />
-    <PackageVersion Include="Azure.AI.OpenAI" Version="2.2.0-beta.4" />
   </ItemGroup>
 
   <ItemGroup Label="Microsoft.Extensions.DataIngestion">
@@ -42,9 +41,9 @@
   </ItemGroup>
 
   <ItemGroup Label="Aspire">
-    <PackageVersion Include="Aspire.Hosting.Azure.CognitiveServices" Version="13.2.0" />
+    <PackageVersion Include="Aspire.Hosting.GitHub.Models" Version="13.2.0" />
+    <PackageVersion Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="13.1.1" />
     <PackageVersion Include="Aspire.Hosting.DevTunnels" Version="13.2.0" />
-    <PackageVersion Include="Aspire.Azure.AI.OpenAI" Version="13.2.0-preview.1.26170.3" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.9.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.5.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />

@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Azure.CognitiveServices" />
+    <PackageReference Include="Aspire.Hosting.GitHub.Models" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" />
     <PackageReference Include="Aspire.Hosting.DevTunnels" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" />
     <PackageReference Include="Aspire.Hosting.Qdrant" />

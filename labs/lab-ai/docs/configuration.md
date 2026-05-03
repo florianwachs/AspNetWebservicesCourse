@@ -2,7 +2,12 @@
 
 ## Overview
 
-Conference Pulse is configured through .NET Aspire orchestration — no API keys in code or config files. Authentication uses `DefaultAzureCredential` (Azure CLI, managed identity, etc.).
+Conference Pulse is configured through .NET Aspire orchestration. It supports exactly two AI providers:
+
+- `Ollama` — default local mode. Aspire starts an Ollama Docker container and downloads small local models.
+- `GitHubModels` — cloud-hosted GitHub Models using a GitHub token with `models: read` permission.
+
+No API keys are stored in code. Use user secrets or environment variables for provider secrets.
 
 ## User Secrets (AppHost Project)
 
@@ -15,26 +20,21 @@ dotnet user-secrets set "KEY" "VALUE"
 
 | Secret | Required | Description | Example |
 |--------|----------|-------------|---------|
-| `Azure:SubscriptionId` | Yes | Azure subscription ID for Aspire local provisioning | `12345678-abcd-...` |
-| `Azure:Location` | Yes | Azure region for provisioned resources | `eastus` |
-| `AzureOpenAI:Name` | Yes | Name of your Azure OpenAI resource | `my-openai-resource` |
-| `AzureOpenAI:ResourceGroup` | Yes | Resource group containing the resource | `my-rg` |
+| `AI:Provider` | Optional | `Ollama` or `GitHubModels`. Defaults to `Ollama` in appsettings. | `GitHubModels` |
+| `AI:ApiKey` | GitHub Models only | GitHub fine-grained PAT with `models: read`. | `github_pat_...` |
+| `AI:ChatModel` | Optional | Chat model override. | `openai/gpt-4.1-mini` |
+| `AI:EmbeddingModel` | Optional | Embedding model override. | `openai/text-embedding-3-small` |
+| `AI:EmbeddingDimensions` | Optional | Vector size used by Qdrant. | `1536` |
+| `AI:VectorCollectionName` | Optional | Qdrant collection to use for this provider/model pair. | `conference_knowledge_github_models` |
 
-## Azure OpenAI Deployments
+## AI Provider Defaults
 
-The AppHost references two deployments by exact name (lines 18–19 in `src/ConferenceAssistant.AppHost/AppHost.cs`):
+| Provider | Endpoint | Chat Model | Embedding Model | Dimensions | Collection |
+|----------|----------|------------|-----------------|------------|------------|
+| `Ollama` | `http://localhost:11434/v1` outside Aspire; Aspire injects its container endpoint when orchestrated | `llama3.2:3b` | `embeddinggemma` | `768` | `conference_knowledge_ollama` |
+| `GitHubModels` | `https://models.github.ai/inference` | `openai/gpt-4.1-mini` | `openai/text-embedding-3-small` | `1536` | `conference_knowledge_github_models` |
 
-```csharp
-openai.AddDeployment("chat", "gpt-4o", "2024-08-06");
-openai.AddDeployment("embedding", "text-embedding-3-small", "1");
-```
-
-| Deployment Name | Model | Version | Purpose |
-|----------------|-------|---------|---------|
-| `chat` | gpt-4o | 2024-08-06 | All chat completions — agent workflows, poll generation, Q&A |
-| `embedding` | text-embedding-3-small | 1 | Vector embeddings for ingestion and semantic search |
-
-> ⚠️ Deployment names must match exactly. If your Azure OpenAI resource uses different deployment names, update lines 18–19 in `src/ConferenceAssistant.AppHost/AppHost.cs`.
+When switching providers, keep separate collection names unless you intentionally rebuild the vector data. Qdrant collections have fixed vector dimensions, so old Azure/OpenAI 1536-dimensional data cannot be searched with Ollama's 768-dimensional embeddings.
 
 ## Infrastructure (Aspire-Managed)
 
@@ -44,6 +44,7 @@ These are configured in the AppHost and managed automatically by Aspire:
 |----------|------|---------|--------------|
 | PostgreSQL | Container | EF Core persistence (sessions, polls, Q&A, insights) | Data volume for persistence across restarts. PgWeb admin UI available via `.WithPgWeb()`. |
 | Qdrant | Container | Vector/embedding storage for semantic search | Persistent lifetime (`.WithLifetime(ContainerLifetime.Persistent)`), data volume. |
+| Ollama | Container | Local chat and embedding models when `AI:Provider` is `Ollama` | Persistent model volume. First run downloads `llama3.2:3b` and `embeddinggemma`. |
 | Dev Tunnel | Azure Dev Tunnel | Public HTTPS URL for attendee access | Anonymous access enabled via `.WithAnonymousAccess()`. |
 
 ## MCP Server Configuration
@@ -84,22 +85,40 @@ To customize, edit:
 The `IChatClient` is configured with middleware in `src/ConferenceAssistant.Web/Program.cs`:
 
 ```csharp
-openaiBuilder.AddChatClient("chat")
+builder.Services.AddChatClient(...)
     .UseFunctionInvocation()   // Enables agent tool calling
     .UseOpenTelemetry()        // Distributed tracing
     .UseLogging();             // Request/response logging
 ```
 
-## Running Without AI
+## Running Modes
 
-The app can run without Azure OpenAI configured. Core features (session management, manual polls, voting, Q&A submission) work. AI features (auto-generated polls, AI answers, insights, semantic search) are disabled. See the Aspire dashboard — the OpenAI resource will show as unhealthy.
+### Ollama
+
+Ollama is the default:
+
+```bash
+aspire run
+```
+
+Keep the Aspire dashboard open until both Ollama model resources are healthy. The first start downloads the models.
+
+### GitHub Models
+
+```bash
+cd src/ConferenceAssistant.AppHost
+dotnet user-secrets set "AI:Provider" "GitHubModels"
+dotnet user-secrets set "AI:ApiKey" "<github-token-with-models-read>"
+cd ../..
+aspire run
+```
 
 ## Environment Variables
 
 Aspire injects connection strings automatically. The web project receives:
 
-- `ConnectionStrings__openai` — Azure OpenAI endpoint
 - `ConnectionStrings__conferencedb` — PostgreSQL connection string
 - `ConnectionStrings__qdrant` — Qdrant endpoint
+- `AI__Provider`, `AI__Endpoint`, `AI__ApiKey`, `AI__ChatModel`, `AI__EmbeddingModel`, `AI__EmbeddingDimensions`, `AI__VectorCollectionName` — AI provider settings from AppHost
 
 These are handled by Aspire and should not be set manually.

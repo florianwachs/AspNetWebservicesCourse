@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
 using Npgsql;
+using OpenAI;
+using OpenAI.Chat;
+using OpenAI.Embeddings;
+using System.ClientModel;
 using ConferenceAssistant.Core.Services;
 using ConferenceAssistant.Ingestion.Services;
 using ConferenceAssistant.Agents.Tools;
@@ -56,17 +60,34 @@ builder.Services.AddSingleton<IQuestionService, QuestionService>();
 builder.Services.AddSingleton<IInsightService, InsightService>();
 
 // ---------------------------------------------------------------------------
-// Aspire AI Integration — Azure OpenAI via Aspire connection
-// Connection string injected by AppHost via WithReference(openai)
+// AI Provider — GitHub Models or local Ollama via OpenAI-compatible clients
 // ---------------------------------------------------------------------------
-var openaiBuilder = builder.AddAzureOpenAIClient("openai");
+var configuredAiOptions = builder.Configuration
+    .GetSection(AiProviderOptions.SectionName)
+    .Get<AiProviderOptions>() ?? new AiProviderOptions();
 
-openaiBuilder.AddChatClient("chat")
+var aiOptions = configuredAiOptions.Resolve(builder.Configuration["GITHUB_TOKEN"]);
+builder.Services.AddSingleton(aiOptions);
+
+var openAiClientOptions = new OpenAIClientOptions
+{
+    Endpoint = aiOptions.Endpoint
+};
+
+builder.Services.AddChatClient(_ =>
+        new ChatClient(
+            aiOptions.ChatModel,
+            new ApiKeyCredential(aiOptions.ApiKey),
+            openAiClientOptions).AsIChatClient())
     .UseFunctionInvocation()
     .UseOpenTelemetry()
     .UseLogging();
 
-openaiBuilder.AddEmbeddingGenerator("embedding");
+builder.Services.AddEmbeddingGenerator(_ =>
+    new EmbeddingClient(
+        aiOptions.EmbeddingModel,
+        new ApiKeyCredential(aiOptions.ApiKey),
+        openAiClientOptions).AsIEmbeddingGenerator(aiOptions.EmbeddingDimensions));
 
 // ---------------------------------------------------------------------------
 // Ingestion + VectorData — knowledge base pipeline
