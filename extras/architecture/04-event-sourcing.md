@@ -1,6 +1,6 @@
 # Event Sourcing
 
-## Why students should care
+## Why you should care
 
 Event sourcing is one of the easiest patterns to romanticize and one of the easiest to misuse.
 

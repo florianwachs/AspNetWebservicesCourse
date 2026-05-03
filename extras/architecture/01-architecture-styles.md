@@ -113,7 +113,7 @@ flowchart LR
 
 Each slice owns one use case top-to-bottom. The main win is local reasoning: read one slice to understand one behavior.
 
-### Why students should care
+### Why you should care
 
 VSA is often the first architecture step that gives an immediate payoff in day-to-day work:
 
@@ -280,7 +280,7 @@ flowchart TB
 
 This is the same family as Hexagonal and Clean Architecture. The picture changes; the dependency rule does not.
 
-### Why students should care
+### Why you should care
 
 VSA helps you find code faster. Onion helps you protect the code that matters most.
 

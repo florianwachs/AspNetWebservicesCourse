@@ -24,7 +24,7 @@ flowchart LR
 
 That means no shared mutable state and no explicit locking inside the actor itself.
 
-## Why students should care
+## Why you should care
 
 Actors are worth learning because they solve a problem that layered architecture, VSA, Onion, and CQRS do not solve directly:
 
