@@ -1,0 +1,68 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="insight-card @TypeClass">
+    <div class="insight-badge">@TypeLabel</div>
+    <p class="insight-content">@Insight.Content</p>
+    <span class="insight-time">@Insight.GeneratedAt.ToString("HH:mm")</span>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Insight Insight { get; set; } = default!;
+
+    private string TypeClass => Insight.Type switch
+    {
+        InsightType.PollAnalysis => "type-analysis",
+        InsightType.AudienceTrend => "type-trend",
+        InsightType.KnowledgeGap => "type-gap",
+        InsightType.TopicSummary => "type-summary",
+        InsightType.SessionSummary => "type-session",
+        _ => ""
+    };
+
+    private string TypeLabel => Insight.Type switch
+    {
+        InsightType.PollAnalysis => "📊 Analysis",
+        InsightType.AudienceTrend => "📈 Trend",
+        InsightType.KnowledgeGap => "🔍 Knowledge Gap",
+        InsightType.TopicSummary => "📝 Summary",
+        InsightType.SessionSummary => "🎯 Session Summary",
+        _ => "💡 Insight"
+    };
+}
+
+<style>
+    .insight-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 4px solid #e94560;
+        border-radius: 0 0.75rem 0.75rem 0;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .insight-card.type-trend { border-left-color: #4ecdc4; }
+    .insight-card.type-gap { border-left-color: #f9c74f; }
+    .insight-card.type-summary { border-left-color: #90be6d; }
+    .insight-card.type-session { border-left-color: #577590; }
+
+    .insight-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+    }
+
+    .insight-content {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .insight-time {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        opacity: 0.4;
+    }
+</style>

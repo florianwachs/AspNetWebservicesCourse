@@ -1,0 +1,83 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="topic-badge @StatusClass">
+    <span class="topic-order">@Topic.Order</span>
+    <div class="topic-info">
+        <span class="topic-title">@Topic.Title</span>
+        <span class="topic-status">@StatusLabel</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public SessionTopic Topic { get; set; } = default!;
+
+    private string StatusClass => Topic.Status switch
+    {
+        TopicStatus.Active => "active",
+        TopicStatus.Completed => "completed",
+        _ => "upcoming"
+    };
+
+    private string StatusLabel => Topic.Status switch
+    {
+        TopicStatus.Active => "● Live",
+        TopicStatus.Completed => "✓ Done",
+        _ => "○ Upcoming"
+    };
+}
+
+<style>
+    .topic-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .topic-badge.active {
+        background: rgba(233, 69, 96, 0.1);
+        border-color: #e94560;
+    }
+
+    .topic-badge.completed {
+        opacity: 0.5;
+    }
+
+    .topic-order {
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .topic-badge.active .topic-order {
+        background: #e94560;
+    }
+
+    .topic-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topic-title {
+        font-weight: 500;
+    }
+
+    .topic-status {
+        font-size: 0.75rem;
+        opacity: 0.6;
+    }
+
+    .topic-badge.active .topic-status {
+        color: #e94560;
+        opacity: 1;
+    }
+</style>

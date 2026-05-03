@@ -1,0 +1,2357 @@
+@page "/presenter/{SessionCode}"
+@layout ConferenceAssistant.Web.Components.Layout.PresenterLayout
+@using ConferenceAssistant.Core.Models
+@using ConferenceAssistant.Core.Services
+@using ConferenceAssistant.Ingestion.Services
+@implements IDisposable
+@inject ISessionManager SessionManager
+@using ConferenceAssistant.Web.Services
+@using ConferenceAssistant.Ingestion.Models
+@inject ISemanticSearchService SemanticSearchService
+@inject IInsightGenerationService InsightGenerationService
+@inject IContentImportService ContentImportService
+@inject ISessionPersistenceService PersistenceService
+@inject ISlideGenerationService SlideGenerationService
+@inject ConferenceAssistant.Agents.Workflows.PollGenerationWorkflow PollGenerationWorkflow
+@inject IQuestionAnsweringService QuestionAnsweringService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Presenter Dashboard</PageTitle>
+
+<div class="presenter-page">
+    @if (!isHostAuthenticated)
+    {
+        <div class="pin-gate">
+            @if (sessionContext is not null)
+            {
+                <h2>🔒 @sessionContext.Session.Title</h2>
+                <p>Enter the host PIN to access the presenter dashboard.</p>
+            }
+            else
+            {
+                <h2>🔒 Session Not Found</h2>
+                <p>No session with code "@SessionCode" exists.</p>
+            }
+            @if (sessionContext is not null)
+            {
+                <div class="pin-form">
+                    <input type="password" maxlength="6" @bind="pinInput" @bind:event="oninput"
+                           placeholder="Host PIN" class="pin-input" @onkeydown="HandlePinKeydown" />
+                    <button class="btn btn-primary" @onclick="ValidatePin">Unlock</button>
+                </div>
+                @if (pinError is not null)
+                {
+                    <p class="pin-error">@pinError</p>
+                }
+            }
+        </div>
+    }
+    else if (session is null)
+    {
+        <div class="no-session">
+            <h2>No session loaded</h2>
+            <p>Load a conference outline to get started.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Session Controls (top bar) -->
+        <div class="session-bar">
+            <div class="session-header">
+                <h1>@session.Title</h1>
+                <span class="status-badge @session.Status.ToString().ToLower()">@session.Status</span>
+                <span class="record-count" title="Knowledge base records">📚 @knowledgeBaseCount records</span>
+            </div>
+            <div class="session-controls">
+                @if (session.Status == SessionStatus.Setup)
+                {
+                    <button class="btn btn-primary" @onclick="StartSession">🚀 Go Live</button>
+                }
+                else if (session.Status == SessionStatus.Live)
+                {
+                    <button class="btn btn-danger" @onclick="EndSession">⏹ End Session</button>
+                }
+            </div>
+        </div>
+
+
+        <div class="dashboard-grid">
+            <!-- Left Column: Topic Outline + Import -->
+            <div class="left-column">
+                <div class="topic-outline">
+                    <h3>📋 Topics</h3>
+                    @{ var currentTopicId = activeSlide?.TopicId; }
+                    @foreach (var topic in session.Topics.OrderBy(t => t.Order))
+                    {
+                        var slideCount = sessionContext?.AllSlides.Count(s => s.TopicId == topic.Id) ?? 0;
+                        <div class="topic-item @(topic.Id == currentTopicId ? "current" : "") @(topic.Status == TopicStatus.Completed ? "completed" : "")"
+                             @onclick="() => JumpToTopic(topic.Id)">
+                            <div class="topic-item-title">
+                                @if (topic.Status == TopicStatus.Completed)
+                                {
+                                    <span class="topic-check">✓</span>
+                                }
+                                @topic.Title
+                            </div>
+                            @if (slideCount > 0)
+                            {
+                                <span class="topic-slide-count">@slideCount slides</span>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="import-section">
+                    <button class="import-toggle" @onclick="() => isImportExpanded = !isImportExpanded">
+                        📥 Import @(isImportExpanded ? "▾" : "▸")
+                    </button>
+                    @if (isImportExpanded)
+                    {
+                        <div class="import-content">
+                            <p class="import-description">Import from GitHub to enrich the knowledge base.</p>
+
+                            @if (!string.IsNullOrWhiteSpace(importRepoStatus))
+                            {
+                                <div class="import-status">@importRepoStatus</div>
+                            }
+
+                            @if (importRepoSuccess is not null)
+                            {
+                                <div class="import-success">✅ @importRepoSuccess</div>
+                            }
+
+                            @if (showRepoDedupWarning)
+                            {
+                                <div class="import-dedup-warning">⚠️ Already imported. Import again?
+                                    <button class="btn-inline" @onclick="ConfirmRepoReimport">Yes</button>
+                                    <button class="btn-inline" @onclick="() => showRepoDedupWarning = false">Cancel</button>
+                                </div>
+                            }
+
+                            <div class="import-form">
+                                <input type="text" @bind="importRepoUrl" placeholder="https://github.com/owner/repo or .../tree/branch/subdir" class="import-url-input" />
+                                <button class="btn btn-primary" @onclick="ImportRepo" disabled="@isImportingRepo">
+                                    @if (isImportingRepo)
+                                    {
+                                        <span>⏳ Importing...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>📥 Import</span>
+                                    }
+                                </button>
+                            </div>
+
+                            <div class="import-options-row">
+                                <div class="import-option">
+                                    <label>Branch <span class="hint">(auto-detect)</span></label>
+                                    <input type="text" @bind="importRepoBranch" placeholder="e.g., main" class="import-option-input" />
+                                </div>
+                                <div class="import-option">
+                                    <label>Subdirectory <span class="hint">(optional)</span></label>
+                                    <input type="text" @bind="importRepoSubdir" placeholder="e.g., scenarios" class="import-option-input" />
+                                </div>
+                            </div>
+
+                            @if (importRepoError is not null)
+                            {
+                                <div class="import-error">@importRepoError</div>
+                            }
+
+                            @if (importHistory.Count > 0)
+                            {
+                                <div class="import-history">
+                                    <h4>Import History</h4>
+                                    @foreach (var entry in importHistory)
+                                    {
+                                        <div class="import-entry">
+                                            <span class="import-url">@entry.Url</span>
+                                            <span class="import-count">📄 @entry.DocumentCount docs</span>
+                                            <span class="import-topics">🎯 @entry.TopicCount topics</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            @if (lastImportDraft is not null && lastImportDraft.Draft.Topics.Count > 0)
+                            {
+                                <div class="import-draft-actions">
+                                    <h4>Add Drafted Topics to Session?</h4>
+                                    <p class="muted">The AI drafted @lastImportDraft.Draft.Topics.Count topic(s) from the imported content.</p>
+                                    @foreach (var topic in lastImportDraft.Draft.Topics)
+                                    {
+                                        <div class="draft-topic-item">
+                                            <span>@topic.Title</span>
+                                            <span class="tp-count">@topic.TalkingPoints.Count points, @topic.SuggestedPolls.Count polls</span>
+                                        </div>
+                                    }
+                                    <button class="btn btn-primary" @onclick="AddDraftedTopicsToSession">➕ Add All Topics</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- Settings Section -->
+                <div class="settings-section">
+                    <button class="section-toggle" @onclick="() => isSettingsExpanded = !isSettingsExpanded">
+                        ⚙️ Settings @(isSettingsExpanded ? "▾" : "▸")
+                    </button>
+                    @if (isSettingsExpanded)
+                    {
+                        <div class="settings-content">
+                            @if (confirmClear is null)
+                            {
+                                <button class="btn btn-sm btn-danger-outline" @onclick='() => confirmClear = "polls"'>🗑️ Clear Polls</button>
+                                <button class="btn btn-sm btn-danger-outline" @onclick='() => confirmClear = "qa"'>🗑️ Clear Q&amp;A</button>
+                                <button class="btn btn-sm btn-danger-outline" @onclick='() => confirmClear = "all"'>🗑️ Clear All Data</button>
+                                <hr style="margin: 0.5rem 0; border-color: rgba(255,255,255,0.1);" />
+                                <button class="btn btn-sm btn-danger-outline" @onclick='() => confirmClear = "session"'>⚠️ Delete Session</button>
+                            }
+                            else
+                            {
+                                <div class="clear-confirm">
+                                    @if (confirmClear == "session")
+                                    {
+                                        <p>⚠️ Permanently delete this session and all its data? This cannot be undone.</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Clear @confirmClear data? This cannot be undone.</p>
+                                    }
+                                    <button class="btn btn-sm btn-danger" @onclick="ExecuteClear">Confirm</button>
+                                    <button class="btn btn-sm" @onclick='() => confirmClear = null'>Cancel</button>
+                                </div>
+                            }
+                            @if (clearMessage is not null)
+                            {
+                                <p class="clear-message">@clearMessage</p>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="panel center-column" tabindex="0" @onkeydown="HandleSlideKeydown">
+                @if (activeSlide is not null)
+                {
+                    <div class="center-slide-area">
+                        <SlideRenderer Slide="@activeSlide" Compact="true" />
+                    </div>
+
+                    @if (nextSlide is not null)
+                    {
+                        <div class="up-next-preview">
+                            <span class="up-next-label">Up Next</span>
+                            <SlideRenderer Slide="@nextSlide" Compact="true" />
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(activeSlide.SpeakerNotes))
+                    {
+                        <div class="center-notes">
+                            <span>🎤</span> @activeSlide.SpeakerNotes
+                        </div>
+                    }
+
+                    <div class="center-nav">
+                        <button class="btn btn-sm" @onclick="GoBackSlideAsync" disabled="@((sessionContext?.ActiveSlideIndex ?? -1) <= 0)">◀ Prev</button>
+                        <span class="slide-progress">Slide @((sessionContext?.ActiveSlideIndex ?? -1) + 1) / @(sessionContext?.TotalSlides ?? 0)</span>
+                        <button class="btn btn-sm" @onclick="AdvanceSlideAsync" disabled="@((sessionContext?.ActiveSlideIndex ?? -1) >= (sessionContext?.TotalSlides ?? 0) - 1)">Next ▶</button>
+                        <button class="btn btn-sm @(slidesHidden ? "btn-warning" : "")" @onclick="ToggleSlidesVisibility" title="@(slidesHidden ? "Show slides on display" : "Hide slides from display")">
+                            @(slidesHidden ? "👁️‍🗨️ Hidden" : "👁️ Visible")
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="no-active-slide">
+                        <span class="empty-icon">🎬</span>
+                        <p>Activate a topic or advance to a slide to start presenting.</p>
+                    </div>
+                }
+
+                <div class="keyboard-hints">
+                    <span>← → Navigate</span> <span>P Poll</span> <span>Esc Close</span>
+                </div>
+
+                <!-- Quick Poll Launch -->
+                @if (activePoll is null || activePoll.Status == PollStatus.Closed)
+                {
+                    <div class="poll-launch-zone">
+                        @if (activeTopic is not null)
+                        {
+                            <button class="btn btn-outline btn-sm" @onclick="AutoGeneratePoll" disabled="@isGeneratingPoll">
+                                @if (isGeneratingPoll)
+                                {
+                                    <span>⏳ Generating...</span>
+                                }
+                                else
+                                {
+                                    <span>🤖 Auto-Generate Poll</span>
+                                }
+                            </button>
+                        }
+
+                        @if (activeTopic?.SuggestedPolls.Count > 0)
+                        {
+                            <div class="suggested-poll-picker">
+                                <select @bind="selectedSuggestedPollIndex">
+                                    <option value="-1">— Use Suggested Poll —</option>
+                                    @for (var i = 0; i < activeTopic.SuggestedPolls.Count; i++)
+                                    {
+                                        <option value="@i">@activeTopic.SuggestedPolls[i].Question</option>
+                                    }
+                                </select>
+                                <button class="btn btn-sm btn-primary"
+                                        disabled="@(selectedSuggestedPollIndex < 0)"
+                                        @onclick="LaunchSelectedSuggestedPoll">
+                                    Launch
+                                </button>
+                            </div>
+                        }
+
+                        <button class="btn btn-outline btn-sm" @onclick="ToggleCustomPollForm">✏️ Custom Poll</button>
+                        @if (showCustomPollForm)
+                        {
+                            <div class="custom-poll-inputs">
+                                <input type="text" @bind="customPollQuestion" placeholder="Poll question..." />
+                                @for (var i = 0; i < customPollOptions.Count; i++)
+                                {
+                                    var index = i;
+                                    <div class="option-row">
+                                        <input type="text"
+                                               value="@customPollOptions[index]"
+                                               @onchange="(e) => UpdateCustomOption(index, e.Value?.ToString() ?? string.Empty)"
+                                               placeholder="Option @(index + 1)..." />
+                                        @if (customPollOptions.Count > 2)
+                                        {
+                                            <button class="btn-icon" @onclick="() => RemoveCustomOption(index)">✕</button>
+                                        }
+                                    </div>
+                                }
+                                <div class="custom-poll-actions">
+                                    <button class="btn btn-sm" @onclick="AddCustomOption">+ Add Option</button>
+                                    <label class="allow-other-label">
+                                        <input type="checkbox" @bind="allowOtherOption" /> ☑ Allow 'Other' responses
+                                    </label>
+                                    <button class="btn btn-sm btn-primary"
+                                            disabled="@(!IsCustomPollValid)"
+                                            @onclick="LaunchCustomPoll">
+                                        🚀 Create &amp; Go Live
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Right Column: Q&A + Active Poll + Insights -->
+            <div class="right-column">
+                <div class="qa-feed">
+                    <h3>❓ Q&amp;A <span class="qa-count">(@allQuestions.Count)</span></h3>
+                    @if (allQuestions.Count == 0)
+                    {
+                        <div class="empty-state">
+                            <span class="empty-icon">💬</span>
+                            <p class="muted">No questions yet. Attendees can ask questions from their devices.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var q in allQuestions)
+                        {
+                            <div class="question-item @(!q.IsSafe && !q.IsApprovedByPresenter ? "question-unsafe" : "") @(!q.IsSafe && q.IsApprovedByPresenter ? "question-approved" : "")">
+                                <div class="question-header">
+                                    <span class="upvote-count">👍 @q.Upvotes</span>
+                                    @if (!q.IsSafe && !q.IsApprovedByPresenter)
+                                    {
+                                        <span class="unsafe-badge">⚠️ Unsafe</span>
+                                    }
+                                    else if (!q.IsSafe && q.IsApprovedByPresenter)
+                                    {
+                                        <span class="approved-badge">✅ Approved</span>
+                                    }
+                                    <span class="question-text">@q.Text</span>
+                                    @if (!q.IsSafe && !q.IsApprovedByPresenter)
+                                    {
+                                        <button class="btn-icon approve-btn" @onclick="() => ApproveQuestion(q.Id)" title="Approve and show to attendees">
+                                            ✅
+                                        </button>
+                                    }
+                                    <button class="btn-icon spotlight-btn @(sessionContext?.SpotlightedQuestion?.Id == q.Id ? "spotlight-active" : "")"
+                                            @onclick="() => ToggleSpotlight(q.Id)"
+                                            title="@(sessionContext?.SpotlightedQuestion?.Id == q.Id ? "Remove from display" : "Show on display")">
+                                        📺
+                                    </button>
+                                    <button class="btn-icon delete-btn" @onclick="() => DeleteQuestion(q.Id)" title="Remove question">🗑️</button>
+                                    @if (!string.IsNullOrEmpty(q.TopicId))
+                                    {
+                                        var qTopic = session?.Topics.FirstOrDefault(t => t.Id == q.TopicId);
+                                        @if (qTopic is not null)
+                                        {
+                                            <span class="question-topic-badge">@qTopic.Title</span>
+                                        }
+                                    }
+                                </div>
+                                @if (q.Answers.Count > 0)
+                                {
+                                    @foreach (var answer in q.Answers)
+                                    {
+                                        <div class="question-answer @(answer.IsAiGenerated ? "ai-answer" : "")">
+                                            @if (answer.IsAiGenerated)
+                                            {
+                                                <span class="ai-badge">🤖 AI</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="human-badge">💬 @answer.AuthorLabel</span>
+                                            }
+                                            <strong>A:</strong> @answer.Text
+                                        </div>
+                                    }
+                                }
+                                @if (answeringQuestionId == q.Id)
+                                {
+                                    <div class="answer-form">
+                                        <input type="text" @bind="answerText" placeholder="Type your answer..." />
+                                        <button class="btn btn-sm btn-primary" @onclick="() => SubmitAnswer(q.Id)">Submit</button>
+                                        <button class="btn btn-sm" @onclick="CancelAnswer">Cancel</button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-sm btn-answer" @onclick="() => StartAnswering(q.Id)">💬 Add Answer</button>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+
+                @if (activePoll is not null && activePoll.Status != PollStatus.Closed)
+                {
+                    <div class="right-poll-section @(activePoll.Status == PollStatus.Active ? "poll-active-glow" : "")">
+                        <h3>📊 Live Poll</h3>
+                        <h4>@activePoll.Question</h4>
+                        <div class="poll-options-display">
+                            @foreach (var option in activePoll.Options)
+                            {
+                                var count = activePollResults?.GetValueOrDefault(option, 0) ?? 0;
+                                var total = activePollResults?.Values.Sum() ?? 0;
+                                var pct = total > 0 ? (int)(100.0 * count / total) : 0;
+                                <div class="poll-option-bar">
+                                    <div class="poll-option-fill" style="width: @(pct)%"></div>
+                                    <span class="poll-option-label">@option</span>
+                                    <span class="poll-option-count">@count (@(pct)%)</span>
+                                </div>
+                            }
+                            @if (activePoll.AllowOther)
+                            {
+                                var otherCount = activePollResults?.GetValueOrDefault("Other", 0) ?? 0;
+                                var total = activePollResults?.Values.Sum() ?? 0;
+                                var otherPct = total > 0 ? (int)(100.0 * otherCount / total) : 0;
+                                <div class="poll-option-bar">
+                                    <div class="poll-option-fill" style="width: @(otherPct)%"></div>
+                                    <span class="poll-option-label">Other</span>
+                                    <span class="poll-option-count">@otherCount (@(otherPct)%)</span>
+                                </div>
+                                var otherTexts = sessionContext?.GetOtherResponses(activePoll.Id);
+                                @if (otherTexts is not null && otherTexts.Count > 0)
+                                {
+                                    <div class="other-texts-inline">
+                                        @foreach (var t in otherTexts)
+                                        {
+                                            <span class="other-text-chip">"@t"</span>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @if (activePoll.Status == PollStatus.Draft)
+                        {
+                            <button class="btn btn-primary btn-sm" @onclick="() => ActivatePollAsync(activePoll.Id)">📡 Go Live</button>
+                        }
+                        else if (activePoll.Status == PollStatus.Active)
+                        {
+                            <button class="btn btn-danger btn-sm" @onclick="() => ClosePollAsync(activePoll.Id)">🔒 Close Poll</button>
+                        }
+                    </div>
+                }
+
+                @if (closedPoll is not null)
+                {
+                    <div class="closed-poll-results">
+                        <h4>Last Poll Results: @closedPoll.Question</h4>
+                        <PollResultsChart Poll="@closedPoll" Results="@closedPollResults"
+                                          OtherResponses="@(closedPoll.AllowOther ? sessionContext?.GetOtherResponses(closedPoll.Id) : null)" />
+                    </div>
+                }
+
+                <div class="insights-section">
+                    <h3>💡 Insights</h3>
+                    @if (topicInsights.Count == 0)
+                    {
+                        <div class="empty-state">
+                            <span class="empty-icon">🔍</span>
+                            <p class="muted">No insights yet for this topic.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var insight in topicInsights)
+                        {
+                            <InsightCard Insight="@insight" />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (showPollEditModal)
+{
+    <div class="poll-edit-overlay" @onclick="CancelPollEdit">
+        <div class="poll-edit-modal" @onclick:stopPropagation="true">
+            <h3>📊 Edit Poll Before Launch</h3>
+            <div class="poll-edit-field">
+                <label>Question</label>
+                <input type="text" @bind="editPollQuestion" placeholder="Poll question..." />
+            </div>
+            <div class="poll-edit-field">
+                <label>Options</label>
+                @for (var i = 0; i < editPollOptions.Count; i++)
+                {
+                    var index = i;
+                    <div class="poll-edit-option-row">
+                        <input type="text"
+                               value="@editPollOptions[index]"
+                               @onchange="(e) => UpdateEditPollOption(index, e.Value?.ToString() ?? string.Empty)"
+                               placeholder="Option @(index + 1)..." />
+                        @if (editPollOptions.Count > 2)
+                        {
+                            <button class="btn-icon" @onclick="() => RemoveEditPollOption(index)">✕</button>
+                        }
+                    </div>
+                }
+                <button class="btn btn-sm" @onclick="AddEditPollOption">+ Add Option</button>
+            </div>
+            <div class="poll-edit-field">
+                <label class="allow-other-label">
+                    <input type="checkbox" @bind="editAllowOther" /> Allow 'Other' responses
+                </label>
+            </div>
+            <div class="poll-edit-actions">
+                <button class="btn btn-sm" @onclick="CancelPollEdit">Cancel</button>
+                <button class="btn btn-sm btn-primary" disabled="@(!IsEditPollValid)" @onclick="LaunchEditedPoll">🚀 Launch Poll</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string SessionCode { get; set; } = "";
+
+    // PIN gate state
+    private bool isHostAuthenticated = false;
+    private string pinInput = "";
+    private string? pinError;
+    private SessionContext? sessionContext;
+
+    private ConferenceSession? session;
+    private SessionTopic? activeTopic;
+    private Poll? activePoll;
+    private Dictionary<string, int>? activePollResults;
+    private Poll? closedPoll;
+    private Dictionary<string, int>? closedPollResults;
+    private IReadOnlyList<Insight> topicInsights = [];
+    private IReadOnlyList<AudienceQuestion> topicQuestions = [];
+    private IReadOnlyList<AudienceQuestion> allQuestions = [];
+    private int knowledgeBaseCount;
+
+    // Suggested poll selection
+    private int selectedSuggestedPollIndex = -1;
+
+    // Custom poll form
+    private bool showCustomPollForm;
+    private string customPollQuestion = "";
+    private List<string> customPollOptions = ["", ""];
+    private bool allowOtherOption = true;
+    private bool isGeneratingPoll;
+
+    // Question answering
+    private string? answeringQuestionId;
+    private string answerText = "";
+
+    // Import section collapse state
+    private bool isImportExpanded;
+
+    // Settings / clear data state
+    private bool isSettingsExpanded;
+    private string? confirmClear;
+    private string? clearMessage;
+
+    // Import tab state
+    private string importRepoUrl = "";
+    private string importRepoBranch = "";
+    private string importRepoSubdir = "";
+    private bool isImportingRepo;
+    private string? importRepoError;
+    private string importRepoStatus = "";
+    private string? importRepoSuccess;
+    private ImportDraftResult? lastImportDraft;
+    private List<ImportHistoryEntry> importHistory = [];
+    private HashSet<string> importedRepoUrls = [];
+    private bool showRepoDedupWarning;
+
+    private record ImportHistoryEntry(string Url, int DocumentCount, int TopicCount);
+
+    // Slide navigation
+    private Slide? activeSlide;
+    private Slide? nextSlide;
+    private Action<Slide>? onSlideChanged;
+
+    // Slides visibility
+    private bool slidesHidden;
+
+    // Poll edit modal
+    private bool showPollEditModal;
+    private string editPollQuestion = "";
+    private List<string> editPollOptions = ["", ""];
+    private bool editAllowOther = true;
+    private PollSource editPollSource = PollSource.Custom;
+
+    // Event handler references for cleanup
+    private Action<PollResponse>? onResponseReceived;
+    private Action<Poll>? onPollActivated;
+    private Action<Poll>? onPollClosed;
+    private Action<AudienceQuestion>? onQuestionReceived;
+    private Action<AudienceQuestion>? onQuestionAnswered;
+    private Action<AudienceQuestion>? onQuestionUpvoted;
+    private Action<Insight>? onInsightGenerated;
+    private Action<bool>? onSlidesVisibilityChanged;
+    private Action<AudienceQuestion?>? onQuestionSpotlighted;
+    private Action<AudienceQuestion>? onQuestionRemoved;
+    private Action<AudienceQuestion>? onQuestionModerated;
+    private Timer? _knowledgeBaseTimer;
+
+    protected override void OnInitialized()
+    {
+        sessionContext = SessionManager.GetSession(SessionCode);
+    }
+
+    private void ValidatePin()
+    {
+        if (SessionManager.ValidateHostPin(SessionCode, pinInput))
+        {
+            isHostAuthenticated = true;
+            pinError = null;
+            sessionContext = SessionManager.GetSession(SessionCode);
+            InitializeSession();
+        }
+        else
+        {
+            pinError = "Invalid PIN. Please try again.";
+        }
+    }
+
+    private void HandlePinKeydown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") ValidatePin();
+    }
+
+    private async void InitializeSession()
+    {
+        if (sessionContext is null) return;
+        session = sessionContext.Session;
+        RefreshState();
+
+        try { knowledgeBaseCount = await SemanticSearchService.GetRecordCountAsync(); }
+        catch { knowledgeBaseCount = 0; }
+
+        onResponseReceived = _ => InvokeAsync(() => { RefreshPollResults(); StateHasChanged(); });
+        onPollActivated = _ => InvokeAsync(() => { RefreshState(); StateHasChanged(); });
+        onPollClosed = _ => InvokeAsync(() => { RefreshState(); RefreshKnowledgeBaseCount(); StateHasChanged(); });
+        onQuestionReceived = _ => InvokeAsync(() => { RefreshQuestions(); RefreshKnowledgeBaseCount(); StateHasChanged(); });
+        onQuestionAnswered = _ => InvokeAsync(() => { RefreshQuestions(); RefreshKnowledgeBaseCount(); StateHasChanged(); });
+        onQuestionUpvoted = _ => InvokeAsync(() => { RefreshQuestions(); StateHasChanged(); });
+        onInsightGenerated = _ => InvokeAsync(() => { RefreshInsights(); RefreshKnowledgeBaseCount(); StateHasChanged(); });
+        onSlideChanged = _ => InvokeAsync(() => { activeSlide = sessionContext?.ActiveSlide; nextSlide = sessionContext?.GetNextSlide(); StateHasChanged(); });
+
+        sessionContext.ResponseReceived += onResponseReceived;
+        sessionContext.PollActivated += onPollActivated;
+        sessionContext.PollClosed += onPollClosed;
+        sessionContext.QuestionReceived += onQuestionReceived;
+        sessionContext.QuestionAnswered += onQuestionAnswered;
+        sessionContext.QuestionUpvoted += onQuestionUpvoted;
+        sessionContext.InsightGenerated += onInsightGenerated;
+        sessionContext.SlideChanged += onSlideChanged;
+
+        onSlidesVisibilityChanged = visible => InvokeAsync(() => { slidesHidden = !visible; StateHasChanged(); });
+        sessionContext.SlidesVisibilityChanged += onSlidesVisibilityChanged;
+
+        onQuestionSpotlighted = _ => InvokeAsync(StateHasChanged);
+        sessionContext.QuestionSpotlighted += onQuestionSpotlighted;
+
+        onQuestionRemoved = _ => InvokeAsync(() => { RefreshQuestions(); StateHasChanged(); });
+        sessionContext.QuestionRemoved += onQuestionRemoved;
+
+        onQuestionModerated = _ => InvokeAsync(() => { RefreshQuestions(); StateHasChanged(); });
+        sessionContext.QuestionModerated += onQuestionModerated;
+
+        slidesHidden = sessionContext.SlidesHidden;
+
+        // Periodic refresh of knowledge base count (catches background ingestion)
+        _knowledgeBaseTimer = new Timer(_ =>
+            InvokeAsync(() => { RefreshKnowledgeBaseCount(); StateHasChanged(); }),
+            null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        _knowledgeBaseTimer?.Dispose();
+        if (sessionContext is not null)
+        {
+            sessionContext.ResponseReceived -= onResponseReceived;
+            sessionContext.PollActivated -= onPollActivated;
+            sessionContext.PollClosed -= onPollClosed;
+            sessionContext.QuestionReceived -= onQuestionReceived;
+            sessionContext.QuestionAnswered -= onQuestionAnswered;
+            sessionContext.QuestionUpvoted -= onQuestionUpvoted;
+            sessionContext.InsightGenerated -= onInsightGenerated;
+            sessionContext.SlideChanged -= onSlideChanged;
+            sessionContext.SlidesVisibilityChanged -= onSlidesVisibilityChanged;
+            sessionContext.QuestionSpotlighted -= onQuestionSpotlighted;
+            sessionContext.QuestionRemoved -= onQuestionRemoved;
+            sessionContext.QuestionModerated -= onQuestionModerated;
+        }
+    }
+
+    private async Task ExecuteClear()
+    {
+        if (sessionContext is null || session is null) return;
+
+        try
+        {
+            if (confirmClear == "session")
+            {
+                await PersistenceService.DeleteSessionAsync(session.Id);
+                SessionManager.RemoveSession(session.SessionCode);
+                confirmClear = null;
+                Navigation.NavigateTo("/", forceLoad: true);
+                return;
+            }
+
+            await PersistenceService.ClearRuntimeDataAsync(session.Id);
+            sessionContext.ClearRuntimeData();
+            RefreshState();
+
+            clearMessage = confirmClear switch
+            {
+                "polls" => "✅ Polls & responses cleared.",
+                "qa" => "✅ Q&A data cleared.",
+                "all" => "✅ All runtime data cleared.",
+                _ => "✅ Data cleared."
+            };
+        }
+        catch (Exception ex)
+        {
+            clearMessage = $"❌ Error: {ex.Message}";
+        }
+
+        confirmClear = null;
+        StateHasChanged();
+    }
+
+    private void RefreshState()
+    {
+        if (sessionContext is null) return;
+        session = sessionContext.Session;
+        activeTopic = sessionContext.GetActiveTopic();
+        activeSlide = sessionContext.ActiveSlide;
+        nextSlide = sessionContext.GetNextSlide();
+
+        var previousPoll = activePoll;
+        activePoll = sessionContext.GetActivePoll();
+        RefreshPollResults();
+
+        // Track the last closed poll for displaying final results
+        if (previousPoll is not null && previousPoll.Status != PollStatus.Closed && activePoll is null)
+        {
+            closedPoll = previousPoll;
+            closedPollResults = sessionContext.GetPollResults(previousPoll.Id);
+        }
+
+        allQuestions = sessionContext.GetTopQuestions(50, includeUnsafe: true);
+
+        if (activeTopic is not null)
+        {
+            topicInsights = sessionContext.GetInsightsForTopic(activeTopic.Id);
+            topicQuestions = sessionContext.GetQuestionsForTopic(activeTopic.Id);
+
+            // Track most recently closed poll for this topic
+            var topicPolls = sessionContext.GetPollsForTopic(activeTopic.Id);
+            var lastClosed = topicPolls.LastOrDefault(p => p.Status == PollStatus.Closed);
+            if (lastClosed is not null && activePoll is null)
+            {
+                closedPoll = lastClosed;
+                closedPollResults = sessionContext.GetPollResults(lastClosed.Id);
+            }
+        }
+        else
+        {
+            topicInsights = [];
+            topicQuestions = [];
+        }
+
+        ResetPollForm();
+    }
+
+    private void RefreshPollResults()
+    {
+        if (activePoll is not null)
+            activePollResults = sessionContext?.GetPollResults(activePoll.Id);
+    }
+
+    private void RefreshQuestions()
+    {
+        allQuestions = sessionContext?.GetTopQuestions(50, includeUnsafe: true) ?? [];
+        if (activeTopic is not null)
+            topicQuestions = sessionContext?.GetQuestionsForTopic(activeTopic.Id) ?? [];
+        else
+            topicQuestions = [];
+    }
+
+    private void DeleteQuestion(string questionId)
+    {
+        sessionContext?.RemoveQuestion(questionId);
+        RefreshQuestions();
+    }
+
+    private void ApproveQuestion(string questionId)
+    {
+        sessionContext?.ApproveQuestion(questionId);
+        RefreshQuestions();
+    }
+
+    private void RefreshInsights()
+    {
+        if (activeTopic is not null)
+            topicInsights = sessionContext?.GetInsightsForTopic(activeTopic.Id) ?? [];
+    }
+
+    private async void RefreshKnowledgeBaseCount()
+    {
+        try { knowledgeBaseCount = await SemanticSearchService.GetRecordCountAsync(); }
+        catch { /* swallow */ }
+    }
+
+    private void StartSession()
+    {
+        sessionContext?.StartSession();
+        RefreshState();
+    }
+
+    private void EndSession()
+    {
+        sessionContext?.EndSession();
+        RefreshState();
+    }
+
+    private void ActivateTopic(string topicId)
+    {
+        sessionContext?.ActivateTopic(topicId);
+        closedPoll = null;
+        closedPollResults = null;
+        RefreshState();
+    }
+
+    private void CompleteTopic(string topicId)
+    {
+        sessionContext?.CompleteTopic(topicId);
+        RefreshState();
+    }
+
+    private void JumpToTopic(string topicId)
+    {
+        sessionContext?.ActivateTopic(topicId);
+        RefreshState();
+    }
+
+    // Poll actions
+
+    private async Task AutoGeneratePoll()
+    {
+        if (sessionContext is null || activeTopic is null || isGeneratingPoll) return;
+        isGeneratingPoll = true;
+        StateHasChanged();
+
+        try
+        {
+            // Capture existing draft poll IDs so we can find the newly created one
+            var existingPollIds = sessionContext.GetPollsForTopic(activeTopic.Id)
+                .Select(p => p.Id).ToHashSet();
+
+            await PollGenerationWorkflow.ExecuteAsync(activeTopic.Id);
+
+            // Find the newly created draft poll
+            var newPoll = sessionContext.GetPollsForTopic(activeTopic.Id)
+                .FirstOrDefault(p => p.Status == PollStatus.Draft && !existingPollIds.Contains(p.Id));
+
+            if (newPoll is not null)
+            {
+                editPollQuestion = newPoll.Question;
+                editPollOptions = new List<string>(newPoll.Options);
+                editAllowOther = newPoll.AllowOther;
+                editPollSource = PollSource.Generated;
+                showPollEditModal = true;
+            }
+            else
+            {
+                // Fallback: if the workflow didn't create a poll via tool, use suggested poll
+                var suggested = activeTopic.SuggestedPolls.FirstOrDefault();
+                if (suggested is not null)
+                {
+                    editPollQuestion = suggested.Question;
+                    editPollOptions = new List<string>(suggested.Options);
+                    editAllowOther = true;
+                    editPollSource = PollSource.Generated;
+                    showPollEditModal = true;
+                }
+            }
+        }
+        finally
+        {
+            isGeneratingPoll = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void LaunchSelectedSuggestedPoll()
+    {
+        if (activeTopic is null || selectedSuggestedPollIndex < 0 || sessionContext is null) return;
+        var sp = activeTopic.SuggestedPolls[selectedSuggestedPollIndex];
+        editPollQuestion = sp.Question;
+        editPollOptions = new List<string>(sp.Options);
+        editAllowOther = true;
+        editPollSource = PollSource.Suggested;
+        showPollEditModal = true;
+        selectedSuggestedPollIndex = -1;
+    }
+
+    private void ToggleCustomPollForm()
+    {
+        showCustomPollForm = !showCustomPollForm;
+        if (showCustomPollForm)
+        {
+            customPollQuestion = "";
+            customPollOptions = ["", ""];
+            allowOtherOption = true;
+        }
+    }
+
+    private void UpdateCustomOption(int index, string value)
+    {
+        if (index >= 0 && index < customPollOptions.Count)
+            customPollOptions[index] = value;
+    }
+
+    private void AddCustomOption() => customPollOptions.Add("");
+
+    private void RemoveCustomOption(int index)
+    {
+        if (index >= 0 && index < customPollOptions.Count && customPollOptions.Count > 2)
+            customPollOptions.RemoveAt(index);
+    }
+
+    private bool IsCustomPollValid =>
+        !string.IsNullOrWhiteSpace(customPollQuestion)
+        && customPollOptions.Count(o => !string.IsNullOrWhiteSpace(o)) >= 2;
+
+    private void LaunchCustomPoll()
+    {
+        if (!IsCustomPollValid || sessionContext is null) return;
+        var options = customPollOptions.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => o.Trim()).ToList();
+        var poll = sessionContext.CreatePoll(activeTopic?.Id, customPollQuestion.Trim(), options, PollSource.Custom, allowOther: allowOtherOption);
+        sessionContext.ActivatePoll(poll.Id);
+        showCustomPollForm = false;
+        RefreshState();
+    }
+
+    private void ActivatePollAsync(string pollId)
+    {
+        sessionContext?.ActivatePoll(pollId);
+        RefreshState();
+    }
+
+    private void ClosePollAsync(string pollId)
+    {
+        sessionContext?.ClosePoll(pollId);
+        RefreshState();
+    }
+
+    private void ResetPollForm()
+    {
+        selectedSuggestedPollIndex = -1;
+    }
+
+    // Question answering
+
+    private void StartAnswering(string questionId)
+    {
+        answeringQuestionId = questionId;
+        answerText = "";
+    }
+
+    private void CancelAnswer()
+    {
+        answeringQuestionId = null;
+        answerText = "";
+    }
+
+    private void SubmitAnswer(string questionId)
+    {
+        if (string.IsNullOrWhiteSpace(answerText)) return;
+        sessionContext?.AnswerQuestion(questionId, answerText.Trim());
+        answeringQuestionId = null;
+        answerText = "";
+
+        RefreshQuestions();
+    }
+
+    // Slide navigation
+
+    private void AdvanceSlideAsync()
+    {
+        sessionContext?.AdvanceSlide();
+        RefreshState();
+    }
+
+    private void GoBackSlideAsync()
+    {
+        sessionContext?.GoBackSlide();
+        RefreshState();
+    }
+
+    private void HandleSlideKeydown(KeyboardEventArgs e)
+    {
+        if (e.Key is "ArrowRight" or " ")
+        {
+            AdvanceSlideAsync();
+        }
+        else if (e.Key is "ArrowLeft")
+        {
+            GoBackSlideAsync();
+        }
+        else if (e.Key is "p" or "P")
+        {
+            ToggleCustomPollForm();
+        }
+        else if (e.Key is "Escape")
+        {
+            if (showPollEditModal)
+            {
+                showPollEditModal = false;
+            }
+            else if (showCustomPollForm)
+            {
+                showCustomPollForm = false;
+            }
+            else if (answeringQuestionId is not null)
+            {
+                CancelAnswer();
+            }
+        }
+    }
+
+    // Slides visibility toggle
+    private void ToggleSlidesVisibility()
+    {
+        slidesHidden = !slidesHidden;
+        sessionContext?.SetSlidesVisibility(!slidesHidden);
+    }
+
+    // Spotlight question on display
+    private void ToggleSpotlight(string questionId)
+    {
+        sessionContext?.SpotlightQuestion(questionId);
+        StateHasChanged();
+    }
+
+    // Poll edit modal methods
+    private void LaunchEditedPoll()
+    {
+        if (sessionContext is null) return;
+        var options = editPollOptions.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => o.Trim()).ToList();
+        if (string.IsNullOrWhiteSpace(editPollQuestion) || options.Count < 2) return;
+        var poll = sessionContext.CreatePoll(activeTopic?.Id, editPollQuestion.Trim(), options, editPollSource, allowOther: editAllowOther);
+        sessionContext.ActivatePoll(poll.Id);
+        showPollEditModal = false;
+        RefreshState();
+    }
+
+    private void CancelPollEdit()
+    {
+        showPollEditModal = false;
+    }
+
+    private void AddEditPollOption() => editPollOptions.Add("");
+
+    private void RemoveEditPollOption(int index)
+    {
+        if (index >= 0 && index < editPollOptions.Count && editPollOptions.Count > 2)
+            editPollOptions.RemoveAt(index);
+    }
+
+    private void UpdateEditPollOption(int index, string value)
+    {
+        if (index >= 0 && index < editPollOptions.Count)
+            editPollOptions[index] = value;
+    }
+
+    private bool IsEditPollValid =>
+        !string.IsNullOrWhiteSpace(editPollQuestion)
+        && editPollOptions.Count(o => !string.IsNullOrWhiteSpace(o)) >= 2;
+
+    // Import actions
+    private async Task ImportRepo()
+    {
+        importRepoError = null;
+        importRepoSuccess = null;
+        showRepoDedupWarning = false;
+
+        if (string.IsNullOrWhiteSpace(importRepoUrl))
+        {
+            importRepoError = "Please enter a GitHub repository URL.";
+            return;
+        }
+
+        var trimmedUrl = importRepoUrl.Trim();
+
+        if (!trimmedUrl.Contains("github.com") || trimmedUrl.Split('/').Length < 5)
+        {
+            importRepoError = "Invalid GitHub URL. Use format: https://github.com/owner/repo";
+            return;
+        }
+
+        if (importedRepoUrls.Contains(trimmedUrl))
+        {
+            showRepoDedupWarning = true;
+            return;
+        }
+
+        await DoImportRepo(trimmedUrl);
+    }
+
+    private async Task ConfirmRepoReimport()
+    {
+        showRepoDedupWarning = false;
+        await DoImportRepo(importRepoUrl.Trim());
+    }
+
+    private async Task DoImportRepo(string url)
+    {
+        isImportingRepo = true;
+        importRepoStatus = "🔍 Connecting to GitHub...";
+        importRepoSuccess = null;
+        StateHasChanged();
+
+        try
+        {
+            importRepoStatus = "🔍 Fetching repository & drafting session...";
+            StateHasChanged();
+
+            lastImportDraft = await ContentImportService.ImportAndDraftAsync(
+                url, session?.Title,
+                string.IsNullOrWhiteSpace(importRepoBranch) ? null : importRepoBranch.Trim(),
+                string.IsNullOrWhiteSpace(importRepoSubdir) ? null : importRepoSubdir.Trim());
+
+            importHistory.Add(new ImportHistoryEntry(
+                url,
+                lastImportDraft.ImportResult.RecordCount,
+                lastImportDraft.Draft.Topics.Count));
+
+            importedRepoUrls.Add(url);
+            importRepoSuccess = $"Successfully imported {lastImportDraft.ImportResult.RecordCount} documents!";
+            importRepoUrl = "";
+            RefreshKnowledgeBaseCount();
+        }
+        catch (Exception ex)
+        {
+            if (!url.Contains("github.com") || url.Split('/').Length < 5)
+                importRepoError = "Invalid GitHub URL. Use format: https://github.com/owner/repo";
+            else
+                importRepoError = $"Import failed: {ex.Message}";
+        }
+        finally
+        {
+            isImportingRepo = false;
+            importRepoStatus = "";
+            StateHasChanged();
+        }
+    }
+
+    private void AddDraftedTopicsToSession()
+    {
+        if (lastImportDraft is null || sessionContext is null || session is null) return;
+
+        foreach (var topicDraft in lastImportDraft.Draft.Topics)
+        {
+            var topic = new SessionTopic
+            {
+                Id = Guid.NewGuid().ToString("N")[..8],
+                Title = topicDraft.Title,
+                Description = topicDraft.Description,
+                Order = session.Topics.Count,
+                Status = TopicStatus.Upcoming,
+                TalkingPoints = topicDraft.TalkingPoints.ToList(),
+                SuggestedPolls = topicDraft.SuggestedPolls.Select(p => new SuggestedPoll
+                {
+                    Question = p.Question,
+                    Options = p.Options.ToList()
+                }).ToList()
+            };
+            session.Topics.Add(topic);
+        }
+
+        // Generate and load slides for newly added topics, remapping topic IDs
+        if (lastImportDraft is not null && !string.IsNullOrWhiteSpace(lastImportDraft.SlideMarkdown))
+        {
+            var newSlides = SlideMarkdownParser.Parse(lastImportDraft.SlideMarkdown);
+            for (int i = 0; i < lastImportDraft.Draft.Topics.Count && i < session.Topics.Count; i++)
+            {
+                var draftTopicId = $"topic-{i}";
+                var actualTopicId = session.Topics[session.Topics.Count - lastImportDraft.Draft.Topics.Count + i].Id;
+                foreach (var slide in newSlides.Where(s => s.TopicId == draftTopicId))
+                {
+                    slide.TopicId = actualTopicId;
+                }
+            }
+            var allSlides = sessionContext.AllSlides.ToList();
+            allSlides.AddRange(newSlides);
+            sessionContext.LoadSlides(allSlides);
+        }
+
+        lastImportDraft = null;
+        RefreshState();
+        StateHasChanged();
+    }
+}
+
+<style>
+    /* Dashboard 3-column grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 220px 1fr 320px;
+        gap: 1rem;
+        height: calc(100vh - 120px);
+        overflow: hidden;
+    }
+
+    .left-column,
+    .center-column,
+    .right-column {
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    /* ===== Left Column: Topic Outline ===== */
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .topic-outline {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .topic-outline h3 {
+        font-size: 0.85rem;
+        margin: 0 0 0.5rem;
+        opacity: 0.7;
+    }
+
+    .topic-item {
+        display: flex;
+        flex-direction: column;
+        padding: 0.45rem 0.6rem;
+        border-left: 3px solid transparent;
+        border-radius: 0 0.3rem 0.3rem 0;
+        cursor: pointer;
+        margin-bottom: 0.15rem;
+        transition: all 0.2s ease;
+    }
+
+    .topic-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .topic-item.current {
+        border-left-color: #e94560;
+        background: rgba(233, 69, 96, 0.08);
+    }
+
+    .topic-item.current .topic-item-title {
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 600;
+    }
+
+    .topic-item.completed {
+        opacity: 0.5;
+    }
+
+    .topic-item.completed .topic-item-title {
+        text-decoration: line-through;
+    }
+
+    .topic-item-title {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .topic-check {
+        color: #4ecdc4;
+        margin-right: 0.25rem;
+        font-weight: 700;
+    }
+
+    .topic-slide-count {
+        font-size: 0.65rem;
+        opacity: 0.45;
+        margin-top: 0.1rem;
+    }
+
+    /* ===== Settings Section ===== */
+    .settings-section {
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding-top: 0.5rem;
+    }
+
+    .section-toggle {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.8rem;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .section-toggle:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .settings-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .btn-danger-outline {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        background: rgba(255, 107, 107, 0.05);
+        color: #ff6b6b;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .btn-danger-outline:hover {
+        background: rgba(255, 107, 107, 0.15);
+        border-color: #ff6b6b;
+    }
+
+    .clear-confirm {
+        padding: 0.5rem;
+        background: rgba(255, 107, 107, 0.1);
+        border: 1px solid rgba(255, 107, 107, 0.2);
+        border-radius: 0.4rem;
+    }
+
+    .clear-confirm p {
+        font-size: 0.8rem;
+        margin: 0 0 0.4rem;
+        color: #ff6b6b;
+    }
+
+    .clear-message {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        margin: 0.25rem 0 0;
+    }
+
+    /* ===== Import Section ===== */
+    .import-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .import-toggle {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.8rem;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .import-toggle:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .import-content {
+        padding: 0 0.75rem 0.75rem;
+    }
+
+    .import-description {
+        font-size: 0.75rem;
+        opacity: 0.6;
+        margin-bottom: 0.5rem;
+    }
+
+    .import-form {
+        display: flex;
+        gap: 0.4rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .import-url-input {
+        flex: 1;
+        min-width: 0;
+        padding: 0.4rem 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.4rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 0.75rem;
+        box-sizing: border-box;
+    }
+
+    .import-url-input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .import-url-input:focus {
+        outline: none;
+        border-color: #e94560;
+    }
+
+    .import-options-row {
+        display: flex;
+        gap: 0.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .import-option {
+        flex: 1;
+    }
+
+    .import-option label {
+        display: block;
+        font-size: 0.65rem;
+        opacity: 0.6;
+        margin-bottom: 0.15rem;
+    }
+
+    .import-option .hint {
+        font-weight: 400;
+        opacity: 0.5;
+    }
+
+    .import-option-input {
+        width: 100%;
+        padding: 0.3rem 0.4rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.35rem;
+        background: rgba(0, 0, 0, 0.2);
+        color: white;
+        font-size: 0.75rem;
+        box-sizing: border-box;
+    }
+
+    .import-option-input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+    }
+
+    .import-option-input:focus {
+        outline: none;
+        border-color: #e94560;
+    }
+
+    .import-error {
+        padding: 0.4rem 0.6rem;
+        background: rgba(255, 107, 107, 0.15);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        border-radius: 0.4rem;
+        color: #ff6b6b;
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .import-status {
+        padding: 0.4rem 0.6rem;
+        background: rgba(100, 100, 255, 0.1);
+        border: 1px solid rgba(100, 100, 255, 0.2);
+        border-radius: 0.4rem;
+        font-size: 0.75rem;
+        color: #aab0ff;
+        margin: 0.4rem 0;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .import-success {
+        padding: 0.4rem 0.6rem;
+        background: rgba(0, 200, 100, 0.1);
+        border: 1px solid rgba(0, 200, 100, 0.2);
+        border-radius: 0.4rem;
+        font-size: 0.75rem;
+        color: #66d9a0;
+        margin: 0.4rem 0;
+    }
+
+    .import-dedup-warning {
+        padding: 0.35rem 0.5rem;
+        background: rgba(255, 179, 71, 0.1);
+        border: 1px solid rgba(255, 179, 71, 0.2);
+        border-radius: 0.4rem;
+        font-size: 0.75rem;
+        color: #ffb347;
+        margin: 0.3rem 0;
+    }
+
+    .import-history {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .import-history h4 {
+        font-size: 0.75rem;
+        margin: 0 0 0.3rem;
+        opacity: 0.8;
+    }
+
+    .import-entry {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.3rem 0.4rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 0.3rem;
+        margin-bottom: 0.2rem;
+        font-size: 0.7rem;
+    }
+
+    .import-url {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        opacity: 0.7;
+    }
+
+    .import-count, .import-topics {
+        white-space: nowrap;
+        font-size: 0.65rem;
+        opacity: 0.6;
+    }
+
+    .import-draft-actions {
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        background: rgba(233, 69, 96, 0.05);
+        border: 1px solid rgba(233, 69, 96, 0.15);
+        border-radius: 0.4rem;
+    }
+
+    .import-draft-actions h4 {
+        font-size: 0.8rem;
+        margin: 0 0 0.2rem;
+    }
+
+    .draft-topic-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.25rem 0.4rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 0.25rem;
+        margin-bottom: 0.2rem;
+        font-size: 0.75rem;
+    }
+
+    .tp-count {
+        font-size: 0.65rem;
+        opacity: 0.5;
+    }
+
+    .btn-inline {
+        background: none;
+        border: 1px solid currentColor;
+        color: inherit;
+        padding: 0.12rem 0.4rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 0.7rem;
+        margin-left: 0.3rem;
+    }
+
+    .btn-inline:hover {
+        opacity: 0.8;
+    }
+
+    /* ===== Center Column: Slides ===== */
+    .center-column {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .center-column:focus {
+        outline: 1px solid rgba(233, 69, 96, 0.3);
+    }
+
+    .center-slide-area {
+        flex: 1;
+        min-height: 200px;
+        overflow: hidden;
+    }
+
+    .up-next-preview {
+        opacity: 0.5;
+        max-height: 120px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 0.4rem;
+        padding: 0.4rem;
+        position: relative;
+    }
+
+    .up-next-label {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.7;
+        position: absolute;
+        top: 0.25rem;
+        left: 0.4rem;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.2rem;
+    }
+
+    .center-notes {
+        background: rgba(255, 200, 0, 0.05);
+        border: 1px solid rgba(255, 200, 0, 0.15);
+        border-radius: 0.4rem;
+        padding: 0.5rem 0.6rem;
+        font-size: 0.8rem;
+        max-height: 100px;
+        overflow-y: auto;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .center-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.4rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .slide-progress {
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95);
+        background: rgba(233, 69, 96, 0.15);
+        padding: 0.2rem 0.75rem;
+        border-radius: 1rem;
+        letter-spacing: 0.03em;
+    }
+
+    .no-active-slide {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        min-height: 200px;
+        opacity: 0.5;
+        text-align: center;
+    }
+
+    /* ===== Poll Launch Zone (center bottom) ===== */
+    .poll-launch-zone {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: flex-start;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .suggested-poll-picker {
+        display: flex;
+        gap: 0.3rem;
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .suggested-poll-picker select {
+        flex: 1;
+        font-size: 0.75rem;
+        padding: 0.3rem;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 0.3rem;
+    }
+
+    .custom-poll-inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        margin-top: 0.3rem;
+    }
+
+    .custom-poll-inputs input[type="text"] {
+        width: 100%;
+        padding: 0.35rem 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.35rem;
+        background: rgba(0, 0, 0, 0.2);
+        color: white;
+        font-size: 0.8rem;
+        box-sizing: border-box;
+    }
+
+    .option-row {
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+    }
+
+    .option-row input {
+        flex: 1;
+    }
+
+    .custom-poll-actions {
+        display: flex;
+        gap: 0.3rem;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .allow-other-label {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+    }
+
+    /* ===== Right Column: Q&A + Polls + Insights ===== */
+    .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .qa-feed {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        flex: 1;
+        overflow-y: auto;
+        min-height: 150px;
+    }
+
+    .qa-feed h3 {
+        font-size: 0.85rem;
+        margin: 0 0 0.5rem;
+    }
+
+    .qa-count {
+        font-size: 0.7rem;
+        opacity: 0.5;
+        font-weight: 400;
+    }
+
+    .question-item {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.8rem;
+    }
+
+    .question-item.question-unsafe {
+        background: rgba(255, 100, 50, 0.08);
+        border-left: 3px solid rgba(255, 100, 50, 0.6);
+        padding-left: 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .question-item.question-approved {
+        border-left: 3px solid rgba(78, 205, 196, 0.5);
+        padding-left: 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .unsafe-badge {
+        display: inline-block;
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 0.1rem 0.35rem;
+        background: rgba(255, 100, 50, 0.25);
+        color: #ff6432;
+        border-radius: 0.25rem;
+        white-space: nowrap;
+    }
+
+    .approved-badge {
+        display: inline-block;
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 0.1rem 0.35rem;
+        background: rgba(78, 205, 196, 0.2);
+        color: #4ecdc4;
+        border-radius: 0.25rem;
+        white-space: nowrap;
+    }
+
+    .approve-btn {
+        color: #4ecdc4 !important;
+    }
+
+    .approve-btn:hover {
+        background: rgba(78, 205, 196, 0.15) !important;
+    }
+
+    .question-item:last-child {
+        border-bottom: none;
+    }
+
+    .question-header {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+    }
+
+    .upvote-count {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0.7;
+    }
+
+    .question-text {
+        flex: 1;
+    }
+
+    .question-topic-badge {
+        display: inline-block;
+        font-size: 0.6rem;
+        padding: 0.08rem 0.35rem;
+        background: rgba(233, 69, 96, 0.15);
+        border: 1px solid rgba(233, 69, 96, 0.25);
+        border-radius: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+        white-space: nowrap;
+    }
+
+    .question-answer {
+        margin-top: 0.3rem;
+        padding: 0.3rem 0.4rem;
+        font-size: 0.75rem;
+        border-radius: 0.25rem;
+    }
+
+    .question-answer.ai-answer {
+        background: rgba(100, 100, 255, 0.1);
+        border-left: 3px solid rgba(100, 100, 255, 0.5);
+    }
+
+    .ai-badge {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: rgba(100, 100, 255, 0.2);
+        color: #aab0ff;
+        padding: 0.08rem 0.35rem;
+        border-radius: 0.2rem;
+        margin-right: 0.3rem;
+    }
+
+    .human-badge {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: rgba(78, 205, 196, 0.2);
+        color: #4ecdc4;
+        padding: 0.08rem 0.35rem;
+        border-radius: 0.2rem;
+        margin-right: 0.3rem;
+    }
+
+    .answer-form {
+        display: flex;
+        gap: 0.3rem;
+        margin-top: 0.3rem;
+    }
+
+    .answer-form input {
+        flex: 1;
+        padding: 0.3rem 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.3rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 0.75rem;
+    }
+
+    .btn-answer {
+        opacity: 0.6;
+        font-size: 0.7rem;
+    }
+
+    .btn-answer:hover {
+        opacity: 1;
+    }
+
+    .delete-btn {
+        opacity: 0.4;
+        transition: opacity 0.2s;
+        font-size: 0.9rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.1rem 0.3rem;
+    }
+
+    .delete-btn:hover {
+        opacity: 1;
+        color: #e94560;
+    }
+
+    /* ===== Right Poll Section ===== */
+    .right-poll-section {
+        background: rgba(233, 69, 96, 0.05);
+        border: 1px solid rgba(233, 69, 96, 0.15);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .right-poll-section h3 {
+        font-size: 0.85rem;
+        margin: 0 0 0.3rem;
+        color: #e94560;
+    }
+
+    .right-poll-section h4 {
+        font-size: 0.8rem;
+        margin: 0 0 0.5rem;
+        opacity: 0.9;
+    }
+
+    .poll-options-display {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .poll-option-bar {
+        position: relative;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 0.3rem;
+        padding: 0.35rem 0.5rem;
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .poll-option-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: rgba(233, 69, 96, 0.25);
+        border-radius: 0.3rem;
+        transition: width 0.3s;
+    }
+
+    .poll-option-label {
+        position: relative;
+        font-size: 0.75rem;
+        z-index: 1;
+    }
+
+    .poll-option-count {
+        position: relative;
+        float: right;
+        font-size: 0.7rem;
+        opacity: 0.7;
+        z-index: 1;
+    }
+
+    .closed-poll-results {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .closed-poll-results h4 {
+        font-size: 0.8rem;
+        margin: 0 0 0.5rem;
+        opacity: 0.7;
+    }
+
+    .other-texts-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        padding: 0.25rem 0;
+        max-height: 80px;
+        overflow-y: auto;
+    }
+
+    .other-text-chip {
+        font-size: 0.7rem;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.2rem;
+    }
+
+    /* ===== Insights Section ===== */
+    .insights-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .insights-section h3 {
+        font-size: 0.85rem;
+        margin: 0 0 0.5rem;
+    }
+
+    .btn-insight {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        border: 1px solid rgba(255, 200, 0, 0.4);
+        background: rgba(255, 200, 0, 0.1);
+        color: #ffc800;
+        padding: 0.3rem 0.75rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+
+    .btn-insight:hover:not(:disabled) {
+        background: rgba(255, 200, 0, 0.2);
+        border-color: #ffc800;
+    }
+
+    .btn-insight:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* ===== PIN Gate ===== */
+    .pin-gate {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        text-align: center;
+    }
+
+    .pin-gate h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .pin-gate p {
+        opacity: 0.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .pin-form {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    .pin-input {
+        width: 150px;
+        padding: 0.75rem 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+        letter-spacing: 0.3em;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    .pin-input::placeholder {
+        font-size: 0.9rem;
+        letter-spacing: normal;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .pin-error {
+        color: #ff6b6b;
+        margin-top: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* ===== Utility ===== */
+    .btn-override {
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        opacity: 0.6;
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+        background: none;
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    .btn-override:hover {
+        opacity: 1;
+        border-color: #e94560;
+    }
+
+    @@keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+
+    @@keyframes poll-glow {
+        0%, 100% { box-shadow: 0 0 8px rgba(233, 69, 96, 0.15); }
+        50% { box-shadow: 0 0 16px rgba(233, 69, 96, 0.35); }
+    }
+
+    /* Active poll glow */
+    .right-poll-section.poll-active-glow {
+        animation: poll-glow 2s ease-in-out infinite;
+    }
+
+    /* Keyboard shortcuts hint */
+    .keyboard-hints {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        padding: 0.3rem 0 0;
+        font-size: 0.6rem;
+        opacity: 0.3;
+        user-select: none;
+    }
+
+    .keyboard-hints span {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.2rem;
+        letter-spacing: 0.02em;
+    }
+
+    /* Empty state styling */
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 0.5rem;
+        text-align: center;
+    }
+
+    .empty-icon {
+        font-size: 1.5rem;
+        opacity: 0.35;
+        margin-bottom: 0.4rem;
+        display: block;
+    }
+
+    .empty-state .muted {
+        margin: 0;
+    }
+
+    /* Smooth transitions on interactive elements */
+    .btn, .btn-sm, .btn-outline, .btn-answer, .btn-insight, .btn-inline, .import-toggle {
+        transition: all 0.2s ease;
+    }
+
+    .question-item {
+        transition: background 0.2s ease;
+    }
+
+    .question-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Custom scrollbar */
+    .left-column::-webkit-scrollbar,
+    .center-column::-webkit-scrollbar,
+    .right-column::-webkit-scrollbar,
+    .qa-feed::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .left-column::-webkit-scrollbar-track,
+    .center-column::-webkit-scrollbar-track,
+    .right-column::-webkit-scrollbar-track,
+    .qa-feed::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .left-column::-webkit-scrollbar-thumb,
+    .center-column::-webkit-scrollbar-thumb,
+    .right-column::-webkit-scrollbar-thumb,
+    .qa-feed::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+    }
+
+    .left-column::-webkit-scrollbar-thumb:hover,
+    .center-column::-webkit-scrollbar-thumb:hover,
+    .right-column::-webkit-scrollbar-thumb:hover,
+    .qa-feed::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive safeguards */
+    @@media (max-width: 1200px) {
+        .dashboard-grid {
+            grid-template-columns: 180px 1fr 280px;
+        }
+    }
+
+    @@media (max-width: 900px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+        }
+    }
+
+    /* ===== Spotlight Button ===== */
+    .spotlight-btn {
+        opacity: 0.4;
+        transition: opacity 0.2s;
+        font-size: 0.9rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.1rem 0.3rem;
+    }
+
+    .spotlight-btn:hover {
+        opacity: 0.8;
+    }
+
+    .spotlight-btn.spotlight-active {
+        opacity: 1;
+        background: rgba(233, 69, 96, 0.2);
+        border-radius: 0.25rem;
+    }
+
+    /* ===== Poll Edit Modal ===== */
+    .poll-edit-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .poll-edit-modal {
+        background: #1a1a2e;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 500px;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .poll-edit-modal h3 {
+        margin: 0 0 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .poll-edit-field {
+        margin-bottom: 1.25rem;
+    }
+
+    .poll-edit-field label {
+        display: block;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.4rem;
+    }
+
+    .poll-edit-field input[type="text"] {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.5rem;
+        color: white;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+    }
+
+    .poll-edit-option-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        align-items: center;
+    }
+
+    .poll-edit-option-row input {
+        flex: 1;
+    }
+
+    .poll-edit-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+</style>

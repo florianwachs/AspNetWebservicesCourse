@@ -1,0 +1,39 @@
+@inherits LayoutComponentBase
+
+<div class="session-layout">
+    <header class="session-header">
+        <h1>📊 Conference Pulse</h1>
+    </header>
+    <main class="session-content">
+        @Body
+    </main>
+</div>
+
+<style>
+    .session-layout {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .session-header {
+        padding: 1rem;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .session-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        background: linear-gradient(90deg, #e94560, #0f3460);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .session-content {
+        padding: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+</style>

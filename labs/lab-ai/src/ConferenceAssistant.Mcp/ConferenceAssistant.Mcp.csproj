@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" />
+    <PackageReference Include="ModelContextProtocol.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConferenceAssistant.Core\ConferenceAssistant.Core.csproj" />
+    <ProjectReference Include="..\ConferenceAssistant.Ingestion\ConferenceAssistant.Ingestion.csproj" />
+  </ItemGroup>
+
+</Project>

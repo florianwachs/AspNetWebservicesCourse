@@ -1,0 +1,118 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="question-card">
+    <button class="upvote-btn" @onclick="OnUpvoteClicked">
+        <span class="upvote-arrow">▲</span>
+        <span class="upvote-count">@Question.Upvotes</span>
+    </button>
+    <div class="question-body">
+        <p class="question-text">@Question.Text</p>
+        @if (Question.Answers.Count > 0)
+        {
+            @foreach (var answer in Question.Answers)
+            {
+                <div class="question-answer @(answer.IsAiGenerated ? "ai-generated" : "")">
+                    @if (answer.IsAiGenerated)
+                    {
+                        <span class="ai-badge">🤖 AI</span>
+                    }
+                    else
+                    {
+                        <span class="human-badge">💬 @answer.AuthorLabel</span>
+                    }
+                    @answer.Text
+                </div>
+            }
+        }
+        <span class="question-time">@Question.AskedAt.ToString("HH:mm")</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public AudienceQuestion Question { get; set; } = default!;
+    [Parameter] public EventCallback OnUpvote { get; set; }
+
+    private async Task OnUpvoteClicked() => await OnUpvote.InvokeAsync();
+}
+
+<style>
+    .question-card {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .upvote-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.5rem;
+        color: white;
+        padding: 0.5rem;
+        cursor: pointer;
+        min-width: 3rem;
+        transition: all 0.2s;
+    }
+
+    .upvote-btn:hover {
+        border-color: #e94560;
+        background: rgba(233, 69, 96, 0.1);
+    }
+
+    .upvote-arrow { font-size: 0.75rem; }
+    .upvote-count { font-weight: 600; font-size: 1rem; }
+
+    .question-body { flex: 1; }
+
+    .question-text {
+        margin: 0 0 0.25rem;
+        font-size: 1rem;
+    }
+
+    .question-answer {
+        margin: 0.5rem 0 0;
+        padding: 0.5rem;
+        background: rgba(78, 205, 196, 0.1);
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .question-answer.ai-generated {
+        background: rgba(100, 100, 255, 0.1);
+        border-left: 3px solid rgba(100, 100, 255, 0.5);
+    }
+
+    .ai-badge {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(100, 100, 255, 0.2);
+        color: #aab0ff;
+        padding: 0.1rem 0.4rem;
+        border-radius: 0.25rem;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+    }
+
+    .human-badge {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(78, 205, 196, 0.2);
+        color: #4ecdc4;
+        padding: 0.1rem 0.4rem;
+        border-radius: 0.25rem;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+    }
+
+    .question-time {
+        font-size: 0.7rem;
+        opacity: 0.4;
+    }
+</style>
