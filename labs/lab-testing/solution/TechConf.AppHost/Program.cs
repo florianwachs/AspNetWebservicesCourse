@@ -5,11 +5,11 @@ var postgres = builder.AddPostgres("postgres")
 
 var api = builder.AddProject<Projects.TechConf_Api>("api")
     .WithReference(postgres)
-    .WaitFor(postgres);
+    .WaitFor(postgres)
+    .WithHttpsEndpoint();
 
 builder.AddViteApp("web", "../TechConf.Web")
     .WithReference(api)
-    .WithHttpEndpoint(env: "PORT")
     .WaitFor(api);
 
 builder.Build().Run();

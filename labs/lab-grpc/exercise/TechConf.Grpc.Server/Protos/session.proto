@@ -1,0 +1,23 @@
+// TODO: Task 1 — Define the Session service
+//
+// Use this template:
+//
+// syntax = "proto3";
+// option csharp_namespace = "TechConf.Grpc.Server";
+// import "google/protobuf/timestamp.proto";
+// package techconf;
+//
+// service SessionService {
+//   rpc GetSessions (GetSessionsRequest) returns (GetSessionsResponse);
+//   rpc GetSessionById (GetSessionByIdRequest) returns (SessionMessage);
+//   rpc CreateSession (CreateSessionRequest) returns (SessionMessage);
+//   rpc StreamSessionUpdates (StreamSessionsRequest) returns (stream SessionMessage);
+// }
+//
+// Define these messages:
+//   - SessionMessage: id, title, description, start_time, end_time, room, event_id, speaker_id
+//   - GetSessionsRequest: event_id (optional filter), page, page_size
+//   - GetSessionsResponse: repeated SessionMessage, total_count
+//   - GetSessionByIdRequest: id
+//   - CreateSessionRequest: title, description, start_time, end_time, room, event_id, speaker_id
+//   - StreamSessionsRequest: event_id

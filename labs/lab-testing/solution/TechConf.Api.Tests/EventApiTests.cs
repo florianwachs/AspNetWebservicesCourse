@@ -15,16 +15,28 @@ public class EventApiTests : IClassFixture<WebApplicationFactory<Program>>
 
     public EventApiTests(WebApplicationFactory<Program> factory)
     {
+        var databaseName = $"TestDb-{Guid.NewGuid()}";
+
         _client = factory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
             {
-                var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
-                if (descriptor is not null) services.Remove(descriptor);
+                var dbContextDescriptors = services
+                    .Where(descriptor =>
+                        descriptor.ServiceType == typeof(AppDbContext)
+                        || descriptor.ServiceType == typeof(DbContextOptions<AppDbContext>)
+                        || descriptor.ServiceType == typeof(DbContextOptions)
+                        || descriptor.ServiceType.GenericTypeArguments.Contains(typeof(AppDbContext))
+                        || descriptor.ImplementationType?.GenericTypeArguments.Contains(typeof(AppDbContext)) == true)
+                    .ToList();
+
+                foreach (var descriptor in dbContextDescriptors)
+                {
+                    services.Remove(descriptor);
+                }
 
                 services.AddDbContext<AppDbContext>(options =>
-                    options.UseInMemoryDatabase($"TestDb-{Guid.NewGuid()}"));
+                    options.UseInMemoryDatabase(databaseName));
             });
         }).CreateClient();
     }

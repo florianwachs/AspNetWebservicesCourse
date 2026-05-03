@@ -60,7 +60,7 @@ A modular monolith is **not**:
 
 If every feature can still touch every table, every entity, and every internal class, you do not have modules. You have a monolith with nicer packaging.
 
-## Why students should care
+## Why you should care
 
 For many course-sized and early production systems, a modular monolith gives most of the benefits people hope microservices will give them:
 

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="TechConf.Grpc.AppHost/TechConf.Grpc.AppHost.csproj" />
+  <Project Path="TechConf.Grpc.Client/TechConf.Grpc.Client.csproj" />
+  <Project Path="TechConf.Grpc.Server/TechConf.Grpc.Server.csproj" />
+  <Project Path="TechConf.Grpc.ServiceDefaults/TechConf.Grpc.ServiceDefaults.csproj" />
+</Solution>

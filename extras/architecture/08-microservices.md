@@ -4,9 +4,11 @@ This page is about one of the most overused architecture words in modern softwar
 
 Microservices can be useful, but only when the boundary needs real **operational independence**, not just cleaner code.
 
+Yet, just like Actor-Systems and Event Sourcing, you should know what it is, how it works and how to apply it to the correct problem. It should be a tool in your toolbelt but not applied in every situation.
+
 ## Why this page exists
 
-Students often hear that microservices are:
+You often hear that microservices are:
 
 - more scalable,
 - more modern,
@@ -14,7 +16,7 @@ Students often hear that microservices are:
 
 That is incomplete at best.
 
-Microservices are a trade. You gain service autonomy, but you also accept distributed-system cost:
+Microservices (like most things) are a trade. You gain service autonomy, but you also accept distributed-system cost:
 
 - network failure,
 - distributed tracing,
@@ -24,7 +26,7 @@ Microservices are a trade. You gain service autonomy, but you also accept distri
 - more deployment pipelines,
 - and more things to observe when something breaks.
 
-For most course projects and many early production systems, that cost is not worth paying yet.
+For most course projects and many production systems, that cost is not worth paying. It is a powerful technique when applied to a situation that requires it.
 
 ## What microservices are
 

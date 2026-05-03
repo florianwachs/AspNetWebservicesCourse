@@ -19,18 +19,18 @@ This hands-on course teaches modern web service development using the latest .NE
 
 ## 📅 Schedule
 
-|                   | Date             | Topic                                                          |
-| ----------------- | ---------------- | -------------------------------------------------------------- |
-| ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/) |
-| ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)         |
-| ✅ Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)       |
-| 👉 Workshop Day 4 | 2026-04-25, 8:30 | [Architecture, SignalR (realtime), Testing](docs/day4/)        |
-| ⏳ Workshop Day 5 | 2026-05-09, 8:30 | TBD                                                            |
-| 👀 Exam           | 2026-06-20, 8:30 | [Exam Information](course/exam/readme.md)                      |
+|                   | Date             | Topic                                                                 |
+| ----------------- | ---------------- | --------------------------------------------------------------------- |
+| ✅ Workshop Day 1 | 2026-03-20, 8:30 | [Foundations: Minimal APIs & Dependency Injection](docs/day1/)        |
+| ✅ Workshop Day 2 | 2026-03-21, 8:30 | [Data Access, Validation & Error Handling](docs/day2/)                |
+| ✅ Workshop Day 3 | 2026-04-11, 8:30 | [.NET Aspire, Authentication & Architecture](docs/day3/)              |
+| ✅ Workshop Day 4 | 2026-04-25, 8:30 | [Architecture, SignalR (realtime), Testing](docs/day4/)               |
+| 👉 Workshop Day 5 | 2026-05-09, 8:30 | [API Versioning, Integration Testing, and a lot of extras](docs/day5) |
+| 👀 Exam           | 2026-06-20, 8:30 | [Exam Information](course/exam/readme.md)                             |
 
 ## 🔬 Labs
 
-Each workshop day includes a hands-on lab with starter code and a reference solution:
+Each workshop day includes hands-on labs with starter code and a reference solution, plus a few optional advanced follow-up labs:
 
 | Lab                                                                                                    | Day   | Topic                                                    |
 | ------------------------------------------------------------------------------------------------------ | ----- | -------------------------------------------------------- |
@@ -43,6 +43,11 @@ Each workshop day includes a hands-on lab with starter code and a reference solu
 | [Lab: Refactor WorkshopPlanner to Onion Architecture](labs/lab-architecture-onion/)                    | Day 4 | Onion Architecture, Application Boundaries, Repositories |
 | [Lab: Signal Showdown with SignalR, React, Avalonia and Aspire](labs/lab-signalr-multiplayer/)         | Day 4 | SignalR, Realtime, React, Avalonia, Aspire               |
 | [Lab – Testing](labs/lab-testing/)                                                                     | Day 4 | Integration Testing, Aspire Testing, Playwright          |
+| [Lab: Version the TechConf API](labs/lab-api-versioning/)                                              | Day 5 | API Versioning, OpenAPI, Backward Compatibility          |
+| [Lab: Building an MCP Server for AI Integration](labs/lab-mcp/)                                        | Day 5 | MCP, AI Tool Integration, Prompts, Tools                 |
+| [Lab: Live Event Streaming with gRPC and gRPC-Web](labs/lab-grpc/)                                     | Day 5 | gRPC, Server Streaming, gRPC-Web, Aspire                 |
+| [Lab: OData — Standardized Queryable REST API](labs/lab-odata/)                                        | Day 5 | OData, Queryable REST, EDM                  |
+| [Lab: GraphQL API with Hot Chocolate](labs/lab-graphql/)                                               | Day 5 | GraphQL, Hot Chocolate, Queries, Mutations               |
 
 ## 🔧 Environment Setup
 

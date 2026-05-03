@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "TechConf.Microservices.AppHost/TechConf.Microservices.AppHost.csproj"
+  }
+}

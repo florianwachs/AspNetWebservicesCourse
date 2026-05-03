@@ -9,7 +9,6 @@ var api = builder.AddProject<Projects.TechConf_Api>("api")
 
 builder.AddViteApp("web", "../TechConf.Web")
     .WithReference(api)
-    .WithHttpEndpoint(env: "PORT")
     .WaitFor(api);
 
 builder.Build().Run();

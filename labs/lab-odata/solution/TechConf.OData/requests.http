@@ -1,0 +1,72 @@
+@host = https://localhost:5001
+
+### Get all events
+GET {{host}}/odata/Events
+
+### Get published events
+GET {{host}}/odata/Events?$filter=Status eq 'Published'
+
+### Select specific fields
+GET {{host}}/odata/Events?$select=Id,Title,StartDate,Location
+
+### Sort by start date descending
+GET {{host}}/odata/Events?$orderby=StartDate desc
+
+### Paginate: first page of 2
+GET {{host}}/odata/Events?$top=2&$skip=0&$count=true
+
+### Expand sessions
+GET {{host}}/odata/Events?$expand=Sessions
+
+### Expand sessions with nested select
+GET {{host}}/odata/Events?$expand=Sessions($select=Title,StartTime;$orderby=StartTime)
+
+### Expand sessions with speaker
+GET {{host}}/odata/Events?$expand=Sessions($expand=Speaker($select=Name,Company))
+
+### Combined query
+GET {{host}}/odata/Events?$filter=Status eq 'Published'&$select=Id,Title,StartDate,Location&$expand=Sessions($select=Title)&$orderby=StartDate desc&$top=10&$count=true
+
+### Get single event by ID
+GET {{host}}/odata/Events(aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa)
+
+### Get metadata
+GET {{host}}/odata/$metadata
+
+### Create a new event
+POST {{host}}/odata/Events
+Content-Type: application/json
+
+{
+    "Id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+    "Title": "AI Summit 2026",
+    "Description": "Exploring the future of AI",
+    "StartDate": "2026-12-01T09:00:00Z",
+    "EndDate": "2026-12-03T17:00:00Z",
+    "Location": "Hamburg",
+    "MaxAttendees": 400,
+    "Status": "Draft"
+}
+
+### Patch an event (partial update)
+PATCH {{host}}/odata/Events(aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa)
+Content-Type: application/json
+
+{
+    "Status": "Cancelled"
+}
+
+### Delete an event
+DELETE {{host}}/odata/Events(cccccccc-cccc-cccc-cccc-cccccccccccc)
+
+### Get available seats (OData Function)
+GET {{host}}/odata/Events(aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa)/AvailableSeats
+
+### Cancel an event (OData Action)
+POST {{host}}/odata/Events(bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb)/Cancel
+
+### Get sessions with speaker
+GET {{host}}/odata/Sessions?$expand=Speaker&$select=Title,StartTime,Room
+
+### Filter events containing "Tech"
+GET {{host}}/odata/Events?$filter=contains(Title,'Tech')

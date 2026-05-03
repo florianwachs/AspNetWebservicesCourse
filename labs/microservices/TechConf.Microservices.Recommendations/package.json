@@ -1,0 +1,13 @@
+{
+  "name": "techconf-microservices-recommendations",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  }
+}

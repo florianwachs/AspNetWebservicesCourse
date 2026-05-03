@@ -70,7 +70,7 @@ sequenceDiagram
 
 Use this whenever a business transaction and a network message must stay aligned.
 
-### Why students should care
+### Why you should care
 
 Without an outbox, these failures become possible:
 

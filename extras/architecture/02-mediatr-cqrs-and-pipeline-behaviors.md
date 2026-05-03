@@ -4,7 +4,7 @@ This page is about the step after "my endpoints work" and before "I need a full-
 
 For most course projects, MediatR and lightweight CQRS are useful because they make one use case the center of the code instead of one generic service class.
 
-## Why students should care
+## Why you should care
 
 MediatR, CQRS, and pipeline behaviors help when these problems start showing up:
 
@@ -297,7 +297,7 @@ flowchart LR
     Tx --> H[Handler]
 ```
 
-### Why students should care about behaviors
+### Why you should care about behaviors
 
 Behaviors are one of the biggest practical wins of the MediatR approach:
 
