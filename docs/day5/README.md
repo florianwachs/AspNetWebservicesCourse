@@ -21,7 +21,7 @@ TODO: I still want to add a AI sample for my students!!
 
 **Core track — [Version the TechConf API](../../labs/lab-api-versioning/) and [Integration testing lab](../../labs/lab-testing/)**: Practice side-by-side API versions, version-aware OpenAPI docs, focused API tests, and distributed-app integration tests against real infrastructure.
 
-**Optional advanced API track — [MCP server lab](../../labs/lab-mcp/), [gRPC streaming lab](../../labs/lab-grpc/), [OData lab](../../labs/lab-odata/), and [GraphQL lab](../../labs/lab-graphql/)**: Explore AI tool integration with MCP, live event streaming with gRPC and gRPC-Web, standardized queryable REST with OData, and schema-first APIs with GraphQL.
+**Optional advanced API track — [AI assistant lab](../../labs/lab-ai/), [microservices lab](../../labs/microservices/), [MCP server lab](../../labs/lab-mcp/), [gRPC streaming lab](../../labs/lab-grpc/), [OData lab](../../labs/lab-odata/), and [GraphQL lab](../../labs/lab-graphql/)**: Explore AI assistant integration, distributed service collaboration patterns, AI tool integration with MCP, live event streaming with gRPC and gRPC-Web, standardized queryable REST with OData, and schema-first APIs with GraphQL.
 
 ## 📚 Key Packages Introduced Today
 
