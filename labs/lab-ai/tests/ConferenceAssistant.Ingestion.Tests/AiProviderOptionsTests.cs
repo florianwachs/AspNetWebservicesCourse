@@ -48,8 +48,8 @@ public class AiProviderOptionsTests
         var resolved = options.Resolve();
 
         Assert.Equal(AiProvider.Ollama, resolved.Provider);
-        Assert.Equal("llama3.2:3b", resolved.ChatModel);
-        Assert.Equal("embeddinggemma", resolved.EmbeddingModel);
+        Assert.Equal("qwen2.5:0.5b-instruct", resolved.ChatModel);
+        Assert.Equal("nomic-embed-text", resolved.EmbeddingModel);
         Assert.Equal(768, resolved.EmbeddingDimensions);
         Assert.Equal("conference_knowledge_ollama", resolved.VectorCollectionName);
     }

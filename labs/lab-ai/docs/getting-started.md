@@ -44,7 +44,7 @@ Conference Pulse supports two provider modes:
 
 | Provider | Best for | Default models |
 |---|---|---|
-| `Ollama` | Local demos without cloud accounts | `llama3.2:3b` for chat, `embeddinggemma` for embeddings |
+| `Ollama` | Local demos without cloud accounts | `qwen2.5:0.5b-instruct` for chat, `nomic-embed-text` for embeddings |
 | `GitHubModels` | Cloud-hosted model access through GitHub | `openai/gpt-4.1-mini` for chat, `openai/text-embedding-3-small` for embeddings |
 
 The repository defaults to `Ollama`. The first run downloads the models into a persistent Docker volume.
@@ -111,7 +111,7 @@ When `aspire run` starts, several things happen automatically:
 7. **Default demo data** loads — a session called `DOTNETAI-CONF` is auto-created with five pre-configured topics
 8. **Slides and knowledge base** are ingested — content from `data/slides.md` is parsed and indexed
 
-> ⚠️ **First run takes longer.** Docker needs to pull the PostgreSQL and Qdrant images. In Ollama mode it also downloads `llama3.2:3b` and `embeddinggemma`; keep Aspire running until the model resources are healthy.
+> ⚠️ **First run takes longer.** Docker needs to pull the PostgreSQL and Qdrant images. In Ollama mode it also downloads `qwen2.5:0.5b-instruct` and `nomic-embed-text`; keep Aspire running until the model resources are healthy.
 
 ---
 

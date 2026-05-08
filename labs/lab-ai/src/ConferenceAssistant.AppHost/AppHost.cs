@@ -54,8 +54,8 @@ switch (aiProvider.Trim().ToLowerInvariant())
 
     case "ollama":
     {
-        var chatModel = GetConfigurationValue("AI:ChatModel", "llama3.2:3b");
-        var embeddingModel = GetConfigurationValue("AI:EmbeddingModel", "embeddinggemma");
+        var chatModel = GetConfigurationValue("AI:ChatModel", "qwen2.5:0.5b-instruct");
+        var embeddingModel = GetConfigurationValue("AI:EmbeddingModel", "nomic-embed-text");
         var embeddingDimensions = GetConfigurationInt("AI:EmbeddingDimensions", 768);
         var vectorCollectionName = GetConfigurationValue("AI:VectorCollectionName", "conference_knowledge_ollama");
 

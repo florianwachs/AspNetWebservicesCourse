@@ -31,7 +31,7 @@ An interactive .NET conference assistant that runs as a live web app during your
 - [Aspire CLI](https://aspire.dev) — install via `irm https://aspire.dev/install.ps1 | iex` (Windows) or `curl -fsSL https://aspire.dev/install.sh | bash` (Linux/macOS)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for PostgreSQL, Qdrant, and optional Ollama containers)
 - One AI provider:
-  - **Ollama** (default) — Aspire runs `llama3.2:3b` and `embeddinggemma` in Docker.
+  - **Ollama** (default) — Aspire runs `qwen2.5:0.5b-instruct` and `nomic-embed-text` in Docker.
   - **GitHub Models** — requires a GitHub token with `models: read` permission.
 
 ## Quick Start
@@ -183,13 +183,13 @@ All configuration flows through **Aspire + user secrets** — no API keys in cod
 | Setting | Default | Description |
 |---------|---------|-------------|
 | `AI:Provider` | `Ollama` | `Ollama` or `GitHubModels` |
-| `AI:ChatModel` | `llama3.2:3b` for Ollama, `openai/gpt-4.1-mini` for GitHub Models | Chat completions model |
-| `AI:EmbeddingModel` | `embeddinggemma` for Ollama, `openai/text-embedding-3-small` for GitHub Models | Embedding model |
+| `AI:ChatModel` | `qwen2.5:0.5b-instruct` for Ollama, `openai/gpt-4.1-mini` for GitHub Models | Chat completions model |
+| `AI:EmbeddingModel` | `nomic-embed-text` for Ollama, `openai/text-embedding-3-small` for GitHub Models | Embedding model |
 | `AI:EmbeddingDimensions` | `768` for Ollama, `1536` for GitHub Models | Qdrant vector size |
 | `AI:VectorCollectionName` | provider-specific | Qdrant collection name |
 | `AI:ApiKey` | `ollama` for Ollama | Required for GitHub Models |
 
-The default local path uses Ollama in Docker. The first run downloads `llama3.2:3b` and `embeddinggemma`, so keep Aspire running until the model downloads complete. Switching providers uses separate Qdrant collections because embedding dimensions differ; existing Azure-era vector data is not reused automatically.
+The default local path uses Ollama in Docker. The first run downloads `qwen2.5:0.5b-instruct` and `nomic-embed-text`, so keep Aspire running until the model downloads complete. Switching providers uses separate Qdrant collections because embedding dimensions differ; existing Azure-era vector data is not reused automatically.
 
 ## The Snowball Effect
 

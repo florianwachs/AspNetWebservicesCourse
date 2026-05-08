@@ -31,7 +31,7 @@ dotnet user-secrets set "KEY" "VALUE"
 
 | Provider | Endpoint | Chat Model | Embedding Model | Dimensions | Collection |
 |----------|----------|------------|-----------------|------------|------------|
-| `Ollama` | `http://localhost:11434/v1` outside Aspire; Aspire injects its container endpoint when orchestrated | `llama3.2:3b` | `embeddinggemma` | `768` | `conference_knowledge_ollama` |
+| `Ollama` | `http://localhost:11434/v1` outside Aspire; Aspire injects its container endpoint when orchestrated | `qwen2.5:0.5b-instruct` | `nomic-embed-text` | `768` | `conference_knowledge_ollama` |
 | `GitHubModels` | `https://models.github.ai/inference` | `openai/gpt-4.1-mini` | `openai/text-embedding-3-small` | `1536` | `conference_knowledge_github_models` |
 
 When switching providers, keep separate collection names unless you intentionally rebuild the vector data. Qdrant collections have fixed vector dimensions, so old Azure/OpenAI 1536-dimensional data cannot be searched with Ollama's 768-dimensional embeddings.
@@ -44,7 +44,7 @@ These are configured in the AppHost and managed automatically by Aspire:
 |----------|------|---------|--------------|
 | PostgreSQL | Container | EF Core persistence (sessions, polls, Q&A, insights) | Data volume for persistence across restarts. PgWeb admin UI available via `.WithPgWeb()`. |
 | Qdrant | Container | Vector/embedding storage for semantic search | Persistent lifetime (`.WithLifetime(ContainerLifetime.Persistent)`), data volume. |
-| Ollama | Container | Local chat and embedding models when `AI:Provider` is `Ollama` | Persistent model volume. First run downloads `llama3.2:3b` and `embeddinggemma`. |
+| Ollama | Container | Local chat and embedding models when `AI:Provider` is `Ollama` | Persistent model volume. First run downloads `qwen2.5:0.5b-instruct` and `nomic-embed-text`. |
 | Dev Tunnel | Azure Dev Tunnel | Public HTTPS URL for attendee access | Anonymous access enabled via `.WithAnonymousAccess()`. |
 
 ## MCP Server Configuration

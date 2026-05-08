@@ -65,8 +65,8 @@ public sealed class AiProviderOptions
             AiProvider.Ollama,
             Endpoint: CreateEndpoint(Endpoint, "http://localhost:11434/v1"),
             ApiKey: FirstNonEmpty(ApiKey, "ollama"),
-            ChatModel: FirstNonEmpty(ChatModel, "llama3.2:3b"),
-            EmbeddingModel: FirstNonEmpty(EmbeddingModel, "embeddinggemma"),
+            ChatModel: FirstNonEmpty(ChatModel, "qwen2.5:0.5b-instruct"),
+            EmbeddingModel: FirstNonEmpty(EmbeddingModel, "nomic-embed-text"),
             EmbeddingDimensions: ValidateDimensions(EmbeddingDimensions, 768),
             VectorCollectionName: FirstNonEmpty(VectorCollectionName, "conference_knowledge_ollama"));
     }
