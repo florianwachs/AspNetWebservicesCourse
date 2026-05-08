@@ -1,0 +1,257 @@
+@page "/session/{SessionCode}"
+@layout ConferenceAssistant.Web.Components.Layout.SessionLayout
+@using ConferenceAssistant.Core.Models
+@using ConferenceAssistant.Core.Services
+@inject ISessionManager SessionManager
+@implements IDisposable
+@rendermode InteractiveServer
+
+<PageTitle>Conference Pulse — Live</PageTitle>
+
+<div class="session-page">
+    @if (sessionContext is null)
+    {
+        <div class="waiting">
+            <h2>🔍 Session Not Found</h2>
+            <p>No session with code "@SessionCode" exists.</p>
+        </div>
+    }
+    else if (session is null)
+    {
+        <div class="waiting">
+            <p>⏳ Waiting for session to start...</p>
+        </div>
+    }
+    else if (session.Status == SessionStatus.Setup)
+    {
+        <div class="waiting">
+            <h2>@session.Title</h2>
+            <p>⏳ Session hasn't started yet. Hang tight!</p>
+        </div>
+    }
+    else
+    {
+        <!-- Current Topic -->
+        @if (activeTopic is not null)
+        {
+            <div class="current-topic">
+                <TopicBadge Topic="@activeTopic" />
+            </div>
+        }
+
+        <!-- Active Poll -->
+        @if (activePoll is not null)
+        {
+            <PollCard Poll="@activePoll" Results="@pollResults" OnVoteSubmitted="HandleVote" AttendeeId="@attendeeId" />
+        }
+        else
+        {
+            <div class="no-poll">
+                <p>🎤 Listening... Next poll coming soon.</p>
+            </div>
+        }
+
+        <!-- Ask a Question -->
+        <div class="question-form">
+            <h3>❓ Ask a Question</h3>
+            <div class="input-group">
+                <input type="text" @bind="newQuestion" @bind:event="oninput"
+                       placeholder="Type your question..."
+                       @onkeydown="HandleQuestionKeydown" />
+                <button class="btn-send" @onclick="SubmitQuestion" disabled="@string.IsNullOrWhiteSpace(newQuestion)">
+                    Send
+                </button>
+            </div>
+        </div>
+
+        <!-- Top Questions -->
+        @if (questions.Count > 0)
+        {
+            <div class="questions-list">
+                <h3>🔥 Top Questions</h3>
+                @foreach (var q in questions)
+                {
+                    <QuestionCard Question="@q" OnUpvote="() => Upvote(q.Id)" />
+                }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public string SessionCode { get; set; } = "";
+
+    private SessionContext? sessionContext;
+    private ConferenceSession? session;
+    private SessionTopic? activeTopic;
+    private Poll? activePoll;
+    private Dictionary<string, int>? pollResults;
+    private IReadOnlyList<AudienceQuestion> questions = [];
+    private string newQuestion = "";
+    private string attendeeId = Guid.NewGuid().ToString()[..8];
+
+    // Event handler references for cleanup
+    private Action<Poll>? onPollActivated;
+    private Action<Poll>? onPollClosed;
+    private Action<PollResponse>? onResponseReceived;
+    private Action<AudienceQuestion>? onQuestionReceived;
+    private Action<AudienceQuestion>? onQuestionAnswered;
+    private Action<AudienceQuestion>? onQuestionUpvoted;
+    private Action<AudienceQuestion>? onQuestionRemoved;
+    private Action<AudienceQuestion>? onQuestionModerated;
+
+    protected override void OnInitialized()
+    {
+        sessionContext = SessionManager.GetSession(SessionCode);
+        if (sessionContext is null) return;
+
+        session = sessionContext.Session;
+        RefreshState();
+
+        onPollActivated = _ => InvokeAsync(() => { RefreshState(); StateHasChanged(); });
+        onPollClosed = _ => InvokeAsync(() => { RefreshState(); StateHasChanged(); });
+        onResponseReceived = _ => InvokeAsync(() => { RefreshPollResults(); StateHasChanged(); });
+        onQuestionReceived = _ => InvokeAsync(() => { questions = sessionContext?.GetTopQuestions(10) ?? []; StateHasChanged(); });
+        onQuestionAnswered = _ => InvokeAsync(() => { questions = sessionContext?.GetTopQuestions(10) ?? []; StateHasChanged(); });
+        onQuestionUpvoted = _ => InvokeAsync(() => { questions = sessionContext?.GetTopQuestions(10) ?? []; StateHasChanged(); });
+        onQuestionRemoved = _ => InvokeAsync(() => { questions = sessionContext?.GetTopQuestions(10) ?? []; StateHasChanged(); });
+        onQuestionModerated = _ => InvokeAsync(() => { questions = sessionContext?.GetTopQuestions(10) ?? []; StateHasChanged(); });
+
+        sessionContext.PollActivated += onPollActivated;
+        sessionContext.PollClosed += onPollClosed;
+        sessionContext.ResponseReceived += onResponseReceived;
+        sessionContext.QuestionReceived += onQuestionReceived;
+        sessionContext.QuestionAnswered += onQuestionAnswered;
+        sessionContext.QuestionUpvoted += onQuestionUpvoted;
+        sessionContext.QuestionRemoved += onQuestionRemoved;
+        sessionContext.QuestionModerated += onQuestionModerated;
+    }
+
+    public void Dispose()
+    {
+        if (sessionContext is not null)
+        {
+            sessionContext.PollActivated -= onPollActivated;
+            sessionContext.PollClosed -= onPollClosed;
+            sessionContext.ResponseReceived -= onResponseReceived;
+            sessionContext.QuestionReceived -= onQuestionReceived;
+            sessionContext.QuestionAnswered -= onQuestionAnswered;
+            sessionContext.QuestionUpvoted -= onQuestionUpvoted;
+            sessionContext.QuestionRemoved -= onQuestionRemoved;
+            sessionContext.QuestionModerated -= onQuestionModerated;
+        }
+    }
+
+    private void RefreshState()
+    {
+        if (sessionContext is null) return;
+        session = sessionContext.Session;
+        activeTopic = sessionContext.GetActiveTopic();
+        activePoll = sessionContext.GetActivePoll();
+        RefreshPollResults();
+        questions = sessionContext.GetTopQuestions(10);
+    }
+
+    private void RefreshPollResults()
+    {
+        if (activePoll is not null)
+            pollResults = sessionContext?.GetPollResults(activePoll.Id);
+    }
+
+    private void HandleVote((string Option, string? OtherText) vote)
+    {
+        if (activePoll is null || sessionContext is null) return;
+        sessionContext.SubmitResponse(activePoll.Id, vote.Option, attendeeId, vote.OtherText);
+        RefreshPollResults();
+    }
+
+    private void SubmitQuestion()
+    {
+        if (string.IsNullOrWhiteSpace(newQuestion) || sessionContext is null) return;
+        sessionContext.SubmitQuestion(newQuestion, activeTopic?.Id, attendeeId);
+        newQuestion = "";
+        questions = sessionContext.GetTopQuestions(10);
+    }
+
+    private void Upvote(string questionId)
+    {
+        if (sessionContext is null) return;
+        sessionContext.UpvoteQuestion(questionId);
+        questions = sessionContext.GetTopQuestions(10);
+    }
+
+    private void HandleQuestionKeydown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") SubmitQuestion();
+    }
+}
+
+<style>
+    .session-page {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .waiting {
+        text-align: center;
+        padding: 3rem 1rem;
+        opacity: 0.7;
+    }
+
+    .waiting h2 { margin-bottom: 0.5rem; }
+
+    .current-topic { margin-bottom: 0.5rem; }
+
+    .no-poll {
+        text-align: center;
+        padding: 2rem;
+        opacity: 0.5;
+        font-size: 1.1rem;
+    }
+
+    .question-form {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 0.75rem;
+        padding: 1rem;
+    }
+
+    .question-form h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1rem;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .input-group input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.5rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 1rem;
+    }
+
+    .input-group input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+    .btn-send {
+        padding: 0.75rem 1.25rem;
+        background: #e94560;
+        border: none;
+        border-radius: 0.5rem;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-send:disabled { opacity: 0.3; cursor: default; }
+
+    .questions-list h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1rem;
+    }
+</style>

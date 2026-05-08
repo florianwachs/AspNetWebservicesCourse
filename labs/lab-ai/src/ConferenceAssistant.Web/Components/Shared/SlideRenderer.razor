@@ -1,0 +1,244 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="slide-renderer @TypeClass @LayoutClass @(Compact ? "compact" : "")">
+    @switch (Slide.Type)
+    {
+        case SlideType.Title:
+            <div class="slide-title-layout">
+                <h1 class="slide-title">@Slide.Title</h1>
+                @if (!string.IsNullOrWhiteSpace(Slide.Subtitle))
+                {
+                    <h2 class="slide-subtitle">@Slide.Subtitle</h2>
+                }
+            </div>
+            break;
+
+        case SlideType.Section:
+            <div class="slide-section-layout">
+                <h1 class="slide-section-title">@Slide.Title</h1>
+            </div>
+            break;
+
+        case SlideType.Code:
+            <div class="slide-code-layout">
+                @if (!string.IsNullOrWhiteSpace(Slide.Title))
+                {
+                    <h2 class="slide-heading">@Slide.Title</h2>
+                }
+                <pre class="slide-code"><code class="@($"language-{Slide.CodeLanguage}")">@Slide.CodeSnippet</code></pre>
+            </div>
+            break;
+
+        case SlideType.Content:
+            <div class="slide-content-layout">
+                @if (!string.IsNullOrWhiteSpace(Slide.Title))
+                {
+                    <h2 class="slide-heading">@Slide.Title</h2>
+                }
+                @if (Slide.Bullets.Count > 0)
+                {
+                    <ul class="slide-bullets">
+                        @foreach (var bullet in Slide.Bullets)
+                        {
+                            <li>@((MarkupString)FormatBullet(bullet))</li>
+                        }
+                    </ul>
+                }
+                else if (!string.IsNullOrWhiteSpace(Slide.BodyMarkdown))
+                {
+                    <div class="slide-body">@((MarkupString)FormatBody(Slide.BodyMarkdown))</div>
+                }
+            </div>
+            break;
+
+        default:
+            <div class="slide-blank-layout"></div>
+            break;
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Slide Slide { get; set; } = default!;
+    [Parameter] public bool Compact { get; set; }
+
+    private string TypeClass => $"slide-type-{Slide.Type.ToString().ToLowerInvariant()}";
+    private string LayoutClass => $"slide-layout-{Slide.Layout.ToString().ToLowerInvariant()}";
+
+    private static string FormatBullet(string text)
+    {
+        // Simple bold formatting: **text** → <strong>text</strong>
+        return System.Text.RegularExpressions.Regex.Replace(
+            System.Net.WebUtility.HtmlEncode(text),
+            @"\*\*(.+?)\*\*",
+            "<strong>$1</strong>");
+    }
+
+    private static string FormatBody(string markdown)
+    {
+        // Basic paragraph formatting — convert line breaks to <br>
+        var encoded = System.Net.WebUtility.HtmlEncode(markdown.Trim());
+        encoded = System.Text.RegularExpressions.Regex.Replace(
+            encoded, @"\*\*(.+?)\*\*", "<strong>$1</strong>");
+        return encoded.Replace("\n\n", "</p><p>").Replace("\n", "<br>");
+    }
+}
+
+<style>
+    .slide-renderer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 4rem;
+        animation: slideIn 0.3s ease-out;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .slide-renderer.compact {
+        padding: 0.75rem 1rem;
+    }
+
+    @@keyframes slideIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Title slide */
+    .slide-title-layout {
+        text-align: center;
+        max-width: 90%;
+    }
+
+    .slide-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 0 0 1rem;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+        font-size: 2rem;
+        font-weight: 400;
+        opacity: 0.6;
+        margin: 0;
+    }
+
+    .slide-renderer.compact .slide-title { font-size: 1.2rem; margin-bottom: 0.25rem; }
+    .slide-renderer.compact .slide-subtitle { font-size: 0.8rem; }
+
+    /* Section slide */
+    .slide-section-layout {
+        text-align: center;
+    }
+
+    .slide-section-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #e94560;
+        margin: 0;
+    }
+
+    .slide-renderer.compact .slide-section-title { font-size: 1rem; }
+
+    /* Content slide */
+    .slide-content-layout {
+        width: 100%;
+        max-width: 1200px;
+        overflow: hidden;
+    }
+
+    .slide-heading {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin: 0 0 2rem;
+        color: #e94560;
+    }
+
+    .slide-renderer.compact .slide-heading { font-size: 0.9rem; margin-bottom: 0.3rem; }
+
+    .slide-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .slide-bullets li {
+        font-size: 2rem;
+        line-height: 1.4;
+        padding-left: 2rem;
+        position: relative;
+    }
+
+    .slide-bullets li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: #e94560;
+        font-weight: 700;
+    }
+
+    .slide-renderer.compact .slide-bullets li {
+        font-size: 0.75rem;
+        padding-left: 0.8rem;
+        line-height: 1.3;
+    }
+
+    .slide-renderer.compact .slide-bullets { gap: 0.15rem; }
+
+    .slide-body {
+        font-size: 1.75rem;
+        line-height: 1.6;
+    }
+
+    .slide-renderer.compact .slide-body { font-size: 0.75rem; line-height: 1.3; }
+
+    /* Code slide */
+    .slide-code-layout {
+        width: 100%;
+        max-width: 1200px;
+        overflow: hidden;
+    }
+
+    .slide-code {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem 2.5rem;
+        overflow: hidden;
+        font-size: 1.5rem;
+        line-height: 1.6;
+        font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+    }
+
+    .slide-code code {
+        color: #e0e0e0;
+    }
+
+    .slide-renderer.compact .slide-code {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.4rem;
+        line-height: 1.3;
+    }
+
+    /* Centered layout override */
+    .slide-layout-centered .slide-content-layout,
+    .slide-layout-centered .slide-code-layout {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Blank slide */
+    .slide-blank-layout {
+        width: 100%;
+        height: 100%;
+    }
+</style>

@@ -1,0 +1,390 @@
+@page "/display/{SessionCode}"
+@layout ConferenceAssistant.Web.Components.Layout.DisplayLayout
+@using ConferenceAssistant.Core.Models
+@using ConferenceAssistant.Core.Services
+@implements IDisposable
+@inject ISessionManager SessionManager
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Conference Pulse — Display</PageTitle>
+
+<div class="display-page">
+    @if (sessionContext is null)
+    {
+        <div class="display-waiting">
+            <h1>🎯 Conference Pulse</h1>
+            <p>Session not found. Check the session code.</p>
+        </div>
+    }
+    else if (session is null || session.Status == SessionStatus.Setup)
+    {
+        <div class="display-waiting">
+            <h1>🎯 Conference Pulse</h1>
+            <p>Waiting for session to begin...</p>
+        </div>
+    }
+    else
+    {
+        <!-- Header Bar -->
+        <div class="display-header">
+            <span class="header-title">@session.Title</span>
+            @if (activeTopic is not null)
+            {
+                <span class="header-topic">📍 @activeTopic.Title</span>
+            }
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="display-content">
+            <!-- Left: Poll Results -->
+            <div class="display-main">
+                @if (activePoll is not null)
+                {
+                    <PollResultsChart Poll="@activePoll" Results="@pollResults"
+                                      OtherResponses="@(activePoll.AllowOther ? sessionContext?.GetOtherResponses(activePoll.Id) : null)" />
+                }
+                else if (spotlightedQuestion is not null && spotlightedQuestion.IsVisibleToAttendees)
+                {
+                    <div class="display-spotlight-question">
+                        <div class="spotlight-icon">❓</div>
+                        <div class="spotlight-text">@spotlightedQuestion.Text</div>
+                        <div class="spotlight-upvotes">👍 @spotlightedQuestion.Upvotes</div>
+                    </div>
+                }
+                else if (activeSlide is not null && !slidesHidden)
+                {
+                    <div class="display-slide-area">
+                        <SlideRenderer Slide="@activeSlide" />
+                        @if (totalSlides > 0)
+                        {
+                            <div class="slide-progress-dots">
+                                @for (var i = 0; i < totalSlides; i++)
+                                {
+                                    <span class="progress-dot @(i == activeSlideIndex ? "active" : "")"></span>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="display-join">
+                        <div class="join-qr">
+                            <img src="@qrDataUriLarge" alt="Scan to join" class="qr-image" />
+                        </div>
+                        <div class="join-info">
+                            <h2>📱 Scan to Join</h2>
+                            <p class="join-code">Session Code: <strong>@SessionCode</strong></p>
+                            <p class="join-url">@sessionUrl</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Right: Sidebar -->
+            <div class="display-sidebar">
+                @if (activePoll is not null || spotlightedQuestion is not null || (activeSlide is not null && !slidesHidden))
+                {
+                    <div class="sidebar-join">
+                        <img src="@qrDataUriSmall" alt="Scan to join" class="sidebar-qr-image" />
+                        <p class="sidebar-join-code">Join: <strong>@SessionCode</strong></p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string SessionCode { get; set; } = "";
+
+    private SessionContext? sessionContext;
+    private ConferenceSession? session;
+    private SessionTopic? activeTopic;
+    private Poll? activePoll;
+    private Dictionary<string, int>? pollResults;
+    private AudienceQuestion? spotlightedQuestion;
+    private bool slidesHidden;
+    private Slide? activeSlide;
+    private int activeSlideIndex;
+    private int totalSlides;
+
+    private string sessionUrl => $"{NavigationManager.BaseUri.TrimEnd('/')}/session/{SessionCode}";
+    private string qrDataUriLarge => ConferenceAssistant.Web.Services.QrCodeGenerator.GenerateDataUri(sessionUrl, 8);
+    private string qrDataUriSmall => ConferenceAssistant.Web.Services.QrCodeGenerator.GenerateDataUri(sessionUrl, 4);
+
+    private Action<Poll>? onPollActivated;
+    private Action<Poll>? onPollClosed;
+    private Action<PollResponse>? onResponseReceived;
+    private Action<Slide>? onSlideChanged;
+    private Action<AudienceQuestion?>? onQuestionSpotlighted;
+    private Action<bool>? onSlidesVisibilityChanged;
+    private Action<AudienceQuestion>? onQuestionModerated;
+
+    protected override void OnInitialized()
+    {
+        sessionContext = SessionManager.GetSession(SessionCode);
+        if (sessionContext is null) return;
+
+        session = sessionContext.Session;
+        RefreshState();
+
+        onPollActivated = _ => InvokeAsync(() => { RefreshState(); StateHasChanged(); });
+        onPollClosed = _ => InvokeAsync(() => { RefreshState(); StateHasChanged(); });
+        onResponseReceived = _ => InvokeAsync(() => { RefreshPollResults(); StateHasChanged(); });
+        onSlideChanged = _ => InvokeAsync(() => { RefreshSlideState(); StateHasChanged(); });
+        onQuestionSpotlighted = _ => InvokeAsync(() => { spotlightedQuestion = sessionContext?.SpotlightedQuestion; StateHasChanged(); });
+        onSlidesVisibilityChanged = _ => InvokeAsync(() => { slidesHidden = sessionContext?.SlidesHidden ?? false; StateHasChanged(); });
+
+        sessionContext.PollActivated += onPollActivated;
+        sessionContext.PollClosed += onPollClosed;
+        sessionContext.ResponseReceived += onResponseReceived;
+        sessionContext.SlideChanged += onSlideChanged;
+        sessionContext.QuestionSpotlighted += onQuestionSpotlighted;
+        sessionContext.SlidesVisibilityChanged += onSlidesVisibilityChanged;
+
+        onQuestionModerated = _ => InvokeAsync(() => { spotlightedQuestion = sessionContext?.SpotlightedQuestion; StateHasChanged(); });
+        sessionContext.QuestionModerated += onQuestionModerated;
+    }
+
+    private void RefreshState()
+    {
+        if (sessionContext is null) return;
+        session = sessionContext.Session;
+        activeTopic = sessionContext.GetActiveTopic();
+        activePoll = sessionContext.GetActivePoll();
+        RefreshPollResults();
+        RefreshSlideState();
+        spotlightedQuestion = sessionContext.SpotlightedQuestion;
+        slidesHidden = sessionContext.SlidesHidden;
+    }
+
+    private void RefreshSlideState()
+    {
+        if (sessionContext is null) return;
+        activeSlide = sessionContext.ActiveSlide;
+        activeSlideIndex = sessionContext.ActiveSlideIndex;
+        totalSlides = sessionContext.TotalSlides;
+    }
+
+    private void RefreshPollResults()
+    {
+        if (activePoll is not null)
+            pollResults = sessionContext?.GetPollResults(activePoll.Id);
+    }
+
+    public void Dispose()
+    {
+        if (sessionContext is not null)
+        {
+            sessionContext.PollActivated -= onPollActivated;
+            sessionContext.PollClosed -= onPollClosed;
+            sessionContext.ResponseReceived -= onResponseReceived;
+            sessionContext.SlideChanged -= onSlideChanged;
+            sessionContext.QuestionSpotlighted -= onQuestionSpotlighted;
+            sessionContext.SlidesVisibilityChanged -= onSlidesVisibilityChanged;
+            sessionContext.QuestionModerated -= onQuestionModerated;
+        }
+    }
+}
+
+<style>
+    .display-page {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .display-waiting {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .display-waiting h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .display-waiting p {
+        font-size: 1.5rem;
+        opacity: 0.5;
+    }
+
+    .display-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .header-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .header-topic {
+        font-size: 1.1rem;
+        color: #e94560;
+    }
+
+    .display-content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 1rem;
+        padding: 2rem;
+        overflow: hidden;
+    }
+
+    .display-main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .display-spotlight-question {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        text-align: center;
+        max-width: 900px;
+        padding: 2rem;
+    }
+
+    .spotlight-icon {
+        font-size: 4rem;
+    }
+
+    .spotlight-text {
+        font-size: 2.5rem;
+        font-weight: 600;
+        line-height: 1.3;
+        color: white;
+    }
+
+    .spotlight-upvotes {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .display-idle {
+        text-align: center;
+        opacity: 0.3;
+    }
+
+    .display-join {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        height: 100%;
+        text-align: center;
+    }
+
+    .join-qr {
+        padding: 1.5rem;
+        background: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 0 60px rgba(233, 69, 96, 0.3);
+    }
+
+    .qr-image {
+        width: 280px;
+        height: 280px;
+        image-rendering: pixelated;
+    }
+
+    .join-info h2 {
+        font-size: 2.5rem;
+        margin: 0 0 0.5rem;
+        color: white;
+    }
+
+    .join-code {
+        font-size: 1.8rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0.5rem 0;
+    }
+
+    .join-code strong {
+        color: #e94560;
+        letter-spacing: 0.1em;
+    }
+
+    .join-url {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Cascadia Code', monospace;
+    }
+
+    .sidebar-join {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.5rem;
+    }
+
+    .sidebar-qr-image {
+        width: 140px;
+        height: 140px;
+        image-rendering: pixelated;
+        background: white;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+    }
+
+    .sidebar-join-code {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0;
+    }
+
+    .sidebar-join-code strong {
+        color: #e94560;
+    }
+
+    .display-sidebar {
+        overflow-y: auto;
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        padding-left: 1rem;
+    }
+
+    .display-slide-area {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slide-progress-dots {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+        padding: 1rem 0 0.5rem;
+    }
+
+    .progress-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: background 0.3s ease;
+    }
+
+    .progress-dot.active {
+        background: #e94560;
+    }
+</style>

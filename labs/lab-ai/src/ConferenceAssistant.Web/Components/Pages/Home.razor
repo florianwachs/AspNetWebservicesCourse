@@ -1,0 +1,205 @@
+@page "/"
+@layout ConferenceAssistant.Web.Components.Layout.HomeLayout
+@using ConferenceAssistant.Core.Models
+@using ConferenceAssistant.Core.Services
+@inject ISessionManager SessionManager
+@rendermode InteractiveServer
+
+<PageTitle>Conference Pulse</PageTitle>
+
+<div class="landing">
+    <div class="landing-hero">
+        <h1>🎯 Conference Pulse</h1>
+        <p class="hero-subtitle">AI-Powered Conference Assistant</p>
+    </div>
+
+    <div class="sessions-section">
+        @if (sessions.Count > 0)
+        {
+            <h2 class="section-title">Active Sessions</h2>
+            <div class="session-list">
+                @foreach (var s in sessions)
+                {
+                    <div class="session-card">
+                        <div class="session-card-header">
+                            <span class="session-card-title">@s.Title</span>
+                            <span class="status-indicator @s.Status.ToString().ToLower()">@s.Status</span>
+                        </div>
+                        <div class="session-card-code">@s.SessionCode</div>
+                        @if (!string.IsNullOrWhiteSpace(s.Description))
+                        {
+                            <p class="session-card-desc">@s.Description</p>
+                        }
+                        <div class="session-card-links">
+                            <a href="/session/@s.SessionCode" class="card-link join">📱 Join</a>
+                            <a href="/display/@s.SessionCode" class="card-link display">🖥️ Display</a>
+                            <a href="/presenter/@s.SessionCode" class="card-link present">🎤 Present</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="no-sessions">No active sessions. Create one to get started!</p>
+        }
+
+        <a href="/create" class="btn-create-session">+ Create New Session</a>
+    </div>
+</div>
+
+@code {
+    private IReadOnlyList<SessionInfo> sessions = [];
+
+    protected override void OnInitialized()
+    {
+        sessions = SessionManager.ListActiveSessions();
+    }
+}
+
+<style>
+    .landing {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 2rem;
+    }
+
+    .landing-hero {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .landing-hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.6;
+    }
+
+    .sessions-section {
+        width: 100%;
+        max-width: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.5;
+        margin-bottom: 1rem;
+    }
+
+    .session-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .session-card {
+        padding: 1.25rem 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.75rem;
+        transition: border-color 0.2s;
+    }
+
+    .session-card:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .session-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+
+    .session-card-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    .status-indicator {
+        padding: 0.15rem 0.6rem;
+        border-radius: 1rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .status-indicator.setup { background: rgba(249, 199, 79, 0.2); color: #f9c74f; }
+    .status-indicator.live { background: rgba(233, 69, 96, 0.25); color: #e94560; }
+    .status-indicator.completed { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
+
+    .session-card-code {
+        font-size: 0.8rem;
+        opacity: 0.4;
+        font-family: monospace;
+        margin-bottom: 0.5rem;
+    }
+
+    .session-card-desc {
+        font-size: 0.85rem;
+        opacity: 0.6;
+        margin: 0 0 0.75rem;
+        line-height: 1.4;
+    }
+
+    .session-card-links {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .card-link {
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        text-decoration: none;
+        color: white;
+        transition: all 0.2s;
+    }
+
+    .card-link.join { background: rgba(78, 205, 196, 0.15); border: 1px solid rgba(78, 205, 196, 0.3); }
+    .card-link.join:hover { background: rgba(78, 205, 196, 0.25); }
+    .card-link.display { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); }
+    .card-link.display:hover { background: rgba(255, 255, 255, 0.1); }
+    .card-link.present { background: rgba(233, 69, 96, 0.15); border: 1px solid rgba(233, 69, 96, 0.3); }
+    .card-link.present:hover { background: rgba(233, 69, 96, 0.25); }
+
+    .no-sessions {
+        opacity: 0.5;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .btn-create-session {
+        padding: 0.7rem 1.5rem;
+        background: #e94560;
+        border-radius: 0.5rem;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+    }
+
+    .btn-create-session:hover {
+        background: #d63851;
+        transform: translateY(-2px);
+        color: white;
+    }
+</style>

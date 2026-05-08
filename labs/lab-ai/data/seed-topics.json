@@ -1,0 +1,122 @@
+{
+  "sessionId": "DOTNETAI-CONF",
+  "title": "The Microsoft AI Stack for .NET",
+  "description": "A living presentation powered by AI agents, real-time polls, and the full Microsoft AI stack for .NET.",
+  "topics": [
+    {
+      "id": "meai",
+      "title": "Microsoft.Extensions.AI",
+      "description": "The abstraction layer everything speaks through — IChatClient, IEmbeddingGenerator, ChatClientBuilder, AIFunctionFactory",
+      "order": 1,
+      "talkingPoints": [
+        "IChatClient — provider-agnostic LLM calls",
+        "IEmbeddingGenerator — embeddings for search and ingestion",
+        "ChatClientBuilder — composable middleware pipeline",
+        "AIFunctionFactory.Create() — tool definitions for agents",
+        "One interface, any provider, middleware for cross-cutting concerns"
+      ],
+      "suggestedPolls": [
+        {
+          "question": "What's your experience level with AI in .NET?",
+          "options": ["Just getting started", "Built a prototype", "Running in production", "Teaching others"]
+        },
+        {
+          "question": "Which AI provider do you primarily use?",
+          "options": ["Azure OpenAI", "OpenAI directly", "Local models (Ollama)", "Haven't decided yet"]
+        }
+      ]
+    },
+    {
+      "id": "knowledge",
+      "title": "Knowledge Engineering",
+      "description": "DataIngestion pipelines and VectorData stores — turning raw content into searchable, semantic knowledge",
+      "order": 2,
+      "talkingPoints": [
+        "IngestionPipeline — 5-stage document processing",
+        "Readers, Chunkers, and Enrichers",
+        "InMemoryVectorStore — zero-infrastructure vector search",
+        "VectorStoreCollection with auto-embedding",
+        "The living knowledge base that grows during the session"
+      ],
+      "suggestedPolls": [
+        {
+          "question": "What's the hardest part of building RAG applications?",
+          "options": ["Chunking strategy", "Embedding quality", "Retrieval relevance", "Cost management"]
+        },
+        {
+          "question": "Where do you store your vectors today?",
+          "options": ["Azure AI Search", "Qdrant/Pinecone/etc.", "In-memory for dev", "Haven't started yet"]
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agentic AI",
+      "description": "The Microsoft Agent Framework — ChatClientAgent, tools, and AgentWorkflowBuilder for multi-agent orchestration",
+      "order": 3,
+      "talkingPoints": [
+        "ChatClientAgent — agents with tools and instructions",
+        "AgentWorkflowBuilder — sequential, handoff, group chat",
+        "Tool calling via AIFunctionFactory integration",
+        "Multi-agent collaboration patterns",
+        "The snowball effect — agents get smarter as the KB grows"
+      ],
+      "suggestedPolls": [
+        {
+          "question": "Which agent pattern would you use first in your projects?",
+          "options": ["Single agent with tools", "Sequential pipeline", "Multi-agent collaboration", "Not sure yet"]
+        },
+        {
+          "question": "What's your biggest concern about agentic AI?",
+          "options": ["Reliability/hallucinations", "Cost of LLM calls", "Debugging complexity", "Security/safety"]
+        }
+      ]
+    },
+    {
+      "id": "mcp",
+      "title": "Interoperability with MCP",
+      "description": "Model Context Protocol — exposing tools as an MCP server and consuming external knowledge as an MCP client",
+      "order": 4,
+      "talkingPoints": [
+        "MCP server — expose your app's capabilities to any AI client",
+        "MCP client — consume external tools and knowledge",
+        "Streamable HTTP transport for web scenarios",
+        "Tool discovery and invocation protocol",
+        "The ecosystem effect — composable AI capabilities"
+      ],
+      "suggestedPolls": [
+        {
+          "question": "What excites you most about MCP?",
+          "options": ["Universal tool sharing", "IDE/Copilot integration", "Cross-platform interop", "Building composable AI services"]
+        },
+        {
+          "question": "How would you first use MCP in your projects?",
+          "options": ["Expose internal APIs as tools", "Connect to external knowledge", "Build Copilot extensions", "Integrate with existing agents"]
+        }
+      ]
+    },
+    {
+      "id": "closer",
+      "title": "The Closer",
+      "description": "Full stack cascade — every technology exercised in one command via Copilot CLI connected to our MCP server",
+      "order": 5,
+      "talkingPoints": [
+        "Copilot CLI connected to our MCP server",
+        "generate_session_summary triggers the full agent workflow",
+        "The technology cascade visualization on the big screen",
+        "One command, five technologies, zero custom client code",
+        "Resources and next steps"
+      ],
+      "suggestedPolls": [
+        {
+          "question": "Which technology from today will you explore first?",
+          "options": ["Microsoft.Extensions.AI", "DataIngestion + VectorData", "Agent Framework", "MCP"]
+        },
+        {
+          "question": "Rate this session format (AI-powered, no slides):",
+          "options": ["Loved it — do more of this!", "Interesting experiment", "Prefer traditional slides", "Mixed feelings"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="cascade-vis">
+    <h2 class="cascade-title">Technology Cascade</h2>
+    <div class="cascade-stack">
+        @foreach (var layer in Layers)
+        {
+            var evt = Events.LastOrDefault(e => e.Technology == layer.Name);
+            var status = evt?.Status ?? CascadeStatus.Pending;
+            var statusClass = status switch
+            {
+                CascadeStatus.Active => "active",
+                CascadeStatus.Complete => "complete",
+                CascadeStatus.Error => "error",
+                _ => "pending"
+            };
+
+            <div class="cascade-layer @statusClass">
+                <div class="layer-icon">@layer.Icon</div>
+                <div class="layer-info">
+                    <div class="layer-name">@layer.Name</div>
+                    <div class="layer-detail">
+                        @if (evt is not null && status != CascadeStatus.Pending)
+                        {
+                            @evt.Detail
+                        }
+                        else
+                        {
+                            @layer.Description
+                        }
+                    </div>
+                </div>
+                <div class="layer-status">
+                    @switch (status)
+                    {
+                        case CascadeStatus.Active:
+                            <span class="pulse">●</span>
+                            break;
+                        case CascadeStatus.Complete:
+                            <span class="check">✓</span>
+                            break;
+                        case CascadeStatus.Error:
+                            <span class="error-icon">✗</span>
+                            break;
+                        default:
+                            <span class="waiting">○</span>
+                            break;
+                    }
+                </div>
+            </div>
+
+            @if (layer != Layers.Last())
+            {
+                <div class="cascade-connector @(status is CascadeStatus.Complete ? "lit" : "")">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">▼</div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public IReadOnlyList<CascadeEvent> Events { get; set; } = [];
+
+    private record TechLayer(string Name, string Icon, string Description);
+
+    private static readonly TechLayer[] Layers =
+    [
+        new("Copilot CLI", "🤖", "MCP client request"),
+        new("MCP Server", "🔌", "Tool discovery & invocation"),
+        new("Agent Framework", "🧠", "Multi-agent orchestration"),
+        new("VectorData", "🔍", "Semantic search"),
+        new("DataIngestion", "📥", "Knowledge pipeline"),
+        new("M.E.AI", "⚡", "Provider-agnostic AI")
+    ];
+}
+
+<style>
+    .cascade-vis {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cascade-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        opacity: 0.6;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .cascade-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .cascade-layer {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        width: 100%;
+        padding: 1.25rem 1.5rem;
+        border-radius: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.5s ease;
+    }
+
+    .cascade-layer.active {
+        border-color: #e94560;
+        background: rgba(233, 69, 96, 0.1);
+        box-shadow: 0 0 30px rgba(233, 69, 96, 0.2);
+        animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    .cascade-layer.complete {
+        border-color: #4ecdc4;
+        background: rgba(78, 205, 196, 0.08);
+    }
+
+    .cascade-layer.error {
+        border-color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.1);
+    }
+
+    @@keyframes glow {
+        from { box-shadow: 0 0 20px rgba(233, 69, 96, 0.15); }
+        to { box-shadow: 0 0 40px rgba(233, 69, 96, 0.35); }
+    }
+
+    .layer-icon {
+        font-size: 2rem;
+        min-width: 2.5rem;
+        text-align: center;
+    }
+
+    .layer-info {
+        flex: 1;
+    }
+
+    .layer-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .layer-detail {
+        font-size: 0.85rem;
+        opacity: 0.5;
+        margin-top: 0.15rem;
+    }
+
+    .cascade-layer.active .layer-detail,
+    .cascade-layer.complete .layer-detail {
+        opacity: 0.8;
+    }
+
+    .layer-status {
+        font-size: 1.5rem;
+    }
+
+    .pulse {
+        color: #e94560;
+        animation: pulse-anim 1s ease-in-out infinite;
+    }
+
+    @@keyframes pulse-anim {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    .check { color: #4ecdc4; }
+    .error-icon { color: #ff6b6b; }
+    .waiting { opacity: 0.2; }
+
+    .cascade-connector {
+        padding: 0.25rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0.15;
+        transition: opacity 0.5s;
+    }
+
+    .cascade-connector.lit {
+        opacity: 0.6;
+    }
+
+    .connector-line {
+        width: 2px;
+        height: 0.5rem;
+        background: white;
+    }
+
+    .connector-arrow {
+        font-size: 0.6rem;
+    }
+</style>

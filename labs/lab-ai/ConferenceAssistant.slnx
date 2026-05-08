@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ConferenceAssistant.Agents/ConferenceAssistant.Agents.csproj" />
+    <Project Path="src/ConferenceAssistant.AppHost/ConferenceAssistant.AppHost.csproj" />
+    <Project Path="src/ConferenceAssistant.Core/ConferenceAssistant.Core.csproj" />
+    <Project Path="src/ConferenceAssistant.Ingestion/ConferenceAssistant.Ingestion.csproj" />
+    <Project Path="src/ConferenceAssistant.Mcp/ConferenceAssistant.Mcp.csproj" />
+    <Project Path="src/ConferenceAssistant.ServiceDefaults/ConferenceAssistant.ServiceDefaults.csproj" />
+    <Project Path="src/ConferenceAssistant.Web/ConferenceAssistant.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ConferenceAssistant.Agents.Tests/ConferenceAssistant.Agents.Tests.csproj" />
+    <Project Path="tests/ConferenceAssistant.Ingestion.Tests/ConferenceAssistant.Ingestion.Tests.csproj" />
+    <Project Path="tests/ConferenceAssistant.Mcp.Tests/ConferenceAssistant.Mcp.Tests.csproj" />
+  </Folder>
+</Solution>

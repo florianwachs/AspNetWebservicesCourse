@@ -1,0 +1,211 @@
+@using ConferenceAssistant.Core.Models
+
+<div class="poll-card">
+    <h3>@Poll.Question</h3>
+    <div class="poll-options">
+        @foreach (var option in displayOptions)
+        {
+            var isSelected = SelectedOption == option;
+            <button class="poll-option @(isSelected ? "selected" : "") @(HasVoted ? "disabled" : "")"
+                    disabled="@HasVoted"
+                    @onclick="() => OnVote(option)">
+                <span class="option-text">@option</span>
+                @if (HasVoted && Results is not null && Results.TryGetValue(option, out var count))
+                {
+                    var total = Results.Values.Sum();
+                    var pct = total > 0 ? (int)(100.0 * count / total) : 0;
+                    <span class="option-bar" style="width: @(pct)%"></span>
+                    <span class="option-pct">@pct%</span>
+                }
+            </button>
+        }
+
+        @if (Poll.AllowOther)
+        {
+            var isOtherSelected = SelectedOption == "Other";
+            var otherOptionName = "Other";
+            <button class="poll-option @(isOtherSelected ? "selected" : "") @(HasVoted ? "disabled" : "")"
+                    disabled="@(HasVoted || showOtherInput)"
+                    @onclick="() => OnVote(otherOptionName)">
+                <span class="option-text">Other…</span>
+                @if (HasVoted && Results is not null && Results.TryGetValue("Other", out var otherCount))
+                {
+                    var total = Results.Values.Sum();
+                    var pct = total > 0 ? (int)(100.0 * otherCount / total) : 0;
+                    <span class="option-bar" style="width: @(pct)%"></span>
+                    <span class="option-pct">@pct%</span>
+                }
+            </button>
+
+            @if (showOtherInput && !HasVoted)
+            {
+                <div class="other-input-area">
+                    <input type="text" class="other-text-input" @bind="otherInputText" @bind:event="oninput"
+                           placeholder="Type your answer…" @onkeydown="HandleOtherKeydown" />
+                    <button class="btn-other-submit" disabled="@string.IsNullOrWhiteSpace(otherInputText)"
+                            @onclick="SubmitOther">
+                        Submit
+                    </button>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Poll Poll { get; set; } = default!;
+    [Parameter] public Dictionary<string, int>? Results { get; set; }
+    [Parameter] public EventCallback<(string Option, string? OtherText)> OnVoteSubmitted { get; set; }
+    [Parameter] public string? AttendeeId { get; set; }
+
+    private string? SelectedOption;
+    private bool HasVoted;
+    private bool showOtherInput;
+    private string otherInputText = "";
+    private List<string> displayOptions = [];
+
+    protected override void OnParametersSet()
+    {
+        displayOptions = GetShuffledOptions();
+    }
+
+    private List<string> GetShuffledOptions()
+    {
+        if (string.IsNullOrEmpty(AttendeeId)) return Poll.Options;
+        var seed = (Poll.Id + AttendeeId).GetHashCode();
+        var rng = new Random(seed);
+        return [.. Poll.Options.OrderBy(_ => rng.Next())];
+    }
+
+    private async Task OnVote(string option)
+    {
+        if (HasVoted) return;
+
+        if (option == "Other")
+        {
+            showOtherInput = true;
+            return;
+        }
+
+        SelectedOption = option;
+        HasVoted = true;
+        await OnVoteSubmitted.InvokeAsync((option, null));
+    }
+
+    private async Task SubmitOther()
+    {
+        if (HasVoted || string.IsNullOrWhiteSpace(otherInputText)) return;
+        SelectedOption = "Other";
+        HasVoted = true;
+        showOtherInput = false;
+        await OnVoteSubmitted.InvokeAsync(("Other", otherInputText.Trim()));
+    }
+
+    private async Task HandleOtherKeydown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await SubmitOther();
+    }
+}
+
+<style>
+    .poll-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .poll-card h3 {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+    }
+
+    .poll-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .poll-option {
+        position: relative;
+        padding: 1rem 1.25rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.75rem;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.2s;
+        overflow: hidden;
+    }
+
+    .poll-option:hover:not(.disabled) {
+        border-color: #e94560;
+        background: rgba(233, 69, 96, 0.15);
+    }
+
+    .poll-option.selected {
+        border-color: #e94560;
+        background: rgba(233, 69, 96, 0.2);
+    }
+
+    .poll-option.disabled {
+        cursor: default;
+    }
+
+    .option-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: rgba(233, 69, 96, 0.2);
+        transition: width 0.5s ease;
+        z-index: 0;
+    }
+
+    .option-text, .option-pct {
+        position: relative;
+        z-index: 1;
+    }
+
+    .option-pct {
+        float: right;
+        font-weight: 600;
+        color: #e94560;
+    }
+
+    .other-input-area {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .other-text-input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.5rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 1rem;
+    }
+
+    .other-text-input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-other-submit {
+        padding: 0.75rem 1.25rem;
+        background: #e94560;
+        border: none;
+        border-radius: 0.5rem;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-other-submit:disabled {
+        opacity: 0.3;
+        cursor: default;
+    }
+</style>

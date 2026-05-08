@@ -1,0 +1,47 @@
+@inherits LayoutComponentBase
+
+<div class="presenter-layout">
+    <nav class="presenter-sidebar">
+        <div class="sidebar-header">
+            <h2>🎤 Presenter</h2>
+        </div>
+        <div class="sidebar-content">
+            @Body
+        </div>
+    </nav>
+</div>
+
+<style>
+    .presenter-layout {
+        display: flex;
+        height: 100vh;
+        background: #1a1a2e;
+        color: #e0e0e0;
+    }
+
+    .presenter-sidebar {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .sidebar-header {
+        padding: 1rem 1.5rem;
+        background: #16213e;
+        border-bottom: 1px solid #0f3460;
+    }
+
+    .sidebar-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #e94560;
+    }
+
+    .sidebar-content {
+        flex: 1;
+        padding: 1rem;
+        overflow: hidden;
+        min-height: 0;
+    }
+</style>

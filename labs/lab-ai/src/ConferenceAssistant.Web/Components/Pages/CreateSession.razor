@@ -1,0 +1,701 @@
+@page "/create"
+@layout ConferenceAssistant.Web.Components.Layout.HomeLayout
+@using ConferenceAssistant.Core.Models
+@using ConferenceAssistant.Core.Services
+@using ConferenceAssistant.Web.Services
+@using ConferenceAssistant.Ingestion.Models
+@inject ISessionManager SessionManager
+@inject NavigationManager Navigation
+@inject IWebHostEnvironment Environment
+@inject IContentImportService ContentImportService
+@rendermode InteractiveServer
+
+<PageTitle>Create Session — Conference Pulse</PageTitle>
+
+<div class="create-page">
+    <div class="create-card">
+        <h1>🎯 Create a Session</h1>
+        <p class="subtitle">Set up a new presentation session for your audience.</p>
+
+        @if (errorMessage is not null)
+        {
+            <div class="error-banner">@errorMessage</div>
+        }
+
+        <div class="form-group">
+            <label>Session Title *</label>
+            <input type="text" @bind="title" placeholder="e.g., The Microsoft AI Stack for .NET" class="form-input" />
+        </div>
+
+        <div class="form-group">
+            <label>Session Code <span class="hint">(optional — auto-generated if blank)</span></label>
+            <input type="text" @bind="sessionCode" placeholder="e.g., AICONF2026" class="form-input" maxlength="20" />
+        </div>
+
+        <div class="form-group">
+            <label>Host PIN * <span class="hint">(4-6 digits, share only with co-presenters)</span></label>
+            <input type="text" @bind="hostPin" placeholder="e.g., 4521" class="form-input pin-field" maxlength="6" />
+        </div>
+
+        <div class="form-group">
+            <label>Description <span class="hint">(optional)</span></label>
+            <textarea @bind="description" placeholder="Brief description of your session..." class="form-input form-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Session Template</label>
+            <select @bind="template" class="form-input">
+                <option value="default">🎤 .NET AI Conference (pre-loaded topics + slides)</option>
+                <option value="blank">📝 Blank Session (start from scratch)</option>
+                <option value="github">🐙 Import from GitHub</option>
+            </select>
+        </div>
+
+        @if (template == "github")
+        {
+            <div class="github-import-section">
+                <div class="form-group">
+                    <label>GitHub Repository URL *</label>
+                    <input type="text" @bind="repoUrl" placeholder="https://github.com/owner/repo or .../tree/branch/subdir" class="form-input" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group form-group-half">
+                        <label>Branch <span class="hint">(auto-detected if blank)</span></label>
+                        <input type="text" @bind="repoBranch" placeholder="e.g., main, master, develop" class="form-input" />
+                    </div>
+                    <div class="form-group form-group-half">
+                        <label>Subdirectory <span class="hint">(optional)</span></label>
+                        <input type="text" @bind="repoSubdirectory" placeholder="e.g., scenarios" class="form-input" />
+                    </div>
+                </div>
+
+                <div class="generation-options">
+                    <label><input type="checkbox" @bind="generateSlides" /> Generate slides with speaker notes</label>
+                    <label><input type="checkbox" @bind="generatePolls" /> Generate suggested polls</label>
+                    <label><input type="checkbox" @bind="generateTalkingPoints" /> Generate talking points</label>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(importStatus))
+                {
+                    <div class="import-status">@importStatus</div>
+                }
+
+                @if (showDedupWarning)
+                {
+                    <div class="import-dedup-warning">⚠️ This repository was already imported. Import again?
+                        <button class="btn-inline" @onclick="ConfirmReimport">Yes, re-import</button>
+                        <button class="btn-inline" @onclick="() => showDedupWarning = false">Cancel</button>
+                    </div>
+                }
+
+                @if (importStep == 0)
+                {
+                    <button class="btn btn-outline" @onclick="FetchAndPreview" disabled="@isImporting">
+                        @if (isImporting) { <span>⏳ Fetching...</span> }
+                        else { <span>🔍 Fetch & Draft Session</span> }
+                    </button>
+                }
+
+                @if (importError is not null)
+                {
+                    <div class="error-banner">@importError</div>
+                }
+
+                @if (importStep >= 1 && importResult is not null)
+                {
+                    <div class="import-preview">
+                        <div class="import-stats">
+                            <span>📄 @importResult.ImportResult.RecordCount documents imported</span>
+                            @if (importResult.ImportResult.Errors.Count > 0)
+                            {
+                                <span class="warning">⚠️ @importResult.ImportResult.Errors.Count errors</span>
+                            }
+                        </div>
+
+                        <div class="draft-preview">
+                            <h3>🤖 AI-Drafted Session Structure</h3>
+                            <p class="draft-description">@importResult.Draft.Description</p>
+
+                            @for (var i = 0; i < importResult.Draft.Topics.Count; i++)
+                            {
+                                var topic = importResult.Draft.Topics[i];
+                                <div class="draft-topic">
+                                    <div class="draft-topic-header">
+                                        <h4>@topic.Title</h4>
+                                        <button class="btn-icon" title="Remove topic" @onclick="() => RemoveDraftTopic(i)">✕</button>
+                                    </div>
+                                    <p class="topic-desc">@topic.Description</p>
+                                    <div class="talking-points-preview">
+                                        @foreach (var tp in topic.TalkingPoints)
+                                        {
+                                            <span class="tp-chip">@tp</span>
+                                        }
+                                    </div>
+                                    @if (topic.SuggestedPolls.Count > 0)
+                                    {
+                                        <div class="polls-preview">
+                                            @foreach (var poll in topic.SuggestedPolls)
+                                            {
+                                                <div class="poll-chip">📊 @poll.Question (@poll.Options.Count options)</div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="form-actions">
+            <a href="/" class="btn btn-back">← Back</a>
+            <button class="btn btn-create" @onclick="CreateSessionAsync" disabled="@isCreating">
+                @if (isCreating)
+                {
+                    <span>Creating...</span>
+                }
+                else
+                {
+                    <span>🚀 Create Session</span>
+                }
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string title = "";
+    private string sessionCode = "";
+    private string hostPin = "";
+    private string description = "";
+    private string template = "default";
+    private string? errorMessage;
+    private bool isCreating;
+
+    // GitHub import state
+    private string repoUrl = "";
+    private string repoBranch = "";
+    private string repoSubdirectory = "";
+    private int importStep = 0;
+    private bool isImporting;
+    private string? importError;
+    private string importStatus = "";
+    private ImportDraftResult? importResult;
+    private HashSet<string> importedUrls = [];
+    private bool showDedupWarning;
+    private bool generateSlides = true;
+    private bool generatePolls = true;
+    private bool generateTalkingPoints = true;
+
+    private async Task CreateSessionAsync()
+    {
+        errorMessage = null;
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            errorMessage = "Session title is required.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(hostPin) || hostPin.Length < 4 || !hostPin.All(char.IsDigit))
+        {
+            errorMessage = "Host PIN must be 4-6 digits.";
+            return;
+        }
+
+        isCreating = true;
+        try
+        {
+            SessionContext context;
+            var code = string.IsNullOrWhiteSpace(sessionCode) ? null : sessionCode.Trim();
+
+            if (template == "default")
+            {
+                var dataRoot = Path.Combine(Environment.ContentRootPath, "..", "..", "data");
+                var seedPath = Path.Combine(dataRoot, "seed-topics.json");
+
+                if (File.Exists(seedPath))
+                {
+                    var json = await File.ReadAllTextAsync(seedPath);
+                    context = SessionManager.CreateSessionFromSeed(json, hostPin, code);
+                    if (!string.IsNullOrWhiteSpace(title))
+                        context.Session.Title = title;
+                    if (!string.IsNullOrWhiteSpace(description))
+                        context.Session.Description = description;
+
+                    var slidesPath = Path.Combine(Path.GetDirectoryName(seedPath)!, "slides.md");
+                    if (File.Exists(slidesPath))
+                    {
+                        await SessionManager.LoadSlidesForSessionAsync(context.Session.SessionCode, slidesPath);
+                    }
+                }
+                else
+                {
+                    context = SessionManager.CreateSession(title, hostPin, code, description);
+                }
+            }
+            else if (template == "github")
+            {
+                if (importResult is null || importResult.Draft.Topics.Count == 0)
+                {
+                    errorMessage = "Please import a GitHub repo and review the draft first.";
+                    isCreating = false;
+                    return;
+                }
+
+                context = SessionManager.CreateSession(title, hostPin, code, description);
+
+                foreach (var topicDraft in importResult.Draft.Topics)
+                {
+                    var topic = new SessionTopic
+                    {
+                        Id = Guid.NewGuid().ToString("N")[..8],
+                        Title = topicDraft.Title,
+                        Description = topicDraft.Description,
+                        Order = context.Session.Topics.Count,
+                        Status = TopicStatus.Upcoming,
+                        TalkingPoints = topicDraft.TalkingPoints.ToList(),
+                        SuggestedPolls = topicDraft.SuggestedPolls.Select(p => new SuggestedPoll
+                        {
+                            Question = p.Question,
+                            Options = p.Options.ToList()
+                        }).ToList()
+                    };
+                    context.Session.Topics.Add(topic);
+                }
+
+                // Parse and load slides from generated markdown, remapping topic IDs
+                if (importResult is not null && !string.IsNullOrWhiteSpace(importResult.SlideMarkdown))
+                {
+                    var slides = SlideMarkdownParser.Parse(importResult.SlideMarkdown);
+                    for (int i = 0; i < importResult.Draft.Topics.Count && i < context.Session.Topics.Count; i++)
+                    {
+                        var draftTopicId = $"topic-{i}";
+                        var actualTopicId = context.Session.Topics[i].Id;
+                        foreach (var slide in slides.Where(s => s.TopicId == draftTopicId))
+                        {
+                            slide.TopicId = actualTopicId;
+                        }
+                    }
+                    context.LoadSlides(slides);
+                }
+            }
+            else
+            {
+                context = SessionManager.CreateSession(title, hostPin, code, description);
+            }
+
+            Navigation.NavigateTo($"/presenter/{context.Session.SessionCode}");
+        }
+        catch (InvalidOperationException ex)
+        {
+            errorMessage = ex.Message;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to create session: {ex.Message}";
+        }
+        finally
+        {
+            isCreating = false;
+        }
+    }
+
+    private async Task FetchAndPreview()
+    {
+        importError = null;
+        showDedupWarning = false;
+
+        if (string.IsNullOrWhiteSpace(repoUrl))
+        {
+            importError = "Please enter a GitHub repository URL.";
+            return;
+        }
+
+        var trimmedUrl = repoUrl.Trim();
+
+        if (!trimmedUrl.Contains("github.com") || trimmedUrl.Split('/').Length < 5)
+        {
+            importError = "Invalid GitHub URL. Use format: https://github.com/owner/repo";
+            return;
+        }
+
+        if (importedUrls.Contains(trimmedUrl))
+        {
+            showDedupWarning = true;
+            return;
+        }
+
+        await DoFetchAndPreview(trimmedUrl);
+    }
+
+    private async Task ConfirmReimport()
+    {
+        showDedupWarning = false;
+        importStep = 0;
+        importResult = null;
+        await DoFetchAndPreview(repoUrl.Trim());
+    }
+
+    private async Task DoFetchAndPreview(string url)
+    {
+        isImporting = true;
+        importStatus = "🔍 Connecting to GitHub...";
+        StateHasChanged();
+
+        try
+        {
+            importStatus = "🔍 Fetching repository & drafting session...";
+            StateHasChanged();
+
+            importResult = await ContentImportService.ImportAndDraftAsync(url,
+                string.IsNullOrWhiteSpace(title) ? null : title,
+                string.IsNullOrWhiteSpace(repoBranch) ? null : repoBranch.Trim(),
+                string.IsNullOrWhiteSpace(repoSubdirectory) ? null : repoSubdirectory.Trim(),
+                new GenerationOptions(generateSlides, generatePolls, generateTalkingPoints));
+            importStep = 1;
+            importedUrls.Add(url);
+
+            // Auto-fill title and description from draft if blank
+            if (string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(importResult.Draft.Title))
+                title = importResult.Draft.Title;
+            if (string.IsNullOrWhiteSpace(description) && !string.IsNullOrWhiteSpace(importResult.Draft.Description))
+                description = importResult.Draft.Description;
+        }
+        catch (Exception ex)
+        {
+            if (!repoUrl.Trim().Contains("github.com") || repoUrl.Trim().Split('/').Length < 5)
+                importError = "Invalid GitHub URL. Use format: https://github.com/owner/repo";
+            else
+                importError = $"Import failed: {ex.Message}";
+        }
+        finally
+        {
+            isImporting = false;
+            importStatus = "";
+        }
+    }
+
+    private void RemoveDraftTopic(int index)
+    {
+        if (importResult is not null && index >= 0 && index < importResult.Draft.Topics.Count)
+        {
+            importResult.Draft.Topics.RemoveAt(index);
+        }
+    }
+}
+
+<style>
+    .create-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .create-card {
+        width: 100%;
+        max-width: 700px;
+        padding: 2.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+    }
+
+    .create-card h1 {
+        font-size: 1.75rem;
+        margin: 0 0 0.25rem;
+        color: white;
+    }
+
+    .subtitle {
+        opacity: 0.5;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .error-banner {
+        padding: 0.6rem 1rem;
+        background: rgba(255, 107, 107, 0.15);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        border-radius: 0.5rem;
+        color: #ff6b6b;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .hint {
+        font-weight: 400;
+        opacity: 0.5;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 0.5rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #e94560;
+    }
+
+    .form-textarea {
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .pin-field {
+        width: 150px;
+        letter-spacing: 0.2em;
+        font-size: 1.1rem;
+    }
+
+    select.form-input {
+        cursor: pointer;
+    }
+
+    select.form-input option {
+        background: #1a1a2e;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.25rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-back {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-back:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+
+    .btn-create {
+        background: #e94560;
+        padding: 0.7rem 1.5rem;
+    }
+
+    .btn-create:hover {
+        background: #d63851;
+    }
+
+    .btn-create:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    .github-import-section {
+        margin-top: 0.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.75rem;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .form-group-half {
+        flex: 1;
+    }
+
+    .import-preview {
+        margin-top: 1rem;
+    }
+
+    .import-stats {
+        display: flex;
+        gap: 1rem;
+        padding: 0.6rem 0.8rem;
+        background: rgba(0, 200, 100, 0.08);
+        border: 1px solid rgba(0, 200, 100, 0.15);
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .import-stats .warning {
+        color: #ffb347;
+    }
+
+    .draft-preview h3 {
+        font-size: 1rem;
+        margin: 0 0 0.5rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .draft-description {
+        font-size: 0.85rem;
+        opacity: 0.7;
+        margin-bottom: 1rem;
+    }
+
+    .draft-topic {
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .draft-topic-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .draft-topic-header h4 {
+        font-size: 0.9rem;
+        margin: 0;
+        color: white;
+    }
+
+    .topic-desc {
+        font-size: 0.8rem;
+        opacity: 0.6;
+        margin: 0.25rem 0 0.5rem;
+    }
+
+    .talking-points-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .tp-chip {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;
+        background: rgba(233, 69, 96, 0.15);
+        border: 1px solid rgba(233, 69, 96, 0.25);
+        border-radius: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .polls-preview {
+        margin-top: 0.3rem;
+    }
+
+    .poll-chip {
+        font-size: 0.75rem;
+        opacity: 0.7;
+    }
+
+    .btn-icon {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    .btn-icon:hover {
+        color: #ff6b6b;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid rgba(233, 69, 96, 0.4);
+        color: #e94560;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    .btn-outline:hover {
+        background: rgba(233, 69, 96, 0.1);
+    }
+
+    .btn-outline:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    .import-status {
+        padding: 0.5rem 0.75rem;
+        background: rgba(100, 100, 255, 0.1);
+        border: 1px solid rgba(100, 100, 255, 0.2);
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        color: #aab0ff;
+        margin: 0.5rem 0;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .import-dedup-warning {
+        padding: 0.4rem 0.6rem;
+        background: rgba(255, 179, 71, 0.1);
+        border: 1px solid rgba(255, 179, 71, 0.2);
+        border-radius: 0.5rem;
+        font-size: 0.8rem;
+        color: #ffb347;
+        margin: 0.4rem 0;
+    }
+
+    .btn-inline {
+        background: none;
+        border: 1px solid currentColor;
+        color: inherit;
+        padding: 0.15rem 0.5rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 0.75rem;
+        margin-left: 0.4rem;
+    }
+
+    .btn-inline:hover {
+        opacity: 0.8;
+    }
+
+    @@keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+</style>
